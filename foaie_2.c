@@ -241,13 +241,13 @@ int main(int argc, char** argv) {
   worksheet_set_column(worksheet, 1, 10, 20, NULL);
 
   const unsigned daysinmonth = days_in_month(previous.month, previous.year);
-
+  unsigned parcursi = 0;
   /* efficency .... compute pattern array and use it here*/
   for (unsigned i = 1; i <= daysinmonth; i++) {
     worksheet_write_number(worksheet, i + offset, 0, i, format_local);
-
     switch (isholiday(i, previous.month, previous.year) ? 1 : 0) {
       case false:
+        parcursi += tmp[i].km;
         worksheet_write_string(worksheet, i + offset, 2, tmp[i].route,
                                format_local);
         worksheet_write_number(worksheet, i + offset, 1, (double)tmp[i].km,
@@ -267,13 +267,9 @@ int main(int argc, char** argv) {
   }
 
   /* efficency ..... calculate beforehand,  not here */
-  unsigned total = km, parcursi = 0;
-  for (unsigned i = 0; i < daysinmonth; i++) {
-    printf("%s\n", tmp[i].route);
-    parcursi += tmp[i].km;
-  }
-  total += parcursi;
-  printf("%d\n", total);
+  unsigned total = 0;
+  total = km + parcursi;
+  printf("parcursi: %d\t%d\n", parcursi, total);
 
   lxw_format* format = workbook_add_format(workbook);
   format_set_num_format(format, "#,#");
