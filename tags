@@ -1,0 +1,43 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/alex/tmp/parcurs/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+COL1	foaie_2.c	/^#define COL1 /;"	d	file:
+COL2	foaie_2.c	/^#define COL2 /;"	d	file:
+LXW_COLOR_YELLOW_PALE	foaie_2.c	/^#define LXW_COLOR_YELLOW_PALE /;"	d	file:
+NELEMS	foaie_2.c	/^#define NELEMS(/;"	d	file:
+T	foaie_2.c	/^static struct T { unsigned day, month, year; } current, previous;$/;"	s	file:
+__anonf3542bab0108	foaie_2.c	/^static struct {$/;"	s	file:
+__anonf3542bab0208	foaie_2.c	/^  static const struct {$/;"	s	function:isholiday	file:
+clean	Makefile	/^clean:$/;"	t
+current	foaie_2.c	/^static struct T { unsigned day, month, year; } current, previous;$/;"	v	typeref:struct:T
+day	foaie_2.c	/^    unsigned day, mon;$/;"	m	struct:isholiday::__anonf3542bab0208	typeref:typename:unsigned	file:
+day	foaie_2.c	/^static struct T { unsigned day, month, year; } current, previous;$/;"	m	struct:T	typeref:typename:unsigned	file:
+days_in_month	foaie_2.c	/^static inline unsigned days_in_month(const unsigned month,$/;"	f	typeref:typename:unsigned	file:
+get_previous	foaie_2.c	/^static inline void get_previous(void) {$/;"	f	typeref:typename:void	file:
+isholiday	foaie_2.c	/^static inline bool isholiday(const unsigned day, const unsigned month,$/;"	f	typeref:typename:bool	file:
+km	foaie_2.c	/^  long km;$/;"	m	struct:__anonf3542bab0108	typeref:typename:long	file:
+longdate	foaie_2.c	/^static char longdate[128];$/;"	v	typeref:typename:char[128]	file:
+mail2	foaie.py	/^def mail2():$/;"	f
+main	foaie_2.c	/^int main(int argc, char **argv) {$/;"	f	typeref:typename:int
+mon	foaie_2.c	/^    unsigned day, mon;$/;"	m	struct:isholiday::__anonf3542bab0208	typeref:typename:unsigned	file:
+month	foaie_2.c	/^static struct T { unsigned day, month, year; } current, previous;$/;"	m	struct:T	typeref:typename:unsigned	file:
+month_name	foaie_2.c	/^static inline const char *month_name(const unsigned day, const unsigned month,$/;"	f	typeref:typename:const char *	file:
+name	foaie_2.c	/^static char name[256];$/;"	v	typeref:typename:char[256]	file:
+obs	foaie_2.c	/^  char *obs;$/;"	m	struct:__anonf3542bab0108	typeref:typename:char *	file:
+parcurs	README.md	/^# parcurs$/;"	c
+parcurs	foaie_2.c	/^} tmp[128], parcurs[16] = {{"Cluj-Oradea", 321, "Interes Serviciu"},$/;"	v	typeref:struct:__anonf3542bab0108[16]
+pattern	foaie_2.c	/^static bool pattern[32];$/;"	v	typeref:typename:bool[32]	file:
+previous	foaie_2.c	/^static struct T { unsigned day, month, year; } current, previous;$/;"	v	typeref:struct:T
+random_shuffle	foaie_2.c	/^static inline void random_shuffle(void) {$/;"	f	typeref:typename:void	file:
+route	foaie_2.c	/^  char *route;$/;"	m	struct:__anonf3542bab0108	typeref:typename:char *	file:
+row	foaie_2.c	/^static unsigned row;$/;"	v	typeref:typename:unsigned	file:
+tmp	foaie_2.c	/^} tmp[128], parcurs[16] = {{"Cluj-Oradea", 321, "Interes Serviciu"},$/;"	v	typeref:struct:__anonf3542bab0108[128]
+year	foaie_2.c	/^static struct T { unsigned day, month, year; } current, previous;$/;"	m	struct:T	typeref:typename:unsigned	file:
