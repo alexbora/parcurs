@@ -130,7 +130,30 @@ static inline void random_shuffle(void) {
   }
 }
 
+static inline void shuffle(int* pattern, const int n) {
+  int i;
+  for (i = 0; i < n; i++) {
+    pattern[i] = i;
+  }
+  for (i = n - 1; i > 0; i--) {
+    int j;
+    j = rand() % (i + 1);
+    if (j != i) {
+      int swap;
+      swap = pattern[j];
+      pattern[j] = pattern[i];
+      pattern[i] = swap;
+    }
+  }
+}
+
 int main(int argc, char** argv) {
+  for (unsigned i = 0; i < 128; i++) {
+    for (unsigned j = 0; j < NELEMS(parcurs); j++) {
+      tmp[i] = parcurs[rand() % NELEMS(parcurs)];
+    }
+  }
+
   random_shuffle();
 
   FILE* file = fopen("km", "r+");
@@ -269,6 +292,10 @@ int main(int argc, char** argv) {
   /* efficency ..... calculate beforehand,  not here */
   unsigned total = 0;
   total = km + parcursi;
+  for (unsigned i = 0; i < 32; i++) {
+    printf("%s\n", tmp[i].route);
+  }
+
   printf("parcursi: %d\t%d\n", parcursi, total);
 
   lxw_format* format = workbook_add_format(workbook);
