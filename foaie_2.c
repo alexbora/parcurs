@@ -10,7 +10,6 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/_types/_ucontext.h>
 #include <xlsxwriter.h>
 
 #define COL1 (0)
