@@ -7,6 +7,7 @@
 #include <limits.h>
 #include <locale.h>
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,7 +23,7 @@
 
 static struct T { unsigned day, month, year; } current, previous;
 static char longdate[128];
-static bool pattern[32];
+static unsigned days_pattern[32];
 static unsigned row;
 static char name[256];
 
@@ -111,19 +112,18 @@ static inline void get_previous(void) {
 
 static inline void random_shuffle(void) {
   srand((unsigned)time(0));
-  unsigned found, play, cycle, k, recent[128];
-  found = play = cycle = k = 0;
+  unsigned found, play, cycle, k = 0, recent[128];
+  found = play = cycle = k;
   memset(&recent, 0, sizeof(recent));
 
-  const static size_t parc = NELEMS(parcurs);
+  const static size_t parc = NELEMS(parcurs), tmp_size = NELEMS(tmp);
 
-  for (; cycle < NELEMS(tmp); cycle++) {
+  for (; cycle < tmp_size; cycle++) {
     do {
       play = rand() % parc;
       found = 0;
-      for (k = 0; k < parc; k += 1) {
+      for (k = 0; k < parc; k++)
         if (recent[k] == play) found = 1;
-      }
     } while (found);
 
     tmp[cycle] = parcurs[play];
@@ -180,11 +180,21 @@ int main(int argc, char** argv) {
   fclose(file);
 
   /* efficency */
-  int n = days_in_month(previous.month, previous.year);
-  while (n--) {
-    pattern[n] = !isholiday(n, previous.month, previous.year);
-    /* printf("%d\n", pattern[n]); */
-  }
+  /* int n = days_in_month(previous.month, previous.year); */
+  /* int km_parcursi = 0; */
+  /* while (n--) { */
+  /*   days_pattern[n] = !isholiday(n, previous.month, previous.year); */
+  /*   /1* printf("%d\n", pattern[n]); *1/ */
+  /*   switch (days_pattern[n]) { */
+  /*     case 0: */
+  /*       km_parcursi += tmp[n].km; */
+  /*     case 1: */
+  /*       break; */
+  /*     default: */
+  /*       break; */
+  /*   } */
+  /* } */
+  /* printf("%d\n", km_parcursi); */
 
   /* sprintf(name, "foaie_parcurs_B-151-VGT_%s_Alex_Bora_%s.xlsx",
    * previous->month, */
@@ -196,7 +206,9 @@ int main(int argc, char** argv) {
   /* lxw_workbook* workbook = workbook_new(name); */
 
   lxw_worksheet* worksheet = workbook_add_worksheet(workbook, NULL);
+  worksheet_select(worksheet);
   worksheet_insert_image(worksheet, 1, 3, "logo.png");
+
   lxw_format* format_bold = workbook_add_format(workbook);
   format_set_bold(format_bold);
   format_set_border(format_bold, LXW_BORDER_NONE);
@@ -261,13 +273,15 @@ int main(int argc, char** argv) {
   format_set_border(format_local, LXW_BORDER_THIN);
 
   worksheet_set_column(worksheet, 0, 0, strlen("parcursi: "), format_bold);
-  worksheet_set_column(worksheet, 1, 10, 20, NULL);
+  worksheet_set_column(worksheet, 1, 1, 10, NULL);
+  worksheet_set_column(worksheet, 2, 10, 20, NULL);
 
   const unsigned daysinmonth = days_in_month(previous.month, previous.year);
   unsigned parcursi = 0;
   /* efficency .... compute pattern array and use it here*/
   for (unsigned i = 1; i <= daysinmonth; i++) {
     worksheet_write_number(worksheet, i + offset, 0, i, format_local);
+    /* switch (days_pattern[i]) { */
     switch (isholiday(i, previous.month, previous.year) ? 1 : 0) {
       case false:
         parcursi += tmp[i].km;
@@ -292,7 +306,7 @@ int main(int argc, char** argv) {
   /* efficency ..... calculate beforehand,  not here */
   unsigned total = 0;
   total = km + parcursi;
-  for (unsigned i = 0; i < 32; i++) {
+  for (unsigned i = 0; i < daysinmonth; i++) {
     printf("%s\n", tmp[i].route);
   }
 
