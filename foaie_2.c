@@ -202,11 +202,28 @@ int main(int argc, char** argv) {
 
   sprintf(name, "foaie_parcurs_B-151-VGT_%s_Alex_Bora_%s.xlsx",
           month_name(previous.day, previous.month, previous.year), longdate);
-  lxw_workbook* workbook = workbook_new("foaie.xlsx");
-  /* lxw_workbook* workbook = workbook_new(name); */
 
+  lxw_workbook_options options = {
+      .constant_memory = LXW_FALSE, .tmpdir = NULL, .use_zip64 = LXW_FALSE};
+
+  /* lxw_workbook* workbook = workbook_new("foaie.xlsx"); */
+  /* lxw_workbook* workbook = workbook_new(name); */
+  lxw_workbook* workbook = workbook_new_opt("foaie.xlsx", &options);
   lxw_worksheet* worksheet = workbook_add_worksheet(workbook, NULL);
+  worksheet_activate(worksheet);
   worksheet_select(worksheet);
+  worksheet_set_first_sheet(worksheet);
+  worksheet_set_portrait(worksheet);
+  worksheet_set_paper(worksheet, 9);
+  worksheet_print_area(worksheet, 0, 0, 90, 5);
+  worksheet_fit_to_pages(worksheet, 1, 1);
+  worksheet_ignore_errors(worksheet, LXW_IGNORE_NUMBER_STORED_AS_TEXT,
+                          "A1:XFD1048576");
+
+  worksheet_set_column(worksheet, 0, 0, strlen("parcursi: "), NULL);
+  worksheet_set_column(worksheet, 1, 1, strlen("km parcursi"), NULL);
+  worksheet_set_column(worksheet, 2, 10, 20, NULL);
+
   worksheet_insert_image(worksheet, 1, 3, "logo.png");
 
   lxw_format* format_bold = workbook_add_format(workbook);
@@ -248,7 +265,7 @@ int main(int argc, char** argv) {
   format_set_num_format(format_bold_right, "#,#");
   worksheet_write_number(worksheet, row + 11, 1, km, format_bold_right);
 
-  worksheet_set_default_row(worksheet, 20, 1);
+  worksheet_set_default_row(worksheet, 15, 1);
 
   lxw_format* format_header = workbook_add_format(workbook);
   format_set_align(format_header, LXW_ALIGN_CENTER);
@@ -257,6 +274,7 @@ int main(int argc, char** argv) {
   format_set_right(format_header, LXW_BORDER_THIN);
   format_set_pattern(format_header, LXW_PATTERN_SOLID);
   format_set_bg_color(format_header, LXW_COLOR_YELLOW_PALE);
+  /* format_set_shrink(format_header); */
 
   worksheet_write_string(worksheet, row + 12, 0, "Ziua", format_header);
   worksheet_write_string(worksheet, row + 12, 1, "Km_parcursi", format_header);
@@ -272,9 +290,11 @@ int main(int argc, char** argv) {
   format_set_bg_color(format_local, LXW_COLOR_YELLOW_PALE);
   format_set_border(format_local, LXW_BORDER_THIN);
 
-  worksheet_set_column(worksheet, 0, 0, strlen("parcursi: "), format_bold);
-  worksheet_set_column(worksheet, 1, 1, 10, NULL);
-  worksheet_set_column(worksheet, 2, 10, 20, NULL);
+  /* worksheet_set_column(worksheet, 0, 0, strlen("parcursi: "), format_bold);
+   */
+  /* worksheet_set_column(worksheet, 1, 1, strlen("km parcursi"), NULL); */
+  /* worksheet_set_column(worksheet, 2, 10, 20, NULL); */
+  /* /1* worksheet_set_column(worksheet, 2, 10, 20, NULL); *1/ */
 
   const unsigned daysinmonth = days_in_month(previous.month, previous.year);
   unsigned parcursi = 0;
@@ -334,17 +354,17 @@ int main(int argc, char** argv) {
   format_set_bottom(format_footer, LXW_BORDER_THIN);
 
   const unsigned r = daysinmonth + offset + 3;
-  worksheet_merge_range(worksheet, r, 0, r, 3,
+  worksheet_merge_range(worksheet, r + 1, 0, r, 3,
                         "***NPC = Norma proprie de consum carburanti",
                         format_footer);
-  worksheet_merge_range(worksheet, r + 1, 0, r + 1, 3,
+  worksheet_merge_range(worksheet, r + 2, 0, r + 3, 3,
                         "*Km. parcurşi între locuinţă şi serviciu sunt "
                         "consideraţi în interesul serviciului.",
                         format_footer);
-  worksheet_merge_range(worksheet, r + 2, 0, r + 2, 3,
+  worksheet_merge_range(worksheet, r + 3, 0, r + 3, 3,
                         "Total km Interes Personal		 0",
                         format_footer);
-  worksheet_merge_range(worksheet, r + 4, 0, r + 4, 3,
+  worksheet_merge_range(worksheet, r + 5, 0, r + 5, 3,
                         "Total km Personal Ratio		 0,0%",
                         format_footer);
 
@@ -352,17 +372,16 @@ int main(int argc, char** argv) {
   sprintf(data_predarii, "Semnătură utilizator:\t\t\t  Data predarii: %s",
           longdate);
 
-  worksheet_merge_range(worksheet, r + 6, 0, r + 6, 3, data_predarii,
+  worksheet_merge_range(worksheet, r + 7, 0, r + 6, 3, data_predarii,
                         format_footer);
 
   format_set_border(format_footer, LXW_BORDER_NONE);
-  worksheet_merge_range(worksheet, r + 8, 0, r + 8, 3, "……………………………………………………",
+  worksheet_merge_range(worksheet, r + 9, 0, r + 8, 3, "……………………………………………………",
                         format_footer);
 
   file = fopen("km", "w+");
   fprintf(file, "%d", total);
   fclose(file);
 
-  workbook_close(workbook);
-  return 0;
+  return workbook_close(workbook);
 }
