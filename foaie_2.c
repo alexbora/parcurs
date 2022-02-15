@@ -58,8 +58,6 @@ static inline unsigned days_in_month(const unsigned month,
   return 31;
 }
 
-int a;
-
 static inline bool isholiday(const unsigned day, const unsigned month,
                              const unsigned year) {
   struct tm tm = {.tm_year = year - 1900,
