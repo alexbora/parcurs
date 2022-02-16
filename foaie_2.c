@@ -18,12 +18,16 @@
 
 #define COL1 (0)
 #define COL2 (1)
+#define COL3 (2)
+#define COL4 (3)
+/* #define COL5 (4) */
+
 #define LXW_COLOR_YELLOW_PALE (0xFFFFCA)
 #define NELEMS(x) sizeof(x) / sizeof(x[0])
 
 static struct T { unsigned day, month, year; } current, previous;
 static char longdate[128];
-static unsigned days_pattern[32];
+/* static unsigned days_pattern[32]; */
 static unsigned row;
 static char name[256];
 
@@ -60,9 +64,9 @@ static inline unsigned days_in_month(const unsigned month,
 
 static inline bool isholiday(const unsigned day, const unsigned month,
                              const unsigned year) {
-  struct tm tm = {.tm_year = year - 1900,
-                  .tm_mon = month - 1,
-                  .tm_mday = day,
+  struct tm tm = {.tm_year = (const int)(year - 1900),
+                  .tm_mon = (const int)(month - 1),
+                  .tm_mday = (const int)day,
                   .tm_isdst = -1};
   mktime(&tm);
 
@@ -98,9 +102,9 @@ static inline const char* month_name(const unsigned day, const unsigned month,
 static inline void get_previous(void) {
   time_t r = time(0);
   struct tm* tm = localtime(&r);
-  current.day = tm->tm_mday;
-  current.month = tm->tm_mon + 1;
-  current.year = tm->tm_year + 1900;
+  current.day = (unsigned)(tm->tm_mday);
+  current.month = (unsigned)(tm->tm_mon + 1);
+  current.year = (unsigned)(tm->tm_year + 1900);
   /* printf("day %d\n", current.day); */
   /* printf("month %d\n", current.month); */
   /* printf("year %d\n", current.year); */
@@ -110,27 +114,7 @@ static inline void get_previous(void) {
   strftime(longdate, 64, "%d.%m.%Y", tm);
 }
 
-static inline void random_shuffle(void) {
-  srand((unsigned)time(0));
-  unsigned found, play, cycle, k = 0, recent[128];
-  found = play = cycle = k;
-  memset(&recent, 0, sizeof(recent));
-
-  const static size_t parc = NELEMS(parcurs), tmp_size = NELEMS(tmp);
-
-  for (; cycle < tmp_size; cycle++) {
-    do {
-      play = rand() % parc;
-      found = 0;
-      for (k = 0; k < parc; k++)
-        if (recent[k] == play) found = 1;
-    } while (found);
-
-    tmp[cycle] = parcurs[play];
-  }
-}
-
-static inline void shuffle(int* pattern, const int n) {
+__attribute__((unused)) static inline void shuffle(int* pattern, const int n) {
   int i;
   for (i = 0; i < n; i++) {
     pattern[i] = i;
@@ -147,13 +131,36 @@ static inline void shuffle(int* pattern, const int n) {
   }
 }
 
-int main(int argc, char** argv) {
+static inline void random_shuffle(void) {
+  srand((unsigned)time(0));
+
+  size_t n = NELEMS(parcurs);
+
   for (unsigned i = 0; i < 128; i++) {
-    for (unsigned j = 0; j < NELEMS(parcurs); j++) {
-      tmp[i] = parcurs[rand() % NELEMS(parcurs)];
+    for (unsigned j = 0; j < n; j++) {
+      tmp[i] = parcurs[(unsigned long)rand() % n];
     }
   }
 
+  int found, play, cycle, k = 0, recent[128];
+  found = play = cycle = k;
+  memset(&recent, 0, sizeof(recent));
+
+  const static int parc = NELEMS(parcurs), tmp_size = NELEMS(tmp);
+
+  for (; cycle < tmp_size; cycle++) {
+    do {
+      play = rand() % parc;
+      found = 0;
+      for (k = 0; k < parc; k++)
+        if (recent[k] == play) found = 1;
+    } while (found);
+
+    tmp[cycle] = parcurs[play];
+  }
+}
+
+int main(int argc, char** argv) {
   random_shuffle();
 
   FILE* file = fopen("km", "r+");
@@ -230,40 +237,44 @@ int main(int argc, char** argv) {
   format_set_bold(format_bold);
   format_set_border(format_bold, LXW_BORDER_NONE);
 
-  worksheet_merge_range(worksheet, row, 0, row, 1, "VOLVO ROMÂNIA",
+  worksheet_merge_range(worksheet, row, COL1, row, COL2, "VOLVO ROMÂNIA",
                         format_bold);
 
-  worksheet_merge_range(worksheet, row + 1, 0, row + 1, 1, "", format_bold);
-  worksheet_merge_range(worksheet, row + 2, 0, row + 2, 1, "FOAIE DE PARCURS",
+  worksheet_merge_range(worksheet, row + 1, COL1, row + 1, COL2, "",
                         format_bold);
-  worksheet_merge_range(worksheet, row + 3, 0, row + 3, 1, "", format_bold);
-  worksheet_write_string(worksheet, row + 4, 0, "Luna:", format_bold);
-  worksheet_write_string(worksheet, row + 5, 0, "Anul:", format_bold);
-  worksheet_write_string(worksheet, row + 6, 0,
+  worksheet_merge_range(worksheet, row + 2, COL1, row + 2, COL2,
+                        "FOAIE DE PARCURS", format_bold);
+  worksheet_merge_range(worksheet, row + 3, COL1, row + 3, 1, "", format_bold);
+  worksheet_write_string(worksheet, row + 4, COL1, "Luna:", format_bold);
+  worksheet_write_string(worksheet, row + 5, COL1, "Anul:", format_bold);
+  worksheet_write_string(worksheet, row + 6, COL1,
                          "Nume utilizator:", format_bold);
-  worksheet_write_string(worksheet, row + 7, 0,
+  worksheet_write_string(worksheet, row + 7, COL1,
                          "Nr. Înmatriculare:", format_bold);
-  worksheet_write_string(worksheet, row + 8, 0, "Tipul maşinii:", format_bold);
-  worksheet_write_string(worksheet, row + 9, 0, "NPC", format_bold);
+  worksheet_write_string(worksheet, row + 8, COL1,
+                         "Tipul maşinii:", format_bold);
+  worksheet_write_string(worksheet, row + 9, COL1, "NPC", format_bold);
 
   worksheet_write_string(
-      worksheet, row + 4, 2,
+      worksheet, row + 4, COL3,
       month_name(previous.day, previous.month, previous.year), format_bold);
 
   format_set_align(format_bold, LXW_ALIGN_LEFT);
-  worksheet_write_number(worksheet, row + 5, 2, previous.year, format_bold);
+  worksheet_write_number(worksheet, row + 5, COL3, previous.year, format_bold);
 
-  worksheet_write_string(worksheet, row + 6, 2, "Alex Bora", format_bold);
-  worksheet_write_string(worksheet, row + 7, 2, "B 151 VGT", format_bold);
-  worksheet_write_string(worksheet, row + 8, 2, "Renault Megane 1.5 dcii",
+  worksheet_write_string(worksheet, row + 6, COL3, "Alex Bora", format_bold);
+  worksheet_write_string(worksheet, row + 7, COL3, "B 151 VGT", format_bold);
+  worksheet_write_string(worksheet, row + 8, COL3, "Renault Megane 1.5 dcii",
                          format_bold);
 
-  worksheet_write_string(worksheet, row + 11, 0, "Km initiali:", format_bold);
+  worksheet_write_string(worksheet, row + 11, COL1,
+                         "Km initiali:", format_bold);
 
   lxw_format* format_bold_right = workbook_add_format(workbook);
   format_set_align(format_bold_right, LXW_ALIGN_RIGHT);
   format_set_num_format(format_bold_right, "#,#");
-  worksheet_write_number(worksheet, row + 11, 1, km, format_bold_right);
+
+  worksheet_write_number(worksheet, row + 11, COL2, km, format_bold_right);
 
   worksheet_set_default_row(worksheet, 15, 1);
 
@@ -276,11 +287,12 @@ int main(int argc, char** argv) {
   format_set_bg_color(format_header, LXW_COLOR_YELLOW_PALE);
   /* format_set_shrink(format_header); */
 
-  worksheet_write_string(worksheet, row + 12, 0, "Ziua", format_header);
-  worksheet_write_string(worksheet, row + 12, 1, "Km_parcursi", format_header);
-  worksheet_write_string(worksheet, row + 12, 2, "Locul deplasarii",
+  worksheet_write_string(worksheet, row + 12, COL1, "Ziua", format_header);
+  worksheet_write_string(worksheet, row + 12, COL2, "Km_parcursi",
                          format_header);
-  worksheet_write_string(worksheet, row + 12, 3, "Observatii utilizator",
+  worksheet_write_string(worksheet, row + 12, COL3, "Locul deplasarii",
+                         format_header);
+  worksheet_write_string(worksheet, row + 12, COL4, "Observatii utilizator",
                          format_header);
 
   unsigned offset = 13;
@@ -300,16 +312,16 @@ int main(int argc, char** argv) {
   unsigned parcursi = 0;
   /* efficency .... compute pattern array and use it here*/
   for (unsigned i = 1; i <= daysinmonth; i++) {
-    worksheet_write_number(worksheet, i + offset, 0, i, format_local);
+    worksheet_write_number(worksheet, i + offset, COL1, i, format_local);
     /* switch (days_pattern[i]) { */
     switch (isholiday(i, previous.month, previous.year) ? 1 : 0) {
       case false:
         parcursi += tmp[i].km;
-        worksheet_write_string(worksheet, i + offset, 2, tmp[i].route,
+        worksheet_write_string(worksheet, i + offset, COL3, tmp[i].route,
                                format_local);
-        worksheet_write_number(worksheet, i + offset, 1, (double)tmp[i].km,
+        worksheet_write_number(worksheet, i + offset, COL2, (double)tmp[i].km,
                                format_local);
-        worksheet_write_string(worksheet, i + offset, 3, tmp[i].obs,
+        worksheet_write_string(worksheet, i + offset, COL4, tmp[i].obs,
                                format_local);
         break;
       case true:
@@ -383,5 +395,6 @@ int main(int argc, char** argv) {
   fprintf(file, "%d", total);
   fclose(file);
 
-  return workbook_close(workbook);
+  workbook_close(workbook);
+  return 0;
 }
