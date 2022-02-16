@@ -114,7 +114,7 @@ static inline void get_previous(void) {
   strftime(longdate, 64, "%d.%m.%Y", tm);
 }
 
-__attribute__((unused)) static inline void shuffle(int* pattern, const int n) {
+static inline void shuffle(int* pattern, const int n) {
   int i;
   for (i = 0; i < n; i++) {
     pattern[i] = i;
@@ -158,6 +158,13 @@ static inline void random_shuffle(void) {
 
     tmp[cycle] = parcurs[play];
   }
+
+  int c[tmp_size];
+  shuffle(c, 32);
+  for (unsigned i = 0; i < 32; i++) {
+    printf("%d\t", c[i]);
+  }
+  puts("\n");
 }
 
 int main(int argc, char** argv) {
