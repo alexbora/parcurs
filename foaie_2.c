@@ -114,7 +114,7 @@ static inline void get_previous(void) {
   strftime(longdate, 64, "%d.%m.%Y", tm);
 }
 
-static inline void shuffle(int* pattern, const int n) {
+__attribute__((unused)) static inline void shuffle(int* pattern, const int n) {
   int i;
   for (i = 0; i < n; i++) {
     pattern[i] = i;
@@ -159,12 +159,12 @@ static inline void random_shuffle(void) {
     tmp[cycle] = parcurs[play];
   }
 
-  int c[tmp_size];
-  shuffle(c, 32);
-  for (unsigned i = 0; i < 32; i++) {
-    printf("%d\t", c[i]);
-  }
-  puts("\n");
+  /* int c[tmp_size]; */
+  /* shuffle(c, 32); */
+  /* for (unsigned i = 0; i < 32; i++) { */
+  /*   printf("%d\t", c[i]); */
+  /* } */
+  /* puts("\n"); */
 }
 
 int main(int argc, char** argv) {
@@ -214,16 +214,36 @@ int main(int argc, char** argv) {
    * previous->month, */
   /* t->long_date); */
 
-  sprintf(name, "foaie_parcurs_B-151-VGT_%s_Alex_Bora_%s.xlsx",
-          month_name(previous.day, previous.month, previous.year), longdate);
+  sprintf(name, "foaie_parcurs_B-151-VGT_%s_%d_Alex_Bora_%s.xlsx",
+          month_name(previous.day, previous.month, previous.year),
+          previous.year, longdate);
+  char worksheet_name[32];
+  sprintf(worksheet_name, "%s %d",
+          month_name(previous.day, previous.month, previous.year),
+          previous.year);
 
   lxw_workbook_options options = {
-      .constant_memory = LXW_FALSE, .tmpdir = NULL, .use_zip64 = LXW_FALSE};
+      .constant_memory = LXW_FALSE, .tmpdir = NULL, .use_zip64 = LXW_TRUE};
+
+  lxw_doc_properties properties = {
+      .title = name,
+      .subject = "",
+      .author = "Alex Bora",
+      .manager = "",
+      .company = "Volvo",
+      .category = "foaie parcurs",
+      .keywords = "foaie parcurs",
+      .comments = "",
+      .status = "Done",
+  };
+
+  // Set the properties in the workbook.
 
   /* lxw_workbook* workbook = workbook_new("foaie.xlsx"); */
-  /* lxw_workbook* workbook = workbook_new(name); */
+  /* lxw_workbook* workbook = workbook_new_opt(name, &options); */
   lxw_workbook* workbook = workbook_new_opt("foaie.xlsx", &options);
-  lxw_worksheet* worksheet = workbook_add_worksheet(workbook, NULL);
+  workbook_set_properties(workbook, &properties);
+  lxw_worksheet* worksheet = workbook_add_worksheet(workbook, worksheet_name);
   worksheet_activate(worksheet);
   worksheet_select(worksheet);
   worksheet_set_first_sheet(worksheet);
@@ -308,7 +328,7 @@ int main(int argc, char** argv) {
   format_set_right(format_local, LXW_BORDER_THIN);
   format_set_bg_color(format_local, LXW_COLOR_YELLOW_PALE);
   format_set_border(format_local, LXW_BORDER_THIN);
-
+  format_set_align(format_local, LXW_ALIGN_VERTICAL_CENTER);
   /* worksheet_set_column(worksheet, 0, 0, strlen("parcursi: "), format_bold);
    */
   /* worksheet_set_column(worksheet, 1, 1, strlen("km parcursi"), NULL); */
