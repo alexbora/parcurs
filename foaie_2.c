@@ -178,14 +178,14 @@ static inline bool repeating(
   return false;
 }
 
-static inline bool is_vacation(const unsigned day) {
-  int vacation[16] = {
+static inline bool is_vacation(const unsigned day, const unsigned month) {
+  /* naive version, but whatever... */
+  const unsigned vacation[16] = {
 #include "vacation"
   };
-
   size_t size = NELEMS(vacation);
-  for (size_t i = 0; i < size; i++)
-    if (day == (const unsigned)vacation[i]) return true;
+  for (size_t i = 1; i <= size; i++)
+    if (month == vacation[0] && day == vacation[i]) return true;
   return false;
 }
 
@@ -384,8 +384,10 @@ int main(int argc, char** argv) {
   for (unsigned i = 1; i <= daysinmonth; i++) {
     worksheet_write_number(worksheet, i + offset, COL1, i, format_local);
     /* switch (days_pattern[i]) { */
-    switch (is_vacation(i) && isholiday(i, previous.month, previous.year) ? 1
-                                                                          : 0) {
+    switch (is_vacation(i, previous.month) &&
+                    isholiday(i, previous.month, previous.year)
+                ? 1
+                : 0) {
       case false:
         parcursi += tmp[i].km;
         worksheet_write_string(worksheet, i + offset, COL3, tmp[i].route,
