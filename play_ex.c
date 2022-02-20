@@ -177,6 +177,8 @@ int main() {
 
   /* varianta 3 */
   /* probabil cea mai buna */
+  /* shoot the ducks,  simply zero the array elements that are either holiday or
+   * vacation,  the write function will write null,  or blank,  or "" */
   puts("\nvarianta 3");
   struct Final {
     char *route, km[4], *obs;
