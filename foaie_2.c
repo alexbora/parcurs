@@ -31,7 +31,7 @@ static char longdate[128];
 static unsigned row;
 static char name[256];
 
-static struct {
+static struct Route {
   char* route;
   long km;
   char* obs;
@@ -132,7 +132,7 @@ __attribute__((unused)) static inline void shuffle(int* pattern, const int n) {
 }
 
 static inline void random_shuffle(void) {
-  srand((unsigned)time(0));
+  /* srand((unsigned)time(0)); */
 
   size_t n = NELEMS(parcurs);
 
@@ -166,9 +166,18 @@ static inline void random_shuffle(void) {
   /* } */
   /* puts("\n"); */
 }
+static bool repeating(struct Route in[]) {
+  for (unsigned i = 0; i < 32; i++) {
+    if (in[i + 1].km == in[i].km && in[i].km != 30) return true;
+  }
+  return false;
+}
 
 int main(int argc, char** argv) {
-  random_shuffle();
+  srand((unsigned)time(0));
+  do {
+    random_shuffle();
+  } while (repeating(tmp));
 
   FILE* file = fopen("km", "r+");
   static unsigned km;
