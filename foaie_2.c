@@ -4,6 +4,10 @@
  * @created     : Tuesday Feb 02, 2021 22:13:00 EET
  */
 
+#if defined(_WINDOWS) || defined(_WIN32) || defined(_WIN64)
+#error "Leave Bill alone, get an Unix box.\n"
+#endif
+
 #include <limits.h>
 #include <locale.h>
 #include <stdbool.h>
@@ -11,9 +15,11 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/syslimits.h>
 #ifdef __APPLE__
 #include <sys/_types/_ucontext.h>
 #endif
+#include <unistd.h>
 #include <xlsxwriter.h>
 
 #define COL1 (0)
@@ -132,9 +138,7 @@ __attribute__((unused)) static inline void shuffle(int* pattern, const int n) {
 }
 
 static inline void random_shuffle(void) {
-  /* srand((unsigned)time(0)); */
-
-  size_t n = NELEMS(parcurs);
+  static const size_t n = NELEMS(parcurs);
 
   for (unsigned i = 0; i < 128; i++) {
     for (unsigned j = 0; j < n; j++) {
@@ -166,7 +170,8 @@ static inline void random_shuffle(void) {
   /* } */
   /* puts("\n"); */
 }
-static bool repeating(struct Route in[]) {
+static inline bool repeating(
+    struct Route in[] /*similar to "struct Route *in" */) {
   for (unsigned i = 0; i < 32; i++) {
     if (in[i + 1].km == in[i].km && in[i].km != 30) return true;
   }
@@ -231,8 +236,15 @@ int main(int argc, char** argv) {
           month_name(previous.day, previous.month, previous.year),
           previous.year);
 
+  char cwd[PATH_MAX + 1];
   lxw_workbook_options options = {
-      .constant_memory = LXW_FALSE, .tmpdir = NULL, .use_zip64 = LXW_TRUE};
+      .constant_memory = LXW_FALSE,
+      .tmpdir = cwd, /* .tmpdir = getcwd(NULL, 0), */
+      .use_zip64 = LXW_TRUE};
+  /* char* buf = getcwd(NULL, 0); */
+
+  /* free(buf); */
+  getcwd(cwd, sizeof(cwd));
 
   lxw_doc_properties properties = {
       .title = name,
@@ -245,6 +257,11 @@ int main(int argc, char** argv) {
       .comments = "",
       .status = "Done",
   };
+  lxw_data_validation* data_validation = calloc(1, sizeof(lxw_data_validation));
+  data_validation->validate = LXW_VALIDATION_TYPE_ANY;
+  data_validation->criteria = LXW_VALIDATION_TYPE_ANY;
+  data_validation->ignore_blank = LXW_VALIDATION_OFF;
+  data_validation->show_input = LXW_VALIDATION_OFF;
 
   // Set the properties in the workbook.
 
@@ -262,6 +279,11 @@ int main(int argc, char** argv) {
   worksheet_fit_to_pages(worksheet, 1, 1);
   worksheet_ignore_errors(worksheet, LXW_IGNORE_NUMBER_STORED_AS_TEXT,
                           "A1:XFD1048576");
+  worksheet_ignore_errors(worksheet, LXW_IGNORE_LIST_DATA_VALIDATION,
+                          "A1:XFD1048576");
+
+  worksheet_data_validation_range(worksheet, RANGE("A1:XFD1048576"),
+                                  data_validation);
 
   worksheet_set_column(worksheet, 0, 0, strlen("parcursi: "), NULL);
   worksheet_set_column(worksheet, 1, 1, strlen("km parcursi"), NULL);
