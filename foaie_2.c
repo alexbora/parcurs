@@ -179,9 +179,9 @@ static inline bool repeating(
 }
 
 static inline bool is_vacation(const unsigned day) {
-  int vacation[16];
-  FILE* f = fopen("vacation", "r");
-  fclose(f);
+  int vacation[16] = {
+#include "vacation"
+  };
 
   size_t size = NELEMS(vacation);
   for (size_t i = 0; i < size; i++)
@@ -189,7 +189,7 @@ static inline bool is_vacation(const unsigned day) {
   return false;
 }
 
-/* inefficient,  buf clear. See below for optimized verdsion */
+/* inefficient, but clear. See below for optimized verdsion */
 int main(int argc, char** argv) {
   srand((unsigned)time(0));
   do {
