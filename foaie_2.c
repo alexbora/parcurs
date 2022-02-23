@@ -196,7 +196,7 @@ int main(int argc, char** argv) {
     random_shuffle();
   } while (repeating(tmp));
 
-  FILE* file = fopen("km", "r+");
+  FILE* file = fopen("km2", "r+");
   static unsigned km;
 
   if (argc < 5) {
@@ -278,8 +278,8 @@ int main(int argc, char** argv) {
   // Set the properties in the workbook.
 
   /* lxw_workbook* workbook = workbook_new("foaie.xlsx"); */
-  lxw_workbook* workbook = workbook_new_opt(name, &options);
-  // lxw_workbook* workbook = workbook_new_opt("foaie.xlsx", &options);
+  // lxw_workbook* workbook = workbook_new_opt(name, &options);
+  lxw_workbook* workbook = workbook_new_opt("foaie.xlsx", &options);
   workbook_set_properties(workbook, &properties);
   lxw_worksheet* worksheet = workbook_add_worksheet(workbook, worksheet_name);
   worksheet_activate(worksheet);
@@ -461,7 +461,7 @@ int main(int argc, char** argv) {
   worksheet_merge_range(worksheet, r + 9, 0, r + 8, 3, "……………………………………………………",
                         format_footer);
 
-  file = fopen("km", "w+");
+  file = fopen("km2", "w+");
   fprintf(file, "%d", total);
   fclose(file);
 
