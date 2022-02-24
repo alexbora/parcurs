@@ -178,16 +178,7 @@ static inline bool repeating(
   return false;
 }
 
-static inline bool is_vacation(const unsigned day, const unsigned month) {
-  /* naive version, but whatever... */
-  const unsigned vacation[16] = {
-#include "vacation"
-  };
-  size_t size = NELEMS(vacation);
-  for (size_t i = 1; i <= size; i++)
-    if (month == vacation[0] && day == vacation[i]) return true;
-  return false;
-}
+#define add_vacation(p, i) ((p[i]) = (struct Route){"", 0, ""})
 
 /* inefficient, but clear. See below for optimized verdsion */
 int main(int argc, char** argv) {
@@ -307,14 +298,20 @@ int main(int argc, char** argv) {
   format_set_bold(format_bold);
   format_set_border(format_bold, LXW_BORDER_NONE);
 
-  worksheet_merge_range(worksheet, row, COL1, row, COL2, "VOLVO ROMÂNIA",
-                        format_bold);
+  worksheet_write_string(worksheet, row, COL1, "VOLVO ROMÂNIA", format_bold);
+  worksheet_write_string(worksheet, row + 1, COL1, "", format_bold);
+  worksheet_write_string(worksheet, row + 2, COL1, "FOAIE DE PARCURS",
+                         format_bold);
+  worksheet_write_string(worksheet, row + 3, COL1, "", format_bold);
+  /* worksheet_merge_range(worksheet, row, COL1, row, COL2, "VOLVO ROMÂNIA", */
+  /* format_bold); */
 
-  worksheet_merge_range(worksheet, row + 1, COL1, row + 1, COL2, "",
-                        format_bold);
-  worksheet_merge_range(worksheet, row + 2, COL1, row + 2, COL2,
-                        "FOAIE DE PARCURS", format_bold);
-  worksheet_merge_range(worksheet, row + 3, COL1, row + 3, 1, "", format_bold);
+  /* worksheet_merge_range(worksheet, row + 1, COL1, row + 1, COL2, "", */
+  /* format_bold); */
+  /* worksheet_merge_range(worksheet, row + 2, COL1, row + 2, COL2, */
+  /* "FOAIE DE PARCURS", format_bold); */
+  /* worksheet_merge_range(worksheet, row + 3, COL1, row + 3, 1, "",
+   * format_bold); */
   worksheet_write_string(worksheet, row + 4, COL1, "Luna:", format_bold);
   worksheet_write_string(worksheet, row + 5, COL1, "Anul:", format_bold);
   worksheet_write_string(worksheet, row + 6, COL1,
@@ -346,7 +343,7 @@ int main(int argc, char** argv) {
 
   worksheet_write_number(worksheet, row + 11, COL2, km, format_bold_right);
 
-  worksheet_set_default_row(worksheet, 15, 1);
+  worksheet_set_default_row(worksheet, 20, 1);
 
   lxw_format* format_header = workbook_add_format(workbook);
   format_set_align(format_header, LXW_ALIGN_CENTER);
@@ -355,6 +352,7 @@ int main(int argc, char** argv) {
   format_set_right(format_header, LXW_BORDER_THIN);
   format_set_pattern(format_header, LXW_PATTERN_SOLID);
   format_set_bg_color(format_header, LXW_COLOR_YELLOW_PALE);
+  format_set_align(format_header, LXW_ALIGN_VERTICAL_CENTER);
   /* format_set_shrink(format_header); */
 
   worksheet_write_string(worksheet, row + 12, COL1, "Ziua", format_header);
@@ -436,30 +434,49 @@ int main(int argc, char** argv) {
   format_set_bottom(format_footer, LXW_BORDER_THIN);
 
   const unsigned r = daysinmonth + offset + 3;
-  worksheet_merge_range(worksheet, r + 1, 0, r, 3,
-                        "***NPC = Norma proprie de consum carburanti",
-                        format_footer);
-  worksheet_merge_range(worksheet, r + 2, 0, r + 3, 3,
-                        "*Km. parcurşi între locuinţă şi serviciu sunt "
-                        "consideraţi în interesul serviciului.",
-                        format_footer);
-  worksheet_merge_range(worksheet, r + 3, 0, r + 3, 3,
-                        "Total km Interes Personal		 0",
-                        format_footer);
-  worksheet_merge_range(worksheet, r + 5, 0, r + 5, 3,
-                        "Total km Personal Ratio		 0,0%",
-                        format_footer);
+  worksheet_write_string(worksheet, r + 1, COL1,
+                         "***NPC = Norma proprie de consum carburanti",
+                         format_footer);
+  worksheet_write_string(worksheet, r + 2, COL1,
+                         "*Km. parcurşi între locuinţă şi serviciu sunt "
+                         "consideraţi în interesul serviciului.",
+                         format_footer);
+  worksheet_write_string(worksheet, r + 3, COL1,
+                         "Total km Interes Personal		 0",
+                         format_footer);
+  worksheet_write_string(worksheet, r + 5, COL1,
+                         "Total km Personal Ratio		 0,0%",
+                         format_footer);
+
+  /*   worksheet_merge_range(worksheet, r + 1, 0, r, 3, */
+  /*                         "***NPC = Norma proprie de consum carburanti", */
+  /*                         format_footer); */
+  /*   worksheet_merge_range(worksheet, r + 2, 0, r + 3, 3, */
+  /*                         "*Km. parcurşi între locuinţă şi serviciu sunt " */
+  /*                         "consideraţi în interesul serviciului.", */
+  /*                         format_footer); */
+  /*   worksheet_merge_range(worksheet, r + 3, 0, r + 3, 3, */
+  /*                         "Total km Interes Personal		 0", */
+  /*                         format_footer); */
+  /*   worksheet_merge_range(worksheet, r + 5, 0, r + 5, 3, */
+  /*                         "Total km Personal Ratio		 0,0%", */
+  /*                         format_footer); */
 
   char data_predarii[128];
   sprintf(data_predarii, "Semnătură utilizator:\t\t\t  Data predarii: %s",
           longdate);
 
-  worksheet_merge_range(worksheet, r + 7, 0, r + 6, 3, data_predarii,
-                        format_footer);
+  worksheet_write_string(worksheet, r + 7, COL1, data_predarii, format_footer);
+  /* worksheet_merge_range(worksheet, r + 7, 0, r + 6, 3, data_predarii, */
+  /*                       format_footer); */
 
   format_set_border(format_footer, LXW_BORDER_NONE);
-  worksheet_merge_range(worksheet, r + 9, 0, r + 8, 3, "……………………………………………………",
-                        format_footer);
+
+  worksheet_write_string(worksheet, r + 9, COL1, "……………………………………………………",
+                         format_footer);
+  /* worksheet_merge_range(worksheet, r + 9, 0, r + 8, 3,
+   * "……………………………………………………", */
+  /*                       format_footer); */
 
   file = fopen("km2", "w+");
   fprintf(file, "%d", total);
