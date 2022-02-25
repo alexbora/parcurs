@@ -22,6 +22,26 @@
 #include <unistd.h>
 #include <xlsxwriter.h>
 
+#ifdef LOG
+#define log f
+#else
+#define log stderr
+#endif
+
+#ifdef L
+#undef stderr
+#define stderr f
+#endif
+
+#define Testclaim(assertion, returnval)     \
+  if (!(assertion)) {                       \
+    fprintf(stderr, #assertion,             \
+            __LINE__                        \
+            " failed to be true.  \
+              Returning " #returnval "\n"); \
+    return returnval;                       \
+  }
+
 #define COL1 (0)
 #define COL2 (1)
 #define COL3 (2)
@@ -183,6 +203,8 @@ static inline bool repeating(
 
 /* inefficient, but clear. See below for optimized verdsion */
 int main(int argc, char** argv) {
+  FILE* f = fopen("z", "w++");
+
   srand((unsigned)time(0));
   do {
     random_shuffle();
@@ -485,8 +507,10 @@ int main(int argc, char** argv) {
   file = fopen("km", "w+");
   fprintf(file, "%d", total);
   fclose(file);
+  fclose(f);
 
   workbook_close(workbook);
   printf("%s\n", name);
+
   return 0;
 }
