@@ -181,6 +181,7 @@ static inline bool repeating(
 #define add_vacation(p, i) ((p[i]) = (struct Route){"", 0, ""})
 
 /* inefficient, but clear. See below for optimized verdsion */
+/* for optimized version,  git checkout testing */
 int main(int argc, char** argv) {
   srand((unsigned)time(0));
   do {
