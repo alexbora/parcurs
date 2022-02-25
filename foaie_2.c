@@ -178,7 +178,8 @@ static inline bool repeating(
   return false;
 }
 
-#define add_vacation(p, i) ((p[i]) = (struct Route){"", 0, ""})
+/* patchwork */
+#define add_vacation(p, i) ((p[i]) = (struct Route){"concediu", 0, "concediu"})
 
 /* inefficient, but clear. See below for optimized verdsion */
 int main(int argc, char** argv) {
@@ -187,7 +188,7 @@ int main(int argc, char** argv) {
     random_shuffle();
   } while (repeating(tmp));
 
-  FILE* file = fopen("km2", "r+");
+  FILE* file = fopen("km", "r+");
   static unsigned km;
 
   if (argc < 5) {
@@ -260,7 +261,10 @@ int main(int argc, char** argv) {
       .comments = "",
       .status = "Done",
   };
-  lxw_data_validation* data_validation = calloc(1, sizeof(lxw_data_validation));
+
+  lxw_data_validation* data_validation = &(lxw_data_validation){0};
+  /* lxw_data_validation* data_validation = calloc(1,
+   * sizeof(lxw_data_validation)); */
   data_validation->validate = LXW_VALIDATION_TYPE_ANY;
   data_validation->criteria = LXW_VALIDATION_TYPE_ANY;
   data_validation->ignore_blank = LXW_VALIDATION_OFF;
@@ -269,8 +273,8 @@ int main(int argc, char** argv) {
   // Set the properties in the workbook.
 
   /* lxw_workbook* workbook = workbook_new("foaie.xlsx"); */
-  // lxw_workbook* workbook = workbook_new_opt(name, &options);
-  lxw_workbook* workbook = workbook_new_opt("foaie.xlsx", &options);
+  lxw_workbook* workbook = workbook_new_opt(name, &options);
+  /* lxw_workbook* workbook = workbook_new_opt("foaie.xlsx", &options); */
   workbook_set_properties(workbook, &properties);
   lxw_worksheet* worksheet = workbook_add_worksheet(workbook, worksheet_name);
   worksheet_activate(worksheet);
@@ -478,7 +482,7 @@ int main(int argc, char** argv) {
    * "……………………………………………………", */
   /*                       format_footer); */
 
-  file = fopen("km2", "w+");
+  file = fopen("km", "w+");
   fprintf(file, "%d", total);
   fclose(file);
 
