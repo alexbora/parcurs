@@ -270,8 +270,8 @@ int main(int argc, char** argv) {
   // Set the properties in the workbook.
 
   /* lxw_workbook* workbook = workbook_new("foaie.xlsx"); */
-  // lxw_workbook* workbook = workbook_new_opt(name, &options);
-  lxw_workbook* workbook = workbook_new_opt("foaie.xlsx", &options);
+  lxw_workbook* workbook = workbook_new_opt(name, &options);
+  /* lxw_workbook* workbook = workbook_new_opt("foaie.xlsx", &options); */
   workbook_set_properties(workbook, &properties);
   lxw_worksheet* worksheet = workbook_add_worksheet(workbook, worksheet_name);
   worksheet_activate(worksheet);
