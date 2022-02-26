@@ -178,7 +178,7 @@ static inline bool repeating(
   return false;
 }
 
-#define add_vacation(p, i) ((p[i]) = (struct Route){"", 0, ""})
+/* #define add_vacation(p, i) ((p[i]) = (struct Route){"", 0, ""}) */
 
 /* inefficient, but clear. See below for optimized verdsion */
 /* for optimized version,  git checkout testing */
@@ -188,7 +188,7 @@ int main(int argc, char** argv) {
     random_shuffle();
   } while (repeating(tmp));
 
-  FILE* file = fopen("km2", "r+");
+  FILE* file = fopen("km", "r+");
   static unsigned km;
 
   if (argc < 5) {
@@ -479,7 +479,7 @@ int main(int argc, char** argv) {
    * "……………………………………………………", */
   /*                       format_footer); */
 
-  file = fopen("km2", "w+");
+  file = fopen("km", "w+");
   fprintf(file, "%d", total);
   fclose(file);
 
@@ -738,7 +738,7 @@ int main() {
   int t, play, cycle = 0, found;
 
   /* initialize stuff */
-  srand((unsigned)time(NULL)); /* seed the randomizer */
+  /* srand((unsigned)time(NULL)); /1* seed the randomizer *1/ */
 
   /* Randomly play the tunes and keep track */
   while (cycle < COUNT) {
