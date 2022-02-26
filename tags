@@ -8,19 +8,23 @@ COL1	foaie_2.c	/^#define COL1 /;"	d	file:
 COL2	foaie_2.c	/^#define COL2 /;"	d	file:
 COL3	foaie_2.c	/^#define COL3 /;"	d	file:
 COL4	foaie_2.c	/^#define COL4 /;"	d	file:
-COL5	foaie_2.c	/^#define COL5 /;"	d	file:
 LXW_COLOR_YELLOW_PALE	foaie_2.c	/^#define LXW_COLOR_YELLOW_PALE /;"	d	file:
 NELEMS	foaie_2.c	/^#define NELEMS(/;"	d	file:
+Route	foaie_2.c	/^static struct Route {$/;"	s	file:
 T	foaie_2.c	/^static struct T { unsigned day, month, year; } current, previous;$/;"	s	file:
+add_vacation	foaie_2.c	/^#define add_vacation(/;"	d	file:
 calendar	foaie.py	/^import calendar$/;"	i
 current	foaie_2.c	/^static struct T { unsigned day, month, year; } current, previous;$/;"	v	typeref:struct:T	file:
+date	foaie.py	/^from datetime import date$/;"	i
+datetime	foaie.py	/^from datetime import datetime$/;"	i
 datetime	foaie.py	/^import datetime$/;"	i
 day	foaie_2.c	/^static struct T { unsigned day, month, year; } current, previous;$/;"	m	struct:T	file:
 days_in_month	foaie_2.c	/^static inline unsigned days_in_month(const unsigned month,$/;"	f	file:
 functools	foaie.py	/^import functools$/;"	i
 get_previous	foaie_2.c	/^static inline void get_previous(void) {$/;"	f	file:
+glob	foaie.py	/^import glob,  os$/;"	i
 isholiday	foaie_2.c	/^static inline bool isholiday(const unsigned day, const unsigned month,$/;"	f	file:
-km	foaie_2.c	/^  long km;$/;"	m	struct:__anon1	file:
+km	foaie_2.c	/^  long km;$/;"	m	struct:Route	file:
 locale	foaie.py	/^import locale$/;"	i
 longdate	foaie_2.c	/^static char longdate[128];$/;"	v	file:
 mail	foaie.py	/^def mail():$/;"	f
@@ -28,16 +32,20 @@ main	foaie_2.c	/^int main(int argc, char** argv) {$/;"	f
 month	foaie_2.c	/^static struct T { unsigned day, month, year; } current, previous;$/;"	m	struct:T	file:
 month_name	foaie.py	/^from calendar import month_name$/;"	i
 month_name	foaie_2.c	/^static inline const char* month_name(const unsigned day, const unsigned month,$/;"	f	file:
+name	foaie.py	/^def name():$/;"	f
 name	foaie_2.c	/^static char name[256];$/;"	v	file:
-obs	foaie_2.c	/^  char* obs;$/;"	m	struct:__anon1	file:
-parcurs	foaie_2.c	/^} tmp[128], parcurs[16] = {{"Cluj-Oradea", 321, "Interes Serviciu"},$/;"	v	typeref:struct:__anon1	file:
+obs	foaie_2.c	/^  char* obs;$/;"	m	struct:Route	file:
+os	foaie.py	/^import glob,  os$/;"	i
+parcurs	foaie_2.c	/^} tmp[128], parcurs[16] = {{"Cluj-Oradea", 321, "Interes Serviciu"},$/;"	v	typeref:struct:Route	file:
 previous	foaie_2.c	/^static struct T { unsigned day, month, year; } current, previous;$/;"	v	typeref:struct:T	file:
 random	foaie.py	/^import random$/;"	i
 random_shuffle	foaie_2.c	/^static inline void random_shuffle(void) {$/;"	f	file:
-route	foaie_2.c	/^  char* route;$/;"	m	struct:__anon1	file:
+repeating	foaie_2.c	/^static inline bool repeating($/;"	f	file:
+route	foaie_2.c	/^  char* route;$/;"	m	struct:Route	file:
 row	foaie_2.c	/^static unsigned row;$/;"	v	file:
-shuffle	foaie_2.c	/^static inline void shuffle(int* pattern, const int n) {$/;"	f	file:
+shuffle	foaie_2.c	/^__attribute__((unused)) static inline void shuffle(int* pattern, const int n) {$/;"	f	file:
+strptime	foaie.py	/^from time import strptime$/;"	i
 subprocess	foaie.py	/^import subprocess$/;"	i
-tmp	foaie_2.c	/^} tmp[128], parcurs[16] = {{"Cluj-Oradea", 321, "Interes Serviciu"},$/;"	v	typeref:struct:__anon1	file:
+tmp	foaie_2.c	/^} tmp[128], parcurs[16] = {{"Cluj-Oradea", 321, "Interes Serviciu"},$/;"	v	typeref:struct:Route	file:
 yagmail	foaie.py	/^import yagmail$/;"	i
 year	foaie_2.c	/^static struct T { unsigned day, month, year; } current, previous;$/;"	m	struct:T	file:
