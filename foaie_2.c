@@ -489,6 +489,41 @@ int main(int argc, char** argv) {
 }
 
 /* for optimized version see below or git checkout testing */
+
+#if 0
+ /* -------------------------------------------------------------------------------------------
+   */
+  /* efficency */
+  struct Data {
+    char route[64], km[64], obs[64];
+  } data[32] = {{}};
+
+  const unsigned day = days_in_month(2, 2022);
+  for (unsigned i = 1; i <= day; i++) {
+    if (isholiday(i, 2, 2022)) tmp[i] = (struct Route){"", 0, ""};
+  }
+
+  double pa = 0;
+  /* efficency .... compute pattern array and use it here*/
+  unsigned i = 0;
+  for (i = 1; i <= day; i++) {
+    strcpy(data[i].route, tmp[i].route);
+    strcpy(data[i].obs, tmp[i].obs);
+    if (tmp[i].km == 0) strcpy(data[i].km, "");
+    pa += tmp[i].km;
+  }
+  lxw_workbook* w = workbook_new("test.xlsx");
+  lxw_worksheet* s = workbook_add_worksheet(w, "1");
+
+  for (i = 0; i < day; i++) {
+    printf("%s\n", data[i].km);
+    worksheet_write_string(s, i, 1, data[i].km, NULL);
+    worksheet_write_string(s, i, 0, data[i].route, NULL);
+  }
+  worksheet_write_number(s, i, 1, pa, NULL);
+  workbook_close(w);
+#endif
+
 #if 0
 #include <errno.h>
 #include <stdio.h>
