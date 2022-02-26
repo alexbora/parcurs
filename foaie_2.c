@@ -244,7 +244,7 @@ int main(int argc, char** argv) {
   lxw_workbook_options options = {
       .constant_memory = LXW_FALSE,
       .tmpdir = cwd, /* .tmpdir = getcwd(NULL, 0), */
-      .use_zip64 = LXW_TRUE};
+      .use_zip64 = LXW_FALSE};
   /* char* buf = getcwd(NULL, 0); */
 
   /* free(buf); */
