@@ -7,4 +7,5 @@
 
 
 clean:
-	rm -rf *.dSYM foaie_2 play
+	@rm -rf *.dSYM foaie_2 play
+	@echo "cleaned."
