@@ -38,8 +38,9 @@ def mail():
 
     longdate = datetime.today().strftime('%d.%m.%Y')
     dir = os.getcwd()
-    excel =   dir + "/foaie_parcurs_B-151-VGT_" + month.lower() + "_" + str(previous_year) + "_Alex_Bora" + ".xlsx"
-    # excel = dir + "/foaie_parcurs_B-151-VGT_ianuarie_Alex_Bora_18.02.2022.xlsx"
+    #excel =   dir + "/foaie_parcurs_B-151-VGT_" + month.lower() + "_" + str(previous_year) + "_Alex_Bora" + ".xlsx"
+    #excel = dir + "/foaie_parcurs_B-151-VGT_ianuarie_Alex_Bora_18.02.2022.xlsx"
+    excel = "/mnt/t400.linux/home/alex/Documente/parcurs/foaie_parcurs_B-151-VGT_" + month.lower() + "_2022_Alex_Bora.xlsx"
     exe = dir + "/foaie_2"
 
     #subprocess.call(exe)
