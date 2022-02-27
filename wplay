@@ -11,6 +11,8 @@
 ***********************************************/
 #include <math.h>
 #include <stdio.h>
+#include <time.h>
+
 /**Function that generates a random number.
 Parameters:
 r0: initial (first) seed
@@ -44,8 +46,30 @@ static void randomNos(int r0, int a, int m, int c, int n, int x[n], int min,
   }
 }
 
+static struct Route {
+  char* route;
+  long km;
+  char* obs;
+} tmp[32], parcurs[16] = {{"Cluj-Oradea", 321, "Interes Serviciu"},
+                          {"Cluj-Turda", 121, "Interes Serviciu"},
+                          {"Cluj-Zalau", 156, "Interes Serviciu"},
+                          {"Cluj-Baia-Mare", 356, "Interes Serviciu"},
+                          {"Cluj-Bistrita", 257, "Interes Serviciu"},
+                          {"Cluj-Dej", 101, "Interes Serviciu"},
+                          {"Cluj-Cluj", 47, "Interes Serviciu"},
+                          {"Acasa-Birou", 30, " "},
+                          {"Acasa-Birou", 30, " "},
+                          {"Acasa-Birou", 30, " "},
+                          {"Acasa-Birou", 30, " "},
+                          {"Acasa-Birou", 30, " "},
+                          {"Cluj-Cmp. Turzii", 152, "Interes Serviciu"},
+                          {"Cluj-Apahida", 85, "Interes Serviciu"},
+                          {"Cluj-Bontida", 92, "Interes Serviciu"},
+                          {"Cluj-Satu-Mare", 421, "Interes Serviciu"}};
+
 int main() {
-  int min = 0, max = 0, n = 0, a = 1093, m = 86436, c = 18257, r0 = 43;
+  srand((unsigned)time(0));
+  int min, max, n, a = 1093, m = 86436, c = 18257, r0 = rand() % 43;
   printf("Enter the lower limit:\n");
   scanf("%d", &min);
   printf("Enter the higher limit:\n");
@@ -54,11 +78,21 @@ int main() {
   scanf("%d", &n);
 
   int random[n];
+
   randomNos(r0, a, m, c, n, random, min, max);
 
   printf("The random numbers between %d and %d are:\n", min, max);
+
   for (int i = 0; i < n; i++) {
-    printf("%d\n", random[i]);
+    /* printf("%d\n", random[i]); */
+    printf("%s\n", parcurs[random[i]].route);
+    tmp[i] = parcurs[random[i]];
   }
+
+  int km = 0;
+  for (int i = 0; i < 20; i++) {
+    km += tmp[i].km;
+  }
+  printf("%d\n", km);
   return 0;
 }
