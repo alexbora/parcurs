@@ -75,6 +75,7 @@ static inline bool isholiday(const unsigned day, const unsigned month,
                   .tm_mday = (const int)day,
                   .tm_isdst = -1};
   mktime(&tm);
+  if (tm.tm_year != 2022) return false;
   static const struct {
     unsigned day, mon;
   } hol[] = {{1, 1},   {2, 1},  {24, 1},  {22, 4}, {24, 4}, {25, 4},
