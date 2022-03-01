@@ -110,6 +110,17 @@ static inline bool isholiday(const unsigned day, const unsigned month,
   return false;
 }
 
+static inline bool isvacation(const unsigned day, const unsigned month) {
+  struct {
+    unsigned day, mon;
+  } vacation[] = {{day, month}};
+
+  size_t size = (sizeof(vacation) / sizeof(vacation[0]));
+  for (size_t i = 0; i < size; i++)
+    if (day == vacation[i].day && month == vacation[i].mon) return true;
+  return false;
+}
+
 static inline const char* month_name(const unsigned day, const unsigned month,
                                      const unsigned year) {
   struct tm tm = {.tm_year = (int)year - 1900,
