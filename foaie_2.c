@@ -95,19 +95,55 @@ static inline bool isholiday(const unsigned day, const unsigned month,
                   .tm_mday = (const int)day,
                   .tm_isdst = -1};
   mktime(&tm);
-  if (tm.tm_year != 2022) return true;
+  /* if (tm.tm_year != 2022) return true; */
+
   static const struct {
     unsigned day, mon;
-  } hol[] = {{1, 1},   {2, 1},  {24, 1},  {22, 4}, {24, 4}, {25, 4},
-             {1, 5},   {1, 5},  {1, 6},   {12, 6}, {13, 6}, {15, 8},
-             {30, 11}, {1, 12}, {25, 12}, {26, 12}};
+  } hol[2024][16] = {[2022] = {{1, 1},
+                               {2, 1},
+                               {24, 1},
+                               {22, 4},
+                               {24, 4},
+                               {25, 4},
+                               {1, 5},
+                               {1, 5},
+                               {1, 6},
+                               {12, 6},
+                               {13, 6},
+                               {15, 8},
+                               {30, 11},
+                               {1, 12},
+                               {25, 12},
+                               {26, 12}},
+                     [2023] = {{1, 1},
+                               {24, 1},
+                               {14, 4},
+                               {17, 4},
+                               {1, 5},
+                               {1, 5},
+                               {5, 1},
+                               {15, 8},
+                               {30, 11},
+                               {1, 12},
+                               {25, 12},
+                               {26, 12}}};
 
   if (tm.tm_wday == 0 || tm.tm_wday == 6) return true;
 
   size_t size = (sizeof(hol) / sizeof(hol[0]));
   for (size_t i = 0; i < size; i++)
-    if (day == hol[i].day && month == hol[i].mon) return true;
+    if (day == hol[tm.tm_year][i].day && month == hol[tm.tm_year][i].mon)
+      return true;
   return false;
+
+  struct Holiday {
+    struct Year {
+      int day, month;
+    } year;
+  } holiday[32];
+
+  holiday[22] = (struct Holiday){1, 1};
+  holiday[tm.tm_year - 2000] = (struct Holiday){1, 1};
 }
 
 static inline bool isvacation(const unsigned day, const unsigned month) {
