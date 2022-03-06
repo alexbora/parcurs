@@ -145,14 +145,18 @@ int main(int argc, char **argv) {
   char tmp2[2];
   char *in = get_json2();
 
-  char test[240];
+  char test[2] = {};
   int j = 0;
   for (char *p = in; *p; p++, j += 2) {
     p = strstr(p, "date");
-    memcpy(test + j, p + 7, 2);
-    /* printf("%s\n", p + 7); */
-    printf("%s\n", test);
+    /* memset(test, 0, 2); */
+    memcpy(test, p + 7, 2);
+    printf("%.2s\t", p + 7);
+    printf("%.2s\n", p + 10);
+    /* sprintf(tmp, "%.2s", p + 7); */
   }
+
+  return 0;
   size_t len = strlen(in);
   char *p = in;
   for (unsigned i = 0; i < len; i++) {
