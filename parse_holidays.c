@@ -5,6 +5,7 @@
  */
 
 #include "json-c/json_object.h"
+#include "json-c/json_tokener.h"
 #include "json-c/json_types.h"
 #include <curl/curl.h>
 #include <json-c/json.h>
@@ -23,7 +24,17 @@ static inline int get_year() {
   return tm->tm_year + 1900;
 }
 
-int parse_json(const char *in) {
+int parse_json(const char *in[]) {
+  json_object *row[] = {};
+  for (unsigned i = 0; i < sizeof(in) / sizeof(in[0]); ++i) {
+    row[i] = json_tokener_parse(in[i]);
+    json_object *obj_name = json_object_object_get(row[i], "name");
+    const char *name = json_object_get_string(obj_name);
+    printf("Name: %s\n", name);
+  }
+
+  return 0;
+
   /* char buf[] = */
   /* "{ \"name\": \"xxxxx\", \"Id\": 101, \"Voting_eligible\": true }"; */
   const char *buffer = in;
@@ -104,13 +115,20 @@ char *get_json2() {
   int received = recv(sockfd, buf, 2056, 0);
   close(sockfd);
   /* printf("%s", buf); */
-
+  return buf;
+  for (unsigned i = 0; i < received * sizeof(char); i++) {
+    /* if (buf[i] == '[') */
+    /* buf[i] = '{'; */
+    if (buf[i] == ']')
+      buf[i] = '\0';
+  }
+  /* return buf; */
   /* BUN !!!!*/
   /* char* p = strstr(buf, "name"); */
   /* return p - 3; */
   for (unsigned i = 0; i < received * sizeof(char); i++) {
     if (buf[i] == '[')
-      return &buf[i];
+      return &buf[i + 1];
     /* return &buf[i + 1]; */
   }
   return NULL;
@@ -121,7 +139,39 @@ int main(int argc, char **argv) {
   /* puts(result); */
   /* parse_json(result); */
   /* puts(get_json()); */
-  puts(get_json2());
-  parse_json(get_json2());
+  /* puts(get_json2()); */
+
+  char tmp[2];
+  char tmp2[2];
+  char *in = get_json2();
+
+  char test[240];
+  int j = 0;
+  for (char *p = in; *p; p++, j += 2) {
+    p = strstr(p, "date");
+    memcpy(test + j, p + 7, 2);
+    /* printf("%s\n", p + 7); */
+    printf("%s\n", test);
+  }
+  size_t len = strlen(in);
+  char *p = in;
+  for (unsigned i = 0; i < len; i++) {
+    p = strstr(p, "date");
+    memcpy(tmp, p + 7, 2);
+    memcpy(tmp2, p + 10, 2);
+    printf("%s\t-", tmp);
+    printf("%s\n", tmp2);
+    p++;
+  }
+
+  for (char *p = in; *p; p++) {
+    p = strstr(p, in);
+    printf("%s\n", p + 7);
+  }
+
+  /* printf("%s\n", tmp2); */
+  /* parse_json(in); */
+  /* parse_json(get_json2()); */
+
   return 0;
 }
