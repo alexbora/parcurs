@@ -4,9 +4,6 @@
  * @created     : Luni Feb 28, 2022 16:20:01 EET
  */
 
-#include "json-c/json_object.h"
-#include "json-c/json_tokener.h"
-#include "json-c/json_types.h"
 #include <curl/curl.h>
 #include <json-c/json.h>
 #include <netdb.h>
@@ -19,17 +16,21 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "json-c/json_object.h"
+#include "json-c/json_tokener.h"
+#include "json-c/json_types.h"
+
 static inline int get_year() {
-  struct tm *tm = localtime(&(time_t){time(0)});
+  struct tm* tm = localtime(&(time_t){time(0)});
   return tm->tm_year + 1900;
 }
 
-int parse_json(const char *in[]) {
-  json_object *row[] = {};
+int parse_json(const char* in[]) {
+  json_object* row[] = {};
   for (unsigned i = 0; i < sizeof(in) / sizeof(in[0]); ++i) {
     row[i] = json_tokener_parse(in[i]);
-    json_object *obj_name = json_object_object_get(row[i], "name");
-    const char *name = json_object_get_string(obj_name);
+    json_object* obj_name = json_object_object_get(row[i], "name");
+    const char* name = json_object_get_string(obj_name);
     printf("Name: %s\n", name);
   }
 
@@ -37,7 +38,7 @@ int parse_json(const char *in[]) {
 
   /* char buf[] = */
   /* "{ \"name\": \"xxxxx\", \"Id\": 101, \"Voting_eligible\": true }"; */
-  const char *buffer = in;
+  const char* buffer = in;
   json_object *tmp, *obj_name, *obj_date,
       *root_obj = json_tokener_parse(buffer);
 #if 0
@@ -71,44 +72,45 @@ int parse_json(const char *in[]) {
   /*   /1* printf("\nFOO: %s\n", foo_val); *1/ */
   /*   puts("\nnot found\n"); */
 #endif
-  json_object *new = json_object_new_object(),
-              *jarray = json_object_new_array(),
-              *jstring1 = json_object_new_string(in);
+  json_object* new = json_object_new_object(),
+               *jarray = json_object_new_array(),
+               *jstring1 = json_object_new_string(in);
 
   json_object_array_add(jarray, jstring1);
   json_object_object_add(new, "Year", jarray);
   /* printf("The json object created: %s\n", json_object_to_json_string(new));
    */
 
-  json_object *name = json_object_object_get(new, "Year");
+  json_object* name = json_object_object_get(new, "Year");
   printf("%s\n", json_object_get_string(name));
   return 0;
 }
 
-char *get_json() {
-  char *response = malloc(4096);
-  char *header = "GET /index.html HTTP/1.1\r\nHost: "
-                 "www.example.com\r\n\r\n";
+char* get_json() {
+  char* response = malloc(4096);
+  char* header =
+      "GET /index.html HTTP/1.1\r\nHost: "
+      "www.example.com\r\n\r\n";
   int sockfd = socket(AF_INET, SOCK_STREAM, 0);
-  struct hostent *server = gethostbyname("www.example.com");
+  struct hostent* server = gethostbyname("www.example.com");
   struct sockaddr_in serv_addr = {.sin_family = AF_INET, .sin_port = htons(80)};
   memcpy(&serv_addr.sin_addr.s_addr, server->h_addr, server->h_length);
-  int x = connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
+  int x = connect(sockfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
   write(sockfd, header, strlen(header));
   read(sockfd, response, 4096);
   close(sockfd);
   return response;
 }
 
-char *get_json2() {
+char* get_json2() {
   struct addrinfo hints = {.ai_family = AF_UNSPEC, .ai_socktype = SOCK_STREAM},
                   *res;
-  char *buf = malloc(2056);
+  char* buf = malloc(2056);
   int x = getaddrinfo("us-central1-romanian-bank-holidays.cloudfunctions.net",
                       "80", &hints, &res);
   int sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
   x = connect(sockfd, res->ai_addr, res->ai_addrlen);
-  char *header =
+  char* header =
       "GET /romanian_bank_holidays/?year=2022 HTTP/1.1\r\nHost: "
       "us-central1-romanian-bank-holidays.cloudfunctions.net\r\n\r\n";
   send(sockfd, header, strlen(header), 0);
@@ -119,22 +121,20 @@ char *get_json2() {
   for (unsigned i = 0; i < received * sizeof(char); i++) {
     /* if (buf[i] == '[') */
     /* buf[i] = '{'; */
-    if (buf[i] == ']')
-      buf[i] = '\0';
+    if (buf[i] == ']') buf[i] = '\0';
   }
   /* return buf; */
   /* BUN !!!!*/
   /* char* p = strstr(buf, "name"); */
   /* return p - 3; */
   for (unsigned i = 0; i < received * sizeof(char); i++) {
-    if (buf[i] == '[')
-      return &buf[i + 1];
+    if (buf[i] == '[') return &buf[i + 1];
     /* return &buf[i + 1]; */
   }
   return NULL;
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
   puts("----------\n");
   /* puts(result); */
   /* parse_json(result); */
@@ -143,36 +143,49 @@ int main(int argc, char **argv) {
 
   char tmp[2];
   char tmp2[2];
-  char *in = get_json2();
+  char* in = get_json2();
+#if 0
+  char* p = in;
+  for (unsigned i = 0; i < strlen(in); i++) {
+    p = strstr(in, "date");
+    printf("%.2s\n", p + 7);
+    p++;
+  }
 
+  return 0;
   char test[2] = {};
   int j = 0;
-  for (char *p = in; *p; p++, j += 2) {
+  for (char* p = in; *p; p++, j += 2) {
     p = strstr(p, "date");
     /* memset(test, 0, 2); */
-    memcpy(test, p + 7, 2);
-    printf("%.2s\t", p + 7);
-    printf("%.2s\n", p + 10);
+    /* memcpy(test, p + 7, 2); */
+    printf("%.2s\n", p);
+    /* printf("%.2s\t", p + 7); */
+    /* printf("%.2s\n", p + 10); */
     /* sprintf(tmp, "%.2s", p + 7); */
   }
 
   return 0;
+#endif
   size_t len = strlen(in);
-  char *p = in;
+  char* p = in;
   for (unsigned i = 0; i < len; i++) {
-    p = strstr(p, "date");
-    memcpy(tmp, p + 7, 2);
-    memcpy(tmp2, p + 10, 2);
-    printf("%s\t-", tmp);
-    printf("%s\n", tmp2);
-    p++;
+    p = strstr(in, "date");
+    /* memcpy(tmp, p + 7, 2); */
+    /* memcpy(tmp2, p + 10, 2); */
+    /* printf("%s\t-", tmp); */
+    /* printf("%s\n", tmp2); */
+    /* p++; */
   }
 
-  for (char *p = in; *p; p++) {
-    p = strstr(p, in);
-    printf("%s\n", p + 7);
+  for (char* ptr = in; *ptr; ptr++) {
+    ptr = strstr(ptr, "date");
+    if (ptr == NULL) goto label;
+    printf("%.2s\n", ptr + 7);
+    memcpy(tmp, ptr + 7, 2);
   }
-
+label:
+  printf("tmp: %s\n", tmp);
   /* printf("%s\n", tmp2); */
   /* parse_json(in); */
   /* parse_json(get_json2()); */

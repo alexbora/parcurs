@@ -8,5 +8,5 @@ all:
 	@gcc foaie_2.c -o foaie_2 -lxlsxwriter
 	@echo "compiling..."
 clean:
-	@rm -rf *.dSYM foaie_2 play
+	@rm -rf *.dSYM foaie_2 parse_holidays play
 	@echo "cleaned."
