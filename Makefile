@@ -5,7 +5,7 @@
 ######################################################################
 
 all: 
-	@gcc foaie_2.c -o foaie_2 -lxlsxwriter
+	@gcc-11 foaie_2.c -o foaie_2 -lxlsxwriter
 	@echo "compiling..."
 clean:
 	@rm -rf *.dSYM foaie_2 play
