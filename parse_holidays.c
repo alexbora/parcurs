@@ -121,7 +121,7 @@ int main(int argc, char **argv) {
   /* puts(result); */
   /* parse_json(result); */
   /* puts(get_json()); */
-  /* puts(get_json2()); */
+  puts(get_json2());
   parse_json(get_json2());
   return 0;
 }
