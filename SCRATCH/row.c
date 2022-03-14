@@ -18,11 +18,11 @@ void func2(int *arr, int i, int j) {
 int main() {
   int arr[13][4] = {{}};
 
-  func2(&arr[0][0], 0, 0);
-  func2(&arr[0][0], 0, 1);
-  func2(&arr[0][0], 0, 2);
-  func2(&arr[0][0], 1, 3);
-  func2(&arr[0][0], 0, 5);
+  //  func2(&arr[0][0], 0, 0);
+  // func2(&arr[0][0], 0, 1);
+  // unc2(&arr[0][0], 0, 2);
+  // func2(&arr[0][0], 1, 3);
+  func2(&arr[0][0], 3, 1);
   func1(&arr[0][0], 12, 4);
 
   return 0;
