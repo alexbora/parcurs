@@ -15,6 +15,15 @@ void func2(int *arr, int i, int j) {
   *(arr + (i * cols) + j) = 7;
 }
 
+char *buffer = NULL;
+static char *gethelp(char *params) {
+  *buffer = '\0';
+  char *p = buffer;
+  for (int i = 0; i < 10; i++) p += sprintf(p, "%s\n", "cmds[i].name");
+  sprintf(p, "|");
+  return buffer;
+}
+
 int main() {
   int arr[13][4] = {{}};
 
@@ -24,6 +33,9 @@ int main() {
   // func2(&arr[0][0], 1, 3);
   func2(&arr[0][0], 3, 1);
   func1(&arr[0][0], 12, 4);
+
+  buffer = malloc(1024);
+  printf("%s\n", gethelp("test"));
 
   return 0;
 }
