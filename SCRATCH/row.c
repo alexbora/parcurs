@@ -1,41 +1,48 @@
+#include <assert.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/errno.h>
+#include <sys/mman.h>
+#include <unistd.h>
 
-void func1(int* arr, int rows, int cols) {
+static inline int func1(const int* arr, const int rows, const int cols) {
+  int err = 1;
   for (int i = 0; i < rows; ++i) {
     for (int j = 0; j < cols; ++j) {
       printf("%d ", *(arr + (i * cols) + j));
     }
     puts("\n");
   }
+  return err;
 }
 
-void func2(int* arr, int i, int j) {
-  int cols = 4;
-  /* *(arr + (i * cols) + j) = 1; */
-  if (*(arr + (i * cols) + j) == 1) {
-    *(arr + (i * cols) + j + 1) = 1;
-    return;
+static inline void func2(int* arr, int i, const int val) {
+  int cols = 4, j = 0;
+  while (*(arr + (i * cols) + j)) {
+    j++;
   }
-  *(arr + (i * cols) + j) = 1;
+  if (j > 3) j = 0;
+  *(arr + (i * cols) + j) = val;
 }
 
-int main() {
-  int arr[13][4] = {{}};
+int main(void) {
+  static int arr[13][4] = {{0}};
 
-  //  func2(&arr[0][0], 0, 0);
-  // func2(&arr[0][0], 0, 1);
-  // func2(&arr[0][0], 0, 2);
-
-  func2(&arr[0][0], 0, 0);
-  func2(&arr[0][0], 0, 0);
   func2(&arr[0][0], 0, 1);
   func2(&arr[0][0], 0, 1);
 
-  /* func2(&arr[0][0], 0, 1); */
-
+  char* in = "date7mon8";
+  for (unsigned i = 0; i < strlen(in); i++) {
+    func2(&arr[0][0], atoi(in + 4), 9);
+    func2(&arr[atoi(in + 4)][0], 0, 8);
+  }
   func1(&arr[0][0], 12, 4);
+
+  void* p = mmap(NULL, 512 * 1024, PROT_READ | PROT_WRITE,
+                 MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+  if (p == MAP_FAILED) return 0;
 
   return 0;
 }
