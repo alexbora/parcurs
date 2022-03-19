@@ -27,22 +27,23 @@ static inline void func2(int* arr, int i, const int val) {
   *(arr + (i * cols) + j) = val;
 }
 
+static char* verify(void) {
+  static char buf[64];
+  memcpy(buf, "te", 2);
+  return "buf";
+}
+
 int main(void) {
   static int arr[13][4] = {{0}};
 
   func2(&arr[0][0], 0, 1);
   func2(&arr[0][0], 0, 1);
 
-  char* in = "date7mon8";
-  for (unsigned i = 0; i < strlen(in); i++) {
-    func2(&arr[0][0], atoi(in + 4), 9);
-    func2(&arr[atoi(in + 4)][0], 0, 8);
-  }
-  func1(&arr[0][0], 12, 4);
+  char* in = "date7mon8date6mon6";
+  func2(&arr[0][0], atoi(in + 4), 9);
+  func2(&arr[atoi(in + 8)][0], 0, 8);
 
-  void* p = mmap(NULL, 512 * 1024, PROT_READ | PROT_WRITE,
-                 MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
-  if (p == MAP_FAILED) return 0;
+  func1(&arr[0][0], 12, 4);
 
   return 0;
 }

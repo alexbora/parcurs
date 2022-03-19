@@ -176,6 +176,14 @@ void display2DArrayUnknownSize(int* arr, int rows, int cols) {
     printf("\n");
   }
 }
+#include <stdbool.h>
+bool vacation(int* arr, int rows, int cols) {
+  if (rows != *(arr + 4)) return false;
+  for (int j = 0; j < 4; j++) {
+    if (cols == *(arr + 4 + j)) return true;
+  }
+  return false;
+}
 
 int main() {
 #ifdef RELEASE
@@ -216,7 +224,7 @@ int main() {
   fclose(log_file);
 #endif
   /* return 0; */
-#define MONTH 16
+#define MONTH 13
 #define DAY 4
 
   int row[MONTH][DAY] = {{}};
@@ -245,8 +253,10 @@ int main() {
     int m = atoi(x + 10);
     int n = atoi(x + 7);
     /* printf("n: %d\n", n); */
-    row[m][k++] = n;
-    k = (k > 3) ? 0 : k;
+    while (row[m][k]) k++;
+    row[m][k] = n;
+    k = 0;
+    /* k = (k > 3) ? 0 : k; */
   } while (x++);
 
   /* i = j = 0; */
@@ -268,5 +278,7 @@ int main() {
   /* } */
 
   display2DArrayUnknownSize(&row[0][0], MONTH, DAY);
+  printf("%d\n", vacation(&row[0][0], 1, 1));
+
   return 0;
 }
