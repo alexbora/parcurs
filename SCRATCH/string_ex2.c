@@ -17,21 +17,22 @@
 #include <time.h>
 #include <unistd.h>
 
-__attribute__((malloc)) static const char* fetch(ssize_t* const len,
-                                                 const int year) {
+__pure __const __attribute__((malloc)) static char* fetch(
+    ssize_t* restrict const len, const int year) {
   struct addrinfo hints = {.ai_family = AF_INET,
                            .ai_socktype = SOCK_STREAM,
                            .ai_protocol = IPPROTO_TCP},
                   *res = NULL;
   int err = 0, line = 0;
   char* buf = malloc(1024);
-  if (!buf) {
+  if (buf == 0) {
     err = *buf;
     line = __LINE__;
+    /* return buf; */
     goto exit;
   }
 
-  const char* const host =
+  const char* restrict const host =
       "us-central1-romanian-bank-holidays.cloudfunctions.net";
   int x = getaddrinfo(host, "80", &hints, &res);
   if (0 != x) {
@@ -55,14 +56,15 @@ __attribute__((malloc)) static const char* fetch(ssize_t* const len,
   }
 
   char header1[256] = {'\0'};
-  int len_header =
+  const int len_header =
       sprintf(header1,
               "GET /romanian_bank_holidays/?year=%d HTTP/1.1\r\nHost: "
               "%s\r\n\r\n",
               year, host);
 
   /* char foo[1024] = {'\0'}; */
-  /* struct iovec iov[2] = {{&header1[0], strlen(header1)}, {&foo[0], 1024}}; */
+  /* struct iovec iov[2] = {{&header1[0], strlen(header1)}, {&foo[0], 1024}};
+   */
   /* ssize_t sentx = writev(sockfd, &iov[0], 1); */
   /* if (sentx == -1) { */
   /*   err = sentx; */
@@ -71,7 +73,7 @@ __attribute__((malloc)) static const char* fetch(ssize_t* const len,
   /* int receivedx = readv(sockfd, &iov[1], 1); */
   /* memcpy(buf, foo, 1024); */
 
-  ssize_t sent = send(sockfd, header1, len_header, 0);
+  ssize_t sent = send(sockfd, header1, (size_t)len_header, 0);
   if (sent <= 0) {
     err = (int)sent;
     line = __LINE__;
@@ -81,7 +83,7 @@ __attribute__((malloc)) static const char* fetch(ssize_t* const len,
   /* write(sockfd, "GET /\r\n", strlen("GET /\r\n"));  // write(fd, char[]*,
    * len); */
 
-  ssize_t received = recv(sockfd, buf, 2056, 0);
+  ssize_t received = recv(sockfd, buf, 4 * 1024, 0);
   if (received < 1) {
     err = (int)received;
     line = __LINE__;
@@ -110,11 +112,17 @@ __attribute__((malloc)) static const char* fetch(ssize_t* const len,
   shutdown(sockfd, SHUT_RDWR);
   close(sockfd);
 
+  /* char* p; */
+  /* while (received--) { */
+  /*   if (buf[received] == '[') p = &buf[received]; */
+  /* } */
+  /* puts(p); */
+
   for (ssize_t i = 0; i < received; i++) {
     if (buf[i] == '[') {
       *len = received - i;
       /* *len = (ssize_t)strlen(&buf[i]); */
-      return &buf[i];
+      return &buf[i];  // return buf + i;
     }
     /* *len = (ssize_t)strlen(&buf[i]); */
   }
@@ -123,7 +131,7 @@ exit:
   return NULL;
 }
 
-__attribute__((unused)) static void parse_buf_bun(char* in, int len) {
+__unused static void parse_buf_bun(char* in, int len) {
   char* p = in;
   while (len--) {
     p = strstr(p, "date");
@@ -137,11 +145,11 @@ __attribute__((unused)) static void parse_buf_bun(char* in, int len) {
 struct H2 {
   int day, month;
 };
-static struct H2 h2[32];
+/* static struct H2 h2[32]; */
 
 static char **tmp1, **tmp2;
-int* y;
-struct H2* parse_buf(const char* in, ssize_t len) {
+static int* y;
+static struct H2* parse_buf(const char in[static restrict 1], ssize_t len) {
   struct H2* out = calloc(32, sizeof(*out));
   const char* p = in;
   int i = 0;
@@ -164,30 +172,29 @@ struct H2* parse_buf(const char* in, ssize_t len) {
     i++;
   }
   *y = i;
-  free((char*)p);
   return out;
 }
 
-void display2DArrayUnknownSize(int* arr, int rows, int cols) {
+__pure static void display2DArrayUnknownSize(int* arr, int rows, int cols) {
   for (int i = 0; i < rows; i++) {
     for (int j = 0; j < cols; j++) {
-      printf("%d ", *(arr + (i * cols) + j));
+      fprintf(stderr, "%d ", *(arr + (i * cols) + j));
     }
-    printf("\n");
+    fprintf(stderr, "\n");
   }
 }
 #include <stdbool.h>
-bool vacation(int* arr, int rows, int cols) {
-  if (rows != *(arr + 4)) return false;
-  for (int j = 0; j < 4; j++) {
-    if (cols == *(arr + 4 + j)) return true;
+__pure static inline bool vacation(int* arr, int rows, int cols) {
+  if (rows != (*(arr + 4) * rows)) return false;
+  for (unsigned i = 0; i < 4; i++) {
+    if (*(arr + (4 * rows) + i) == cols) return true;
   }
   return false;
 }
 
 int main() {
-#ifdef RELEASE
-  FILE* log_file = fopen("log", "w++");
+#ifdef LOG
+  FILE* log_file = fopen("log_file", "w++");
 #undef stderr
 #define stderr log_file
 #endif
@@ -209,7 +216,7 @@ int main() {
   /* parse_buf_bun(in, strlen(in)); */
   y = malloc(sizeof(int));
   struct H2* res = parse_buf(in, received);
-  for (unsigned i = 0; i < *y; i++) {
+  for (int i = 0; i < *y; i++) {
     /* printf("%s\t", h[i].day); */
     /* printf("%s\n", h[i].month); */
     /* printf("%s\t", tmp1[i]); */
@@ -217,18 +224,19 @@ int main() {
     fprintf(stderr, "%d\t%d\n", (res + i)->day, (res + i)->month);
     /* printf("%d.%d\n", h2[i].day, h2[i].month); */
   }
+  free(res);
   /* fprintf(stderr, "h2: %d\n", h_ptr->day); */
   /* fprintf(stderr, "h2: %d\n", h3[10].day); */
 
-#ifdef RELEASE
+#ifdef LOG
   fclose(log_file);
 #endif
   /* return 0; */
 #define MONTH 13
 #define DAY 4
 
-  int row[MONTH][DAY] = {{}};
-  int i, j;
+  int row[MONTH][DAY] = {{0}};
+  /* int i, j; */
   /* memset(row, 0, sizeof(row)); */
   /* for (i = 0; i < 12; i++) { */
   /*   for (j = 0; j < 4; j++) { */
@@ -245,7 +253,7 @@ int main() {
     }
   }
 #endif
-  char* x = (char*)in;
+  const char* x = (const char*)in;
   int k = 0;
   do {
     x = strstr(x, "date");
@@ -258,7 +266,7 @@ int main() {
     k = 0;
     /* k = (k > 3) ? 0 : k; */
   } while (x++);
-
+  /* free((void*)x); */
   /* i = j = 0; */
   /* char* p = (char*)in; */
   /* while (p++) { */
@@ -278,7 +286,7 @@ int main() {
   /* } */
 
   display2DArrayUnknownSize(&row[0][0], MONTH, DAY);
-  printf("%d\n", vacation(&row[0][0], 1, 1));
+  fprintf(stderr, "%c\n", "nd"[vacation(&row[0][0], 12, 26)]);
 
   return 0;
 }

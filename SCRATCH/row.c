@@ -27,13 +27,15 @@ static inline void func2(int* arr, int i, const int val) {
   *(arr + (i * cols) + j) = val;
 }
 
-static char* verify(void) {
+static char* verify(char buffer[restrict static 17]) {
   static char buf[64];
   memcpy(buf, "te", 2);
   return "buf";
 }
 
 int main(void) {
+  char b[16];
+  verify(b);
   static int arr[13][4] = {{0}};
 
   func2(&arr[0][0], 0, 1);
