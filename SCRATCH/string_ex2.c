@@ -287,6 +287,5 @@ int main() {
 
   display2DArrayUnknownSize(&row[0][0], MONTH, DAY);
   fprintf(stderr, "%c\n", "nd"[vacation(&row[0][0], 12, 26)]);
-
   return 0;
 }

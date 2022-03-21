@@ -1,10 +1,12 @@
 #include <assert.h>
 #include <errno.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/errno.h>
 #include <sys/mman.h>
+#include <sys/wait.h>
 #include <unistd.h>
 
 static inline int func1(const int* arr, const int rows, const int cols) {
@@ -27,15 +29,27 @@ static inline void func2(int* arr, int i, const int val) {
   *(arr + (i * cols) + j) = val;
 }
 
-static char* verify(char buffer[restrict static 17]) {
+__attribute__((unused)) static char* verify(int buffer[restrict static 17]) {
+  (void)buffer;
   static char buf[64];
   memcpy(buf, "te", 2);
   return "buf";
 }
 
+static inline bool leapyear(unsigned year) {
+  return !(year % 4) && ((year % 100) || !(year % 400));
+}
+
+typedef struct rat rat;
+struct rat {
+  int x;
+};
 int main(void) {
-  char b[16];
-  verify(b);
+  __attribute__((unused)) rat r = {0};
+
+  /* char b[16]; */
+  printf("is: %d\n", leapyear(2022));
+
   static int arr[13][4] = {{0}};
 
   func2(&arr[0][0], 0, 1);
