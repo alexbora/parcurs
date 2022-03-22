@@ -3,28 +3,47 @@
  * @file        : string
  * @created     : Luni Mar 07, 2022 15:11:29 EET
  */
-
+#include <arpa/inet.h>
 #include <assert.h>
 #include <netdb.h>
 #include <netinet/in.h> /* struct sockaddr_in, struct sockaddr */
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/_types/_size_t.h>
 #include <sys/_types/_ssize_t.h>
+#include <sys/ioctl.h>  /* ioctl()  */
 #include <sys/socket.h> /* socket, connect */
 #include <sys/uio.h>
 #include <time.h>
 #include <unistd.h>
 
+#ifdef LOG
+static FILE* log_file;
+#undef stderr
+#define stderr log_file
+#endif
+
+static __pure bool internet(void) {
+  int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+  struct sockaddr_in addr = {
+      AF_INET, .sin_port = htons(80), {inet_addr("142.250.185.206")}};
+  if (connect(sockfd, (struct sockaddr*)&addr, sizeof(addr)) != 0) return false;
+  close(sockfd);
+  return true;
+}
+
 __pure __const __attribute__((malloc)) static char* fetch(
     ssize_t* restrict const len, const int year) {
   struct addrinfo hints = {.ai_family = AF_INET,
                            .ai_socktype = SOCK_STREAM,
-                           .ai_protocol = IPPROTO_TCP},
+                           .ai_protocol = IPPROTO_TCP,
+                           .ai_flags = AI_PASSIVE},
                   *res = NULL;
   int err = 0, line = 0;
-  char* buf = malloc(1024);
+  char* const restrict buf = malloc(1024);
   if (buf == 0) {
     err = *buf;
     line = __LINE__;
@@ -35,12 +54,24 @@ __pure __const __attribute__((malloc)) static char* fetch(
   const char* restrict const host =
       "us-central1-romanian-bank-holidays.cloudfunctions.net";
   int x = getaddrinfo(host, "80", &hints, &res);
-  if (0 != x) {
+  if (x == EAI_SYSTEM) {
+    fprintf(stderr, "looking up %s => %s\n", host, strerror(x));
+    return NULL;
+  } else if (0 != x) {
     line = __LINE__;
     err = x;
     goto exit;
   }
 
+  /* for (struct addrinfo* rp = res; rp != NULL; rp = rp->ai_next) { */
+  /*   int sfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol); */
+  /*   if (sfd == -1) continue; */
+
+  /*   if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1) break; /1* Success
+   * *1/ */
+
+  /*   close(sfd); */
+  /* } */
   int sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
   if (sockfd < 0) {
     err = sockfd;
@@ -49,11 +80,12 @@ __pure __const __attribute__((malloc)) static char* fetch(
   }
 
   x = connect(sockfd, res->ai_addr, res->ai_addrlen);
-  if (x != 0) {
+  if (x) {
     err = x;
     line = __LINE__;
     goto exit;
   }
+  puts("\x1b[32mConnected.\x1b[0m\n");
 
   char header1[256] = {'\0'};
   const int len_header =
@@ -109,6 +141,8 @@ __pure __const __attribute__((malloc)) static char* fetch(
   /*   received += bytes; */
   /* } while (received < total); */
   /* strcpy(buf, response); */
+  freeaddrinfo(res);
+  res = NULL;
   shutdown(sockfd, SHUT_RDWR);
   close(sockfd);
 
@@ -117,8 +151,33 @@ __pure __const __attribute__((malloc)) static char* fetch(
   /*   if (buf[received] == '[') p = &buf[received]; */
   /* } */
   /* puts(p); */
+  /* printf("received: %ld\n", received); */
+  /* printf("strlen: %ld\n", strlen(buf)); */
 
-  for (ssize_t i = 0; i < received; i++) {
+  /* puts(&buf[received - 1000]); */
+  /* printf("%c\n", buf[received - 1000]); */
+
+  char* ss = (char*)buf;
+  while (ss++)
+    if (*ss == ']') {
+      *--ss = '\0';
+      break;
+    }
+  received -= 14;
+
+  while (received--)
+    if (buf[received] == '[') return &buf[received];
+
+  printf("buf: %c\n", buf[received - 14]);
+
+  char* t = (char*)buf;
+  while (t++) {
+    /* received--; */
+    if (*t == '[') return t;
+  }
+  /* puts(t); */
+
+  for (ssize_t register i = 0; i < received; i++) {
     if (buf[i] == '[') {
       *len = received - i;
       /* *len = (ssize_t)strlen(&buf[i]); */
@@ -128,6 +187,8 @@ __pure __const __attribute__((malloc)) static char* fetch(
   }
 exit:
   fprintf(stderr, "ERROR: line %d, [%d] %s\n", line, err, gai_strerror(err));
+  freeaddrinfo(res);
+  res = NULL;
   return NULL;
 }
 
@@ -175,16 +236,17 @@ static struct H2* parse_buf(const char in[static restrict 1], ssize_t len) {
   return out;
 }
 
-__pure static void display2DArrayUnknownSize(int* arr, int rows, int cols) {
-  for (int i = 0; i < rows; i++) {
-    for (int j = 0; j < cols; j++) {
+__pure static void display2DArrayUnknownSize(int* restrict arr, unsigned rows,
+                                             unsigned cols) {
+  for (unsigned i = 0; i < rows; i++) {
+    for (unsigned j = 0; j < cols; j++) {
       fprintf(stderr, "%d ", *(arr + (i * cols) + j));
     }
     fprintf(stderr, "\n");
   }
 }
 #include <stdbool.h>
-__pure static inline bool vacation(int* arr, int rows, int cols) {
+__pure static inline bool vacation(int* restrict arr, int rows, int cols) {
   if (rows != (*(arr + 4) * rows)) return false;
   for (unsigned i = 0; i < 4; i++) {
     if (*(arr + (4 * rows) + i) == cols) return true;
@@ -194,9 +256,7 @@ __pure static inline bool vacation(int* arr, int rows, int cols) {
 
 int main() {
 #ifdef LOG
-  FILE* log_file = fopen("log_file", "w++");
-#undef stderr
-#define stderr log_file
+  log_file = fopen("log_file", "w++");
 #endif
 
   tmp1 = malloc(1024);
@@ -228,9 +288,6 @@ int main() {
   /* fprintf(stderr, "h2: %d\n", h_ptr->day); */
   /* fprintf(stderr, "h2: %d\n", h3[10].day); */
 
-#ifdef LOG
-  fclose(log_file);
-#endif
   /* return 0; */
 #define MONTH 13
 #define DAY 4
@@ -287,5 +344,31 @@ int main() {
 
   display2DArrayUnknownSize(&row[0][0], MONTH, DAY);
   fprintf(stderr, "%c\n", "nd"[vacation(&row[0][0], 12, 26)]);
+  printf("internet: %s\n", &"nu\0da, este net"[3 * internet()]);
+  /* printf("internet: %s\n", "nu\0da, este" + (3 * internet())); */
+/* note: use array indexing to silence this warning */
+#ifdef LOG
+  if (log_file) fclose(log_file);
+#endif
+#include <limits.h>
+  if (!internet()) return EXIT_SUCCESS;
+
+  printf("%u\n", CHAR_BIT);
+  printf("%u\n", CHAR_MAX);
+  printf("%u\n", UCHAR_MAX);
+  printf("char: %ld\n", sizeof(char));
+  printf("ssize_t: %ld\n", sizeof(ssize_t));
+
+  int fd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+
+  struct ifreq {
+    char ifr_name[128];
+  } ifreq;
+
+  /* set the name of the interface we wish to check */
+  /* grab flags associated with this interface */
+  ioctl(fd, SIOCGIFFLAGS, &ifreq);
+  close(fd);
+  puts(ifreq.ifr_name);
   return 0;
 }
