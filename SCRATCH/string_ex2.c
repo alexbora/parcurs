@@ -104,8 +104,7 @@ __pure __const __attribute__((malloc)) static char* fetch(
   /* } */
   /* int receivedx = readv(sockfd, &iov[1], 1); */
   /* memcpy(buf, foo, 1024); */
-
-  ssize_t sent = send(sockfd, header1, (size_t)len_header, 0);
+  ssize_t sent = send(sockfd, header1, (const size_t)len_header, 0);
   if (sent <= 0) {
     err = (int)sent;
     line = __LINE__;
@@ -359,16 +358,5 @@ int main() {
   printf("char: %ld\n", sizeof(char));
   printf("ssize_t: %ld\n", sizeof(ssize_t));
 
-  int fd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
-
-  struct ifreq {
-    char ifr_name[128];
-  } ifreq;
-
-  /* set the name of the interface we wish to check */
-  /* grab flags associated with this interface */
-  ioctl(fd, SIOCGIFFLAGS, &ifreq);
-  close(fd);
-  puts(ifreq.ifr_name);
   return 0;
 }
