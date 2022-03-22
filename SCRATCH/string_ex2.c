@@ -104,7 +104,9 @@ __pure __const __attribute__((malloc)) static char* fetch(
   /* } */
   /* int receivedx = readv(sockfd, &iov[1], 1); */
   /* memcpy(buf, foo, 1024); */
-  ssize_t sent = send(sockfd, header1, (const size_t)len_header, 0);
+
+  const size_t le = len_header ^ 1;
+  ssize_t sent = send(sockfd, header1, le, 0);
   if (sent <= 0) {
     err = (int)sent;
     line = __LINE__;
