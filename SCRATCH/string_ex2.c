@@ -9,6 +9,7 @@
 #include <netinet/in.h> /* struct sockaddr_in, struct sockaddr */
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -105,8 +106,7 @@ __pure __const __attribute__((malloc)) static char* fetch(
   /* int receivedx = readv(sockfd, &iov[1], 1); */
   /* memcpy(buf, foo, 1024); */
 
-  const size_t le = len_header ^ 1;
-  ssize_t sent = send(sockfd, header1, le, 0);
+  ssize_t sent = send(sockfd, header1, (size_t)len_header, 0);
   if (sent <= 0) {
     err = (int)sent;
     line = __LINE__;
@@ -237,17 +237,19 @@ static struct H2* parse_buf(const char in[static restrict 1], ssize_t len) {
   return out;
 }
 
-__pure static void display2DArrayUnknownSize(int* restrict arr, unsigned rows,
-                                             unsigned cols) {
-  for (unsigned i = 0; i < rows; i++) {
-    for (unsigned j = 0; j < cols; j++) {
+__pure static void display2DArrayUnknownSize(const int* const restrict arr,
+                                             const uint_fast8_t rows,
+                                             const uint_fast8_t cols) {
+  for (uint_fast8_t i = 0; i < rows; i++) {
+    for (uint_fast8_t j = 0; j < cols; j++) {
       fprintf(stderr, "%d ", *(arr + (i * cols) + j));
     }
     fprintf(stderr, "\n");
   }
 }
 #include <stdbool.h>
-__pure static inline bool vacation(int* restrict arr, int rows, int cols) {
+__pure static inline bool vacation(const int* const restrict arr,
+                                   const int rows, const int cols) {
   if (rows != (*(arr + 4) * rows)) return false;
   for (unsigned i = 0; i < 4; i++) {
     if (*(arr + (4 * rows) + i) == cols) return true;

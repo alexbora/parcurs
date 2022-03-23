@@ -61,5 +61,17 @@ int main(void) {
 
   func1(&arr[0][0], 12, 4);
 
+  int rx = 0;
+
+  typedef union {
+    int all_flags;
+    struct {
+      int foo;
+      int bar;
+    };
+  } FLAGS;
+  static FLAGS flags;
+  flags.all_flags = 0;
+  flags.bar = 1;
   return 0;
 }

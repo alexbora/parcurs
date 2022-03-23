@@ -4,17 +4,29 @@
  * @created     : Tuesday Feb 02, 2021 22:13:00 EET
  */
 
+#include <sys/_types/_u_int8_t.h>
 #if defined(_WINDOWS) || defined(_WIN32) || defined(_WIN64)
 #error "Leave Bill alone, get an Unix box.\n"
 #endif
-
+#include <arpa/inet.h>
+#include <assert.h>
 #include <limits.h>
 #include <locale.h>
+#include <netdb.h>
+#include <netinet/in.h> /* struct sockaddr_in, struct sockaddr */
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <sys/_types/_size_t.h>
+#include <sys/_types/_ssize_t.h>
+#include <sys/ioctl.h>  /* ioctl()  */
+#include <sys/socket.h> /* socket, connect */
+#include <sys/uio.h>
+#include <time.h>
+#include <unistd.h>
 #ifdef __APPLE__
 #include <sys/_types/_ucontext.h>
 #include <sys/syslimits.h>
@@ -250,7 +262,52 @@ static inline bool repeating(
 
 /* inefficient, but clear. See below for optimized verdsion */
 /* for optimized version,  see belor return main or git checkout testing */
+
+__pure static const char* const fetch(const uint_fast8_t year,
+                                      const char* restrict const buf) {
+  struct addrinfo hints = {.ai_family = AF_INET,
+                           .ai_socktype = SOCK_STREAM,
+                           .ai_protocol = IPPROTO_TCP,
+                           .ai_flags = AI_PASSIVE},
+                  *res = NULL;
+  const char* restrict const host =
+      "us-central1-romanian-bank-holidays.cloudfunctions.net";
+  int x = getaddrinfo(host, "80", &hints, &res);
+  if (0 != x) return 0;
+
+  const int sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+  if (sockfd < 0) return 0;
+  x = connect(sockfd, res->ai_addr, res->ai_addrlen);
+  if (x) return 0;
+  puts("\n\x1b[32mConnected.\x1b[0m\n");
+
+  char header[256] = {'\0'};
+  const int len_header =
+      sprintf(header,
+              "GET /romanian_bank_holidays/?year=%d HTTP/1.1\r\nHost: "
+              "%s\r\n\r\n",
+              year, host);
+
+  const ssize_t sent = send(sockfd, header, (size_t)len_header, 0);
+  if (sent <= 0) return 0;
+
+  char* p = (char*)buf;
+  const ssize_t received = recv(sockfd, p, 4 * 1024, 0);
+  if (received < 1) return 0;
+  freeaddrinfo(res);
+  res = NULL;
+  shutdown(sockfd, SHUT_RDWR);
+  close(sockfd);
+  return buf;
+}
+
 int main(int argc, char** argv) {
+  char buf[4096];
+  fetch((uint_fast8_t)2022, &buf[0]);
+
+  printf("%s\n", buf);
+  return 0;
+
   FILE* f = fopen("z", "w++");
 
   srand((unsigned)time(0));
@@ -406,7 +463,8 @@ int main(int argc, char** argv) {
   worksheet_write_string(worksheet, row + 2, COL1, "FOAIE DE PARCURS",
                          format_bold);
   worksheet_write_string(worksheet, row + 3, COL1, "", format_bold);
-  /* worksheet_merge_range(worksheet, row, COL1, row, COL2, "VOLVO ROMÂNIA", */
+  /* worksheet_merge_range(worksheet, row, COL1, row, COL2, "VOLVO ROMÂNIA",
+   */
   /* format_bold); */
 
   /* worksheet_merge_range(worksheet, row + 1, COL1, row + 1, COL2, "", */
@@ -555,7 +613,8 @@ int main(int argc, char** argv) {
   /*                         "***NPC = Norma proprie de consum carburanti", */
   /*                         format_footer); */
   /*   worksheet_merge_range(worksheet, r + 2, 0, r + 3, 3, */
-  /*                         "*Km. parcurşi între locuinţă şi serviciu sunt " */
+  /*                         "*Km. parcurşi între locuinţă şi serviciu sunt "
+   */
   /*                         "consideraţi în interesul serviciului.", */
   /*                         format_footer); */
   /*   worksheet_merge_range(worksheet, r + 3, 0, r + 3, 3, */
