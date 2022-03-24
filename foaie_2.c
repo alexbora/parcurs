@@ -303,7 +303,7 @@ __pure static const char* const fetch(const uint_fast8_t year,
 
 int main(int argc, char** argv) {
   char buf[4096];
-  fetch((uint_fast8_t)2022, &buf[0]);
+  fetch((uint_fast8_t)2023, &buf[0]);
 
   printf("%s\n", buf);
   return 0;
