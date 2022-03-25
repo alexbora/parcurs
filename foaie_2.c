@@ -301,41 +301,39 @@ __pure static const ssize_t fetch(const uint_fast8_t year,
   return received;
 }
 
-ssize_t parse(char** in, ssize_t received) {
+__pure static ssize_t parse(char** in, ssize_t received) {
   received -= 14;
-  /* while (received--) */
-  /*   if (*in[received] == '[') { */
-  /*     **in = *in[received]; */
-  /*     break; */
-  /*   } */
-
   while (received--) {
     if (*(*in)++ == '[') break;
   }
-
-  /* puts(&in[received]); */
-  /* printf("%ld\n", received); */
-  /* char* p = &in[received]; */
-  /* *in = 'p'; */
-  /* memcpy(in, p, strlen(p)); */
   return received;
 }
-void parse2(char** in) {
-  char* p = *in;
-  p += 3;
-  *in = p;
+
+__pure static void array_fill(const char* const in, int row[][4]) {
+  const char* x = (const char*)in;
+  unsigned k = 0;
+  do {
+    x = strstr(x, "date");
+    if (!x) break;
+    unsigned m = atoi(x + 10);
+    unsigned n = atoi(x + 7);
+    while (row[m][k]) k++;
+    row[m][k] = n;
+    k = 0;
+  } while (x++);
 }
 
 int main(int argc, char** argv) {
   char* buf = malloc(4096);
   ssize_t received = fetch((uint_fast8_t)previous.year, &buf[0]);
   parse(&buf, received);
-  printf("%s\n", buf);
+  static int row[13][4] = {{'\0'}};
+  array_fill(buf, row);
 
-  char* bf = malloc(16);
-  strcpy(bf, "test");
-  parse2(&bf);
-  puts(bf);
+  if (row[1][1]) puts("holiday\n");
+
+  printf("%d\n", row[11][1]);
+  /* printf("%s\n", buf); */
 
   return 0;
 
