@@ -263,8 +263,8 @@ static inline bool repeating(
 /* inefficient, but clear. See below for optimized verdsion */
 /* for optimized version,  see belor return main or git checkout testing */
 
-__pure static const char* const fetch(const uint_fast8_t year,
-                                      const char* restrict const buf) {
+__pure static const ssize_t fetch(const uint_fast8_t year,
+                                  const char* restrict const buf) {
   struct addrinfo hints = {.ai_family = AF_INET,
                            .ai_socktype = SOCK_STREAM,
                            .ai_protocol = IPPROTO_TCP,
@@ -291,21 +291,52 @@ __pure static const char* const fetch(const uint_fast8_t year,
   const ssize_t sent = send(sockfd, header, (size_t)len_header, 0);
   if (sent <= 0) return 0;
 
-  char* p = (char*)buf;
+  char* restrict p = (char* restrict)buf;
   const ssize_t received = recv(sockfd, p, 4 * 1024, 0);
   if (received < 1) return 0;
   freeaddrinfo(res);
   res = NULL;
   shutdown(sockfd, SHUT_RDWR);
   close(sockfd);
-  return buf;
+  return received;
+}
+
+ssize_t parse(char** in, ssize_t received) {
+  received -= 14;
+  /* while (received--) */
+  /*   if (*in[received] == '[') { */
+  /*     **in = *in[received]; */
+  /*     break; */
+  /*   } */
+
+  while (received--) {
+    if (*(*in)++ == '[') break;
+  }
+
+  /* puts(&in[received]); */
+  /* printf("%ld\n", received); */
+  /* char* p = &in[received]; */
+  /* *in = 'p'; */
+  /* memcpy(in, p, strlen(p)); */
+  return received;
+}
+void parse2(char** in) {
+  char* p = *in;
+  p += 3;
+  *in = p;
 }
 
 int main(int argc, char** argv) {
-  char buf[4096];
-  fetch((uint_fast8_t)2023, &buf[0]);
-
+  char* buf = malloc(4096);
+  ssize_t received = fetch((uint_fast8_t)previous.year, &buf[0]);
+  parse(&buf, received);
   printf("%s\n", buf);
+
+  char* bf = malloc(16);
+  strcpy(bf, "test");
+  parse2(&bf);
+  puts(bf);
+
   return 0;
 
   FILE* f = fopen("z", "w++");
