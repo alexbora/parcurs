@@ -257,7 +257,21 @@ __pure static inline bool vacation(const int* const restrict arr,
   return false;
 }
 
+void iprint(int n) {
+  if (n > 9) {
+    int a = n / 10;
+    n -= 10 * a;
+    iprint(a);
+  }
+  putchar('0' + n);
+}
+
 int main() {
+  int er = 11;
+  iprint(er);
+  FILE* test = fopen("er", "w++");
+  write(test, er, 2);
+
 #ifdef LOG
   log_file = fopen("log_file", "w++");
 #endif
