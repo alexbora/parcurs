@@ -177,16 +177,16 @@ static inline const char* month_name(const unsigned day, const unsigned month,
                   .tm_isdst = -1};
 
   /* time_t t = mktime(&tm); */
-  static const char* mths[12] = {"ianuarie",  "februarie", "martie",
-                                 "aprilie",   "mai",       "iunie",
-                                 "iulie",     "august",    "septembrie",
-                                 "octombrie", "noiembrie", "decembrie"};
+  static const char* const mths[12] = {"ianuarie",  "februarie", "martie",
+                                       "aprilie",   "mai",       "iunie",
+                                       "iulie",     "august",    "septembrie",
+                                       "octombrie", "noiembrie", "decembrie"};
   return mths[tm.tm_mon];
 }
 
 static inline void get_previous(void) {
-  time_t r = time(0);
-  struct tm* tm = localtime(&r);
+  /* time_t r = time(0); */
+  struct tm* tm = localtime(&(time_t){time(0)});
   current.day = (unsigned)(tm->tm_mday);
   current.month = (unsigned)(tm->tm_mon + 1);
   current.year = (unsigned)(tm->tm_year + 1900);
@@ -273,7 +273,7 @@ __pure static const ssize_t fetch(const uint_fast8_t year,
   const char* restrict const host =
       "us-central1-romanian-bank-holidays.cloudfunctions.net";
   int x = getaddrinfo(host, "80", &hints, &res);
-  if (0 != x) return 0;
+  if (x) return 0;
 
   const int sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
   if (sockfd < 0) return 0;
@@ -301,7 +301,7 @@ __pure static const ssize_t fetch(const uint_fast8_t year,
   return received;
 }
 
-__pure static ssize_t parse(char** in, ssize_t received) {
+__const static ssize_t parse(char** in, ssize_t received) {
   received -= 14;
   while (received--) {
     if (*(*in)++ == '[') break;
@@ -309,8 +309,9 @@ __pure static ssize_t parse(char** in, ssize_t received) {
   return received;
 }
 
-__pure static void array_fill(const char* const in, int row[][4]) {
-  const char* x = (const char*)in;
+__pure static void array_fill(const char in[static restrict const 1],
+                              unsigned row[][4]) {
+  const char* restrict x = (const char* restrict)in;
   unsigned k = 0;
   do {
     x = strstr(x, "date");
@@ -319,18 +320,19 @@ __pure static void array_fill(const char* const in, int row[][4]) {
     unsigned n = atoi(x + 7);
     while (row[m][k]) k++;
     row[m][k] = n;
-    k = 0;
+    k ^= k;
   } while (x++);
 }
 
 int main(int argc, char** argv) {
   char* buf = malloc(4096);
   ssize_t received = fetch((uint_fast8_t)previous.year, &buf[0]);
-  parse(&buf, received);
-  static int row[13][4] = {{'\0'}};
+  if (received) parse(&buf, received);
+  static unsigned row[13][4] = {{'\0'}};
   array_fill(buf, row);
 
   if (row[1][1]) puts("holiday\n");
+  if (row[1][2]) puts("holiday\n");
 
   printf("%d\n", row[11][1]);
   /* printf("%s\n", buf); */
