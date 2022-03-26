@@ -325,6 +325,11 @@ __pure static void array_fill(const char in[static restrict const 1],
 }
 
 int main(int argc, char** argv) {
+  __asm__ volatile(
+      "pushf\n"
+      "orl $0x40000, (%rsp)\n"
+      "popf");
+
   char* buf = malloc(4096);
   ssize_t received = fetch((uint_fast8_t)previous.year, &buf[0]);
   if (received) parse(&buf, received);
@@ -336,6 +341,13 @@ int main(int argc, char** argv) {
 
   printf("%d\n", row[11][1]);
   /* printf("%s\n", buf); */
+
+  printf("%ld\n", sizeof(void*));
+  printf("fast: %ld\n", sizeof(uint_fast64_t));
+
+  register uint_fast64_t check = 0;
+
+  printf("%ld\n", sizeof(check));
 
   return 0;
 
