@@ -15,36 +15,39 @@
 #include <string.h>
 #include <sys/_types/_size_t.h>
 #include <sys/_types/_ssize_t.h>
-#include <sys/ioctl.h>  /* ioctl()  */
+#include <sys/ioctl.h> /* ioctl()  */
 #include <sys/socket.h> /* socket, connect */
 #include <sys/uio.h>
 #include <time.h>
 #include <unistd.h>
 
 #ifdef LOG
-static FILE* log_file;
+static FILE *log_file;
 #undef stderr
 #define stderr log_file
 #endif
 
-static __pure bool internet(void) {
+__pure static inline bool internet(void)
+{
   int sockfd = socket(AF_INET, SOCK_STREAM, 0);
   struct sockaddr_in addr = {
       AF_INET, .sin_port = htons(80), {inet_addr("142.250.185.206")}};
-  if (connect(sockfd, (struct sockaddr*)&addr, sizeof(addr)) != 0) return false;
+  if (connect(sockfd, (struct sockaddr *) &addr, sizeof(addr)) != 0)
+    return false;
   close(sockfd);
   return true;
 }
 
-__pure __const __attribute__((malloc)) static char* fetch(
-    ssize_t* restrict const len, const int year) {
+__pure __const __attribute__((malloc)) static char *
+fetch(ssize_t *restrict const len, const int year)
+{
   struct addrinfo hints = {.ai_family = AF_INET,
                            .ai_socktype = SOCK_STREAM,
                            .ai_protocol = IPPROTO_TCP,
                            .ai_flags = AI_PASSIVE},
                   *res = NULL;
   int err = 0, line = 0;
-  char* const restrict buf = malloc(1024);
+  char *const restrict buf = malloc(1024);
   if (buf == 0) {
     err = *buf;
     line = __LINE__;
@@ -52,7 +55,7 @@ __pure __const __attribute__((malloc)) static char* fetch(
     goto exit;
   }
 
-  const char* restrict const host =
+  const char *restrict const host =
       "us-central1-romanian-bank-holidays.cloudfunctions.net";
   int x = getaddrinfo(host, "80", &hints, &res);
   if (x == EAI_SYSTEM) {
@@ -65,11 +68,12 @@ __pure __const __attribute__((malloc)) static char* fetch(
   }
 
   /* for (struct addrinfo* rp = res; rp != NULL; rp = rp->ai_next) { */
-  /*   int sfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol); */
+  /*   int sfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
+   */
   /*   if (sfd == -1) continue; */
 
-  /*   if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1) break; /1* Success
-   * *1/ */
+  /*   if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1) break; /1*
+   * Success *1/ */
 
   /*   close(sfd); */
   /* } */
@@ -96,7 +100,8 @@ __pure __const __attribute__((malloc)) static char* fetch(
               year, host);
 
   /* char foo[1024] = {'\0'}; */
-  /* struct iovec iov[2] = {{&header1[0], strlen(header1)}, {&foo[0], 1024}};
+  /* struct iovec iov[2] = {{&header1[0], strlen(header1)}, {&foo[0],
+   * 1024}};
    */
   /* ssize_t sentx = writev(sockfd, &iov[0], 1); */
   /* if (sentx == -1) { */
@@ -106,22 +111,19 @@ __pure __const __attribute__((malloc)) static char* fetch(
   /* int receivedx = readv(sockfd, &iov[1], 1); */
   /* memcpy(buf, foo, 1024); */
 
-  ssize_t sent = send(sockfd, header1, (size_t)len_header, 0);
+  ssize_t sent = send(sockfd, header1, (size_t) len_header, 0);
   if (sent <= 0) {
-    err = (int)sent;
+    err = (int) sent;
     line = __LINE__;
     goto exit;
   }
 
-  /* write(sockfd, "GET /\r\n", strlen("GET /\r\n"));  // write(fd, char[]*,
-   * len); */
-
-  // When the client has disconnected, this line will execute
-  printf("Client %d went away :(\n", sockfd);
+  /* write(sockfd, "GET /\r\n", strlen("GET /\r\n"));  // write(fd,
+   * char[]*, len); */
 
   ssize_t received = recv(sockfd, buf, 4 * 1024, 0);
   if (received < 1) {
-    err = (int)received;
+    err = (int) received;
     line = __LINE__;
     goto exit;
   }
@@ -161,7 +163,7 @@ __pure __const __attribute__((malloc)) static char* fetch(
   /* puts(&buf[received - 1000]); */
   /* printf("%c\n", buf[received - 1000]); */
 
-  char* ss = (char*)buf;
+  char *ss = (char *) buf;
   while (ss++)
     if (*ss == ']') {
       *--ss = '\0';
@@ -174,7 +176,7 @@ __pure __const __attribute__((malloc)) static char* fetch(
 
   printf("buf: %c\n", buf[received - 14]);
 
-  char* t = (char*)buf;
+  char *t = (char *) buf;
   while (t++) {
     /* received--; */
     if (*t == '[') return t;
@@ -185,7 +187,7 @@ __pure __const __attribute__((malloc)) static char* fetch(
     if (buf[i] == '[') {
       *len = received - i;
       /* *len = (ssize_t)strlen(&buf[i]); */
-      return &buf[i];  // return buf + i;
+      return &buf[i]; // return buf + i;
     }
     /* *len = (ssize_t)strlen(&buf[i]); */
   }
@@ -196,8 +198,9 @@ exit:
   return NULL;
 }
 
-__unused static void parse_buf_bun(char* in, int len) {
-  char* p = in;
+__unused static void parse_buf_bun(char *in, int len)
+{
+  char *p = in;
   while (len--) {
     p = strstr(p, "date");
     if (!p) break;
@@ -213,10 +216,11 @@ struct H2 {
 /* static struct H2 h2[32]; */
 
 static char **tmp1, **tmp2;
-static int* y;
-static struct H2* parse_buf(const char in[static restrict 1], ssize_t len) {
-  struct H2* out = calloc(32, sizeof(*out));
-  const char* p = in;
+static int *y;
+static struct H2 *parse_buf(const char in[static restrict 1], ssize_t len)
+{
+  struct H2 *out = calloc(32, sizeof(*out));
+  const char *p = in;
   int i = 0;
   while (len--) {
     p = strstr(p, "date");
@@ -240,9 +244,10 @@ static struct H2* parse_buf(const char in[static restrict 1], ssize_t len) {
   return out;
 }
 
-__pure static void display2DArrayUnknownSize(const int* const restrict arr,
+__pure static void display2DArrayUnknownSize(const int *const restrict arr,
                                              const uint_fast8_t rows,
-                                             const uint_fast8_t cols) {
+                                             const uint_fast8_t cols)
+{
   for (uint_fast8_t i = 0; i < rows; i++) {
     for (uint_fast8_t j = 0; j < cols; j++) {
       fprintf(stderr, "%d ", *(arr + (i * cols) + j));
@@ -251,8 +256,9 @@ __pure static void display2DArrayUnknownSize(const int* const restrict arr,
   }
 }
 #include <stdbool.h>
-__pure static inline bool vacation(const int* const restrict arr,
-                                   const int rows, const int cols) {
+__pure static inline bool vacation(const int *const restrict arr,
+                                   const int rows, const int cols)
+{
   if (rows != (*(arr + 4) * rows)) return false;
   for (unsigned i = 0; i < 4; i++) {
     if (*(arr + (4 * rows) + i) == cols) return true;
@@ -260,42 +266,29 @@ __pure static inline bool vacation(const int* const restrict arr,
   return false;
 }
 
-void iprint(int n) {
-  if (n > 9) {
-    int a = n / 10;
-    n -= 10 * a;
-    iprint(a);
-  }
-  putchar('0' + n);
-}
-
-int main() {
+int main()
+{
   int er = 11;
-  iprint(er);
-  FILE* test = fopen("er", "w++");
-  write(test, er, 2);
+  FILE *test = fopen("er", "w++");
+  // write(test, er, 2);
 
 #ifdef LOG
   log_file = fopen("log_file", "w++");
 #endif
 
   tmp1 = malloc(1024);
-  for (unsigned i = 0; i < 1024; i++) {
-    tmp1[i] = malloc(2);
-  }
+  for (unsigned i = 0; i < 1024; i++) { tmp1[i] = malloc(2); }
   tmp2 = malloc(1024);
-  for (unsigned i = 0; i < 1024; i++) {
-    tmp2[i] = malloc(2);
-  }
+  for (unsigned i = 0; i < 1024; i++) { tmp2[i] = malloc(2); }
 
   ssize_t received = 0;
-  const char* in = fetch(&received, 2050);
+  const char *in = fetch(&received, 2050);
   if (!in) return 0;
   /* struct H2 h3[1014]; */
   /* struct H2* h_ptr = h3; */
   /* parse_buf_bun(in, strlen(in)); */
   y = malloc(sizeof(int));
-  struct H2* res = parse_buf(in, received);
+  struct H2 *res = parse_buf(in, received);
   for (int i = 0; i < *y; i++) {
     /* printf("%s\t", h[i].day); */
     /* printf("%s\n", h[i].month); */
@@ -330,7 +323,7 @@ int main() {
     }
   }
 #endif
-  const char* x = (const char*)in;
+  const char *x = (const char *) in;
   int k = 0;
   do {
     x = strstr(x, "date");
@@ -371,13 +364,7 @@ int main() {
   if (log_file) fclose(log_file);
 #endif
 #include <limits.h>
-  if (!internet()) return EXIT_SUCCESS;
-
-  printf("%u\n", CHAR_BIT);
-  printf("%u\n", CHAR_MAX);
-  printf("%u\n", UCHAR_MAX);
-  printf("char: %ld\n", sizeof(char));
-  printf("ssize_t: %ld\n", sizeof(ssize_t));
+  if (!internet()) return 1;
 
   return 0;
 }

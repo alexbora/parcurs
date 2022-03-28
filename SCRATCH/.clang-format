@@ -1,0 +1,47 @@
+
+# C Language specifics
+Language: Cpp
+
+# Align parameters on the open bracket
+# someLongFunction(argument1,
+#                  argument2);
+AlignAfterOpenBracket: Align
+
+
+# Don't align consecutive assignments
+# int aaaa = 12;
+# int b = 14;
+AlignConsecutiveAssignments: false
+
+
+# Align escaped newlines as far left as possible
+# #define A   \
+#   int aaaa; \
+#   int b;    \
+#   int cccccccc;
+AlignEscapedNewlines: Left
+
+# Align operands of binary and ternary expressions
+# int aaa = bbbbbbbbbbb +
+#           cccccc;
+AlignOperands: true
+
+# Don't align trailing comments
+# int a; // Comment a
+# int b = 2; // Comment b
+AlignTrailingComments: false
+
+AllowShortBlocksOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
+
+BreakBeforeBraces: Linux
+
+PointerAlignment: Right
+SpaceAfterCStyleCast: true
+SpacesBeforeTrailingComments: 1
+AlignConsecutiveDeclarations: false
+
+AlwaysBreakAfterReturnType: None #All
