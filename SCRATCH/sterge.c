@@ -59,6 +59,9 @@ int main(void) {
   for (int q = 0; q < 128; q++) {  // print array
     printf("%d\t", array[q]);
   }
+  int add(int, int);
+  int (*operations[128])(int, int);
+  operations['+'] = add;
 
   return 0;
 };

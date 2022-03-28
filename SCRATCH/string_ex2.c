@@ -116,6 +116,9 @@ __pure __const __attribute__((malloc)) static char* fetch(
   /* write(sockfd, "GET /\r\n", strlen("GET /\r\n"));  // write(fd, char[]*,
    * len); */
 
+  // When the client has disconnected, this line will execute
+  printf("Client %d went away :(\n", sockfd);
+
   ssize_t received = recv(sockfd, buf, 4 * 1024, 0);
   if (received < 1) {
     err = (int)received;
