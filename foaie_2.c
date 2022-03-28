@@ -34,6 +34,8 @@
 #include <unistd.h>
 #include <xlsxwriter.h>
 
+#define u64 uint_fast64_t register
+
 #ifdef LOG
 #define log f
 #else
@@ -263,8 +265,8 @@ static inline bool repeating(
 /* inefficient, but clear. See below for optimized verdsion */
 /* for optimized version,  see belor return main or git checkout testing */
 
-__pure static const ssize_t fetch(const uint_fast8_t year,
-                                  const char* restrict const buf) {
+__pure static const ssize_t fetch(const uint_fast64_t year,
+                                  const char buf[static const restrict 1]) {
   struct addrinfo hints = {.ai_family = AF_INET,
                            .ai_socktype = SOCK_STREAM,
                            .ai_protocol = IPPROTO_TCP,
@@ -272,7 +274,7 @@ __pure static const ssize_t fetch(const uint_fast8_t year,
                   *res = NULL;
   const char* restrict const host =
       "us-central1-romanian-bank-holidays.cloudfunctions.net";
-  int x = getaddrinfo(host, "80", &hints, &res);
+  int register x = getaddrinfo(host, "80", &hints, &res);
   if (x) return 0;
 
   const int sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
@@ -284,7 +286,7 @@ __pure static const ssize_t fetch(const uint_fast8_t year,
   char header[256] = {'\0'};
   const int len_header =
       sprintf(header,
-              "GET /romanian_bank_holidays/?year=%d HTTP/1.1\r\nHost: "
+              "GET /romanian_bank_holidays/?year=%llu HTTP/1.1\r\nHost: "
               "%s\r\n\r\n",
               year, host);
 
@@ -309,46 +311,87 @@ __const static ssize_t parse(char** in, ssize_t received) {
   return received;
 }
 
-__pure static void array_fill(const char in[static restrict const 1],
+static inline void array_fill(const char in[static restrict const 1],
                               unsigned row[][4]) {
-  const char* restrict x = (const char* restrict)in;
-  unsigned k = 0;
+  const register char* restrict x = (const char* restrict)in;
+  u64 k = 0;
   do {
     x = strstr(x, "date");
     if (!x) break;
-    unsigned m = atoi(x + 10);
-    unsigned n = atoi(x + 7);
+    unsigned register m = atoi(x + 10);
+    unsigned register n = atoi(x + 7);
     while (row[m][k]) k++;
     row[m][k] = n;
     k ^= k;
   } while (x++);
 }
 
-int main(int argc, char** argv) {
+void fnull(void) { puts("no holiday\n"); }
+void fn(void) { puts("holiday\n"); }
+
+int main(int argc, char* argv[argc + 1]) {
   __asm__ volatile(
       "pushf\n"
       "orl $0x40000, (%rsp)\n"
       "popf");
 
   char* buf = malloc(4096);
-  ssize_t received = fetch((uint_fast8_t)previous.year, &buf[0]);
+  ssize_t received = fetch((uint_fast64_t)previous.year, &buf[0]);
   if (received) parse(&buf, received);
-  static unsigned row[13][4] = {{'\0'}};
-  array_fill(buf, row);
+  static unsigned array[13][4] = {{'\0'}};
+  array_fill(buf, array);
 
-  if (row[1][1]) puts("holiday\n");
-  if (row[1][2]) puts("holiday\n");
+  /* if (row[1][1]) puts("holiday\n"); */
+  /* row[2][1] ? puts("holiday\n") : puts("not holiday\n"); */
 
-  printf("%d\n", row[11][1]);
+  /* printf("%d\n", row[1][0]); */
+  /* printf("%d\n", row[1][1]); */
+  /* printf("%d\n", row[1][2]); */
+  /* printf("%d\n", row[1][3]); */
+
+  void (*pf[13][4])(void);
+  for (unsigned i = 0; i <= 12; i++) {
+    for (unsigned j = 0; j <= 3; j++) {
+      pf[i][j] = array[i][j] ? fn : fnull;
+    }
+  }
+  pf[12][1]();
+  /* printf("%d\n", row[11][1]); */
   /* printf("%s\n", buf); */
 
-  printf("%ld\n", sizeof(void*));
-  printf("fast: %ld\n", sizeof(uint_fast64_t));
+  struct Write {
+    lxw_workbook* book;
+    int row, col;
+    union {
+      char* string;
+      uint_fast64_t no;
+    };
+    union {
+      void (*write_string)(void);
+      void (*write_number)(void);
+    };
+    lxw_format* format;
+  };
 
-  register uint_fast64_t check = 0;
+  struct Write2 {
+    lxw_workbook* book;
+    lxw_format* format;
+    void* data;
+    void (*fn)(void);
+    int row, col;
+  };
+  lxw_workbook* new = workbook_new("new");
 
-  printf("%ld\n", sizeof(check));
+  /* struct Write w = {new, 1, 1, .string = "test", fn, NULL}; */
+  /* struct Write w5 = {new, 1, 1, .no = 10, fn, NULL}; */
+  /* struct Write2 w2 = {new, NULL, (char*)"test", fn, 1, 1}; */
+  /* struct Write2 w3 = {new, NULL, malloc(sizeof(int)), fn, 1, 1}; */
+  /* memcpy(w3.data, &(int){1}, sizeof(int)); */
+  struct Write2 w4 = {new, NULL, malloc(sizeof(int)), fn, 1, 1};
 
+  *((int*)w4.data) = 1;
+
+  workbook_close(new);
   return 0;
 
   FILE* f = fopen("z", "w++");
