@@ -5,6 +5,7 @@
  */
 #include <arpa/inet.h>
 #include <assert.h>
+#include <limits.h>
 #include <netdb.h>
 #include <netinet/in.h> /* struct sockaddr_in, struct sockaddr */
 #include <stdbool.h>
@@ -268,8 +269,8 @@ __pure static inline bool vacation(const int *const restrict arr,
 
 int main()
 {
-  int er = 11;
-  FILE *test = fopen("er", "w++");
+  /* int er = 11; */
+  /* FILE *test = fopen("er", "w++"); */
   // write(test, er, 2);
 
 #ifdef LOG
@@ -333,9 +334,10 @@ int main()
     /* printf("n: %d\n", n); */
     while (row[m][k]) k++;
     row[m][k] = n;
-    k = 0;
+    k ^= k;
     /* k = (k > 3) ? 0 : k; */
   } while (x++);
+  x = (void *) 0;
   /* free((void*)x); */
   /* i = j = 0; */
   /* char* p = (char*)in; */
@@ -356,15 +358,36 @@ int main()
   /* } */
 
   display2DArrayUnknownSize(&row[0][0], MONTH, DAY);
-  fprintf(stderr, "%c\n", "nd"[vacation(&row[0][0], 12, 26)]);
+  fprintf(stderr, "is it vacation? %c\n", "nd"[vacation(&row[0][0], 12, 26)]);
   printf("internet: %s\n", &"nu\0da, este net"[3 * internet()]);
   /* printf("internet: %s\n", "nu\0da, este" + (3 * internet())); */
 /* note: use array indexing to silence this warning */
 #ifdef LOG
   if (log_file) fclose(log_file);
 #endif
-#include <limits.h>
-  if (!internet()) return 1;
+  if (!internet()) {
+    puts("really,  no net...\n");
+    return 1;
+  }
+  int *arr;
+  int z = __builtin_types_compatible_p(__typeof__(arr), __typeof__(&(arr)[0]));
 
+  printf("z: %d\n", z);
+
+#define BUILD_ASSERT_OR_ZERO(cond) (sizeof(char[1 - 2 * !(cond)]) - 1)
+#define BUG(...) 1
+  printf("asseert: %d\n", (int) BUILD_ASSERT_OR_ZERO(arr == NULL));
+  int w = 1;
+  printf("w: %d\n", !w);
+
+  char *ww;
+  printf("size of char 1: %ld\n", sizeof(char[1]) - 1);
+  printf("size ww: %ld\n", sizeof(ww[0]) - 1);
+  printf("size if char 0: %ld\n", sizeof(ww[0]) - 1);
+  printf("size of arr: %ld\n", sizeof(arr[1] - 1));
+
+  BUILD_ASSERT_OR_ZERO(z == 1);
+  char wx;
+  printf("char bit %d\n", CHAR_BIT * wx);
   return 0;
 }
