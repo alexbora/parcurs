@@ -417,11 +417,26 @@ int main()
   memcpy(conc + 4, STR(2023), 4);
   printf("%s\n", conc);
 
-  char *ep = "";
-  char *pe = "80";
+  char *ep = "malloc(8)";
+  char *pe = "malloc(8)";
 
   printf("ep: %d\n", ep == pe);
+  printf("%p %p\n", ep, pe);
   printf("%d\n", *ep);
+  cond = 1;
+  int cond2 = dup(cond);
+  printf("%d\n", cond2);
+
+  struct Test {
+    char *name;
+    int len;
+  } test[] = {
+#define ARR(n, l) {n, sizeof(x) - 1}
+      ARR("test", ), ARR("test", )
+#undef ARR
+  };
+  printf("%s %d\n", test[0].name, test[0].len);
+  printf("%s %d\n", test[1].name, test[1].len);
 
   return 0;
 }
