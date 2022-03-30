@@ -28,11 +28,21 @@ static FILE *log_file;
 #define stderr log_file
 #endif
 
-__pure static inline bool internet(void)
+#define CONNECT_VERBOSE (1u << 0)
+
+__pure static inline bool internet(int flag)
 {
+  const char *host = "test";
+  if (flag & CONNECT_VERBOSE) fprintf(stderr, ("Looking up %s ... \n"), host);
+
   int sockfd = socket(AF_INET, SOCK_STREAM, 0);
   struct sockaddr_in addr = {
       AF_INET, .sin_port = htons(80), {inet_addr("142.250.185.206")}};
+
+  if (flag & CONNECT_VERBOSE)
+    fprintf(stderr, ("done.\nConnecting to %s (port %s) ... \n"), "se->s_name",
+            "se->s_port");
+
   if (connect(sockfd, (struct sockaddr *) &addr, sizeof(addr)) != 0)
     return false;
   close(sockfd);
@@ -67,7 +77,10 @@ fetch(ssize_t *restrict const len, const int year)
     err = x;
     goto exit;
   }
-
+  struct servent *se = getservent();
+  printf("PORT: %d\n", se->s_port);
+  printf("proto: %s\n", se->s_proto);
+  printf("name: %s\n", se->s_name);
   /* for (struct addrinfo* rp = res; rp != NULL; rp = rp->ai_next) { */
   /*   int sfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
    */
@@ -359,17 +372,17 @@ int main()
 
   display2DArrayUnknownSize(&row[0][0], MONTH, DAY);
   fprintf(stderr, "is it vacation? %c\n", "nd"[vacation(&row[0][0], 12, 26)]);
-  printf("internet: %s\n", &"nu\0da, este net"[3 * internet()]);
+  printf("internet: %s\n", &"nu\0da, este net"[3 * internet(CONNECT_VERBOSE)]);
   /* printf("internet: %s\n", "nu\0da, este" + (3 * internet())); */
 /* note: use array indexing to silence this warning */
 #ifdef LOG
   if (log_file) fclose(log_file);
 #endif
-  if (!internet()) {
+  if (!internet(CONNECT_VERBOSE)) {
     puts("really,  no net...\n");
     return 1;
   }
-  int *arr;
+  int *arr = NULL;
   int z = __builtin_types_compatible_p(__typeof__(arr), __typeof__(&(arr)[0]));
 
   printf("z: %d\n", z);
@@ -380,14 +393,35 @@ int main()
   int w = 1;
   printf("w: %d\n", !w);
 
-  char *ww;
+  char *ww = "test";
   printf("size of char 1: %ld\n", sizeof(char[1]) - 1);
   printf("size ww: %ld\n", sizeof(ww[0]) - 1);
   printf("size if char 0: %ld\n", sizeof(ww[0]) - 1);
   printf("size of arr: %ld\n", sizeof(arr[1] - 1));
 
   BUILD_ASSERT_OR_ZERO(z == 1);
-  char wx;
+  char wx = '\0';
   printf("char bit %d\n", CHAR_BIT * wx);
+
+  int cond = 1;
+  printf("cond: %d\n", !cond);
+  printf("cond: %ld\n", (sizeof(char[1 - 2 * !(cond)]) - 1));
+  printf("cond: %c\n", ww[1 - 2 * !(cond)]);
+
+#define STR_(x) #x
+#define STR(x) STR_(x)
+
+  printf("%s\n", STR(2022));
+  char conc[16];
+  memcpy(&conc[0], "test", 4);
+  memcpy(conc + 4, STR(2023), 4);
+  printf("%s\n", conc);
+
+  char *ep = "";
+  char *pe = "80";
+
+  printf("ep: %d\n", ep == pe);
+  printf("%d\n", *ep);
+
   return 0;
 }
