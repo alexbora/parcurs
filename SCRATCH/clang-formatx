@@ -49,10 +49,6 @@ SortIncludes: true
 AlignArrayOfStructures: Right
 AttributeMacros: ['__capability', '__unused',  '__output']
 ForEachMacros:   [ foreach, Q_FOREACH, BOOST_FOREACH ]
-AlignEscapedNewlines: Right
-AlignTrailingComments: true
-Standard: c++20 #Latest
-AlignOperands:   Align
 
 
 #QualifierOrder: ['static',  'inline', 'const', 'restrict', 'type', 'volatile' ]
@@ -81,4 +77,5 @@ ForEachMacros:
   - 'list_for_each_prev'
   - 'list_for_each_prev_safe'
   - 'list_for_each_safe'
+
 

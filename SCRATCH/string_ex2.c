@@ -16,7 +16,7 @@
 #include <string.h>
 #include <sys/_types/_size_t.h>
 #include <sys/_types/_ssize_t.h>
-#include <sys/ioctl.h> /* ioctl()  */
+#include <sys/ioctl.h>  /* ioctl()  */
 #include <sys/socket.h> /* socket, connect */
 #include <sys/uio.h>
 #include <time.h>
@@ -30,37 +30,44 @@ static FILE *log_file;
 
 #define CONNECT_VERBOSE (1u << 0)
 
-__pure static inline bool internet(int flag)
-{
-  const char *host = "test";
-  if (flag & CONNECT_VERBOSE) fprintf(stderr, ("Looking up %s ... \n"), host);
+#define NORETURN __attribute__((__noreturn__))
+__attribute__((format(printf, 3, 4))) NORETURN void
+BUG_fl(const char *file, int line, const char *fmt, ...) {
+  fprintf(stderr, "%d\n", line);
+  exit(1);
+};
+#define BUG(...) BUG_fl(__FILE__, __LINE__, __VA_ARGS__)
 
-  int sockfd = socket(AF_INET, SOCK_STREAM, 0);
-  struct sockaddr_in addr = {
-      AF_INET, .sin_port = htons(80), {inet_addr("142.250.185.206")}};
+__pure static inline bool internet(int flag) {
+  char const *host = "test";
+  if (flag & CONNECT_VERBOSE)
+    fprintf(stderr, ("Looking up %s ... \n"), host);
+
+  int                sockfd = socket(AF_INET, SOCK_STREAM, 0);
+  struct sockaddr_in addr   = {
+        AF_INET, .sin_port = htons(80), {inet_addr("142.250.185.206")}};
 
   if (flag & CONNECT_VERBOSE)
     fprintf(stderr, ("done.\nConnecting to %s (port %s) ... \n"), "se->s_name",
             "se->s_port");
 
-  if (connect(sockfd, (struct sockaddr *) &addr, sizeof(addr)) != 0)
+  if (connect(sockfd, (struct sockaddr *)&addr, sizeof(addr)) != 0)
     return false;
   close(sockfd);
   return true;
 }
 
 __pure __const __attribute__((malloc)) static char *
-fetch(ssize_t *restrict const len, const int year)
-{
-  struct addrinfo hints = {.ai_family = AF_INET,
+fetch(ssize_t *restrict const len, const int year) {
+  struct addrinfo hints = {.ai_family   = AF_INET,
                            .ai_socktype = SOCK_STREAM,
                            .ai_protocol = IPPROTO_TCP,
-                           .ai_flags = AI_PASSIVE},
-                  *res = NULL;
+                           .ai_flags    = AI_PASSIVE},
+                  *res  = NULL;
   int err = 0, line = 0;
   char *const restrict buf = malloc(1024);
   if (buf == 0) {
-    err = *buf;
+    err  = *buf;
     line = __LINE__;
     /* return buf; */
     goto exit;
@@ -74,7 +81,7 @@ fetch(ssize_t *restrict const len, const int year)
     return NULL;
   } else if (0 != x) {
     line = __LINE__;
-    err = x;
+    err  = x;
     goto exit;
   }
   struct servent *se = getservent();
@@ -93,20 +100,20 @@ fetch(ssize_t *restrict const len, const int year)
   /* } */
   int sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
   if (sockfd < 0) {
-    err = sockfd;
+    err  = sockfd;
     line = __LINE__;
     goto exit;
   }
 
   x = connect(sockfd, res->ai_addr, res->ai_addrlen);
   if (x) {
-    err = x;
+    err  = x;
     line = __LINE__;
     goto exit;
   }
   puts("\x1b[32mConnected.\x1b[0m\n");
 
-  char header1[256] = {'\0'};
+  char      header1[256] = {'\0'};
   const int len_header =
       sprintf(header1,
               "GET /romanian_bank_holidays/?year=%d HTTP/1.1\r\nHost: "
@@ -125,9 +132,9 @@ fetch(ssize_t *restrict const len, const int year)
   /* int receivedx = readv(sockfd, &iov[1], 1); */
   /* memcpy(buf, foo, 1024); */
 
-  ssize_t sent = send(sockfd, header1, (size_t) len_header, 0);
+  ssize_t sent = send(sockfd, header1, (size_t)len_header, 0);
   if (sent <= 0) {
-    err = (int) sent;
+    err  = (int)sent;
     line = __LINE__;
     goto exit;
   }
@@ -137,7 +144,7 @@ fetch(ssize_t *restrict const len, const int year)
 
   ssize_t received = recv(sockfd, buf, 4 * 1024, 0);
   if (received < 1) {
-    err = (int) received;
+    err  = (int)received;
     line = __LINE__;
     goto exit;
   }
@@ -177,7 +184,7 @@ fetch(ssize_t *restrict const len, const int year)
   /* puts(&buf[received - 1000]); */
   /* printf("%c\n", buf[received - 1000]); */
 
-  char *ss = (char *) buf;
+  char *ss = (char *)buf;
   while (ss++)
     if (*ss == ']') {
       *--ss = '\0';
@@ -186,14 +193,16 @@ fetch(ssize_t *restrict const len, const int year)
   received -= 14;
 
   while (received--)
-    if (buf[received] == '[') return &buf[received];
+    if (buf[received] == '[')
+      return &buf[received];
 
   printf("buf: %c\n", buf[received - 14]);
 
-  char *t = (char *) buf;
+  char *t = (char *)buf;
   while (t++) {
     /* received--; */
-    if (*t == '[') return t;
+    if (*t == '[')
+      return t;
   }
   /* puts(t); */
 
@@ -212,12 +221,12 @@ exit:
   return NULL;
 }
 
-__unused static void parse_buf_bun(char *in, int len)
-{
+__unused static void parse_buf_bun(char *in, int len) {
   char *p = in;
   while (len--) {
     p = strstr(p, "date");
-    if (!p) break;
+    if (!p)
+      break;
     printf("%.2s %.2s\n", p + 7, p + 10);
     p++;
   }
@@ -229,16 +238,16 @@ struct H2 {
 };
 /* static struct H2 h2[32]; */
 
-static char **tmp1, **tmp2;
-static int *y;
-static struct H2 *parse_buf(const char in[static restrict 1], ssize_t len)
-{
-  struct H2 *out = calloc(32, sizeof(*out));
-  const char *p = in;
-  int i = 0;
+static char     **tmp1, **tmp2;
+static int       *y;
+static struct H2 *parse_buf(const char in[static restrict 1], ssize_t len) {
+  struct H2  *out = calloc(32, sizeof(*out));
+  const char *p   = in;
+  int         i   = 0;
   while (len--) {
     p = strstr(p, "date");
-    if (!p) break;
+    if (!p)
+      break;
     /* memcpy(tmp1[i], p + 7, 2); */
     /* memcpy(tmp2[i], p + 10, 2); */
     /* h2[i].day = atoi(p + 7); */
@@ -246,7 +255,7 @@ static struct H2 *parse_buf(const char in[static restrict 1], ssize_t len)
     /* h_ptr->day = atoi(p + 7); */
     /* (h_ptr->day) = atoi(p + 7); */
     /* (h_ptr + i)->day = atoi(p + 7); */
-    (out + i)->day = atoi(p + 7);
+    (out + i)->day   = atoi(p + 7);
     (out + i)->month = atoi(p + 10);
     /* memcpy((x + i)->day, p + 7, 2); */
     /* memcpy((x + i)->month, p + 10, 2); */
@@ -260,8 +269,7 @@ static struct H2 *parse_buf(const char in[static restrict 1], ssize_t len)
 
 __pure static void display2DArrayUnknownSize(const int *const restrict arr,
                                              const uint_fast8_t rows,
-                                             const uint_fast8_t cols)
-{
+                                             const uint_fast8_t cols) {
   for (uint_fast8_t i = 0; i < rows; i++) {
     for (uint_fast8_t j = 0; j < cols; j++) {
       fprintf(stderr, "%d ", *(arr + (i * cols) + j));
@@ -271,17 +279,31 @@ __pure static void display2DArrayUnknownSize(const int *const restrict arr,
 }
 #include <stdbool.h>
 __pure static inline bool vacation(const int *const restrict arr,
-                                   const int rows, const int cols)
-{
-  if (rows != (*(arr + 4) * rows)) return false;
+                                   const int rows, const int cols) {
+  if (rows != (*(arr + 4) * rows))
+    return false;
   for (unsigned i = 0; i < 4; i++) {
-    if (*(arr + (4 * rows) + i) == cols) return true;
+    if (*(arr + (4 * rows) + i) == cols)
+      return true;
   }
   return false;
 }
 
-int main()
-{
+static char *color(char *out, int flag) {
+  switch (flag) {
+    case 1:
+    case 2:
+      out = "no out";
+      break;
+  }
+  return out;
+}
+
+static inline int no_date(struct tm *tm) {
+  return (tm->tm_hour & tm->tm_min);
+}
+
+int main() {
   /* int er = 11; */
   /* FILE *test = fopen("er", "w++"); */
   // write(test, er, 2);
@@ -291,17 +313,22 @@ int main()
 #endif
 
   tmp1 = malloc(1024);
-  for (unsigned i = 0; i < 1024; i++) { tmp1[i] = malloc(2); }
+  for (unsigned i = 0; i < 1024; i++) {
+    tmp1[i] = malloc(2);
+  }
   tmp2 = malloc(1024);
-  for (unsigned i = 0; i < 1024; i++) { tmp2[i] = malloc(2); }
+  for (unsigned i = 0; i < 1024; i++) {
+    tmp2[i] = malloc(2);
+  }
 
-  ssize_t received = 0;
-  const char *in = fetch(&received, 2050);
-  if (!in) return 0;
+  ssize_t     received = 0;
+  const char *in       = fetch(&received, 2050);
+  if (!in)
+    return 0;
   /* struct H2 h3[1014]; */
   /* struct H2* h_ptr = h3; */
   /* parse_buf_bun(in, strlen(in)); */
-  y = malloc(sizeof(int));
+  y              = malloc(sizeof(int));
   struct H2 *res = parse_buf(in, received);
   for (int i = 0; i < *y; i++) {
     /* printf("%s\t", h[i].day); */
@@ -317,7 +344,7 @@ int main()
 
   /* return 0; */
 #define MONTH 13
-#define DAY 4
+#define DAY   4
 
   int row[MONTH][DAY] = {{0}};
   /* int i, j; */
@@ -337,20 +364,22 @@ int main()
     }
   }
 #endif
-  const char *x = (const char *) in;
-  int k = 0;
+  const char *x = (const char *)in;
+  int         k = 0;
   do {
     x = strstr(x, "date");
-    if (!x) break;
+    if (!x)
+      break;
     int m = atoi(x + 10);
     int n = atoi(x + 7);
     /* printf("n: %d\n", n); */
-    while (row[m][k]) k++;
+    while (row[m][k])
+      k++;
     row[m][k] = n;
     k ^= k;
     /* k = (k > 3) ? 0 : k; */
   } while (x++);
-  x = (void *) 0;
+  x = (void *)0;
   /* free((void*)x); */
   /* i = j = 0; */
   /* char* p = (char*)in; */
@@ -376,20 +405,21 @@ int main()
   /* printf("internet: %s\n", "nu\0da, este" + (3 * internet())); */
 /* note: use array indexing to silence this warning */
 #ifdef LOG
-  if (log_file) fclose(log_file);
+  if (log_file)
+    fclose(log_file);
 #endif
   if (!internet(CONNECT_VERBOSE)) {
     puts("really,  no net...\n");
     return 1;
   }
   int *arr = NULL;
-  int z = __builtin_types_compatible_p(__typeof__(arr), __typeof__(&(arr)[0]));
+  int  z = __builtin_types_compatible_p(__typeof__(arr), __typeof__(&(arr)[0]));
 
   printf("z: %d\n", z);
 
 #define BUILD_ASSERT_OR_ZERO(cond) (sizeof(char[1 - 2 * !(cond)]) - 1)
-#define BUG(...) 1
-  printf("asseert: %d\n", (int) BUILD_ASSERT_OR_ZERO(arr == NULL));
+
+  printf("asseert: %d\n", (int)BUILD_ASSERT_OR_ZERO(arr == NULL));
   int w = 1;
   printf("w: %d\n", !w);
 
@@ -409,7 +439,7 @@ int main()
   printf("cond: %c\n", ww[1 - 2 * !(cond)]);
 
 #define STR_(x) #x
-#define STR(x) STR_(x)
+#define STR(x)  STR_(x)
 
   printf("%s\n", STR(2022));
   char conc[16];
@@ -423,20 +453,27 @@ int main()
   printf("ep: %d\n", ep == pe);
   printf("%p %p\n", ep, pe);
   printf("%d\n", *ep);
-  cond = 1;
+  cond      = 1;
   int cond2 = dup(cond);
   printf("%d\n", cond2);
 
   struct Test {
     char *name;
-    int len;
+    int   len;
   } test[] = {
-#define ARR(n, l) {n, sizeof(x) - 1}
-      ARR("test", ), ARR("test", )
+#define ARR(n, l) {n, strlen(n)}
+      ARR("test", ), ARR("test", ), ARR(STR(7), )
 #undef ARR
   };
   printf("%s %d\n", test[0].name, test[0].len);
   printf("%s %d\n", test[1].name, test[1].len);
+  printf("%s %d\n", test[2].name, test[2].len);
+  /* BUG("cond2"); */
 
+  printf("%s\n", color("no color", 0));
+  struct tm t = {.tm_min = -1, .tm_hour = -1};
+  printf("%d\n", no_date(&t));
   return 0;
+  int  SIZE;
+  char b[SIZE];
 }
