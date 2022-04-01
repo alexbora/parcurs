@@ -339,10 +339,10 @@ static inline void array_fill(const char in[static restrict const 1],
   } while (x++);
 }
 
-void fnull(void) {
+static void fnull(void) {
   puts("no holiday\n");
 }
-void fn(void) {
+static void fn(void) {
   puts("holiday\n");
 }
 
@@ -352,25 +352,24 @@ int main(int argc, char *argv[argc + 1]) {
                    "popf");
 
   char   *buf      = malloc(4096);
-  ssize_t received = fetch((uint_fast64_t)previous.year, &buf[0]);
+  char  **buf_p    = &buf;
+  ssize_t received = fetch((uint_fast64_t)previous.year, *buf_p);
   if (received)
-    parse(&buf, received);
+    parse(buf_p, received);
   static unsigned array[13][4] = {{'\0'}};
-  array_fill(buf, array);
+  array_fill(*buf_p, array);
 
-  printf("%p\n", buf);
-  /* free(buf); */
+  free(buf_p);
 
   int days          = days_in_month(previous.month, previous.year);
   int arr_month[32] = {0};
 
   get_previous();
-  int c_mon = previous.month;
+  int m = previous.month;
   for (unsigned i = 0; i < 3; i++)
-    arr_month[array[c_mon][i]] = array[c_mon][i];
+    arr_month[array[m][i]] = array[m][i];
   for (unsigned i = 1; i <= days; i++) {
-    if (isholiday(i, c_mon, 2022))
-      arr_month[i] = 1;
+    arr_month[i] = isholiday(i, m, previous.year);
   }
 
   void (*f[days])(void);
