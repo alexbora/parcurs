@@ -42,6 +42,8 @@ def mail():
     #excel = dir + "/foaie_parcurs_B-151-VGT_ianuarie_Alex_Bora_18.02.2022.xlsx"
     excel = "/mnt/t400.linux/home/alex/Documente/parcurs/foaie_parcurs_B-151-VGT_" + month.lower() + "_2022_Alex_Bora.xlsx"
     exe = dir + "/foaie_2"
+    excel="/mnt/t400.linux/home/alex/Documente/parcurs/foaie_parcurs_B-151-VGT_martie_2022_Alex_Bora.xlsx"
+    #nu citeste corect path, nu a generat nici macar C
 
     #subprocess.call(exe)
     # subprocess.call("/Users/alex/dev/PARCURS/foaie_2")
