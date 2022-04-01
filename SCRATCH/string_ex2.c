@@ -400,7 +400,7 @@ int main() {
   /* } */
 
   display2DArrayUnknownSize(&row[0][0], MONTH, DAY);
-  fprintf(stderr, "is it vacation? %c\n", "nd"[vacation(&row[0][0], 12, 26)]);
+  fprintf(stderr, "is it vacation? %c\n", "nd"[vacation(&row[0][0], 3, 1)]);
   printf("internet: %s\n", &"nu\0da, este net"[3 * internet(CONNECT_VERBOSE)]);
   /* printf("internet: %s\n", "nu\0da, este" + (3 * internet())); */
 /* note: use array indexing to silence this warning */

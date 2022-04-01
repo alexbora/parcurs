@@ -109,6 +109,8 @@ static inline bool isholiday(const unsigned day, const unsigned month,
   mktime(&tm);
   /* if (tm.tm_year != 2022) return true; */
 
+  if (tm.tm_wday == 0 || tm.tm_wday == 6)
+    return true;
   static const struct {
     unsigned day, mon;
   } hol[2024][16] = {[2022] = {{1, 1},
@@ -142,7 +144,7 @@ static inline bool isholiday(const unsigned day, const unsigned month,
 
   if (tm.tm_wday == 0 || tm.tm_wday == 6)
     return true;
-
+  return false;
   size_t size = (sizeof(hol) / sizeof(hol[0]));
   for (size_t i = 0; i < size; i++)
     if (day == hol[tm.tm_year][i].day && month == hol[tm.tm_year][i].mon)
@@ -356,6 +358,33 @@ int main(int argc, char *argv[argc + 1]) {
   static unsigned array[13][4] = {{'\0'}};
   array_fill(buf, array);
 
+  printf("%p\n", buf);
+  /* free(buf); */
+
+  int days          = days_in_month(previous.month, previous.year);
+  int arr_month[32] = {0};
+
+  get_previous();
+  int c_mon = previous.month;
+  for (unsigned i = 0; i < 3; i++)
+    arr_month[array[c_mon][i]] = array[c_mon][i];
+  for (unsigned i = 1; i <= days; i++) {
+    if (isholiday(i, c_mon, 2022))
+      arr_month[i] = 1;
+  }
+
+  void (*f[days])(void);
+  for (unsigned i = 0; i < days; i++) {
+    f[i] = arr_month[i] ? fn : fnull;
+  }
+
+  for (unsigned i = 0; i < days; i++) {
+    f[i]();
+  }
+  puts("\n");
+  for (unsigned i = 1; i <= days; i++)
+    printf("%d %d\n", i, arr_month[i]);
+  return 0;
   /* if (row[1][1]) puts("holiday\n"); */
   /* row[2][1] ? puts("holiday\n") : puts("not holiday\n"); */
 
@@ -395,21 +424,21 @@ int main(int argc, char *argv[argc + 1]) {
     void (*fn)(void);
     int row, col;
   };
-  lxw_workbook *new = workbook_new("new");
+  /* lxw_workbook *new = workbook_new("new"); */
 
   /* struct Write w = {new, 1, 1, .string = "test", fn, NULL}; */
   /* struct Write w5 = {new, 1, 1, .no = 10, fn, NULL}; */
   /* struct Write2 w2 = {new, NULL, (char*)"test", fn, 1, 1}; */
   /* struct Write2 w3 = {new, NULL, malloc(sizeof(int)), fn, 1, 1}; */
   /* memcpy(w3.data, &(int){1}, sizeof(int)); */
-  struct Write2 w4 = {new, NULL, malloc(sizeof(int)), fn, 1, 1};
+  /* struct Write2 w4 = {new, NULL, malloc(sizeof(int)), fn, 1, 1}; */
 
-  *((int *)w4.data) = 1;
+  /* *((int *)w4.data) = 1; */
 
-  workbook_close(new);
+  /* workbook_close(new); */
   /* return 0; */
 
-  FILE *f = fopen("z", "w++");
+  /* FILE *f = fopen("z", "w++"); */
 
   srand((unsigned)time(0));
   do {
@@ -758,7 +787,7 @@ int main(int argc, char *argv[argc + 1]) {
   file = fopen("km", "w+");
   fprintf(file, "%d", total);
   fclose(file);
-  fclose(f);
+  /* fclose(f); */
 
   workbook_close(workbook);
   printf("%s\n", name);
