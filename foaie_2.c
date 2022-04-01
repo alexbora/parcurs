@@ -407,7 +407,7 @@ int main(int argc, char *argv[argc + 1]) {
   *((int *)w4.data) = 1;
 
   workbook_close(new);
-  return 0;
+  /* return 0; */
 
   FILE *f = fopen("z", "w++");
 
@@ -499,12 +499,15 @@ int main(int argc, char *argv[argc + 1]) {
   sprintf(name, "foaie_parcurs_B-151-VGT_%s_%d_Alex_Bora.xlsx",
           month_name(previous.day, previous.month, previous.year),
           previous.year);
+  puts(name);
   char worksheet_name[32];
+  *worksheet_name = '\0';
   sprintf(worksheet_name, "%s %d",
           month_name(previous.day, previous.month, previous.year),
           previous.year);
 
-  char                 cwd[PATH_MAX + 1];
+  char cwd[PATH_MAX + 1];
+  *cwd                         = '\0';
   lxw_workbook_options options = {.constant_memory = LXW_FALSE,
                                   .tmpdir          = cwd, /* .tmpdir =
                                                              getcwd(NULL, 0), */
@@ -533,7 +536,7 @@ int main(int argc, char *argv[argc + 1]) {
                              .show_input   = LXW_VALIDATION_OFF};
 
   // Set the properties in the workbook.
-  lxw_workbook *workbook = workbook_new_opt("foaie.xlsx", &options);
+  lxw_workbook *workbook = workbook_new_opt(name, &options);
   /* lxw_workbook* workbook = workbook_new_opt(name, &options); */
   /* lxw_workbook* workbook = workbook_new_opt("foaie.xlsx", &options); */
   workbook_set_properties(workbook, &properties);
