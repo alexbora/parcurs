@@ -1,3 +1,6 @@
+/*  -*- mode: cc-mode; coding: utf-8; tab-width: 4; c-basic-offset: 4 -*-
+vim:fenc=utf-8:filetype=c:et:sw=4:ts=4:sts=4 */
+
 /**
  * @author      : alex (alexbora@gmail.com)
  * @file        : foaie
@@ -343,7 +346,15 @@ static void fnull(void) {
   puts("no holiday\n");
 }
 static void fn(void) {
+  /* param: worksheet,  *row,  col,  text,  format) */
+  /* worksheet_write_string(worksheet, i + offset, m, "", format_local); */
   puts("holiday\n");
+}
+
+static void wkend(lxw_worksheet *s, int *row, const int col, const char *text,
+                  lxw_format *f) {
+  worksheet_write_string(s, *row, col, text, f);
+  (*row)++;
 }
 
 int main(int argc, char *argv[argc + 1]) {
@@ -382,7 +393,20 @@ int main(int argc, char *argv[argc + 1]) {
   }
   puts("\n");
   for (unsigned i = 1; i <= days; i++)
-    printf("%d %d\n", i, arr_month[i]);
+    printf("arr_mon: %d %d\n", i, arr_month[i]);
+
+  lxw_workbook  *wkk = workbook_new("text.xlsx");
+  lxw_worksheet *wss = workbook_add_worksheet(wkk, "text");
+
+  int rrr = 1;
+  for (unsigned i = 1; i <= days; i++) {
+    if (arr_month[i])
+      wkend(wss, &rrr, 1, "text", NULL);
+    else
+      wkend(wss, &rrr, 1, "no _text", NULL);
+  }
+
+  workbook_close(wkk);
   return 0;
   /* if (row[1][1]) puts("holiday\n"); */
   /* row[2][1] ? puts("holiday\n") : puts("not holiday\n"); */
@@ -528,8 +552,7 @@ int main(int argc, char *argv[argc + 1]) {
           month_name(previous.day, previous.month, previous.year),
           previous.year);
   puts(name);
-  char worksheet_name[32];
-  *worksheet_name = '\0';
+  char worksheet_name[32] = {'\0'};
   sprintf(worksheet_name, "%s %d",
           month_name(previous.day, previous.month, previous.year),
           previous.year);
