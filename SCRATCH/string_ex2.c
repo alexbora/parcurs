@@ -31,12 +31,12 @@ static FILE *log_file;
 #define CONNECT_VERBOSE (1u << 0)
 
 #define NORETURN __attribute__((__noreturn__))
-__attribute__((format(printf, 3, 4))) NORETURN void
-BUG_fl(const char *file, int line, const char *fmt, ...) {
-  fprintf(stderr, "%d\n", line);
+__attribute__((format(printf, 4, 5))) NORETURN void
+BUG_(const char *file, int line, const char *func, const char *fmt, ...) {
+  fprintf(stderr, "%s - %d - %s\n", file, line, func);
   exit(1);
 };
-#define BUG(...) BUG_fl(__FILE__, __LINE__, __VA_ARGS__)
+#define BUG(...) BUG_(__FILE__, __LINE__, __FUNC__, __VA_ARGS__)
 
 __pure static inline bool internet(int flag) {
   char const *host = "test";
@@ -214,7 +214,11 @@ fetch(ssize_t *restrict const len, const int year) {
     }
     /* *len = (ssize_t)strlen(&buf[i]); */
   }
+#define SAY(a, b, c) fprintf(stderr, a, b, c);
+#define SAY2(a)      fprintf(stderr, "%d %s\n", __LINE__, a);
 exit:
+  SAY("ERROR %.*s", line, gai_strerror(err));
+  SAY2("");
   fprintf(stderr, "ERROR: line %d, [%d] %s\n", line, err, gai_strerror(err));
   freeaddrinfo(res);
   res = NULL;
@@ -473,6 +477,5 @@ int main() {
   printf("%s\n", color("no color", 0));
   struct tm t = {.tm_min = -1, .tm_hour = -1};
   printf("%d\n", no_date(&t));
-  int  SIZE;
-  char b[SIZE];
   return 0;
+}
