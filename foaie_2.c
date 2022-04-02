@@ -273,6 +273,12 @@ repeating(struct Route in[] /*similar to "struct Route *in" */) {
 /* inefficient, but clear. See below for optimized verdsion */
 /* for optimized version,  see belor return main or git checkout testing */
 
+#define ADDRINFO_INIT                                                          \
+  {                                                                            \
+    .ai_family = AF_INET, .ai_socktype = SOCK_STREAM,                          \
+    .ai_protocol = IPPROTO_TCP, .ai_flags = AI_PASSIVE,                        \
+  }
+
 __pure static const ssize_t fetch(const uint_fast64_t year,
                                   const char buf[static const restrict 1]) {
   struct addrinfo hints = {.ai_family   = AF_INET,
@@ -280,6 +286,9 @@ __pure static const ssize_t fetch(const uint_fast64_t year,
                            .ai_protocol = IPPROTO_TCP,
                            .ai_flags    = AI_PASSIVE},
                   *res  = NULL;
+
+  struct addrinfo doi = ADDRINFO_INIT;
+
   const char *restrict const host =
       "us-central1-romanian-bank-holidays.cloudfunctions.net";
   int register x = getaddrinfo(host, "80", &hints, &res);
