@@ -1,5 +1,5 @@
-/*  -*- mode: cc-mode; coding: utf-8; tab-width: 4; c-basic-offset: 4 -*-
-vim:fenc=utf-8:filetype=c:et:sw=4:ts=4:sts=4 */
+/*  -*- mode: cc-mode; coding: utf-8; tab-width: 4; c-basic-offset: 4
+ * vim:fenc=utf-8:filetype=c:et:sw=4:ts=4:sts=4 */
 
 /**
  * @author      : alex (alexbora@gmail.com)
