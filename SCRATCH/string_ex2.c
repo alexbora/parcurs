@@ -473,7 +473,6 @@ int main() {
   printf("%s\n", color("no color", 0));
   struct tm t = {.tm_min = -1, .tm_hour = -1};
   printf("%d\n", no_date(&t));
-  return 0;
   int  SIZE;
   char b[SIZE];
-}
+  return 0;
