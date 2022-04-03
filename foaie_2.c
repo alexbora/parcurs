@@ -37,6 +37,10 @@
 #include <unistd.h>
 #include <xlsxwriter.h>
 
+#ifndef __pure
+#define __pure __attribute__((pure))
+#endif
+
 #define u64 uint_fast64_t
 
 #ifdef LOG
@@ -147,7 +151,6 @@ static inline bool isholiday(const unsigned day, const unsigned month,
 
   if (tm.tm_wday == 0 || tm.tm_wday == 6)
     return true;
-  return false;
   size_t size = (sizeof(hol) / sizeof(hol[0]));
   for (size_t i = 0; i < size; i++)
     if (day == hol[tm.tm_year][i].day && month == hol[tm.tm_year][i].mon)
@@ -162,6 +165,25 @@ static inline bool isholiday(const unsigned day, const unsigned month,
 
   holiday[22]                = (struct Holiday){1, 1};
   holiday[tm.tm_year - 2000] = (struct Holiday){1, 1};
+}
+
+static bool is_vacation_net(const int day, const int month, const int year) {
+  struct tm tm = {.tm_year  = year - 1900,
+                  .tm_mon   = month - 1,
+                  .tm_mday  = day,
+                  .tm_isdst = -1};
+  mktime(&tm);
+
+  if (tm.tm_wday == 0 || tm.tm_wday == 6)
+    return true;
+  return false;
+};
+
+static inline bool vacation(const int day, const int month, const int year,
+                            unsigned flag) {
+  if (flag)
+    return is_vacation_net(day, month, year);
+  return isholiday(day, month, year);
 }
 
 static inline bool isvacation(const unsigned day, const unsigned month) {
@@ -233,9 +255,9 @@ static inline void random_shuffle(void) {
     }
   }
 
-  int found, play, cycle, k = 0, recent[128];
+  int found, play, cycle, k = 0, recent[128] = {0};
   found = play = cycle = k;
-  memset(&recent, 0, sizeof(recent));
+  /* memset(&recent, 0, sizeof(recent)); */
 
   const static int parc = NELEMS(parcurs), tmp_size = NELEMS(tmp);
 
@@ -325,7 +347,7 @@ __pure static const ssize_t fetch(const uint_fast64_t year,
   return received;
 }
 
-__const static ssize_t parse(char **in, ssize_t received) {
+__pure static ssize_t parse(char **in, ssize_t received) {
   received -= 14;
   while (received--) {
     if (*(*in)++ == '[')
@@ -362,6 +384,13 @@ static void fn(void) {
 
 static void wkend(lxw_worksheet *s, int *row, const int col, const char *text,
                   lxw_format *f) {
+  text = "weenkend";
+  worksheet_write_string(s, *row, col, text, f);
+  (*row)++;
+}
+static void wday(lxw_worksheet *s, int *row, const int col, const char *text,
+                 lxw_format *f) {
+  text = "workday";
   worksheet_write_string(s, *row, col, text, f);
   (*row)++;
 }
@@ -385,12 +414,17 @@ int main(int argc, char *argv[argc + 1]) {
   int arr_month[32] = {0};
 
   get_previous();
-  int m = previous.month;
+  int m    = previous.month;
+  int flag = received > 0;
   for (unsigned i = 0; i < 3; i++)
     arr_month[array[m][i]] = array[m][i];
   for (unsigned i = 1; i <= days; i++) {
-    arr_month[i] = isholiday(i, m, previous.year);
+    arr_month[i] = vacation(i, m, previous.year, flag);
   }
+
+  puts("\n");
+  printf("%d\n", flag);
+  puts("\n");
 
   void (*f[days])(void);
   for (unsigned i = 0; i < days; i++) {
@@ -404,15 +438,24 @@ int main(int argc, char *argv[argc + 1]) {
   for (unsigned i = 1; i <= days; i++)
     printf("arr_mon: %d %d\n", i, arr_month[i]);
 
+  void (*write[days])(lxw_worksheet *, int *, const int, const char *,
+                      lxw_format *);
+  for (unsigned i = 0; i < days; i++) {
+    write[i] = arr_month[i] ? wkend : wday;
+  }
+
   lxw_workbook  *wkk = workbook_new("text.xlsx");
   lxw_worksheet *wss = workbook_add_worksheet(wkk, "text");
 
-  int rrr = 1;
-  for (unsigned i = 1; i <= days; i++) {
-    if (arr_month[i])
-      wkend(wss, &rrr, 1, "text", NULL);
-    else
-      wkend(wss, &rrr, 1, "no _text", NULL);
+  lxw_format *format_yellow = workbook_add_format(wkk);
+  format_set_bg_color(format_yellow, LXW_COLOR_YELLOW_PALE);
+  int rrr = 0;
+  for (unsigned i = 0; i < days; i++) {
+    write[i](wss, &rrr, 1, NULL, format_yellow);
+    /* if (arr_month[i]) */
+    /*   wkend(wss, &rrr, 1, "text", format_yellow); */
+    /* else */
+    /*   wday(wss, &rrr, 1, "no _text", format_yellow); */
   }
 
   workbook_close(wkk);

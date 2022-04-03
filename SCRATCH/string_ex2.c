@@ -72,12 +72,11 @@ fetch(ssize_t *restrict const len, const int year) {
     /* return buf; */
     goto exit;
   }
-
   const char *restrict const host =
       "us-central1-romanian-bank-holidays.cloudfunctions.net";
   int x = getaddrinfo(host, "80", &hints, &res);
   if (x == EAI_SYSTEM) {
-    fprintf(stderr, "looking up %s => %s\n", host, strerror(x));
+    fprintf(stderr, "error looking up %s => %s\n", host, strerror(x));
     return NULL;
   } else if (0 != x) {
     line = __LINE__;
@@ -218,7 +217,7 @@ fetch(ssize_t *restrict const len, const int year) {
 #define SAY2(a)      fprintf(stderr, "%d %s\n", __LINE__, a);
 exit:
   SAY("ERROR %.*s", line, gai_strerror(err));
-  SAY2("");
+  SAY2(gai_strerror(err));
   fprintf(stderr, "ERROR: line %d, [%d] %s\n", line, err, gai_strerror(err));
   freeaddrinfo(res);
   res = NULL;
