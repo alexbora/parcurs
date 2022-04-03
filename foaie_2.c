@@ -166,38 +166,38 @@ static inline bool isholiday(const unsigned day, const unsigned month,
   holiday[22]                = (struct Holiday){1, 1};
   holiday[tm.tm_year - 2000] = (struct Holiday){1, 1};
 }
-struct Holidays;
-static inline bool isholiday_ex(const unsigned day, const unsigned month,
-                                const unsigned year, const struct Holidays *h) {
-  struct tm tm = {.tm_year  = (const int)(year - 1900),
-                  .tm_mon   = (const int)(month - 1),
-                  .tm_mday  = (const int)day,
-                  .tm_isdst = -1};
+struct Holidays {
+  int day, month;
+};
+#define TM_INITIAILIZER                                                        \
+  {                                                                            \
+    .tm_year = year - 1900, .tm_mon = month - 1, .tm_mday = day,               \
+    .tm_isdst = -1                                                             \
+  }
+
+static inline bool isholiday_ex(const int day, const int month, const int year,
+                                const struct Holidays *h) {
+  struct tm tm = TM_INITIAILIZER;
   mktime(&tm);
 
-  if (tm.tm_year != 2022)
-    return false;
-  if (tm.tm_wday == 0 || tm.tm_wday == 6)
-    return true;
+  /* if (tm.tm_wday == 0 || tm.tm_wday == 6) */
+  /* return true; */
 
-  static const struct {
-    unsigned day, mon;
-  } hol[] = {{1, 1},   {2, 1},  {24, 1},  {22, 4}, {24, 4}, {25, 4},
-             {1, 5},   {1, 5},  {1, 6},   {12, 6}, {13, 6}, {15, 8},
-             {30, 11}, {1, 12}, {25, 12}, {26, 12}};
+  const struct Holidays *hol =
+      h ? h : (const struct Holidays[]){{1, 1},   {2, 1},  {24, 1},  {22, 4},
+                                        {24, 4},  {25, 4}, {1, 5},   {1, 5},
+                                        {1, 6},   {12, 6}, {13, 6},  {15, 8},
+                                        {30, 11}, {1, 12}, {25, 12}, {26, 12}};
 
-  size_t size = (sizeof(hol) / sizeof(hol[0]));
-  for (size_t i = 0; i < size; i++)
-    if (day == hol[i].day && month == hol[i].mon)
+  /* size_t size = (sizeof(hol) / sizeof(hol[0])); */
+  for (size_t i = 0; i < 16; i++)
+    if (day == hol[i].day && month == hol[i].month)
       return true;
   return false;
 }
 
 static bool is_vacation_net(const int day, const int month, const int year) {
-  struct tm tm = {.tm_year  = year - 1900,
-                  .tm_mon   = month - 1,
-                  .tm_mday  = day,
-                  .tm_isdst = -1};
+  struct tm tm = TM_INITIAILIZER;
   mktime(&tm);
 
   if (tm.tm_wday == 0 || tm.tm_wday == 6)
@@ -224,14 +224,10 @@ static inline bool isvacation(const unsigned day, const unsigned month) {
   return false;
 }
 
-static inline const char *month_name(const unsigned day, const unsigned month,
-                                     const unsigned year) {
-  struct tm tm = {.tm_year  = (int)year - 1900,
-                  .tm_mon   = (int)month - 1,
-                  .tm_mday  = (const int)day,
-                  .tm_isdst = -1};
+static inline const char *const
+month_name(const unsigned day, const unsigned month, const unsigned year) {
+  struct tm tm = TM_INITIAILIZER;
 
-  /* time_t t = mktime(&tm); */
   static const char *const mths[12] = {"ianuarie",  "februarie", "martie",
                                        "aprilie",   "mai",       "iunie",
                                        "iulie",     "august",    "septembrie",
@@ -375,11 +371,30 @@ __pure static const ssize_t fetch(const uint_fast64_t year,
 
 __pure static ssize_t parse(char **in, ssize_t received) {
   received -= 14;
+  char *tmp = *in;
   while (received--) {
-    if (*(*in)++ == '[')
+    if (*tmp++ == '[')
       break;
   }
   return received;
+}
+
+static inline void struct_fill(const char *in, struct Holidays *h) {
+  const char      *x  = in;
+  struct Holidays *hx = h;
+  int              i  = 0;
+  while (x++) {
+    if (*x == '[')
+      break;
+  }
+  while (x++) {
+    x = strstr(x, "date");
+    if (!x)
+      break;
+    hx[i].day   = atoi(x + 7);
+    hx[i].month = atoi(x + 10);
+    i++;
+  }
 }
 
 static inline void array_fill(const char in[static restrict const 1],
@@ -410,18 +425,25 @@ static void fn(void) {
 
 static void wkend(lxw_worksheet *s, int *row, const int col, const char *text,
                   lxw_format *f) {
-  text = "weenkend";
+  text = "";
   worksheet_write_string(s, *row, col, text, f);
   (*row)++;
 }
 static void wday(lxw_worksheet *s, int *row, const int col, const char *text,
                  lxw_format *f) {
-  text = "workday";
-  worksheet_write_string(s, *row, col, text, f);
+  worksheet_write_string(s, *row, col, "routa", f);
+  worksheet_write_string(s, *row, col + 1, "km", f);
+  worksheet_write_string(s, *row, col + 2, "inte", f);
   (*row)++;
 }
 
 int main(int argc, char *argv[argc + 1]) {
+
+  struct Holidays  h[16] = {{0, 0}, {1, 3}, {5, 0}};
+  int              recv  = 0;
+  struct Holidays *hx[2] = {NULL, h};
+  printf("%d\n", isholiday_ex(1, 1, 2022, hx[recv > 0]));
+
   __asm__ volatile("pushf\n"
                    "orl $0x40000, (%rsp)\n"
                    "popf");
@@ -429,13 +451,27 @@ int main(int argc, char *argv[argc + 1]) {
   char   *buf      = malloc(4096);
   char  **buf_p    = &buf;
   ssize_t received = fetch((uint_fast64_t)previous.year, *buf_p);
+
   if (received)
     parse(buf_p, received);
   static unsigned array[13][4] = {{'\0'}};
   array_fill(*buf_p, array);
 
+  free(*buf_p);
   free(buf_p);
+  *buf_p = NULL;
+  buf_p  = NULL;
 
+  char bff[4096];
+  fetch(2022, bff);
+  printf("%s\n", bff);
+
+  struct Holidays hh[16] = {{}};
+  struct_fill(bff, hh);
+  printf("hh %d\n", hh[1].day);
+  printf("hh %d\n", hh[1].month);
+
+  return 0;
   int days          = days_in_month(previous.month, previous.year);
   int arr_month[32] = {0};
 
