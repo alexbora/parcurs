@@ -166,6 +166,32 @@ static inline bool isholiday(const unsigned day, const unsigned month,
   holiday[22]                = (struct Holiday){1, 1};
   holiday[tm.tm_year - 2000] = (struct Holiday){1, 1};
 }
+struct Holidays;
+static inline bool isholiday_ex(const unsigned day, const unsigned month,
+                                const unsigned year, const struct Holidays *h) {
+  struct tm tm = {.tm_year  = (const int)(year - 1900),
+                  .tm_mon   = (const int)(month - 1),
+                  .tm_mday  = (const int)day,
+                  .tm_isdst = -1};
+  mktime(&tm);
+
+  if (tm.tm_year != 2022)
+    return false;
+  if (tm.tm_wday == 0 || tm.tm_wday == 6)
+    return true;
+
+  static const struct {
+    unsigned day, mon;
+  } hol[] = {{1, 1},   {2, 1},  {24, 1},  {22, 4}, {24, 4}, {25, 4},
+             {1, 5},   {1, 5},  {1, 6},   {12, 6}, {13, 6}, {15, 8},
+             {30, 11}, {1, 12}, {25, 12}, {26, 12}};
+
+  size_t size = (sizeof(hol) / sizeof(hol[0]));
+  for (size_t i = 0; i < size; i++)
+    if (day == hol[i].day && month == hol[i].mon)
+      return true;
+  return false;
+}
 
 static bool is_vacation_net(const int day, const int month, const int year) {
   struct tm tm = {.tm_year  = year - 1900,
