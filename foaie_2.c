@@ -468,8 +468,8 @@ int main(int argc, char *argv[argc + 1]) {
 
   struct Holidays hh[16] = {{}};
   struct_fill(bff, hh);
-  printf("hh %d\n", hh[1].day);
-  printf("hh %d\n", hh[1].month);
+  printf("hh %d\n", hh[12].day);
+  printf("hh %d\n", hh[12].month);
 
   return 0;
   int days          = days_in_month(previous.month, previous.year);
