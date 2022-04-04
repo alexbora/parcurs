@@ -67,7 +67,7 @@ def mail3():
 
     longdate = datetime.today().strftime('%d.%m.%Y')
    
-    excel="foaie_parcurs_B-151-VGT_" + month.lower() + "_2022_Alex_Bora.xlsx"
+    excel="/home/alex/tmp/parcurs/foaie_parcurs_B-151-VGT_" + month.lower() + "_2022_Alex_Bora.xlsx"
     exe="/home/alex/tmp/parcurs/foaie_2"
     subprocess.call(exe)
     sender_email = "t400.linux@gmail.com"
@@ -78,6 +78,21 @@ def mail3():
     contents = [excel]
 
     yag.send(receiver_email, subject, contents)
+
+
+def mail4():
+
+    exe="/home/alex/tmp/parcurs/foaie_2"
+    subprocess.call(exe)
+    sender_email = "t400.linux@gmail.com"
+    receiver_email = "t400.linux@gmail.com"
+    subject = "ZWEITE foaie_parcurs - B-151-VGT - Alex Bora"
+    yag = yagmail.SMTP(user=sender_email, password="Cragger2011")
+    contents = ["/home/alex/tmp/parcurs/foaie_parcurs_B-151-VGT_martie_2022_Alex_Bora.xlsx"]
+    yag.send(receiver_email, subject, contents)
+
+
+mail4()
 
 
 # name()
