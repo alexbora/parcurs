@@ -1,5 +1,5 @@
-/*  -*- mode: cc-mode; coding: utf-8; tab-width: 4; c-basic-offset: 4
- * vim:fenc=utf-8:filetype=c:et:sw=4:ts=4:sts=4 */
+///*  -*- mode: cc-mode; coding: utf-8; tab-width: 4; c-basic-offset: 4
+//* vim:fenc=utf-8:filetype=c:et:sw=4:ts=4:sts=4 */
 
 /**
  * @author      : alex (alexbora@gmail.com)
@@ -70,7 +70,9 @@
 #define LXW_COLOR_YELLOW_PALE (0xFFFFCA)
 #define NELEMS(x)             sizeof(x) / sizeof(x[0])
 
-static struct T { unsigned day, month, year; } current, previous;
+static struct T {
+  unsigned day, month, year;
+} current, previous;
 static char longdate[128];
 /* static unsigned days_pattern[32]; */
 static unsigned row;
@@ -97,8 +99,8 @@ static struct Route {
                            {"Cluj-Bontida", 92, "Interes Serviciu"},
                            {"Cluj-Satu-Mare", 421, "Interes Serviciu"}};
 
-static inline unsigned days_in_month(const unsigned month,
-                                     const unsigned year) {
+static inline unsigned days_in_month(const unsigned month, const unsigned year)
+{
   if (month == 4 || month == 6 || month == 9 || month == 11)
     return 30;
   else if (month == 2)
@@ -108,7 +110,8 @@ static inline unsigned days_in_month(const unsigned month,
 }
 
 static inline bool isholiday(const unsigned day, const unsigned month,
-                             const unsigned year) {
+                             const unsigned year)
+{
   struct tm tm = {.tm_year  = (const int)(year - 1900),
                   .tm_mon   = (const int)(month - 1),
                   .tm_mday  = (const int)day,
@@ -175,28 +178,34 @@ struct Holidays {
     .tm_isdst = -1                                                             \
   }
 
-static inline bool isholiday_ex(const int day, const int month, const int year,
-                                const struct Holidays *h) {
+__pure static inline bool isholiday_ex(const int day, const int month,
+                                       const int year, const struct Holidays *h)
+{
   struct tm tm = TM_INITIAILIZER;
   mktime(&tm);
 
-  /* if (tm.tm_wday == 0 || tm.tm_wday == 6) */
-  /* return true; */
+  if (tm.tm_wday == 0 || tm.tm_wday == 6)
+    return true;
 
   const struct Holidays *hol =
-      h ? h : (const struct Holidays[]){{1, 1},   {2, 1},  {24, 1},  {22, 4},
-                                        {24, 4},  {25, 4}, {1, 5},   {1, 5},
-                                        {1, 6},   {12, 6}, {13, 6},  {15, 8},
-                                        {30, 11}, {1, 12}, {25, 12}, {26, 12}};
-
-  /* size_t size = (sizeof(hol) / sizeof(hol[0])); */
-  for (size_t i = 0; i < 16; i++)
-    if (day == hol[i].day && month == hol[i].month)
-      return true;
+      h ? h
+      : tm.tm_year == 2022
+          ? (const struct Holidays[]){{1, 1},   {2, 1},  {24, 1},  {22, 4},
+                                      {24, 4},  {25, 4}, {1, 5},   {1, 5},
+                                      {1, 6},   {12, 6}, {13, 6},  {15, 8},
+                                      {30, 11}, {1, 12}, {25, 12}, {26, 12}}
+          : NULL;
+  if (hol) {
+    for (size_t i = 0; i < 16; i++)
+      if (day == hol[i].day && month == hol[i].month)
+        return true;
+  }
   return false;
 }
 
-static bool is_vacation_net(const int day, const int month, const int year) {
+__pure static bool is_vacation_net(const int day, const int month,
+                                   const int year)
+{
   struct tm tm = TM_INITIAILIZER;
   mktime(&tm);
 
@@ -206,13 +215,15 @@ static bool is_vacation_net(const int day, const int month, const int year) {
 };
 
 static inline bool vacation(const int day, const int month, const int year,
-                            unsigned flag) {
+                            unsigned flag)
+{
   if (flag)
     return is_vacation_net(day, month, year);
   return isholiday(day, month, year);
 }
 
-static inline bool isvacation(const unsigned day, const unsigned month) {
+static inline bool isvacation(const unsigned day, const unsigned month)
+{
   struct {
     unsigned day, mon;
   } vacation[] = {{day, month}};
@@ -225,7 +236,8 @@ static inline bool isvacation(const unsigned day, const unsigned month) {
 }
 
 static inline const char *const
-month_name(const unsigned day, const unsigned month, const unsigned year) {
+month_name(const unsigned day, const unsigned month, const unsigned year)
+{
   struct tm tm = TM_INITIAILIZER;
 
   static const char *const mths[12] = {"ianuarie",  "februarie", "martie",
@@ -235,7 +247,8 @@ month_name(const unsigned day, const unsigned month, const unsigned year) {
   return mths[tm.tm_mon];
 }
 
-static inline void get_previous(void) {
+static inline void get_previous(void)
+{
   /* time_t r = time(0); */
   struct tm *tm = localtime(&(time_t){time(0)});
   current.day   = (unsigned)(tm->tm_mday);
@@ -251,7 +264,8 @@ static inline void get_previous(void) {
   strftime(longdate, 64, "%d.%m.%Y", tm);
 }
 
-__attribute__((unused)) static inline void shuffle(int *pattern, const int n) {
+__attribute__((unused)) static inline void shuffle(int *pattern, const int n)
+{
   int i;
   for (i = 0; i < n; i++) {
     pattern[i] = i;
@@ -268,7 +282,8 @@ __attribute__((unused)) static inline void shuffle(int *pattern, const int n) {
   }
 }
 
-static inline void random_shuffle(void) {
+static inline void random_shuffle(void)
+{
   static const size_t n = NELEMS(parcurs);
 
   for (unsigned i = 0; i < 128; i++) {
@@ -303,7 +318,8 @@ static inline void random_shuffle(void) {
   /* puts("\n"); */
 }
 static inline bool
-repeating(struct Route in[] /*similar to "struct Route *in" */) {
+repeating(struct Route in[] /*similar to "struct Route *in" */)
+{
   for (unsigned i = 0; i < 32; i++) {
     if (in[i + 1].km == in[i].km && in[i].km != 30)
       return true;
@@ -324,7 +340,8 @@ repeating(struct Route in[] /*similar to "struct Route *in" */) {
   }
 
 __pure static const ssize_t fetch(const uint_fast64_t year,
-                                  const char buf[static const restrict 1]) {
+                                  const char buf[static const restrict 1])
+{
   struct addrinfo hints = {.ai_family   = AF_INET,
                            .ai_socktype = SOCK_STREAM,
                            .ai_protocol = IPPROTO_TCP,
@@ -369,7 +386,8 @@ __pure static const ssize_t fetch(const uint_fast64_t year,
   return received;
 }
 
-__pure static ssize_t parse(char **in, ssize_t received) {
+__pure static ssize_t parse(char **in, ssize_t received)
+{
   received -= 14;
   char *tmp = *in;
   while (received--) {
@@ -379,10 +397,16 @@ __pure static ssize_t parse(char **in, ssize_t received) {
   return received;
 }
 
-static inline void struct_fill(const char *in, struct Holidays *h) {
+static inline void struct_fill(const char *in, struct Holidays *h)
+{
+  if (!h) {
+    puts("\nh null\n");
+    return;
+  }
   const char      *x  = in;
   struct Holidays *hx = h;
   int              i  = 0;
+
   while (x++) {
     if (*x == '[')
       break;
@@ -398,7 +422,8 @@ static inline void struct_fill(const char *in, struct Holidays *h) {
 }
 
 static inline void array_fill(const char in[static restrict const 1],
-                              unsigned   row[][4]) {
+                              unsigned   row[][4])
+{
   const register char *restrict x = (const char *restrict)in;
   u64 k                           = 0;
   do {
@@ -414,30 +439,45 @@ static inline void array_fill(const char in[static restrict const 1],
   } while (x++);
 }
 
-static void fnull(void) {
+static void fnull(void)
+{
   puts("no holiday\n");
 }
-static void fn(void) {
+static void fn(void)
+{
   /* param: worksheet,  *row,  col,  text,  format) */
   /* worksheet_write_string(worksheet, i + offset, m, "", format_local); */
   puts("holiday\n");
 }
 
 static void wkend(lxw_worksheet *s, int *row, const int col, const char *text,
-                  lxw_format *f) {
-  text = "";
-  worksheet_write_string(s, *row, col, text, f);
+                  lxw_format *f)
+{
+  (void)text;
+  worksheet_write_blank(s, *row, col, f);
   (*row)++;
 }
 static void wday(lxw_worksheet *s, int *row, const int col, const char *text,
-                 lxw_format *f) {
+                 lxw_format *f)
+{
+  struct Route *d = NULL;
   worksheet_write_string(s, *row, col, "routa", f);
-  worksheet_write_string(s, *row, col + 1, "km", f);
+  worksheet_write_number(s, *row, col + 1, 1, f);
   worksheet_write_string(s, *row, col + 2, "inte", f);
   (*row)++;
 }
+extern char buf_init[];
+#define BUF_INIT                                                               \
+  {                                                                            \
+    .buf = buf_init                                                            \
+  }
+struct Test {
+  char *buf;
+};
+int main(int argc, char *argv[argc + 1])
+{
 
-int main(int argc, char *argv[argc + 1]) {
+  struct Test init = BUF_INIT;
 
   struct Holidays  h[16] = {{0, 0}, {1, 3}, {5, 0}};
   int              recv  = 0;
@@ -462,12 +502,17 @@ int main(int argc, char *argv[argc + 1]) {
   *buf_p = NULL;
   buf_p  = NULL;
 
-  char bff[4096];
-  fetch(2022, bff);
+  char    bff[4096] = {'\0'};
+  ssize_t rr        = fetch(2022, bff);
   printf("%s\n", bff);
 
-  struct Holidays hh[16] = {{}};
+  struct Holidays *hh = rr > 0 ? (struct Holidays[16]){{}} : NULL;
+
+  if (received < 0)
+    hh = 0;
+
   struct_fill(bff, hh);
+
   printf("hh %d\n", hh[12].day);
   printf("hh %d\n", hh[12].month);
 
