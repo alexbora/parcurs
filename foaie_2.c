@@ -29,18 +29,20 @@
 /* #define COL5 (4) */
 
 #define LXW_COLOR_YELLOW_PALE (0xFFFFCA)
-#define NELEMS(x) sizeof(x) / sizeof(x[0])
+#define NELEMS(x)             sizeof(x) / sizeof(x[0])
 
-static struct T { unsigned day, month, year; } current, previous;
+static struct T {
+  unsigned day, month, year;
+} current, previous;
 static char longdate[128];
 /* static unsigned days_pattern[32]; */
 static unsigned row;
-static char name[256];
+static char     name[256];
 
 static struct Route {
-  char* route;
-  long km;
-  char* obs;
+  char *route;
+  long  km;
+  char *obs;
 } tmp[128], parcurs[16] = {{"Cluj-Oradea", 321, "Interes Serviciu"},
                            {"Cluj-Turda", 121, "Interes Serviciu"},
                            {"Cluj-Zalau", 156, "Interes Serviciu"},
@@ -58,8 +60,8 @@ static struct Route {
                            {"Cluj-Bontida", 92, "Interes Serviciu"},
                            {"Cluj-Satu-Mare", 421, "Interes Serviciu"}};
 
-static inline unsigned days_in_month(const unsigned month,
-                                     const unsigned year) {
+static inline unsigned days_in_month(const unsigned month, const unsigned year)
+{
   if (month == 4 || month == 6 || month == 9 || month == 11)
     return 30;
   else if (month == 2)
@@ -69,58 +71,66 @@ static inline unsigned days_in_month(const unsigned month,
 }
 
 static inline bool isholiday(const unsigned day, const unsigned month,
-                             const unsigned year) {
-  struct tm tm = {.tm_year = (const int)(year - 1900),
-                  .tm_mon = (const int)(month - 1),
-                  .tm_mday = (const int)day,
+                             const unsigned year)
+{
+  struct tm tm = {.tm_year  = (const int)(year - 1900),
+                  .tm_mon   = (const int)(month - 1),
+                  .tm_mday  = (const int)day,
                   .tm_isdst = -1};
   mktime(&tm);
-  if (tm.tm_year != 2022) return false;
+  if (tm.tm_year != 2022)
+    return false;
   static const struct {
     unsigned day, mon;
   } hol[] = {{1, 1},   {2, 1},  {24, 1},  {22, 4}, {24, 4}, {25, 4},
              {1, 5},   {1, 5},  {1, 6},   {12, 6}, {13, 6}, {15, 8},
              {30, 11}, {1, 12}, {25, 12}, {26, 12}};
 
-  if (tm.tm_wday == 0 || tm.tm_wday == 6) return true;
+  if (tm.tm_wday == 0 || tm.tm_wday == 6)
+    return true;
 
   size_t size = (sizeof(hol) / sizeof(hol[0]));
   for (size_t i = 0; i < size; i++)
-    if (day == hol[i].day && month == hol[i].mon) return true;
+    if (day == hol[i].day && month == hol[i].mon)
+      return true;
   return false;
 }
 
-static inline const char* month_name(const unsigned day, const unsigned month,
-                                     const unsigned year) {
-  struct tm tm = {.tm_year = (int)year - 1900,
-                  .tm_mon = (int)month - 1,
-                  .tm_mday = (const int)day,
+static inline const char *month_name(const unsigned day, const unsigned month,
+                                     const unsigned year)
+{
+  struct tm tm = {.tm_year  = (int)year - 1900,
+                  .tm_mon   = (int)month - 1,
+                  .tm_mday  = (const int)day,
                   .tm_isdst = -1};
 
   /* time_t t = mktime(&tm); */
-  static const char* mths[12] = {"ianuarie",  "februarie", "martie",
+  static const char *mths[12] = {"ianuarie",  "februarie", "martie",
                                  "aprilie",   "mai",       "iunie",
                                  "iulie",     "august",    "septembrie",
                                  "octombrie", "noiembrie", "decembrie"};
   return mths[tm.tm_mon];
 }
 
-static inline void get_previous(void) {
-  time_t r = time(0);
-  struct tm* tm = localtime(&r);
-  current.day = (unsigned)(tm->tm_mday);
+static inline void get_previous(void)
+{
+  time_t     r  = time(0);
+  struct tm *tm = localtime(&r);
+  current.day   = (unsigned)(tm->tm_mday);
   current.month = (unsigned)(tm->tm_mon + 1);
-  current.year = (unsigned)(tm->tm_year + 1900);
+  current.year  = (unsigned)(tm->tm_year + 1900);
   /* printf("day %d\n", current.day); */
   /* printf("month %d\n", current.month); */
   /* printf("year %d\n", current.year); */
   previous = current;
   previous.month--;
-  if (previous.month == 0) previous.year--;
+  if (previous.month == 0)
+    previous.year--;
   strftime(longdate, 64, "%d.%m.%Y", tm);
 }
 
-__attribute__((unused)) static inline void shuffle(int* pattern, const int n) {
+__attribute__((unused)) static inline void shuffle(int *pattern, const int n)
+{
   int i;
   for (i = 0; i < n; i++) {
     pattern[i] = i;
@@ -130,14 +140,15 @@ __attribute__((unused)) static inline void shuffle(int* pattern, const int n) {
     j = rand() % (i + 1);
     if (j != i) {
       int swap;
-      swap = pattern[j];
+      swap       = pattern[j];
       pattern[j] = pattern[i];
       pattern[i] = swap;
     }
   }
 }
 
-static inline void random_shuffle(void) {
+static inline void random_shuffle(void)
+{
   static const size_t n = NELEMS(parcurs);
 
   for (unsigned i = 0; i < 128; i++) {
@@ -154,10 +165,11 @@ static inline void random_shuffle(void) {
 
   for (; cycle < tmp_size; cycle++) {
     do {
-      play = rand() % parc;
+      play  = rand() % parc;
       found = 0;
       for (k = 0; k < parc; k++)
-        if (recent[k] == play) found = 1;
+        if (recent[k] == play)
+          found = 1;
     } while (found);
 
     tmp[cycle] = parcurs[play];
@@ -170,10 +182,12 @@ static inline void random_shuffle(void) {
   /* } */
   /* puts("\n"); */
 }
-static inline bool repeating(
-    struct Route in[] /*similar to "struct Route *in" */) {
+static inline bool
+repeating(struct Route in[] /*similar to "struct Route *in" */)
+{
   for (unsigned i = 0; i < 32; i++) {
-    if (in[i + 1].km == in[i].km && in[i].km != 30) return true;
+    if (in[i + 1].km == in[i].km && in[i].km != 30)
+      return true;
   }
   return false;
 }
@@ -182,14 +196,15 @@ static inline bool repeating(
 
 /* inefficient, but clear. See below for optimized verdsion */
 /* for optimized version,  git checkout testing */
-int main(int argc, char** argv) {
+int main(int argc, char **argv)
+{
   srand((unsigned)time(0));
   do {
     random_shuffle();
   } while (repeating(tmp));
 
-  FILE* file = fopen("km", "r+");
-  static unsigned km = 0;
+  FILE           *file = fopen("km", "r+");
+  static unsigned km   = 0;
 
   if (argc < 5) {
     get_previous();
@@ -198,14 +213,16 @@ int main(int argc, char** argv) {
     /* printf("%d\n", k); */
     /* puts("default conf\n"); */
   } else {
-    previous.day = 1;
+    previous.day   = 1;
     previous.month = (unsigned)atoi(argv[2]);
-    previous.year = (unsigned)atoi(argv[3]);
-    km = (unsigned)atoi(argv[4]);
-    if (km == 0) fscanf(file, "%d", &km);
+    previous.year  = (unsigned)atoi(argv[3]);
+    km             = (unsigned)atoi(argv[4]);
+    if (km == 0)
+      fscanf(file, "%d", &km);
     /* printf("%d-%d-%d    %d\n", dy, m, y, k); */
     /* previous.month--; */
-    if (previous.month == 0) previous.year--;
+    if (previous.month == 0)
+      previous.year--;
     /* puts(month_name(dy, m, y)); */
     /* puts("custom conf\n"); */
   }
@@ -240,40 +257,40 @@ int main(int argc, char** argv) {
           month_name(previous.day, previous.month, previous.year),
           previous.year);
 
-  char cwd[PATH_MAX + 1];
-  lxw_workbook_options options = {
-      .constant_memory = LXW_FALSE,
-      .tmpdir = cwd, /* .tmpdir = getcwd(NULL, 0), */
-      .use_zip64 = LXW_TRUE};
+  char                 cwd[PATH_MAX + 1];
+  lxw_workbook_options options = {.constant_memory = LXW_FALSE,
+                                  .tmpdir =
+                                      cwd, /* .tmpdir = getcwd(NULL, 0), */
+                                  .use_zip64 = LXW_TRUE};
   /* char* buf = getcwd(NULL, 0); */
 
   /* free(buf); */
   getcwd(cwd, sizeof(cwd));
 
   lxw_doc_properties properties = {
-      .title = name,
-      .subject = "",
-      .author = "Alex Bora",
-      .manager = "",
-      .company = "Volvo",
+      .title    = name,
+      .subject  = "",
+      .author   = "Alex Bora",
+      .manager  = "",
+      .company  = "Volvo",
       .category = "foaie parcurs",
       .keywords = "foaie parcurs",
       .comments = "",
-      .status = "Done",
+      .status   = "Done",
   };
-  lxw_data_validation* data_validation = calloc(1, sizeof(lxw_data_validation));
-  data_validation->validate = LXW_VALIDATION_TYPE_ANY;
-  data_validation->criteria = LXW_VALIDATION_TYPE_ANY;
-  data_validation->ignore_blank = LXW_VALIDATION_OFF;
-  data_validation->show_input = LXW_VALIDATION_OFF;
+  lxw_data_validation *data_validation = calloc(1, sizeof(lxw_data_validation));
+  data_validation->validate            = LXW_VALIDATION_TYPE_ANY;
+  data_validation->criteria            = LXW_VALIDATION_TYPE_ANY;
+  data_validation->ignore_blank        = LXW_VALIDATION_OFF;
+  data_validation->show_input          = LXW_VALIDATION_OFF;
 
   // Set the properties in the workbook.
 
   /* lxw_workbook* workbook = workbook_new("foaie.xlsx"); */
-  lxw_workbook* workbook = workbook_new_opt(name, &options);
+  lxw_workbook *workbook = workbook_new_opt(name, &options);
   /* lxw_workbook* workbook = workbook_new_opt("foaie.xlsx", &options); */
   workbook_set_properties(workbook, &properties);
-  lxw_worksheet* worksheet = workbook_add_worksheet(workbook, worksheet_name);
+  lxw_worksheet *worksheet = workbook_add_worksheet(workbook, worksheet_name);
   worksheet_activate(worksheet);
   worksheet_select(worksheet);
   worksheet_set_first_sheet(worksheet);
@@ -295,7 +312,7 @@ int main(int argc, char** argv) {
 
   worksheet_insert_image(worksheet, 1, 3, "logo.png");
 
-  lxw_format* format_bold = workbook_add_format(workbook);
+  lxw_format *format_bold = workbook_add_format(workbook);
   format_set_bold(format_bold);
   format_set_border(format_bold, LXW_BORDER_NONE);
 
@@ -338,7 +355,7 @@ int main(int argc, char** argv) {
   worksheet_write_string(worksheet, row + 11, COL1,
                          "Km initiali:", format_bold);
 
-  lxw_format* format_bold_right = workbook_add_format(workbook);
+  lxw_format *format_bold_right = workbook_add_format(workbook);
   format_set_align(format_bold_right, LXW_ALIGN_RIGHT);
   format_set_num_format(format_bold_right, "#,#");
 
@@ -346,7 +363,7 @@ int main(int argc, char** argv) {
 
   worksheet_set_default_row(worksheet, 20, 1);
 
-  lxw_format* format_header = workbook_add_format(workbook);
+  lxw_format *format_header = workbook_add_format(workbook);
   format_set_align(format_header, LXW_ALIGN_CENTER);
   format_set_border(format_header, LXW_BORDER_THIN);
   format_set_left(format_header, LXW_BORDER_THIN);
@@ -366,7 +383,7 @@ int main(int argc, char** argv) {
 
   unsigned offset = 13;
 
-  lxw_format* format_local = workbook_add_format(workbook);
+  lxw_format *format_local = workbook_add_format(workbook);
   format_set_right(format_local, LXW_BORDER_THIN);
   format_set_bg_color(format_local, LXW_COLOR_YELLOW_PALE);
   format_set_border(format_local, LXW_BORDER_THIN);
@@ -378,7 +395,7 @@ int main(int argc, char** argv) {
   /* /1* worksheet_set_column(worksheet, 2, 10, 20, NULL); *1/ */
 
   const unsigned daysinmonth = days_in_month(previous.month, previous.year);
-  unsigned parcursi = 0;
+  unsigned       parcursi    = 0;
   /* efficency .... compute pattern array and use it here*/
   for (unsigned i = 1; i <= daysinmonth; i++) {
     worksheet_write_number(worksheet, i + offset, COL1, i, format_local);
@@ -407,12 +424,12 @@ int main(int argc, char** argv) {
   /* efficency ..... calculate beforehand,  not here */
   unsigned total = km + parcursi;
   for (unsigned i = 0; i < daysinmonth; i++) {
-    printf("%s\n", tmp[i].route);
+    /* printf("%s\n", tmp[i].route); */
   }
 
   printf("parcursi: %d\t%d\n", parcursi, total);
 
-  lxw_format* format = workbook_add_format(workbook);
+  lxw_format *format = workbook_add_format(workbook);
   format_set_num_format(format, "#,#");
   format_set_align(format, LXW_ALIGN_LEFT);
   format_set_border(format, LXW_BORDER_THIN);
@@ -429,7 +446,7 @@ int main(int argc, char** argv) {
                          format_header);
   worksheet_write_number(worksheet, daysinmonth + offset, COL2, total, format);
 
-  lxw_format* format_footer = workbook_add_format(workbook);
+  lxw_format *format_footer = workbook_add_format(workbook);
   format_set_align(format_footer, LXW_ALIGN_LEFT);
   format_set_bottom(format_footer, LXW_BORDER_THIN);
 
