@@ -71,8 +71,8 @@ def mail3():
     exe="/home/alex/tmp/parcurs/foaie_2"
     subprocess.call(exe)
     sender_email = "t400.linux@gmail.com"
-    #receiver_email = "t400.linux@gmail.com", 'alexandru.bora@renault-trucks.com'
-    receiver_email = "t400.linux@gmail.com"
+    receiver_email = "t400.linux@gmail.com", 'alexandru.bora@renault-trucks.com'
+    #receiver_email = "t400.linux@gmail.com"
     subject = "foaie_parcurs_B-151-VGT"+ "_" + month.lower()  + "_" + str(previous_year) + "_Alex Bora" 
     yag = yagmail.SMTP(user=sender_email, password="Cragger2011")
     contents = [excel]
@@ -92,7 +92,7 @@ def mail4():
     yag.send(receiver_email, subject, contents)
 
 
-mail4()
+#mail4()
 
 
 # name()
