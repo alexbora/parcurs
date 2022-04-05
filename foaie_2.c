@@ -196,8 +196,20 @@ repeating(struct Route in[] /*similar to "struct Route *in" */)
 
 /* inefficient, but clear. See below for optimized verdsion */
 /* for optimized version,  git checkout testing */
+
+void usage(void)
+{
+  printf("no arg: default\narg2 = month, arg3 = year (arg1 defaults to "
+         "1)\narg4 = km,  if no km,  readls km file\n");
+}
+
 int main(int argc, char **argv)
 {
+
+  if (*argv[1] == 'h')
+    usage();
+
+  return 0;
   srand((unsigned)time(0));
   do {
     random_shuffle();
