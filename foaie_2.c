@@ -422,7 +422,7 @@ static void wkend(lxw_worksheet *s, int *row, const int col, const char *text,
 }
 static void wday(lxw_worksheet *s, int *row, const int col, const char *text,
                  lxw_format *f) {
-  struct Route *d = NULL;
+  struct Route *d = (struct Route *)text;
   worksheet_write_string(s, *row, col, "routa", f);
   worksheet_write_number(s, *row, col + 1, 1, f);
   worksheet_write_string(s, *row, col + 2, "inte", f);
