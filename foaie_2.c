@@ -54,6 +54,12 @@
 #define stderr f
 #endif
 
+#define FREE_AND_NULL(p)                                                       \
+  do {                                                                         \
+    free(p);                                                                   \
+    (p) = NULL;                                                                \
+  } while (0)
+
 #define Testclaim(assertion, returnval)                                        \
   if (!(assertion)) {                                                          \
     fprintf(stderr, #assertion, __LINE__ " failed to be true.  \
@@ -503,10 +509,8 @@ int main(int argc, char **argv)
   static unsigned array[13][4] = {{'\0'}};
   array_fill(*buf_p, array);
 
-  free(*buf_p);
-  free(buf_p);
-  *buf_p = NULL;
-  buf_p  = NULL;
+  FREE_AND_NULL(*buf_p);
+  FREE_AND_NULL(buf_p);
 
   char    bff[4096] = {'\0'};
   ssize_t rr        = fetch(2022, bff);
