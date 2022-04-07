@@ -474,8 +474,15 @@ extern char buf_init[];
 struct Test {
   char *buf;
 };
-int main(int argc, char *argv[argc + 1])
+
+static const char usage[] = "usage:\n[-h][help]\n[no input][current time]\n";
+
+int main(int argc, char **argv)
 {
+  if (argc > 1 && *argv[1] == 'h') {
+    puts(usage);
+  }
+
   struct Test init = BUF_INIT;
 
   struct Holidays  h[16] = {{0, 0}, {1, 3}, {5, 0}};
@@ -512,8 +519,10 @@ int main(int argc, char *argv[argc + 1])
   while (content_length--)
     if (*bff_ptr++ == '[')
       break;
-
-  struct Holidays *hh = rr > 0 ? (struct Holidays[16]){{}} : NULL;
+  /* while (*bff_ptr++ != '[') */
+  /* ; */
+  /* while (content_length-- && *bff_ptr++ != '[') ; */
+  struct Holidays *hh = rr > 0 ? (struct Holidays[16]){{0}} : NULL;
 
   if (received <= 0)
     hh = 0;
@@ -524,8 +533,8 @@ int main(int argc, char *argv[argc + 1])
   printf("hh %d\n", hh[12].month);
 
   return 0;
-  int days          = days_in_month(previous.month, previous.year);
-  int arr_month[32] = {0};
+  unsigned days          = days_in_month(previous.month, previous.year);
+  int      arr_month[32] = {0};
 
   get_previous();
   int m    = previous.month;
@@ -871,7 +880,7 @@ int main(int argc, char *argv[argc + 1])
   for (unsigned i = 1; i <= daysinmonth; i++) {
     worksheet_write_number(worksheet, i + offset, COL1, i, format_local);
     /* switch (days_pattern[i]) { */
-    switch (isholiday(i, previous.month, previous.year) ? 1 : 0) {
+    switch (isholiday_ex(i, previous.month, previous.year, hh) ? 1 : 0) {
       case false:
         parcursi += tmp[i].km;
         worksheet_write_string(worksheet, i + offset, COL3, tmp[i].route,
