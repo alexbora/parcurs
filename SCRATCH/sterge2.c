@@ -33,10 +33,11 @@
 #include <sys/syslimits.h>
 #endif
 #include <unistd.h>
-#
 
+#define LAST_ARG_MUST_BE_NULL __attribute__((sentinel))
 __pure static const ssize_t fetch(const uint_fast64_t year,
-                                  const char buf[static const restrict 1]) {
+                                  const char buf[static const restrict 1])
+{
   struct addrinfo hints = {.ai_family   = AF_INET,
                            .ai_socktype = SOCK_STREAM,
                            .ai_protocol = IPPROTO_TCP,
@@ -79,11 +80,41 @@ __pure static const ssize_t fetch(const uint_fast64_t year,
   return received;
 }
 
-int main(int argc, char *argv[]) {
+#define alloc_nr(x) (((x) + 16) * 3 / 2)
+#define HAS_MULTI_BITS(i)                                                      \
+  ((i) & ((i)-1)) /* checks if an integer has more than 1 bit set */
+
+#define DIV_ROUND_UP(n, d) (((n) + (d)-1) / (d))
+
+static inline int skip_prefix(const char *str, const char *prefix,
+                              const char **out)
+{
+  do {
+    if (!*prefix) {
+      *out = str;
+      return 1;
+    }
+  } while (*str++ == *prefix++);
+  return 0;
+}
+
+int main()
+{
+
+  const char *out = malloc(16);
+  printf("TEST: %d %s\n", skip_prefix("test", "tes", &out), out);
 
   char   *buf      = malloc(4096);
   char  **buf_p    = &buf;
   ssize_t received = fetch((uint_fast64_t)2022, *buf_p);
   free(*buf_p);
+
+  int y = 3;
+  printf("%d\n", alloc_nr(y));
+  y = alloc_nr(y);
+  printf("%d\n", 2 * 3 / 2);
+  printf("multi: %d\n", HAS_MULTI_BITS(y));
+
+  printf("%d\n", DIV_ROUND_UP(3, 4));
   return 0;
 }
