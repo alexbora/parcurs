@@ -1400,4 +1400,3 @@ int main(int argc, char* argv[]) {
   return 0;
 }
 #endif
-#define HAVE_ARC4RANDOM 1
