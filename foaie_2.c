@@ -34,6 +34,8 @@
 #include <sys/_types/_ucontext.h>
 #include <sys/syslimits.h>
 #endif
+#include "config.h"
+
 #include <unistd.h>
 #include <xlsxwriter.h>
 
@@ -53,6 +55,8 @@
 #undef stderr
 #define stderr f
 #endif
+
+#define HAVE_ARC4RANDOM 1
 
 #define foo4random_uniform() (arc4random_uniform(((unsigned)RAND_MAX + 1)))
 #undef rand
@@ -76,7 +80,9 @@
     0, 0                                                                       \
   }
 
-struct tm *tm_;
+static struct tm *tm_;
+
+unsigned *k;
 
 #define Testclaim(assertion, returnval)                                        \
   if (!(assertion)) {                                                          \
@@ -94,9 +100,10 @@ struct tm *tm_;
 #define LXW_COLOR_YELLOW_PALE (0xFFFFCA)
 #define NELEMS(x)             sizeof(x) / sizeof(x[0])
 
-static struct T {
-  unsigned day, month, year;
+static struct {
+  int day, month, year;
 } current, previous;
+
 static char longdate[128];
 /* static unsigned days_pattern[32]; */
 static unsigned row;
@@ -290,15 +297,11 @@ month_name(const unsigned day, const unsigned month, const unsigned year)
 
 static inline void get_previous(void)
 {
-  /* time_t r = time(0); */
   struct tm *tm = localtime(&(time_t){time(0)});
-  current.day   = (unsigned)(tm->tm_mday);
-  current.month = (unsigned)(tm->tm_mon + 1);
-  current.year  = (unsigned)(tm->tm_year + 1900);
-  /* printf("day %d\n", current.day); */
-  /* printf("month %d\n", current.month); */
-  /* printf("year %d\n", current.year); */
-  previous = current;
+  current.day   = tm->tm_mday;
+  current.month = tm->tm_mon + 1;
+  current.year  = tm->tm_year + 1900;
+  previous      = current;
   previous.month--;
   if (previous.month == 0)
     previous.year--;
@@ -518,7 +521,7 @@ static const char usage[] = "usage:\n[-h][help]\n[no input][current time]\n";
 
 #define isascii(x) (((x) & ~0x7f) == 0)
 
-struct tm *init_time(int day, int month, int year)
+static inline struct tm *init_time(int day, int month, int year)
 {
   static struct tm tm;
   tm = TM_INITIAILIZER;
@@ -528,13 +531,23 @@ struct tm *init_time(int day, int month, int year)
 
 int main(int argc, char **argv)
 {
-  get_previous();
-  tm_ = init_time(current.day, current.month, current.year);
-
   if (argc > 1 && *argv[1] == 'h') {
     puts(usage);
+    return 0;
   }
 
+  if (argc < 6) {
+    tm_            = init_time(1, atoi(argv[2]), atoi(argv[3]));
+    previous.year  = tm_->tm_year;
+    previous.day   = tm_->tm_mday;
+    previous.month = tm_->tm_mon;
+    strftime(longdate, 64, "%d.%m.%Y", tm_);
+  } else {
+    get_previous();
+  }
+
+  puts(longdate);
+  return 0;
   struct Test init = BUF_INIT;
 
   struct Holidays  h[16] = {{0, 0}, {1, 3}, {5, 0}};
@@ -633,7 +646,7 @@ int main(int argc, char **argv)
     /* else */
     /*   wday(wss, &rrr, 1, "no _text", format_yellow); */
   }
-
+  puts(longdate);
   workbook_close(wkk);
   return 0;
   /* if (row[1][1]) puts("holiday\n"); */
@@ -1387,3 +1400,4 @@ int main(int argc, char* argv[]) {
   return 0;
 }
 #endif
+#define HAVE_ARC4RANDOM 1
