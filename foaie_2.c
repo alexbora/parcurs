@@ -200,7 +200,8 @@ __pure static inline bool isholiday_ex(const int day, const int month,
                                       {24, 4},  {25, 4}, {1, 5},   {1, 5},
                                       {1, 6},   {12, 6}, {13, 6},  {15, 8},
                                       {30, 11}, {1, 12}, {25, 12}, {26, 12}}
-          : NULL;
+      : tm.tm_year == 2023 ? (const struct Holidays[]){}
+                           : NULL;
   if (hol) {
     for (size_t i = 0; i < 16; i++)
       if (day == hol[i].day && month == hol[i].month)
