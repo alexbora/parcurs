@@ -210,7 +210,7 @@ static inline bool isholiday_ex2(struct tm *tm, struct Holidays *h)
 
   for (struct Holidays *p = h; p; p++)
     if (p->day == tm->tm_mday)
-      printf("%d\n", h->day);
+      return true;
 
   return false;
 }
@@ -389,8 +389,6 @@ __pure static const ssize_t fetch(const uint_fast64_t year,
                            .ai_flags    = AI_PASSIVE},
                   *res  = NULL;
 
-  struct addrinfo doi = ADDRINFO_INIT;
-
   const char *restrict const host =
       "us-central1-romanian-bank-holidays.cloudfunctions.net";
   int register x = getaddrinfo(host, "80", &hints, &res);
@@ -530,8 +528,8 @@ struct tm *init_time(int day, int month, int year)
 
 int main(int argc, char **argv)
 {
-  int day, month, year = 0;
-  tm_ = init_time(1, 1, 2022);
+  get_previous();
+  tm_ = init_time(current.day, current.month, current.year);
 
   if (argc > 1 && *argv[1] == 'h') {
     puts(usage);
