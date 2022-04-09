@@ -54,6 +54,10 @@
 #define stderr f
 #endif
 
+#define foo4random_uniform() (arc4random_uniform(((unsigned)RAND_MAX + 1)))
+#undef rand
+#define rand foo4random_uniform
+
 #define FREE_AND_NULL(p)                                                       \
   do {                                                                         \
     free(p);                                                                   \
@@ -538,7 +542,7 @@ int main(int argc, char **argv)
   printf("hh %d\n", hh[12].day);
   printf("hh %d\n", hh[12].month);
 
-  return 0;
+  /* return 0; */
   unsigned days          = days_in_month(previous.month, previous.year);
   int      arr_month[32] = {0};
 

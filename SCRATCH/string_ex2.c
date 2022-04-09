@@ -32,13 +32,15 @@ static FILE *log_file;
 
 #define NORETURN __attribute__((__noreturn__))
 __attribute__((format(printf, 4, 5))) NORETURN void
-BUG_(const char *file, int line, const char *func, const char *fmt, ...) {
+BUG_(const char *file, int line, const char *func, const char *fmt, ...)
+{
   fprintf(stderr, "%s - %d - %s\n", file, line, func);
   exit(1);
 };
 #define BUG(...) BUG_(__FILE__, __LINE__, __FUNC__, __VA_ARGS__)
 
-__pure static inline bool internet(int flag) {
+__pure static inline bool internet(int flag)
+{
   char const *host = "test";
   if (flag & CONNECT_VERBOSE)
     fprintf(stderr, ("Looking up %s ... \n"), host);
@@ -58,7 +60,8 @@ __pure static inline bool internet(int flag) {
 }
 
 __pure __const __attribute__((malloc)) static char *
-fetch(ssize_t *restrict const len, const int year) {
+fetch(ssize_t *restrict const len, const int year)
+{
   struct addrinfo hints = {.ai_family   = AF_INET,
                            .ai_socktype = SOCK_STREAM,
                            .ai_protocol = IPPROTO_TCP,
@@ -224,7 +227,8 @@ exit:
   return NULL;
 }
 
-__unused static void parse_buf_bun(char *in, int len) {
+__unused static void parse_buf_bun(char *in, int len)
+{
   char *p = in;
   while (len--) {
     p = strstr(p, "date");
@@ -243,7 +247,8 @@ struct H2 {
 
 static char     **tmp1, **tmp2;
 static int       *y;
-static struct H2 *parse_buf(const char in[static restrict 1], ssize_t len) {
+static struct H2 *parse_buf(const char in[static restrict 1], ssize_t len)
+{
   struct H2  *out = calloc(32, sizeof(*out));
   const char *p   = in;
   int         i   = 0;
@@ -272,7 +277,8 @@ static struct H2 *parse_buf(const char in[static restrict 1], ssize_t len) {
 
 __pure static void display2DArrayUnknownSize(const int *const restrict arr,
                                              const uint_fast8_t rows,
-                                             const uint_fast8_t cols) {
+                                             const uint_fast8_t cols)
+{
   for (uint_fast8_t i = 0; i < rows; i++) {
     for (uint_fast8_t j = 0; j < cols; j++) {
       fprintf(stderr, "%d ", *(arr + (i * cols) + j));
@@ -282,7 +288,8 @@ __pure static void display2DArrayUnknownSize(const int *const restrict arr,
 }
 #include <stdbool.h>
 __pure static inline bool vacation(const int *const restrict arr,
-                                   const int rows, const int cols) {
+                                   const int rows, const int cols)
+{
   if (rows != (*(arr + 4) * rows))
     return false;
   for (unsigned i = 0; i < 4; i++) {
@@ -292,7 +299,8 @@ __pure static inline bool vacation(const int *const restrict arr,
   return false;
 }
 
-static char *color(char *out, int flag) {
+static char *color(char *out, int flag)
+{
   switch (flag) {
     case 1:
     case 2:
@@ -302,14 +310,20 @@ static char *color(char *out, int flag) {
   return out;
 }
 
-static inline int no_date(struct tm *tm) {
+static inline int no_date(struct tm *tm)
+{
   return (tm->tm_hour & tm->tm_min);
 }
 
-int main() {
+#define bitsizeof(x) (CHAR_BIT * sizeof(x))
+
+int main()
+{
   /* int er = 11; */
   /* FILE *test = fopen("er", "w++"); */
   // write(test, er, 2);
+  char *txt = "test";
+  printf("%ld\n", bitsizeof(txt));
 
 #ifdef LOG
   log_file = fopen("log_file", "w++");
