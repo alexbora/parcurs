@@ -483,6 +483,7 @@ struct Test {
 
 static const char usage[] = "usage:\n[-h][help]\n[no input][current time]\n";
 
+#define isascii(x) (((x) & ~0x7f) == 0)
 int main(int argc, char **argv)
 {
   if (argc > 1 && *argv[1] == 'h') {
@@ -520,11 +521,11 @@ int main(int argc, char **argv)
   /* atoi(strstr(bff, "Content-Length:") + strlen("Content-Length:")); */
   int content_length = atoi(bff_ptr + strlen("Content-Length:"));
   printf("%d\n", content_length);
-  while (content_length--)
-    if (*bff_ptr++ == '[')
-      break;
-  /* while (*bff_ptr++ != '[') */
-  /* ; */
+  /* while (content_length--) */
+  /* if (*bff_ptr++ == '[') */
+  /* break; */
+  while (*bff_ptr++ != '[')
+    ;
   /* while (content_length-- && *bff_ptr++ != '[') ; */
   struct Holidays *hh = rr > 0 ? (struct Holidays[16]){{0}} : NULL;
 
