@@ -5,7 +5,10 @@
  */
 
 #include <stdlib.h>
+#include <sys/_types/_timeval.h>
+#ifndef __linux__
 #include <sys/_types/_u_int8_t.h>
+#endif
 #if defined(_WINDOWS) || defined(_WIN32) || defined(_WIN64)
 #error "Leave Bill alone, get an Unix box.\n"
 #endif
@@ -32,11 +35,13 @@
 #include <sys/_types/_ucontext.h>
 #include <sys/syslimits.h>
 #endif
+#include <errno.h>
+#include <fcntl.h>
+#include <time.h>
 #include <unistd.h>
 
-#define LAST_ARG_MUST_BE_NULL __attribute__((sentinel))
-__pure static const ssize_t fetch(const uint_fast64_t year,
-                                  const char buf[static const restrict 1])
+__pure static ssize_t fetch(const uint_fast64_t year,
+                            const char          buf[static const restrict 1])
 {
   struct addrinfo hints = {.ai_family   = AF_INET,
                            .ai_socktype = SOCK_STREAM,
@@ -98,11 +103,112 @@ static inline int skip_prefix(const char *str, const char *prefix,
   return 0;
 }
 
+static int csprng_bytes(void *buf, size_t len)
+{
+#if defined(HAVE_ARC4RANDOM) || defined(HAVE_ARC4RANDOM_LIBBSD)
+  /* This function never returns an error. */
+  puts("arcrandom");
+  arc4random_buf(buf, len);
+  return 0;
+#elif defined(HAVE_GETRANDOM)
+  puts("get random");
+  ssize_t res;
+  char   *p = buf;
+  while (len) {
+    res = getrandom(p, len, 0);
+    if (res < 0)
+      return -1;
+    len -= res;
+    p += res;
+  }
+  return 0;
+#elif defined(HAVE_GETENTROPY)
+  puts("entropy");
+  int   res;
+  char *p = buf;
+  while (len) {
+    /* getentropy has a maximum size of 256 bytes. */
+    size_t chunk = len < 256 ? len : 256;
+    res          = getentropy(p, chunk);
+    if (res < 0)
+      return -1;
+    len -= chunk;
+    p += chunk;
+  }
+  return 0;
+#elif defined(HAVE_RTLGENRANDOM)
+  puts("rtl");
+  if (!RtlGenRandom(buf, len))
+    return -1;
+  return 0;
+#elif defined(HAVE_OPENSSL_CSPRNG)
+  puts("openssl");
+  int res = RAND_bytes(buf, len);
+  if (res == 1)
+    return 0;
+  if (res == -1)
+    errno = ENOTSUP;
+  else
+    errno = EIO;
+  return -1;
+#else
+  puts("else");
+  ssize_t res;
+  char   *p = buf;
+  int     fd, err;
+  fd = open("/dev/urandom", O_RDONLY);
+  if (fd < 0)
+    return -1;
+  while (len) {
+    res = read(fd, p, len);
+    if (res < 0) {
+      err = errno;
+      close(fd);
+      errno = err;
+      return -1;
+    }
+    len -= res;
+    p += res;
+  }
+  close(fd);
+  return 0;
+#endif
+}
+
+int trace2_cmd_exit_fl(const char *file, int line, int code)
+{
+  fprintf(stderr, "%s %d %d", file, line, code);
+  exit(code);
+}
+
+#define exit(code) exit(trace2_cmd_exit_fl(__FILE__, __LINE__, (code)))
+#include <sys/time.h>
 int main()
 {
+  struct timeval now;
+  gettimeofday(&now, NULL);
+  printf("%d\n", now.tv_usec);
+  int  er = 0;
+  int *e  = &er;
+
+  printf("PATH : %s\n", getenv("GIT_TEST_DATE_NOW"));
+  struct Tmp {
+    char *a;
+    int   x;
+  } tmp[] = {{"test", 1}, {"test2", 2}, {"test3", 3}, {NULL}};
+
+  struct Tmp *t = tmp;
+  while (t->a) {
+    printf("%s %d\n", t->a, t->x);
+    t++;
+  }
+
+  char *b = malloc(16);
+  printf("prng: %d\n", csprng_bytes(b, 16));
+  printf("%s\n", b);
 
   const char *out = malloc(16);
-  printf("TEST: %d %s\n", skip_prefix("test", "tes", &out), out);
+  printf("TEST: %d %s\n", skip_prefix("date", "da", &out), out);
 
   char   *buf      = malloc(4096);
   char  **buf_p    = &buf;
