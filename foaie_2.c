@@ -64,6 +64,20 @@
     (p) = NULL;                                                                \
   } while (0)
 
+#define BUILD_ASSERT_OR_ZERO(cond) (sizeof(char[1 - 2 * !(cond)]) - 1)
+#define BARF_UNLESS_AN_ARRAY(arr)                                              \
+  BUILD_ASSERT_OR_ZERO(                                                        \
+      !__builtin_types_compatible_p(__typeof__(arr), __typeof__(&(arr)[0])))
+
+#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]) + BARF_UNLESS_AN_ARRAY(x))
+
+#define EMPTY                                                                  \
+  {                                                                            \
+    0, 0                                                                       \
+  }
+
+struct tm *tm_;
+
 #define Testclaim(assertion, returnval)                                        \
   if (!(assertion)) {                                                          \
     fprintf(stderr, #assertion, __LINE__ " failed to be true.  \
@@ -183,10 +197,23 @@ struct Holidays {
   int day, month;
 };
 #define TM_INITIAILIZER                                                        \
+  (struct tm)                                                                  \
   {                                                                            \
     .tm_year = year - 1900, .tm_mon = month - 1, .tm_mday = day,               \
     .tm_isdst = -1                                                             \
   }
+
+static inline bool isholiday_ex2(struct tm *tm, struct Holidays *h)
+{
+  if (tm->tm_wday == 0 || tm->tm_wday == 6)
+    return true;
+
+  for (struct Holidays *p = h; p; p++)
+    if (p->day == tm->tm_mday)
+      printf("%d\n", h->day);
+
+  return false;
+}
 
 __pure static inline bool isholiday_ex(const int day, const int month,
                                        const int year, const struct Holidays *h)
@@ -203,14 +230,17 @@ __pure static inline bool isholiday_ex(const int day, const int month,
           ? (const struct Holidays[]){{1, 1},   {2, 1},  {24, 1},  {22, 4},
                                       {24, 4},  {25, 4}, {1, 5},   {1, 5},
                                       {1, 6},   {12, 6}, {13, 6},  {15, 8},
-                                      {30, 11}, {1, 12}, {25, 12}, {26, 12}}
-      : tm.tm_year == 2023 ? (const struct Holidays[]){}
-                           : NULL;
-  if (hol) {
-    for (size_t i = 0; i < 16; i++)
-      if (day == hol[i].day && month == hol[i].month)
-        return true;
-  }
+                                      {30, 11}, {1, 12}, {25, 12}, {26, 12},
+                                      EMPTY, }
+  : tm.tm_year == 2023 
+    ? (const struct Holidays[]){{1, 1},{24, 1},{14, 4},{17, 4},{1, 5},{1, 5},{5, 1},{15, 8},{30, 11},{1, 12},{25, 12},{26, 12}, EMPTY, }
+  : NULL;
+
+  /* if (hol) { */
+  for (size_t i = 0; i < 16; i++)
+    if (day == hol[i].day && month == hol[i].month)
+      return true;
+  /* } */
   return false;
 }
 
@@ -489,8 +519,20 @@ struct Test {
 static const char usage[] = "usage:\n[-h][help]\n[no input][current time]\n";
 
 #define isascii(x) (((x) & ~0x7f) == 0)
+
+struct tm *init_time(int day, int month, int year)
+{
+  static struct tm tm;
+  tm = TM_INITIAILIZER;
+  mktime(&tm);
+  return &tm;
+}
+
 int main(int argc, char **argv)
 {
+  int day, month, year = 0;
+  tm_ = init_time(1, 1, 2022);
+
   if (argc > 1 && *argv[1] == 'h') {
     puts(usage);
   }
@@ -529,15 +571,18 @@ int main(int argc, char **argv)
   /* while (content_length--) */
   /* if (*bff_ptr++ == '[') */
   /* break; */
+  int content =
+      atoi(strstr(bff, "Content-Length:") + strlen("Content-Length:"));
+
   while (*bff_ptr++ != '[')
     ;
   /* while (content_length-- && *bff_ptr++ != '[') ; */
   struct Holidays *hh = rr > 0 ? (struct Holidays[16]){{0}} : NULL;
 
   if (received <= 0)
-    hh = 0;
-
-  struct_fill(bff, hh);
+    hh = NULL;
+  if (hh)
+    struct_fill(bff, hh);
 
   printf("hh %d\n", hh[12].day);
   printf("hh %d\n", hh[12].month);
