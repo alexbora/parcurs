@@ -8,3 +8,4 @@
 #define HAVE_DEVRANDOM 1
 #define HAVE_DEVRANDOM 1
 #define HAVE_DEVRANDOM 1
+#define HAVE_DEVRANDOM 1
