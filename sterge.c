@@ -23,8 +23,8 @@ static void date_now(void) {
 static void date_prev(int year, int mon, int day) {
   struct tm ti = {59, 59, 12, day, mon - 2, year - 1900};
   time_t epoch = mktime(&ti);
-  printf("%s", asctime(gmtime(&epoch)));
-  printf("W: %d\n", ti.tm_wday);
+  /* printf("%s", asctime(gmtime(&epoch))); */
+  /* printf("W: %d\n", ti.tm_wday); */
 
   TM_PREV = ti;
   TM_PREV.tm_year += 1900;
@@ -65,15 +65,58 @@ static void process_cmdl(int argc, char *argv[restrict argc + 1]) {
     fill_km(&km);
 }
 
+static int is_weekend(int day) {
+  if (day == 0 || day == 6)
+    return 1;
+  return 0;
+}
+
+static unsigned days_in_month(const int month, const int year) {
+  if (month == 4 || month == 6 || month == 9 || month == 11)
+    return 30;
+  else if (month == 2)
+    return (((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) ? 29
+                                                                      : 28);
+  return 31;
+}
+
+void fn(void) { puts("fn\n"); }
+void fe(void) { puts("fe\n"); }
+
 int main(int argc, char *argv[argc + 1]) {
   process_cmdl(argc, argv);
 
-  printf("CURRENT: %d %d %d %d\n %.lf\n", TM.tm_year, TM.tm_mon, TM.tm_mday,
-         TM.tm_wday, km);
+  printf("CURRENT: %d %d %d weekday today: %d\tkm: %.lf\n", TM.tm_year,
+         TM.tm_mon, TM.tm_mday, TM.tm_wday, km);
 
-  date_prev(TM.tm_year, TM.tm_mon, TM.tm_mday);
+  /* date_prev(TM.tm_year, TM.tm_mon, TM.tm_mday); */
 
-  printf("PREV: %d %d %d %d\n", TM_PREV.tm_year, TM_PREV.tm_mon,
-         TM_PREV.tm_mday, TM_PREV.tm_wday);
+  /* printf("PREV: %d %d %d weekday prev: %d\n", TM_PREV.tm_year,
+   * TM_PREV.tm_mon, */
+  /* TM_PREV.tm_mday, TM_PREV.tm_wday); */
+
+  /* printf("weekday today: %d\n", TM.tm_wday); */
+  /* printf("FREE previous month: %d\n", is_weekend(TM_PREV.tm_wday)); */
+  printf("FREE today: %d\n", is_weekend(TM.tm_wday));
+
+  /* int row[32] = {0}; */
+  void (*fp[10])(void);
+
+  for (unsigned i = 1; i <= 10; ++i) {
+    struct tm ti = {59, 59, 12, i, TM.tm_mon - 1, TM.tm_year - 1900};
+    /* struct tm ti = {59, 59, 12, i, 3, 2022 - 1900}; */
+    mktime(&ti);
+    printf("wday: %d %s %d\n", ti.tm_wday, asctime(&ti),
+           is_weekend(ti.tm_wday));
+    /* row[i] = !is_weekend(ti.tm_wday); */
+    fp[i] = is_weekend(ti.tm_wday) ? fn : fe;
+  }
+
+  for (unsigned i = 1; i <= 10; ++i) {
+    fp[i]();
+  }
+
+  /* printf("%d\n", row[1]); */
+
   return 0;
 }
