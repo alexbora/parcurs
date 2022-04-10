@@ -7,9 +7,8 @@
  * @created     : Tuesday Feb 02, 2021 22:13:00 EET
  */
 
-#include <sys/_types/_u_int8_t.h>
 #if defined(_WINDOWS) || defined(_WIN32) || defined(_WIN64)
-#error "Leave Bill alone, get an Unix box.\n"
+#error "Not working under Win.\n"
 #endif
 #include <arpa/inet.h>
 #include <assert.h>
@@ -23,21 +22,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef __linux__
 #include <sys/_types/_size_t.h>
 #include <sys/_types/_ssize_t.h>
+#include <sys/_types/_u_int8_t.h>
+#endif
 #include <sys/ioctl.h>  /* ioctl()  */
 #include <sys/socket.h> /* socket, connect */
 #include <sys/uio.h>
 #include <time.h>
-#include <unistd.h>
 #ifdef __APPLE__
 #include <sys/_types/_ucontext.h>
 #include <sys/syslimits.h>
 #endif
-#include "config.h"
-
 #include <unistd.h>
-#include <xlsxwriter.h>
+
+#include "config.h"
+#include "xlsxwriter.h"
 
 #ifndef __pure
 #define __pure __attribute__((pure))
@@ -56,11 +57,11 @@
 #define stderr f
 #endif
 
-#define HAVE_ARC4RANDOM 1
-
+#ifdef HAVE_ARC4RANDOM
 #define foo4random_uniform() (arc4random_uniform(((unsigned)RAND_MAX + 1)))
 #undef rand
 #define rand foo4random_uniform
+#endif
 
 #define FREE_AND_NULL(p)                                                       \
   do {                                                                         \
@@ -79,6 +80,7 @@
   { 0, 0 }
 
 static struct tm *tm_;
+static struct tm TM;
 
 unsigned *k;
 
@@ -89,10 +91,10 @@ unsigned *k;
     return returnval;                                                          \
   }
 
-#define COL1 (0)
-#define COL2 (1)
-#define COL3 (2)
-#define COL4 (3)
+#define COL1 (unsigned short)(0)
+#define COL2 (unsigned short)(1)
+#define COL3 (unsigned short)(2)
+#define COL4 (unsigned short)(3)
 /* #define COL5 (4) */
 
 #define LXW_COLOR_YELLOW_PALE (0xFFFFCA)
@@ -126,8 +128,7 @@ static struct Route {
                            {"Cluj-Bontida", 92, "Interes Serviciu"},
                            {"Cluj-Satu-Mare", 421, "Interes Serviciu"}};
 
-static inline unsigned days_in_month(const unsigned month,
-                                     const unsigned year) {
+static unsigned days_in_month(const unsigned month, const unsigned year) {
   if (month == 4 || month == 6 || month == 9 || month == 11)
     return 30;
   else if (month == 2)
@@ -136,8 +137,8 @@ static inline unsigned days_in_month(const unsigned month,
   return 31;
 }
 
-static inline bool isholiday(const unsigned day, const unsigned month,
-                             const unsigned year) {
+static bool isholiday(const unsigned day, const unsigned month,
+                      const unsigned year) {
   struct tm tm = {.tm_year = (const int)(year - 1900),
                   .tm_mon = (const int)(month - 1),
                   .tm_mday = (const int)day,
@@ -284,7 +285,7 @@ month_name(const unsigned day, const unsigned month, const unsigned year) {
   return mths[tm.tm_mon];
 }
 
-static inline void get_previous(void) {
+static void get_previous(void) {
   struct tm *tm = localtime(&(time_t){time(0)});
   current.day = tm->tm_mday;
   current.month = tm->tm_mon + 1;
@@ -294,6 +295,9 @@ static inline void get_previous(void) {
   if (previous.month == 0)
     previous.year--;
   strftime(longdate, 64, "%d.%m.%Y", tm);
+  TM = *tm;
+  /* TM.tm_year = current.year; */
+  /* TM.tm_mday = tm->tm_mday; */
 }
 
 __attribute__((unused)) static inline void shuffle(int *pattern, const int n) {
@@ -368,7 +372,7 @@ repeating(struct Route in[] /*similar to "struct Route *in" */) {
     .ai_protocol = IPPROTO_TCP, .ai_flags = AI_PASSIVE,                        \
   }
 
-__pure static const ssize_t fetch(const uint_fast64_t year,
+__pure static const ssize_t fetch(const int year,
                                   const char buf[static const restrict 1]) {
   struct addrinfo hints = {.ai_family = AF_INET,
                            .ai_socktype = SOCK_STREAM,
@@ -393,7 +397,7 @@ __pure static const ssize_t fetch(const uint_fast64_t year,
   char header[256] = {'\0'};
   const int len_header =
       sprintf(header,
-              "GET /romanian_bank_holidays/?year=%llu HTTP/1.1\r\nHost: "
+              "GET /romanian_bank_holidays/?year=%d HTTP/1.1\r\nHost: "
               "%s\r\n\r\n",
               year, host);
 
@@ -492,32 +496,55 @@ struct Test {
 
 static const char usage[] = "usage:\n[-h][help]\n[no input][current time]\n";
 
-#define isascii(x) (((x) & ~0x7f) == 0)
-
-static inline struct tm *init_time(int day, int month, int year) {
-  static struct tm tm;
-  tm = TM_INITIAILIZER;
+static inline void cmdline_time(int day, int month, int year) {
+  struct tm tm = {
+      .tm_year = year - 1900, .tm_mon = month, .tm_mday = day, .tm_isdst = -1};
   mktime(&tm);
-  return &tm;
+  TM = tm;
 }
 
-int main(int argc, char **argv) {
+static double *km_;
+
+int main(int argc, char *argv[argc + 1]) {
+  km_ = malloc(sizeof(double));
   if (argc > 1 && *argv[1] == 'h') {
     puts(usage);
     return 0;
   }
 
-  if (argc < 6) {
-    tm_ = init_time(1, atoi(argv[2]), atoi(argv[3]));
-    previous.year = tm_->tm_year;
-    previous.day = tm_->tm_mday;
-    previous.month = tm_->tm_mon;
-    strftime(longdate, 64, "%d.%m.%Y", tm_);
+  if (argc > 5) {
+    cmdline_time(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
+    previous.year = TM.tm_year;
+    previous.day = TM.tm_mday;
+    previous.month = TM.tm_mon;
+    struct tm *TM_p = &TM;
+    TM_p->tm_mon--;
+    strftime(longdate, 64, "%d.%m.%Y", TM_p);
+    if (atoi(argv[4]) == 0) {
+      FILE *f = fopen("km", "r++");
+      fscanf(f, "%lf", km_);
+      fclose(f);
+    } else {
+      *km_ = atoi(argv[4]);
+    }
   } else {
     get_previous();
+    FILE *f = fopen("km", "r++");
+    fscanf(f, "%lf", km_);
+    fclose(f);
   }
 
-  puts(longdate);
+  //  puts(longdate);
+  printf("weekday: %d\n", TM.tm_wday);
+  printf("monthday: %d\n", TM.tm_mday);
+  printf("previous month: %d\n", TM.tm_mon);
+  printf("km: %lf\n", *km_);
+
+  int dayz = days_in_month(TM.tm_mon, TM.tm_year);
+
+  printf("%d\n", dayz);
+
+  FREE_AND_NULL(km_);
   return 0;
   struct Test init = BUF_INIT;
 
