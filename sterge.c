@@ -21,10 +21,12 @@ static void date_now(void)
   const time_t t  = time(0);
   struct tm   *tm = gmtime(&t);
   strftime(longdate, 64, "%d.%m.%Y", tm);
+  tm->tm_mon--;
   strftime(luna, 64, "%B", tm);
+  *luna |= ' ';
 
   tm->tm_year += 1900;
-  tm->tm_mon += 1;
+  tm->tm_mon += 2;
   TM = *tm;
   tm = NULL;
 }
@@ -53,9 +55,11 @@ static void date_cmdl(int year, int mon, int day)
   mktime(&tm);
 
   strftime(longdate, 64, "%d.%m.%Y", &tm);
+  tm.tm_mon--;
   strftime(luna, 64, "%B", &tm);
+  *luna |= ' ';
 
-  tm.tm_mon++;
+  tm.tm_mon += 2;
   tm.tm_year += 1900;
   TM = tm;
 }
@@ -133,10 +137,9 @@ int main(int argc, char *argv[argc + 1])
   /* int row[32] = {0}; */
 
   puts(longdate);
-  *luna |= ' ';
   puts(luna);
 
-  return 0;
+  /* return 0; */
   void (*fp[11])(void);
 
   for (int i = 1; i <= 10; ++i) {
@@ -148,6 +151,13 @@ int main(int argc, char *argv[argc + 1])
     /* row[i] = !is_weekend(ti.tm_wday); */
     fp[i] = is_weekend(ti.tm_wday) ? fn : fe;
   }
+
+  /* int d = 5, i = 0; */
+  /* while (d--) { */
+  /*   fp[++i](); */
+  /* } */
+
+  /* return 0; */
   for (unsigned i = 1; i <= 10; ++i) {
     fp[i]();
   }
