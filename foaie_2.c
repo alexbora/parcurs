@@ -294,6 +294,11 @@ static inline void get_previous(void) {
   if (previous.month == 0)
     previous.year--;
   strftime(longdate, 64, "%d.%m.%Y", tm);
+  /* tm_ = (struct tm *){0}; */
+  /* tm_->tm_year = previous.year; */
+  tm_ = malloc(sizeof(struct tm));
+  tm_->tm_mday = tm->tm_mday;
+  /* tm_->tm_mon = previous.month; */
 }
 
 __attribute__((unused)) static inline void shuffle(int *pattern, const int n) {
@@ -517,6 +522,9 @@ int main(int argc, char *argv[argc + 1]) {
   }
 
   puts(longdate);
+
+  printf("%d\n", tm_->tm_wday);
+
   return 0;
   struct Test init = BUF_INIT;
 
