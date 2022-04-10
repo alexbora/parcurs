@@ -21,19 +21,20 @@ static void date_now(void) {
 }
 
 static void date_prev(int year, int mon, int day) {
-  struct tm time = {};
-  time.tm_mday = day;
-  time.tm_mon = mon;
-  time.tm_year = year - 1900;
-  mktime(&time);
-  time.tm_year += 1900;
-  TM_PREV = time;
-  printf("WDAY: %d\n", time.tm_wday);
+  struct tm ti = {59, 59, 12, day, mon - 2, year - 1900};
+  time_t epoch = mktime(&ti);
+  printf("%s", asctime(gmtime(&epoch)));
+  printf("W: %d\n", ti.tm_wday);
+
+  TM_PREV = ti;
+  TM_PREV.tm_year += 1900;
+  TM_PREV.tm_mon++;
+  if (TM_PREV.tm_mon == 0)
+    TM_PREV.tm_year--;
 }
 
 static void date_cmdl(int year, int mon, int day) {
   struct tm tm = {.tm_year = year - 1900, .tm_mon = mon - 1, .tm_mday = day};
-
   mktime(&tm);
   tm.tm_mon++;
   tm.tm_year += 1900;
@@ -67,22 +68,12 @@ static void process_cmdl(int argc, char *argv[restrict argc + 1]) {
 int main(int argc, char *argv[argc + 1]) {
   process_cmdl(argc, argv);
 
-  printf("%d %d %d %d\n %.lf\n", TM.tm_year, TM.tm_mon, TM.tm_mday, TM.tm_wday,
-         km);
+  printf("CURRENT: %d %d %d %d\n %.lf\n", TM.tm_year, TM.tm_mon, TM.tm_mday,
+         TM.tm_wday, km);
 
-  date_prev(2022, 3, 10);
-  printf("%d %d %d %d\n %.lf\n", TM_PREV.tm_year, TM_PREV.tm_mon,
-         TM_PREV.tm_mday, TM_PREV.tm_wday, km);
+  date_prev(TM.tm_year, TM.tm_mon, TM.tm_mday);
 
-  struct tm time = {0};
-
-  time.tm_mday = 10;
-  time.tm_mon = 2;
-  time.tm_year = 2022 - 1900;
-
-  mktime(&time);
-
-  printf("%d\n", time.tm_wday);
-
+  printf("PREV: %d %d %d %d\n", TM_PREV.tm_year, TM_PREV.tm_mon,
+         TM_PREV.tm_mday, TM_PREV.tm_wday);
   return 0;
 }

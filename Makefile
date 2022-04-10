@@ -9,5 +9,5 @@ all:
 	@gcc foaie_2.c -o foaie_2 `pkg-config --cflags --libs xlsxwriter`
 	@echo "compiling..."
 clean:
-	@rm -rf *.dSYM foaie_2 parse_holidays play *.xlsx
+	@rm -rf *.dSYM foaie_2 parse_holidays play *.xlsx sterge
 	@echo "cleaned."
