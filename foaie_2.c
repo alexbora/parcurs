@@ -80,6 +80,7 @@
   { 0, 0 }
 
 static struct tm *tm_;
+static struct tm TM;
 
 unsigned *k;
 
@@ -284,7 +285,7 @@ month_name(const unsigned day, const unsigned month, const unsigned year) {
   return mths[tm.tm_mon];
 }
 
-static inline void get_previous(void) {
+static void get_previous(void) {
   struct tm *tm = localtime(&(time_t){time(0)});
   current.day = tm->tm_mday;
   current.month = tm->tm_mon + 1;
@@ -294,11 +295,9 @@ static inline void get_previous(void) {
   if (previous.month == 0)
     previous.year--;
   strftime(longdate, 64, "%d.%m.%Y", tm);
-  /* tm_ = (struct tm *){0}; */
-  /* tm_->tm_year = previous.year; */
-  tm_ = malloc(sizeof(struct tm));
-  tm_->tm_mday = tm->tm_mday;
-  /* tm_->tm_mon = previous.month; */
+  TM = *tm;
+  /* TM.tm_year = current.year; */
+  /* TM.tm_mday = tm->tm_mday; */
 }
 
 __attribute__((unused)) static inline void shuffle(int *pattern, const int n) {
@@ -497,34 +496,49 @@ struct Test {
 
 static const char usage[] = "usage:\n[-h][help]\n[no input][current time]\n";
 
-static inline struct tm *init_time(int day, int month, int year) {
-  static struct tm tm;
-  tm = TM_INITIAILIZER;
+static inline void cmdline_time(int day, int month, int year) {
+  struct tm tm = TM_INITIAILIZER;
   mktime(&tm);
-  return &tm;
+  TM = tm;
 }
 
+static double *km_;
+
 int main(int argc, char *argv[argc + 1]) {
+  km_ = malloc(sizeof(double));
   if (argc > 1 && *argv[1] == 'h') {
     puts(usage);
     return 0;
   }
 
   if (argc > 5) {
-    tm_ = init_time(1, atoi(argv[2]), atoi(argv[3]));
-    (void)argv[1];
-    previous.year = tm_->tm_year;
-    previous.day = tm_->tm_mday;
-    previous.month = tm_->tm_mon;
-    strftime(longdate, 64, "%d.%m.%Y", tm_);
+    cmdline_time(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
+    previous.year = TM.tm_year;
+    previous.day = TM.tm_mday;
+    previous.month = TM.tm_mon;
+    strftime(longdate, 64, "%d.%m.%Y", &TM);
+    if (atoi(argv[4]) == 0) {
+      FILE *f = fopen("km", "r++");
+      fscanf(f, "%lf", km_);
+      fclose(f);
+    } else {
+      *km_ = atoi(argv[4]);
+    }
   } else {
     get_previous();
+    FILE *f = fopen("km", "r++");
+    fscanf(f, "%lf", km_);
+    fclose(f);
   }
 
   puts(longdate);
+  printf("weekday: %d\n", TM.tm_wday);
+  printf("monthday: %d\n", TM.tm_mday);
+  printf("month: %d\n", TM.tm_mon);
+  printf("previous month: %d\n", TM.tm_mon - 1);
+  printf("km: %lf\n", *km_);
 
-  printf("%d\n", tm_->tm_wday);
-
+  FREE_AND_NULL(km_);
   return 0;
   struct Test init = BUF_INIT;
 
