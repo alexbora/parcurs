@@ -4,25 +4,35 @@
  * @created     : duminică apr 10, 2022 13:08:27 EEST
  */
 
+#include <ctype.h>
+#include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
 static struct tm TM, TM_PREV;
-static double km;
+static double    km;
+static char      longdate[64];
+static char      luna[64];
+static int       dayz;
 
-static void date_now(void) {
-  const time_t t = time(0);
-  struct tm *tm = gmtime(&t);
+static void date_now(void)
+{
+  const time_t t  = time(0);
+  struct tm   *tm = gmtime(&t);
+  strftime(longdate, 64, "%d.%m.%Y", tm);
+  strftime(luna, 64, "%B", tm);
+
   tm->tm_year += 1900;
   tm->tm_mon += 1;
   TM = *tm;
   tm = NULL;
 }
 
-static void date_prev(int year, int mon, int day) {
-  struct tm ti = {59, 59, 12, day, mon - 2, year - 1900};
-  time_t epoch = mktime(&ti);
+static void date_prev(int year, int mon, int day)
+{
+  struct tm ti    = {59, 59, 12, day, mon - 2, year - 1900};
+  time_t    epoch = mktime(&ti);
   /* printf("%s", asctime(gmtime(&epoch))); */
   /* printf("W: %d\n", ti.tm_wday); */
 
@@ -33,22 +43,33 @@ static void date_prev(int year, int mon, int day) {
     TM_PREV.tm_year--;
 }
 
-static void date_cmdl(int year, int mon, int day) {
+static void date_cmdl(int year, int mon, int day)
+{
+  if (year < 1970) {
+    puts("Invalid year\n");
+    exit(EXIT_SUCCESS);
+  }
   struct tm tm = {.tm_year = year - 1900, .tm_mon = mon - 1, .tm_mday = day};
   mktime(&tm);
+
+  strftime(longdate, 64, "%d.%m.%Y", &tm);
+  strftime(luna, 64, "%B", &tm);
+
   tm.tm_mon++;
   tm.tm_year += 1900;
   TM = tm;
 }
 
-static void fill_km(double *km) {
+static void fill_km(double *km)
+{
   FILE *f = fopen("km", "r");
   fscanf(f, "%lf", km);
   fclose(f);
   f = NULL;
 }
 
-static void process_cmdl(int argc, char *argv[restrict argc + 1]) {
+static void process_cmdl(int argc, char *argv[restrict argc + 1])
+{
   if (argv[1] && *argv[1] == 'h') {
     puts("\nExecute like './prog year month day km', for example './prog "
          "2022 4 10 100'.\nIf 0 km, file km is read.\nIf no arguments, current "
@@ -65,13 +86,15 @@ static void process_cmdl(int argc, char *argv[restrict argc + 1]) {
     fill_km(&km);
 }
 
-static int is_weekend(int day) {
+static int is_weekend(int day)
+{
   if (day == 0 || day == 6)
     return 1;
   return 0;
 }
 
-static unsigned days_in_month(const int month, const int year) {
+static unsigned days_in_month(const int month, const int year)
+{
   if (month == 4 || month == 6 || month == 9 || month == 11)
     return 30;
   else if (month == 2)
@@ -80,15 +103,23 @@ static unsigned days_in_month(const int month, const int year) {
   return 31;
 }
 
-void fn(void) { puts("fn\n"); }
-void fe(void) { puts("fe\n"); }
+void fn(void)
+{
+  puts("fn\n");
+}
+void fe(void)
+{
+  puts("fe\n");
+}
 
-int main(int argc, char *argv[argc + 1]) {
+int main(int argc, char *argv[argc + 1])
+{
+
+  setlocale(LC_TIME, "ro_RO.UTF-8");
   process_cmdl(argc, argv);
 
   printf("CURRENT: %d %d %d weekday today: %d\tkm: %.lf\n", TM.tm_year,
          TM.tm_mon, TM.tm_mday, TM.tm_wday, km);
-
   /* date_prev(TM.tm_year, TM.tm_mon, TM.tm_mday); */
 
   /* printf("PREV: %d %d %d weekday prev: %d\n", TM_PREV.tm_year,
@@ -97,12 +128,18 @@ int main(int argc, char *argv[argc + 1]) {
 
   /* printf("weekday today: %d\n", TM.tm_wday); */
   /* printf("FREE previous month: %d\n", is_weekend(TM_PREV.tm_wday)); */
-  printf("FREE today: %d\n", is_weekend(TM.tm_wday));
+  /* printf("FREE today: %d\n", is_weekend(TM.tm_wday)); */
 
   /* int row[32] = {0}; */
-  void (*fp[10])(void);
 
-  for (unsigned i = 1; i <= 10; ++i) {
+  puts(longdate);
+  *luna |= ' ';
+  puts(luna);
+
+  return 0;
+  void (*fp[11])(void);
+
+  for (int i = 1; i <= 10; ++i) {
     struct tm ti = {59, 59, 12, i, TM.tm_mon - 1, TM.tm_year - 1900};
     /* struct tm ti = {59, 59, 12, i, 3, 2022 - 1900}; */
     mktime(&ti);
@@ -111,7 +148,6 @@ int main(int argc, char *argv[argc + 1]) {
     /* row[i] = !is_weekend(ti.tm_wday); */
     fp[i] = is_weekend(ti.tm_wday) ? fn : fe;
   }
-
   for (unsigned i = 1; i <= 10; ++i) {
     fp[i]();
   }
