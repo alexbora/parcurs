@@ -201,7 +201,7 @@ static int usage(void)
 {
     printf("no arg: default\narg2 = month, arg3 = year (arg1 defaults to "
             "1)\narg4 = km,  if no km,  readls km file\n");
-    return(EXIT_SUCCESS);
+    exit(EXIT_SUCCESS);
 }
 
 int main(int argc, char *argv[static argc + 1])
