@@ -170,10 +170,8 @@ int main(int argc, char *argv[argc + 1]) {
   puts(longdate);
   puts(luna);
 
-  is_holiday = is_holiday_static;
   int net = 0;
-  if (net)
-    is_holiday = is_holiday_net;
+  is_holiday = net ? is_holiday_net : is_holiday_static;
 
   generate_array(array);
 
