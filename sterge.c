@@ -4,6 +4,7 @@
  * @created     : duminică apr 10, 2022 13:08:27 EEST
  */
 
+/* time includes */
 #include <ctype.h>
 #include <locale.h>
 #include <stdio.h>
@@ -11,18 +12,20 @@
 #include <time.h>
 
 static struct tm TM, TM_PREV;
-static double    km;
-static char      longdate[64];
-static char      luna[64];
-static int       dayz;
-static int       parcursi;
+static double km;
+static char longdate[64];
+static char luna[64];
+static int dayz;
+static int parcursi;
 typedef void (*write_body_fn)(void);
 int array[32];
+int (*is_holiday)(int, int, int);
 
-static void date_now(void)
-{
-  const time_t t  = time(0);
-  struct tm   *tm = gmtime(&t);
+#define MAX_DAYS 32
+
+static void date_now(void) {
+  const time_t t = time(0);
+  struct tm *tm = gmtime(&t);
   strftime(longdate, 64, "%d.%m.%Y", tm);
   tm->tm_mon--;
   strftime(luna, 64, "%B", tm);
@@ -34,10 +37,9 @@ static void date_now(void)
   tm = NULL;
 }
 
-static void date_prev(int year, int mon, int day)
-{
-  struct tm ti    = {59, 59, 12, day, mon - 2, year - 1900};
-  time_t    epoch = mktime(&ti);
+static void date_prev(int year, int mon, int day) {
+  struct tm ti = {59, 59, 12, day, mon - 2, year - 1900};
+  time_t epoch = mktime(&ti);
   /* printf("%s", asctime(gmtime(&epoch))); */
   /* printf("W: %d\n", ti.tm_wday); */
 
@@ -48,8 +50,7 @@ static void date_prev(int year, int mon, int day)
     TM_PREV.tm_year--;
 }
 
-static void date_cmdl(int year, int mon, int day)
-{
+static void date_cmdl(int year, int mon, int day) {
   if (year < 1970) {
     puts("Invalid year\n");
     exit(EXIT_SUCCESS);
@@ -67,16 +68,19 @@ static void date_cmdl(int year, int mon, int day)
   TM = tm;
 }
 
-static void fill_km(double *km)
-{
+static void get_km(double *km) {
   FILE *f = fopen("km", "r");
   fscanf(f, "%lf", km);
   fclose(f);
   f = NULL;
 }
-
-static void process_cmdl(int argc, char *argv[restrict argc + 1])
-{
+static void write_km(double *km) {
+  FILE *f = fopen("km", "w++");
+  fprintf(f, "%lf", *km);
+  fclose(f);
+  f = NULL;
+}
+static void process_cmdl(int argc, char *argv[restrict argc + 1]) {
   if (argv[1] && *argv[1] == 'h') {
     puts("\nExecute like './prog year month day km', for example './prog "
          "2022 4 10 100'.\nIf 0 km, file km is read.\nIf no arguments, current "
@@ -90,18 +94,34 @@ static void process_cmdl(int argc, char *argv[restrict argc + 1])
   if (argc > 4 && argv[4])
     km = atof(argv[4]);
   else
-    fill_km(&km);
+    get_km(&km);
 }
 
-static int is_weekend(int day)
-{
+static int is_weekend(int day) {
   if (day == 0 || day == 6)
     return 1;
   return 0;
 }
 
-static unsigned days_in_month(const int month, const int year)
-{
+static int is_holiday_static(int year, int month, int day) {
+  if (year != 2022)
+    return 0;
+  static const struct {
+    unsigned day, month;
+  } hol[] = {
+      {1, 1}, {2, 1},  {24, 1}, {22, 4}, {24, 4},  {25, 4}, {1, 5},   {1, 5},
+      {1, 6}, {12, 6}, {13, 6}, {15, 8}, {30, 11}, {1, 12}, {25, 12}, {26, 12},
+  };
+
+  for (unsigned i = 0; i < sizeof(hol) / sizeof(hol[0]); i++)
+    if (month == hol[i].month && day == hol[i].day)
+      return 1;
+  return 0;
+}
+
+static int is_holiday_net(int year, int month, int day) { return 0; }
+
+static unsigned days_in_month(const int month, const int year) {
   if (month == 4 || month == 6 || month == 9 || month == 11)
     return 30;
   else if (month == 2)
@@ -110,32 +130,25 @@ static unsigned days_in_month(const int month, const int year)
   return 31;
 }
 
-void fn(void)
-{
-  puts("fn\n");
-}
-void fe(void)
-{
-  puts("fe\n");
-}
+void fn(void) { puts("fn\n"); }
+void fe(void) { puts("fe\n"); }
 
-void generate_array(int *arr)
-{
-  arr[0] = 9;
-  int *p = arr;
-  printf("%d\n\n", *(p++));
+void generate_array(int *arr) {
+  /* arr[0] = 9; */
+  /* int *p = arr; */
+  /* printf("%d\n\n", *(p++)); */
 
-  for (int i = 1; i <= 32; ++i) {
+  for (int i = 1; i <= MAX_DAYS; ++i) {
     struct tm ti = {59, 59, 12, i, TM.tm_mon - 1, TM.tm_year - 1900};
     mktime(&ti);
     printf("wday: %d %s %d\n", ti.tm_wday, asctime(&ti),
            is_weekend(ti.tm_wday));
-    arr[i] = is_weekend(ti.tm_wday) ? 0 : 1;
+    arr[i] =
+        is_weekend(ti.tm_wday) | is_holiday(ti.tm_year, ti.tm_mon, ti.tm_mday);
   }
 }
 
-int main(int argc, char *argv[argc + 1])
-{
+int main(int argc, char *argv[argc + 1]) {
 
   setlocale(LC_TIME, "ro_RO.UTF-8");
   process_cmdl(argc, argv);
@@ -157,13 +170,15 @@ int main(int argc, char *argv[argc + 1])
   puts(longdate);
   puts(luna);
 
+  is_holiday = is_holiday_static;
+  int net = 0;
+  if (net)
+    is_holiday = is_holiday_net;
+
   generate_array(array);
-  array[31] = 7;
-  for (unsigned i = 0; i < 32; i++) {
-    printf("arr: %d\n", array[i]);
-  }
 
   return 0;
+
   /* return 0; */
   void (*fp[11])(void);
   write_body_fn f[32];
