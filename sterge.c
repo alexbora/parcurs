@@ -119,6 +119,21 @@ void fe(void)
   puts("fe\n");
 }
 
+void generate_array(int *arr)
+{
+  arr[0] = 9;
+  int *p = arr;
+  printf("%d\n\n", *(p++));
+
+  for (int i = 1; i <= 32; ++i) {
+    struct tm ti = {59, 59, 12, i, TM.tm_mon - 1, TM.tm_year - 1900};
+    mktime(&ti);
+    printf("wday: %d %s %d\n", ti.tm_wday, asctime(&ti),
+           is_weekend(ti.tm_wday));
+    arr[i] = is_weekend(ti.tm_wday) ? 0 : 1;
+  }
+}
+
 int main(int argc, char *argv[argc + 1])
 {
 
@@ -142,6 +157,13 @@ int main(int argc, char *argv[argc + 1])
   puts(longdate);
   puts(luna);
 
+  generate_array(array);
+  array[31] = 7;
+  for (unsigned i = 0; i < 32; i++) {
+    printf("arr: %d\n", array[i]);
+  }
+
+  return 0;
   /* return 0; */
   void (*fp[11])(void);
   write_body_fn f[32];
