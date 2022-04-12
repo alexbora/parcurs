@@ -21,6 +21,8 @@ typedef void (*write_body_fn)(void);
 int array[32];
 int (*is_holiday)(int, int, int);
 
+char *tmp_luna;
+
 #define MAX_DAYS 32
 
 static void date_now(void) {
@@ -110,7 +112,6 @@ static int is_holiday_static(int year, int month, int day) {
   };
 
   for (unsigned i = 0; i < sizeof(hol) / sizeof(hol[0]); i++)
-    /* return (month == hol[i].month) | (day == hol[i].day); */
     if (month == hol[i].month && day == hol[i].day)
       return 1;
   return 0;
@@ -127,6 +128,20 @@ static unsigned days_in_month(const int month, const int year) {
   return 31;
 }
 
+static char *literal_mon(int month) {
+  return &"\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ianuarie\0\0\0\0\0\0\0\0februari"
+          "e\0\0\0"
+          "\0\0\0\0martie\0\0\0\0\0\0\0\0\0\0aprilie\0\0\0\0\0\0\0\0\0mai\0"
+          "\0\0\0\0"
+          "\0\0\0\0\0\0\0\0iunie\0\0\0\0\0\0\0\0\0\0\0iulie\0\0\0\0\0\0\0\0"
+          "\0\0\0au"
+          "gust\0\0\0\0\0\0\0\0\0\0septembrie\0\0\0\0\0\0octombrie\0\0\0\0"
+          "\0\0\0noi"
+          "embrie\0\0\0\0\0\0\0decembrie\0\0\0\0\0\0\0"[16 * month];
+
+  /* (char*)"text" + 16 * 9; */
+}
+
 void fn(void) { puts("fn\n"); }
 void fe(void) { puts("fe\n"); }
 
@@ -141,6 +156,7 @@ void generate_array(int *arr) {
     printf("wday: %d %s wk: %d\t hol: %d\n", ti.tm_wday, asctime(&ti),
            is_weekend(ti.tm_wday),
            is_holiday(ti.tm_year + 1900, ti.tm_mon + 1, ti.tm_mday));
+
     arr[i] = is_weekend(ti.tm_wday) |
              is_holiday(ti.tm_year + 1900, ti.tm_mon - 1, ti.tm_mday);
     /* arr[i] = (ti.tm_wday == 6) | (ti.tm_wday == 0); */
