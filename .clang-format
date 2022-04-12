@@ -27,7 +27,7 @@ AlignOperands: true
 # Don't align trailing comments
 # int a; // Comment a
 # int b = 2; // Comment b
-AlignTrailingComments: false
+AlignTrailingComments: true
 
 AllowShortBlocksOnASingleLine: true
 AllowShortCaseLabelsOnASingleLine: true
@@ -69,6 +69,8 @@ AlignOperands:   Align
 # AcrossEmptyLines: true
 # AcrossComments: false
 
+# IndentFunctionDeclarationAfterType: true 
+# IndentWrappedFunctionNames: true 
 
 ForEachMacros:
   - 'for_each_abbrev'
