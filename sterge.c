@@ -145,6 +145,8 @@ void generate_array(int *arr) {
            is_weekend(ti.tm_wday));
     arr[i] =
         is_weekend(ti.tm_wday) | is_holiday(ti.tm_year, ti.tm_mon, ti.tm_mday);
+    arr[i] = (ti.tm_wday == 6) | (ti.tm_wday == 0);
+    arr[i] |= is_holiday(ti.tm_year, ti.tm_mon, ti.tm_mday);
   }
 }
 
