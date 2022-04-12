@@ -97,11 +97,7 @@ static void process_cmdl(int argc, char *argv[restrict argc + 1]) {
     get_km(&km);
 }
 
-static int is_weekend(int day) {
-  if (day == 0 || day == 6)
-    return 1;
-  return 0;
-}
+static int is_weekend(int day) { return (day == 6) | (day == 0); }
 
 static int is_holiday_static(int year, int month, int day) {
   if (year != 2022)
@@ -114,6 +110,7 @@ static int is_holiday_static(int year, int month, int day) {
   };
 
   for (unsigned i = 0; i < sizeof(hol) / sizeof(hol[0]); i++)
+    /* return (month == hol[i].month) | (day == hol[i].day); */
     if (month == hol[i].month && day == hol[i].day)
       return 1;
   return 0;
@@ -138,20 +135,20 @@ void generate_array(int *arr) {
   /* int *p = arr; */
   /* printf("%d\n\n", *(p++)); */
 
-  for (int i = 1; i <= MAX_DAYS; ++i) {
+  for (int i = 1; i < MAX_DAYS; ++i) {
     struct tm ti = {59, 59, 12, i, TM.tm_mon - 1, TM.tm_year - 1900};
     mktime(&ti);
-    printf("wday: %d %s %d\n", ti.tm_wday, asctime(&ti),
-           is_weekend(ti.tm_wday));
-    arr[i] =
-        is_weekend(ti.tm_wday) | is_holiday(ti.tm_year, ti.tm_mon, ti.tm_mday);
-    arr[i] = (ti.tm_wday == 6) | (ti.tm_wday == 0);
-    arr[i] |= is_holiday(ti.tm_year, ti.tm_mon, ti.tm_mday);
+    printf("wday: %d %s wk: %d\t hol: %d\n", ti.tm_wday, asctime(&ti),
+           is_weekend(ti.tm_wday),
+           is_holiday(ti.tm_year + 1900, ti.tm_mon + 1, ti.tm_mday));
+    arr[i] = is_weekend(ti.tm_wday) |
+             is_holiday(ti.tm_year + 1900, ti.tm_mon - 1, ti.tm_mday);
+    /* arr[i] = (ti.tm_wday == 6) | (ti.tm_wday == 0); */
+    /* arr[i] |= is_holiday(ti.tm_year, ti.tm_mon, ti.tm_mday); */
   }
 }
 
 int main(int argc, char *argv[argc + 1]) {
-
   setlocale(LC_TIME, "ro_RO.UTF-8");
   process_cmdl(argc, argv);
 
