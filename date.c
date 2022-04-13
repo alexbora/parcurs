@@ -5,6 +5,7 @@
  */
 
 /* time includes */
+#include "date.h"
 #include <ctype.h>
 #include <locale.h>
 #include <stdio.h>
@@ -23,6 +24,8 @@ int array[32];
 static int (*is_holiday)(int, int, int);
 static char *tmp_luna;
 extern int net;
+extern struct Net *h;
+extern struct Net hh[32];
 
 static void date_now(void) {
   const time_t t = time(0);
@@ -99,7 +102,13 @@ static int is_holiday_static(int year, int month, int day) {
   return 0;
 }
 
-static int is_holiday_net(int year, int month, int day) { return 0; }
+static int is_holiday_net(int year, int month, int day) {
+  h = hh;
+  for (unsigned i = 0; i < MAX_DAYS; i++)
+    if (month == h[i].month && day == h[i].day)
+      return 1;
+  return 0;
+}
 
 static unsigned days_in_month(const int month, const int year) {
   if (month == 4 || month == 6 || month == 9 || month == 11)
@@ -130,7 +139,7 @@ void generate_time(int argc, char *argv[]) {
   setlocale(LC_TIME, "ro_RO.UTF-8");
   process_cmdl(argc, argv);
   net = 0;
-  is_holiday = net ? is_holiday_net : is_holiday_static;
+  is_holiday = h ? is_holiday_net : is_holiday_static;
   generate_array(array);
 }
 #ifndef Skipmain

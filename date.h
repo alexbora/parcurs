@@ -10,4 +10,7 @@
 
 void generate_time(int, char **);
 
+struct Net {
+  int month, day;
+};
 #endif /* end of include guard DATE_H */
