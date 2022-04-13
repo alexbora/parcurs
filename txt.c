@@ -29,5 +29,13 @@ int main(int argc, char *argv[]) {
     printf("%ld\n", strlen(arr[i]));
   }
   puts(str + 16 * 10);
+
+  int x = 0;
+  int y = 0;
+
+  int z = (x == y) | x;
+
+  printf("X: %d\n", z);
+
   return 0;
 }

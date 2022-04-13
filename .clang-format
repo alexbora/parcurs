@@ -34,7 +34,7 @@ AllowShortCaseLabelsOnASingleLine: true
 AllowShortFunctionsOnASingleLine: true
 AllowShortIfStatementsOnASingleLine: true
 AllowShortLoopsOnASingleLine: true
-
+AllowShortIfStatementsOnASingleLine : true
 BreakBeforeBraces: Linux
 
 PointerAlignment: Right
