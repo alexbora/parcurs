@@ -11,3 +11,6 @@ all:
 clean:
 	@rm -rf *.dSYM foaie_2 parse_holidays play *.xlsx sterge txt
 	@echo "cleaned."
+
+foaie:
+	foaie.mk

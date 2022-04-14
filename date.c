@@ -20,12 +20,10 @@ static double    km;
 static char      longdate[64];
 static char      luna[64];
 static int       dayz;
-static int       parcursi;
-int              array[32];
+/* static int parcursi; */
+int array[MAX_DAYS];
 static int (*is_holiday)(int, int, int);
-static char *tmp_luna;
-extern int   net;
-/* extern struct Net hh[32]; */
+/* static char *tmp_luna; */
 
 static void date_now(void)
 {
@@ -42,7 +40,7 @@ static void date_now(void)
   tm = NULL;
 }
 
-static void date_cmdl(int year, int mon, int day)
+static void date_cmdl(const int year, const int mon, const int day)
 {
   struct tm tm = {.tm_year = year - 1900, .tm_mon = mon - 1, .tm_mday = day};
   mktime(&tm);
@@ -64,13 +62,15 @@ static void get_km(double *km)
   fclose(f);
   f = NULL;
 }
-static void write_km(double *km)
+
+static void write_km(double *const km)
 {
   FILE *f = fopen("km", "w++");
   fprintf(f, "%lf", *km);
   fclose(f);
   f = NULL;
 }
+
 static void process_cmdl(int argc, char *argv[restrict argc + 1])
 {
   if (argv[1] && *argv[1] == 'h') {
@@ -89,12 +89,12 @@ static void process_cmdl(int argc, char *argv[restrict argc + 1])
     get_km(&km);
 }
 
-static int is_weekend(int day)
+static int is_weekend(const int day)
 {
   return (day == 6) | (day == 0);
 }
 
-static int is_holiday_static(int year, int month, int day)
+static int is_holiday_static(const int year, const int month, const int day)
 {
   if (year != 2022)
     return 0;
@@ -105,16 +105,16 @@ static int is_holiday_static(int year, int month, int day)
       {1, 6}, {12, 6}, {13, 6}, {15, 8}, {30, 11}, {1, 12}, {25, 12}, {26, 12},
   };
 
-  for (unsigned i = 0; i < sizeof(hol) / sizeof(hol[0]); i++)
+  for (int i = 0; i < (int)(sizeof(hol) / sizeof(hol[0])); i++)
     if (month == hol[i].month && day == hol[i].day)
       return 1;
   return 0;
 }
 
-static int is_holiday_net(int year, int month, int day)
+static int is_holiday_net(const int year, const int month, const int day)
 {
-  h_ptr = hh;
-  for (unsigned i = 0; i < MAX_DAYS; i++)
+  /* h_ptr = hh; */
+  for (int i = 0; i < MAX_DAYS; i++)
     if (month == h_ptr[i].month && day == h_ptr[i].day)
       return 1;
   return 0;
@@ -132,9 +132,8 @@ static unsigned days_in_month(const int month, const int year)
 
 void generate_array(int *arr)
 {
-
-  int days = days_in_month(TM.tm_mon, TM.tm_year + 1900);
-  for (int i = 1; i <= days; ++i) {
+  dayz = days_in_month(TM.tm_mon, TM.tm_year + 1900);
+  for (int i = 1; i <= dayz; ++i) {
     struct tm ti = {59, 59, 12, i, TM.tm_mon - 1, TM.tm_year - 1900};
     mktime(&ti);
 
@@ -155,6 +154,8 @@ void generate_time(int argc, char *argv[])
   is_holiday = h_ptr ? is_holiday_net : is_holiday_static;
   generate_array(array);
 }
+
+#define Skipmain
 #ifndef Skipmain
 int main(int argc, char *argv[argc + 1])
 {
@@ -170,6 +171,7 @@ int main(int argc, char *argv[argc + 1])
   puts(luna);
 
   /* generate_array(array); */
+  write_km();
 
   return 0;
 }

@@ -14,7 +14,10 @@ struct Net hh[32], *h_ptr;
 
 int main(int argc, char **argv)
 {
+
+  /* h_ptr = (struct Net[32]){{4, 1}}; */
   net = 0;
+
   generate_time(argc, argv);
   return 0;
 }

@@ -14,5 +14,7 @@ struct Net {
   int month, day;
 };
 
-extern struct Net hh[32], *h_ptr;
+extern struct Net *h_ptr;
+extern int         net;
+
 #endif /* end of include guard DATE_H */
