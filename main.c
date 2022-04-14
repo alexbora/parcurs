@@ -5,11 +5,15 @@
  */
 
 #include "date.h"
+
 #include <stdio.h>
 
 int net;
 
-int main(int argc, char **argv) {
+struct Net hh[32], *h_ptr;
+
+int main(int argc, char **argv)
+{
   net = 0;
   generate_time(argc, argv);
   return 0;
