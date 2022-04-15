@@ -83,7 +83,6 @@ static void fill_struct(char *in, struct Net *h)
 
 int main(int argc, char *argv[])
 {
-
   char *buf = malloc(4096);
   fetch(buf, 2022);
   char *result = parse(buf);
