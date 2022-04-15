@@ -9,12 +9,15 @@
 #define DATE_H
 
 void generate_time(int, char **);
+void net_fetch(void);
+/* void process_cmdl(int argc, char **argv); */
 
 struct Net {
   int month, day;
 };
 
 extern struct Net *h_ptr;
-extern int         net;
+/* extern int         net; */
+extern int current_year;
 
 #endif /* end of include guard DATE_H */

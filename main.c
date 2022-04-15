@@ -8,16 +8,19 @@
 
 #include <stdio.h>
 
-int net;
+/* int net; */
 
-struct Net hh[32], *h_ptr;
+/* struct Net hh[32], *h_ptr; */
+struct Net *h_ptr;
 
 int main(int argc, char **argv)
 {
 
   /* h_ptr = (struct Net[32]){{4, 1}}; */
-  net = 0;
 
+  if (argv[1] && *argv[1] == 'h')
+    net_fetch();
   generate_time(argc, argv);
+  printf("current: %d\n", current_year);
   return 0;
 }

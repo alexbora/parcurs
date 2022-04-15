@@ -24,8 +24,9 @@ static int       dayz;
 int array[MAX_DAYS];
 static int (*is_holiday)(int, int, int);
 /* static char *tmp_luna; */
+int current_year;
 
-static void date_now(void)
+void date_now(void)
 {
   const time_t t  = time(0);
   struct tm   *tm = gmtime(&t);
@@ -35,6 +36,7 @@ static void date_now(void)
   *luna |= ' ';
 
   tm->tm_year += 1900;
+  current_year = tm->tm_year;
   tm->tm_mon += 2;
   TM = *tm;
   tm = NULL;
@@ -52,7 +54,8 @@ static void date_cmdl(const int year, const int mon, const int day)
 
   tm.tm_mon += 2;
   tm.tm_year += 1900;
-  TM = tm;
+  current_year = tm.tm_year;
+  TM           = tm;
 }
 
 static void get_km(double *km)
@@ -71,14 +74,20 @@ static void write_km(double *const km)
   f = NULL;
 }
 
-static void process_cmdl(int argc, char *argv[restrict argc + 1])
+void usage(int argc, char **argv)
 {
-  if (argv[1] && *argv[1] == 'h') {
-    puts("\nExecute like './prog year month day km', for example './prog "
-         "2022 4 10 100'.\nIf 0 km, file km is read.\nIf no arguments, current "
-         "date is chosen and file km is read.\n");
-    exit(EXIT_SUCCESS);
-  }
+  puts("\nExecute like './prog year month day km', for example './prog "
+       "2022 4 10 100'.\nIf 0 km, file km is read.\nIf no arguments, "
+       "current "
+       "date is chosen and file km is read.\n");
+  exit(EXIT_SUCCESS);
+}
+
+void process_cmdl(int argc, char *argv[restrict argc + 1])
+{
+  if (argv[1] && *argv[1] == 'h')
+    usage(argc, argv);
+
   if (argv[1] && argv[2] && argv[3])
     date_cmdl(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
   else
@@ -150,7 +159,7 @@ void generate_time(int argc, char *argv[])
 {
   setlocale(LC_TIME, "ro_RO.UTF-8");
   process_cmdl(argc, argv);
-  net        = 0;
+  /* net        = 0; */
   is_holiday = h_ptr ? is_holiday_net : is_holiday_static;
   generate_array(array);
 }

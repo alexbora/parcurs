@@ -1,5 +1,5 @@
 PROGRAM = foaie_2
-FILES.c = main.c date.c
+FILES.c = main.c date.c net.c
 FILES.h = date.h config.h
 FILES.o = ${FILES.c:.c=.o}
 

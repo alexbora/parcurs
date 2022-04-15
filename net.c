@@ -81,15 +81,14 @@ static void fill_struct(char *in, struct Net *h)
   }
 }
 
-int main(int argc, char *argv[])
+void net_fetch()
 {
   char *buf = malloc(4096);
-  fetch(buf, 2022);
+  fetch(buf, current_year);
   char *result = parse(buf);
 
   struct Net *h = (struct Net[32]){0};
   fill_struct(buf, h);
 
   free(buf);
-  return 0;
 }
