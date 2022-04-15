@@ -12,11 +12,11 @@
 #include <netinet/in.h> /* struct sockaddr_in, struct sockaddr */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/socket.h> /* socket, connect */
 #include <unistd.h>
 
-static const ssize_t fetch(const uint_fast64_t year,
-                           const char          buf[static const restrict 1])
+static const ssize_t fetch(const char *buf, const int year)
 {
   struct addrinfo hints = {.ai_family   = AF_INET,
                            .ai_socktype = SOCK_STREAM,
@@ -41,7 +41,7 @@ static const ssize_t fetch(const uint_fast64_t year,
   char      header[256] = {'\0'};
   const int len_header =
       sprintf(header,
-              "GET /romanian_bank_holidays/?year=%llu HTTP/1.1\r\nHost: "
+              "GET /romanian_bank_holidays/?year=%d HTTP/1.1\r\nHost: "
               "%s\r\n\r\n",
               year, host);
 
@@ -60,24 +60,37 @@ static const ssize_t fetch(const uint_fast64_t year,
   return received;
 }
 
-static ssize_t parse(char **in, ssize_t received)
+static char *parse(char *in)
 {
-  received -= 14;
-  char *tmp = *in;
-  while (received--) {
-    if (*tmp++ == '[')
+  while (*in++ != '[')
+    ;
+  return in;
+}
+
+static void fill_struct(char *in, struct Net *h)
+{
+  char *x = in;
+  int   i = 0;
+  while (x++) {
+    x = strstr(x, "date");
+    if (!x)
       break;
+    h[i].day   = atoi(x + 7);
+    h[i].month = atoi(x + 10);
+    i++;
   }
-  return received;
 }
 
 int main(int argc, char *argv[])
 {
-  char *buf = malloc(4096);
-  int   r;
-  if ((r = fetch(2022, buf)) > 0)
-    parse(&buf, r);
-  puts(buf);
 
+  char *buf = malloc(4096);
+  fetch(buf, 2022);
+  char *result = parse(buf);
+
+  struct Net *h = (struct Net[32]){0};
+  fill_struct(buf, h);
+
+  free(buf);
   return 0;
 }
