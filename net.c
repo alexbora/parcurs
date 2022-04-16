@@ -63,18 +63,22 @@ static ssize_t fetch(char *buf, const int year)
   if (sent <= 0)
     return 0;
 
-  char         *p        = buf;
+  char *p                = buf;
+  *p                     = '\0';
   const ssize_t received = recv(sockfd, p, 4 * 1024, 0);
   if (received < 1)
     return 0;
+
+  memset(res, 0, sizeof(struct addrinfo));
   freeaddrinfo(res);
   res = NULL;
+
   shutdown(sockfd, SHUT_RDWR);
   close(sockfd);
   return received;
 }
 
-static char *fetch_simple(const int year)
+__attribute__((unused)) static char *fetch_simple(const int year)
 {
 
   struct hostent *he =
@@ -132,15 +136,17 @@ static void fill_struct(char *in, struct Net *h)
 
 void net_fetch()
 {
-  char *buf = malloc(4 * 1024);
+  char *buf = calloc(1, 4 * 1024);
   fetch(buf, current_year);
   char *result = parse(buf);
 
   struct Net *h = (struct Net[32]){0};
   fill_struct(result, h);
 
+  memset(buf, '\0', 4 * 1024);
   free(buf);
   buf = NULL;
 
-  char *test = fetch_simple(2023);
+  /* char *test = fetch_simple(2023); */
+  /* memset(test, 0, strlen(test)); */
 }
