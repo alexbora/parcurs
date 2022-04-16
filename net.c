@@ -16,7 +16,7 @@
 #include <sys/socket.h> /* socket, connect */
 #include <unistd.h>
 
-static const ssize_t fetch(const char *buf, const int year)
+static ssize_t fetch(char *buf, const int year)
 {
   struct addrinfo hints = {.ai_family   = AF_INET,
                            .ai_socktype = SOCK_STREAM,
@@ -49,7 +49,7 @@ static const ssize_t fetch(const char *buf, const int year)
   if (sent <= 0)
     return 0;
 
-  char *restrict p       = (char *restrict)buf;
+  char         *p        = buf;
   const ssize_t received = recv(sockfd, p, 4 * 1024, 0);
   if (received < 1)
     return 0;
@@ -88,7 +88,7 @@ void net_fetch()
   char *result = parse(buf);
 
   struct Net *h = (struct Net[32]){0};
-  fill_struct(buf, h);
+  fill_struct(result, h);
 
   free(buf);
 }

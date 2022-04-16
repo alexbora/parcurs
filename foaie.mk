@@ -4,12 +4,12 @@ FILES.h = date.h config.h
 FILES.o = ${FILES.c:.c=.o}
 
 CC      = gcc
-SFLAGS  = -std=c11
+SFLAGS  = -std=c11 #-ansi
 GFLAGS  = -g
 OFLAGS  = -O3
 WFLAG1  = -Wall
 WFLAG2  = -Wextra
-WFLAG3  = -Weverything  #-Werror
+WFLAG3  = #-Weverything  #-Werror
 WFLAG4  = # -Wstrict-prototypes
 WFLAG5  = #-Wmissing-prototypes
 WFLAGS  = ${WFLAG1} ${WFLAG2} ${WFLAG3} ${WFLAG4} ${WFLAG5}

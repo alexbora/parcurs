@@ -19,7 +19,8 @@ int main(int argc, char **argv)
   /* h_ptr = (struct Net[32]){{4, 1}}; */
 
   if (argv[1] && *argv[1] == 'h')
-    net_fetch();
+    usage();
+  net_fetch();
   generate_time(argc, argv);
   printf("current: %d\n", current_year);
   return 0;

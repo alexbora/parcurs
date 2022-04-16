@@ -17,8 +17,8 @@
 
 static struct tm TM;
 static double    km;
-static char      longdate[64];
-static char      luna[64];
+char             longdate[64];
+char             luna[16];
 static int       dayz;
 /* static int parcursi; */
 int array[MAX_DAYS];
@@ -33,7 +33,7 @@ void date_now(void)
   strftime(longdate, 64, "%d.%m.%Y", tm);
   tm->tm_mon--;
   strftime(luna, 64, "%B", tm);
-  *luna |= ' ';
+  *luna |= ' '; // convert lowercase
 
   tm->tm_year += 1900;
   current_year = tm->tm_year;
@@ -58,23 +58,23 @@ static void date_cmdl(const int year, const int mon, const int day)
   TM           = tm;
 }
 
-static void get_km(double *km)
+static void get_km(void)
 {
   FILE *f = fopen("km", "r");
-  fscanf(f, "%lf", km);
+  fscanf(f, "%lf", &km);
   fclose(f);
   f = NULL;
 }
 
-static void write_km(double *const km)
+static void write_km(void)
 {
   FILE *f = fopen("km", "w++");
-  fprintf(f, "%lf", *km);
+  fprintf(f, "%lf", km);
   fclose(f);
   f = NULL;
 }
 
-void usage(int argc, char **argv)
+void usage(void)
 {
   puts("\nExecute like './prog year month day km', for example './prog "
        "2022 4 10 100'.\nIf 0 km, file km is read.\nIf no arguments, "
@@ -86,7 +86,7 @@ void usage(int argc, char **argv)
 void process_cmdl(int argc, char *argv[restrict argc + 1])
 {
   if (argv[1] && *argv[1] == 'h')
-    usage(argc, argv);
+    usage();
 
   if (argv[1] && argv[2] && argv[3])
     date_cmdl(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
@@ -95,7 +95,7 @@ void process_cmdl(int argc, char *argv[restrict argc + 1])
   if (argc > 4 && argv[4])
     km = atof(argv[4]);
   else
-    get_km(&km);
+    get_km();
 }
 
 static int is_weekend(const int day)
@@ -108,13 +108,13 @@ static int is_holiday_static(const int year, const int month, const int day)
   if (year != 2022)
     return 0;
   static const struct {
-    unsigned day, month;
+    int day, month;
   } hol[] = {
       {1, 1}, {2, 1},  {24, 1}, {22, 4}, {24, 4},  {25, 4}, {1, 5},   {1, 5},
       {1, 6}, {12, 6}, {13, 6}, {15, 8}, {30, 11}, {1, 12}, {25, 12}, {26, 12},
   };
 
-  for (int i = 0; i < (int)(sizeof(hol) / sizeof(hol[0])); i++)
+  for (size_t i = 0; i < sizeof(hol) / sizeof(hol[0]); i++)
     if (month == hol[i].month && day == hol[i].day)
       return 1;
   return 0;
@@ -123,13 +123,14 @@ static int is_holiday_static(const int year, const int month, const int day)
 static int is_holiday_net(const int year, const int month, const int day)
 {
   /* h_ptr = hh; */
+  (void)year;
   for (int i = 0; i < MAX_DAYS; i++)
     if (month == h_ptr[i].month && day == h_ptr[i].day)
       return 1;
   return 0;
 }
 
-static unsigned days_in_month(const int month, const int year)
+static int days_in_month(const int month, const int year)
 {
   if (month == 4 || month == 6 || month == 9 || month == 11)
     return 30;
@@ -139,7 +140,7 @@ static unsigned days_in_month(const int month, const int year)
   return 31;
 }
 
-void generate_array(int *arr)
+static void generate_array(int *arr)
 {
   dayz = days_in_month(TM.tm_mon, TM.tm_year + 1900);
   for (int i = 1; i <= dayz; ++i) {
