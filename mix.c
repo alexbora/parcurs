@@ -4,19 +4,22 @@
  * @created     : sâmbătă apr 16, 2022 16:03:13 EEST
  */
 
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/_types/_ucontext.h>
 #include <sys/types.h>
 #include <time.h>
 
 static struct Route {
-  char *route;
-  float km;
-  char *obs;
+  char         *route;
+  unsigned long km;
+  char         *obs;
 } tmp[128];
 
-static void random_shuffle(void) {
-  const struct Route parcurs[16] = {
+static void random_shuffle(void)
+{
+  static const struct Route parcurs[16] = {
       {"Cluj-Oradea", 321, "Interes Serviciu"},
       {"Cluj-Turda", 121, "Interes Serviciu"},
       {"Cluj-Zalau", 156, "Interes Serviciu"},
@@ -42,14 +45,14 @@ static void random_shuffle(void) {
     }
   }
 
-  unsigned found, play, cycle, k = 0, recent[128] = {0};
+  unsigned long found, play, cycle, k = 0, recent[128] = {0};
   found = play = cycle = k;
 
   static const unsigned tmp_size = sizeof(tmp) / sizeof(tmp[0]);
 
   for (; cycle < tmp_size; cycle++) {
     do {
-      play = rand() % n;
+      play  = (unsigned long)rand() % n;
       found = 0;
       for (k = 0; k < n; k++)
         if (recent[k] == play)
@@ -60,7 +63,8 @@ static void random_shuffle(void) {
   }
 }
 
-static int repeating(struct Route *in) {
+static inline int repeating(const struct Route *in)
+{
   for (unsigned i = 0; i < 32; i++) {
     if (in[i + 1].km == in[i].km && in[i].km != 30)
       return 1;
@@ -68,20 +72,22 @@ static int repeating(struct Route *in) {
   return 0;
 }
 
-void mix(void) {
-  srand(time(0));
+void mix(void)
+{
+  srand((unsigned)time(0));
   do {
     random_shuffle();
   } while (repeating(tmp));
 }
 
 #ifndef Skipmain
-int main(int argc, char *argv[]) {
+int main()
+{
   mix();
 
   /* struct Route *tmp_ = (struct Route[128]){0}; */
 
-  for (unsigned i = 0; i < 3; ++i) {
+  for (unsigned i = 0; i < 16; ++i) {
     printf("%s\n", tmp[i].route);
   }
 

@@ -15,7 +15,8 @@
 /* struct Net hh[32], *h_ptr; */
 struct Net *h_ptr;
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
   /* h_ptr = (struct Net[32]){{4, 1}}; */
 
   process_cmdl(argc, argv);
@@ -24,7 +25,7 @@ int main(int argc, char **argv) {
   /* usage(); */
   net_fetch();
   mix();
-  generate_time(argc, argv);
+  generate_time();
   printf("current: %d\n", current_year);
 #if 0
   FILE *f = fopen("config.h", "r");
