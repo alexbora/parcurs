@@ -4,7 +4,7 @@ FILES.h = date.h config.h
 FILES.o = ${FILES.c:.c=.o}
 
 CC      = gcc #/opt/local/libexec/llvm-14/bin/clang
-SFLAGS  = -std=c11 #-ansi
+SFLAGS  = -std=c11 -D_POSIX_C_SOURCE=200112L #-ansi
 GFLAGS  = -g
 OFLAGS  = -O3
 WFLAG1  = -Wall
