@@ -22,6 +22,7 @@ int main(int argc, char **argv) {
 
   /* if (argv[1] && *argv[1] == 'h') */
   /* usage(); */
+  mix();
   net_fetch();
   generate_time(argc, argv);
   printf("current: %d\n", current_year);

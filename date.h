@@ -22,4 +22,7 @@ extern int current_year;
 extern char longdate[64];
 extern char luna[16];
 
+extern struct Route tmp;
+void mix();
+
 #endif /* end of include guard DATE_H */

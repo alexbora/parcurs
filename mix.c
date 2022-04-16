@@ -67,16 +67,19 @@ static int repeating(struct Route *in) {
   return 0;
 }
 
-static void mix(struct Route *in) {
+void mix(void) {
   srand(time(0));
   do {
     random_shuffle();
   } while (repeating(tmp));
+  printf("%s\n", tmp->route);
 }
 
 #ifndef Skipmain
 int main(int argc, char *argv[]) {
-  mix(tmp);
+  mix();
+
+  struct Route *tmp_ = (struct Route[128]){0};
 
   for (unsigned i = 0; i < 32; ++i) {
     printf("%s\n", tmp[i].route);
