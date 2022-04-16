@@ -30,7 +30,7 @@ if compiles "" "
 	}"
 then
 	# echo "CFLAGS += -DHAVE_ARC4RANDOM" >> config.mk
-  echo "#define HAVE_ARC4RANDOM 1" >> config.h 
+  echo "#define HAVE_ARC4RANDOM (1)" >> config.h 
 fi
 
 if compiles "-D_POSIX_C_SOURCE=200112L" "
@@ -43,10 +43,10 @@ if compiles "-D_POSIX_C_SOURCE=200112L" "
 		return (intptr_t)p;
 	}"
 then
-  echo "#deine HAVE_GETRANDOM 1" >> config.h
+  echo "#define HAVE_GETRANDOM (1)" >> config.h
 fi
 
 if test -c /dev/random; then
-  echo "#define HAVE_DEVRANDOM 1" >> config.h
+  echo "#define HAVE_DEVRANDOM (1)" >> config.h
 fi
 
