@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
 
   struct Route *tmp_ = (struct Route[128]){0};
 
-  for (unsigned i = 0; i < 32; ++i) {
+  for (unsigned i = 0; i < 3; ++i) {
     printf("%s\n", tmp[i].route);
   }
 

@@ -25,4 +25,6 @@ extern char luna[16];
 extern struct Route tmp;
 void mix();
 
+extern int array[32];
+
 #endif /* end of include guard DATE_H */
