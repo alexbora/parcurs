@@ -3,7 +3,7 @@ FILES.c = main.c date.c net.c
 FILES.h = date.h config.h
 FILES.o = ${FILES.c:.c=.o}
 
-CC      = gcc
+CC      = gcc #/opt/local/libexec/llvm-14/bin/clang
 SFLAGS  = -std=c11 #-ansi
 GFLAGS  = -g
 OFLAGS  = -O3
