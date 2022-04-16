@@ -7,8 +7,8 @@
 #include "date.h"
 
 #include <stdio.h>
-
-int net;
+#include <stdlib.h>
+/* int net; */
 
 /* struct Net hh[32], *h_ptr; */
 struct Net *h_ptr;
@@ -21,5 +21,14 @@ int main(int argc, char **argv)
   net_fetch();
   generate_time(argc, argv);
   printf("current: %d\n", current_year);
+#if 0
+  FILE *f = fopen("config.h", "r");
+  rewind(f);
+  int  i = 0;
+  char bb[4096];
+  while (!feof(f))
+    bb[i++] = getc(f);
+  puts(bb);
+#endif
   return 0;
 }
