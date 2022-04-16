@@ -148,7 +148,7 @@ static void generate_array(int *arr) {
 
 void generate_time(int argc, char *argv[]) {
   setlocale(LC_TIME, "ro_RO.UTF-8");
-  process_cmdl(argc, argv);
+  /* process_cmdl(argc, argv); */
   /* net        = 0; */
   is_holiday = h_ptr ? is_holiday_net : is_holiday_static;
   generate_array(array);

@@ -16,22 +16,23 @@ static struct Route {
 } tmp[128];
 
 static void random_shuffle(void) {
-  struct Route parcurs[16] = {{"Cluj-Oradea", 321, "Interes Serviciu"},
-                              {"Cluj-Turda", 121, "Interes Serviciu"},
-                              {"Cluj-Zalau", 156, "Interes Serviciu"},
-                              {"Cluj-Baia-Mare", 356, "Interes Serviciu"},
-                              {"Cluj-Bistrita", 257, "Interes Serviciu"},
-                              {"Cluj-Dej", 101, "Interes Serviciu"},
-                              {"Cluj-Cluj", 47, "Interes Serviciu"},
-                              {"Acasa-Birou", 30, " "},
-                              {"Acasa-Birou", 30, " "},
-                              {"Acasa-Birou", 30, " "},
-                              {"Acasa-Birou", 30, " "},
-                              {"Acasa-Birou", 30, " "},
-                              {"Cluj-Cmp. Turzii", 152, "Interes Serviciu"},
-                              {"Cluj-Apahida", 85, "Interes Serviciu"},
-                              {"Cluj-Bontida", 92, "Interes Serviciu"},
-                              {"Cluj-Satu-Mare", 421, "Interes Serviciu"}};
+  const struct Route parcurs[16] = {
+      {"Cluj-Oradea", 321, "Interes Serviciu"},
+      {"Cluj-Turda", 121, "Interes Serviciu"},
+      {"Cluj-Zalau", 156, "Interes Serviciu"},
+      {"Cluj-Baia-Mare", 356, "Interes Serviciu"},
+      {"Cluj-Bistrita", 257, "Interes Serviciu"},
+      {"Cluj-Dej", 101, "Interes Serviciu"},
+      {"Cluj-Cluj", 47, "Interes Serviciu"},
+      {"Acasa-Birou", 30, " "},
+      {"Acasa-Birou", 30, " "},
+      {"Acasa-Birou", 30, " "},
+      {"Acasa-Birou", 30, " "},
+      {"Acasa-Birou", 30, " "},
+      {"Cluj-Cmp. Turzii", 152, "Interes Serviciu"},
+      {"Cluj-Apahida", 85, "Interes Serviciu"},
+      {"Cluj-Bontida", 92, "Interes Serviciu"},
+      {"Cluj-Satu-Mare", 421, "Interes Serviciu"}};
 
   static const size_t n = sizeof(parcurs) / sizeof(parcurs[0]);
 
@@ -72,14 +73,13 @@ void mix(void) {
   do {
     random_shuffle();
   } while (repeating(tmp));
-  printf("%s\n", tmp->route);
 }
 
 #ifndef Skipmain
 int main(int argc, char *argv[]) {
   mix();
 
-  struct Route *tmp_ = (struct Route[128]){0};
+  /* struct Route *tmp_ = (struct Route[128]){0}; */
 
   for (unsigned i = 0; i < 3; ++i) {
     printf("%s\n", tmp[i].route);
