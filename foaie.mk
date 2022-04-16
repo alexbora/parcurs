@@ -1,3 +1,6 @@
+# make -f foaie.mk
+
+
 PROGRAM = foaie_2
 FILES.c = main.c date.c net.c mix.c
 FILES.h = date.h config.h
