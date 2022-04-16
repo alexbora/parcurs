@@ -20,6 +20,7 @@
 static ssize_t fetch(char *buf, const int year)
 {
 
+#if 0
   struct hostent *he =
       gethostbyname("us-central1-romanian-bank-holidays.cloudfunctions.net");
   struct sockaddr_in addr = {.sin_family      = AF_INET,
@@ -30,7 +31,7 @@ static ssize_t fetch(char *buf, const int year)
 
   if (connect(sd, (struct sockaddr *)&addr, sizeof(addr)))
     return 0;
-
+#endif
   struct addrinfo hints = {.ai_family   = AF_INET,
                            .ai_socktype = SOCK_STREAM,
                            .ai_protocol = IPPROTO_TCP,
@@ -73,6 +74,41 @@ static ssize_t fetch(char *buf, const int year)
   return received;
 }
 
+static char *fetch_simple(const int year)
+{
+
+  struct hostent *he =
+      gethostbyname("us-central1-romanian-bank-holidays.cloudfunctions.net");
+  struct sockaddr_in addr = {.sin_family      = AF_INET,
+                             .sin_port        = htons(80),
+                             .sin_addr.s_addr = *(long *)(he->h_addr_list[0])};
+
+  int sd = socket(AF_INET, SOCK_STREAM, 0);
+
+  if (connect(sd, (struct sockaddr *)&addr, sizeof(addr)))
+    return 0;
+
+  puts("\n\x1b[32mConnected.\x1b[0m\n");
+
+  char      header[256] = {'\0'};
+  const int len_header =
+      sprintf(header,
+              "GET /romanian_bank_holidays/?year=%d HTTP/1.1\r\nHost: "
+              "%s\r\n\r\n",
+              year, "us-central1-romanian-bank-holidays.cloudfunctions.net");
+
+  if (0 >= send(sd, header, (size_t)len_header, 0))
+    return 0;
+
+  static char p[4096] = {'\0'};
+  if (1 > recv(sd, p, 4 * 1024, 0))
+    return 0;
+
+  shutdown(sd, SHUT_RDWR);
+  close(sd);
+  return p;
+}
+
 static char *parse(char *in)
 {
   while (*in++ != '[')
@@ -96,7 +132,7 @@ static void fill_struct(char *in, struct Net *h)
 
 void net_fetch()
 {
-  char *buf = malloc(4096);
+  char *buf = malloc(4 * 1024);
   fetch(buf, current_year);
   char *result = parse(buf);
 
@@ -104,4 +140,7 @@ void net_fetch()
   fill_struct(result, h);
 
   free(buf);
+  buf = NULL;
+
+  char *test = fetch_simple(2023);
 }
