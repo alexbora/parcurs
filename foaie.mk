@@ -16,12 +16,13 @@ WFLAGS  = ${WFLAG1} ${WFLAG2} ${WFLAG3} ${WFLAG4} ${WFLAG5}
 UFLAGS  = # Set on command line only
 
 CFLAGS  = ${SFLAGS} ${GFLAGS} ${OFLAGS} ${WFLAGS} ${UFLAGS}
-LDFLAGS =  
+LDFLAGS = `pkg-config --cflags --libs xlsxwriter` 
 LDLIBS  = 
 
-all:    ${PROGRAM}
+all: ${PROGRAM}
 
 ${PROGRAM}: ${FILES.o}
+	./compiles.sh
 	${CC} -o $@ ${CFLAGS} ${FILES.o} ${LDFLAGS} ${LDLIBS}
 
 date.o: ${FILES.h}

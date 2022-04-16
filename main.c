@@ -8,16 +8,14 @@
 
 #include <stdio.h>
 
-/* int net; */
+int net;
 
 /* struct Net hh[32], *h_ptr; */
 struct Net *h_ptr;
 
 int main(int argc, char **argv)
 {
-
   /* h_ptr = (struct Net[32]){{4, 1}}; */
-
   if (argv[1] && *argv[1] == 'h')
     usage();
   net_fetch();

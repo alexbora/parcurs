@@ -144,7 +144,8 @@ static void generate_array(int *arr)
 {
   dayz = days_in_month(TM.tm_mon, TM.tm_year + 1900);
   for (int i = 1; i <= dayz; ++i) {
-    struct tm ti = {59, 59, 12, i, TM.tm_mon - 1, TM.tm_year - 1900};
+    struct tm ti = {59, 59, 12, i, TM.tm_mon - 1, TM.tm_year - 1900,
+                    0,  0,  0,  0, NULL};
     mktime(&ti);
 
     arr[i] = is_weekend(ti.tm_wday);
@@ -163,6 +164,7 @@ void generate_time(int argc, char *argv[])
   /* net        = 0; */
   is_holiday = h_ptr ? is_holiday_net : is_holiday_static;
   generate_array(array);
+  write_km();
 }
 
 #define Skipmain
