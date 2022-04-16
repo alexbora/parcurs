@@ -1,2 +1,1 @@
-#define HAVE_ARC4RANDOM 1
 #define HAVE_DEVRANDOM 1
