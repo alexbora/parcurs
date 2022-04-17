@@ -16,21 +16,35 @@
 #define MAX_DAYS 32
 
 static struct tm TM;
-static double    km;
-char             longdate[64];
-char             luna[16];
-static int       dayz;
+static double km;
+char longdate[64];
+char luna[16];
+static int dayz;
 /* static int parcursi; */
 int array[MAX_DAYS];
 static int (*is_holiday)(int, int, int);
 /* static char *tmp_luna; */
 int current_year;
 
-void date_now(void)
-{
-  const time_t t  = time(0);
-  struct tm   *tm = gmtime(&t);
+static char *literal_mon(int month) {
+  return &"\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ianuarie\0\0\0\0\0\0\0\0februari"
+          "e\0\0\0"
+          "\0\0\0\0martie\0\0\0\0\0\0\0\0\0\0aprilie\0\0\0\0\0\0\0\0\0mai\0"
+          "\0\0\0\0"
+          "\0\0\0\0\0\0\0\0iunie\0\0\0\0\0\0\0\0\0\0\0iulie\0\0\0\0\0\0\0\0"
+          "\0\0\0au"
+          "gust\0\0\0\0\0\0\0\0\0\0septembrie\0\0\0\0\0\0octombrie\0\0\0\0"
+          "\0\0\0noi"
+          "embrie\0\0\0\0\0\0\0decembrie\0\0\0\0\0\0\0"[16 * month];
+}
+
+void date_now(void) {
+  /* const time_t t = time(0); */
+  struct tm *tm = localtime(&(time_t){time(0)});
   strftime(longdate, 64, "%d.%m.%Y", tm);
+
+  puts(literal_mon(tm->tm_mon));
+
   tm->tm_mon--;
   strftime(luna, 64, "%B", tm);
   *luna |= ' '; // convert lowercase
@@ -42,8 +56,7 @@ void date_now(void)
   tm = NULL;
 }
 
-static void date_cmdl(const int year, const int mon, const int day)
-{
+static void date_cmdl(const int year, const int mon, const int day) {
   struct tm tm = {.tm_year = year - 1900, .tm_mon = mon - 1, .tm_mday = day};
   mktime(&tm);
 
@@ -55,29 +68,24 @@ static void date_cmdl(const int year, const int mon, const int day)
   tm.tm_mon += 2;
   tm.tm_year += 1900;
   current_year = tm.tm_year;
-  TM           = tm;
+  TM = tm;
 }
 
-static void get_km(void)
-{
+static void get_km(void) {
   FILE *f = fopen("km", "r");
-  if (fscanf(f, "%lf", &km)) {
-    ;
-  }
-  fclose(f);
+  if (fscanf(f, "%lf", &km))
+    fclose(f);
   f = NULL;
 }
 
-static void write_km(void)
-{
+static void write_km(void) {
   FILE *f = fopen("km", "w++");
   fprintf(f, "%lf", km);
   fclose(f);
   f = NULL;
 }
 
-__attribute__((noreturn)) void usage(void)
-{
+__attribute__((noreturn)) void usage(void) {
   puts("\nExecute like './prog year month day km', for example './prog "
        "2022 4 10 100'.\nIf 0 km, file km is read.\nIf no arguments, "
        "current "
@@ -85,8 +93,7 @@ __attribute__((noreturn)) void usage(void)
   exit(EXIT_SUCCESS);
 }
 
-void process_cmdl(int argc, char **argv)
-{
+void process_cmdl(int argc, char **argv) {
   if (argv[1] && *argv[1] == 'h')
     usage();
 
@@ -100,13 +107,9 @@ void process_cmdl(int argc, char **argv)
     get_km();
 }
 
-static int is_weekend(const int day)
-{
-  return (day == 6) | (day == 0);
-}
+static int is_weekend(const int day) { return (day == 6) | (day == 0); }
 
-static int is_holiday_static(const int year, const int month, const int day)
-{
+static int is_holiday_static(const int year, const int month, const int day) {
   if (year != 2022)
     return 0;
   static const struct {
@@ -122,8 +125,7 @@ static int is_holiday_static(const int year, const int month, const int day)
   return 0;
 }
 
-static int is_holiday_net(const int year, const int month, const int day)
-{
+static int is_holiday_net(const int year, const int month, const int day) {
   /* h_ptr = hh; */
   (void)year;
   for (int i = 0; i < MAX_DAYS; i++)
@@ -132,8 +134,7 @@ static int is_holiday_net(const int year, const int month, const int day)
   return 0;
 }
 
-static int days_in_month(const int month, const int year)
-{
+static int days_in_month(const int month, const int year) {
   if (month == 4 || month == 6 || month == 9 || month == 11)
     return 30;
   else if (month == 2)
@@ -142,8 +143,7 @@ static int days_in_month(const int month, const int year)
   return 31;
 }
 
-static void generate_array(int *arr)
-{
+static void generate_array(int *arr) {
   dayz = days_in_month(TM.tm_mon, TM.tm_year + 1900);
   for (int i = 1; i <= dayz; ++i) {
     struct tm ti = {59, 59, 12, i, TM.tm_mon - 1, TM.tm_year - 1900,
@@ -159,8 +159,7 @@ static void generate_array(int *arr)
   }
 }
 
-void generate_time(void)
-{
+void generate_time(void) {
   setlocale(LC_TIME, "ro_RO.UTF-8");
   /* process_cmdl(argc, argv); */
   /* net        = 0; */
@@ -171,12 +170,11 @@ void generate_time(void)
 
 /* #define Skipmain */
 #ifndef Skipmain
-int main(int argc, char *argv[argc + 1])
-{
+int main(int argc, char *argv[argc + 1]) {
   /* setlocale(LC_TIME, "ro_RO.UTF-8"); */
   /* process_cmdl(argc, argv); */
 
-  generate_time(argc, argv);
+  generate_time();
 
   printf("CURRENT: %d %d %d weekday today: %d\tkm: %.lf\n", TM.tm_year,
          TM.tm_mon, TM.tm_mday, TM.tm_wday, km);
