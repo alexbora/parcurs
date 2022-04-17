@@ -72,7 +72,7 @@ static struct Holidays {
   int day, mon;
 } * h;
 
-static inline int fetch_simple(const int year)
+static int fetch_simple(const int year)
 {
   struct hostent *he =
       gethostbyname("us-central1-romanian-bank-holidays.cloudfunctions.net");
