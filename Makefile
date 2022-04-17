@@ -8,4 +8,4 @@ all:
 	gcc foaie_2.c -o foaie_2 -lxlsxwriter
 
 clean:
-	rm -rf *.dSYM foaie_2 play
+	rm -rf *.dSYM foaie_2 play *.xlsx
