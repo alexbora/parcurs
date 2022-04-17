@@ -23,7 +23,7 @@
 #endif
 
 /* #define HAVE_OPENSSL */
-
+#define HAVE_OPENSSL
 #ifdef HAVE_OPENSSL
 #include <openssl/rand.h>
 #undef rand

@@ -14,7 +14,7 @@ compiles ()
 {
 	stage="$(mktemp -d)"
 	echo "$2" > "$stage/test.c"
-	(cc -Werror "$1" -o "$stage/test" "$stage/test.c" >/dev/null 2>&1)
+	(gcc -Werror "$1" -o "$stage/test" "$stage/test.c" >/dev/null 2>&1)
 	cc_success=$?
 	rm -rf "$stage"
 	return $cc_success
@@ -46,6 +46,8 @@ if compiles "-D_POSIX_C_SOURCE=200112L" "
 then
   echo "#define HAVE_GETRANDOM (1)" >> config.h
 fi
+
+
 
 if test -c /dev/random; then
   echo "#define HAVE_DEVRANDOM (1)" >> config.h
