@@ -24,19 +24,22 @@
 
 /* #define HAVE_OPENSSL */
 
-/* #ifdef HAVE_OPENSSL */
-/* #include <openssl/rand.h> */
-/* #undef rand */
-/* #define rand ssl_rand */
-/* #endif */
+#ifdef HAVE_OPENSSL
+#include <openssl/rand.h>
+#undef rand
+#define rand ssl_rand
+#endif
 
-/* u_int64_t ssl_rand(void) */
-/* { */
-/*   unsigned char bytes[128] = {'\0'}; */
-/*   RAND_bytes(bytes, sizeof(bytes)); */
-/*   uint64_t res = *(uint64_t *)bytes; */
-/*   return res; */
-/* } */
+u_int64_t ssl_rand(void)
+{
+#ifdef HAVE_OPENSSL
+  unsigned char bytes[128] = {'\0'};
+  RAND_bytes(bytes, sizeof(bytes));
+  uint64_t res = *(uint64_t *)bytes;
+  return res % RAND_MAX;
+#endif
+  return 0;
+}
 
 static struct Route {
   char         *route;

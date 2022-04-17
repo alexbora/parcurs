@@ -6,7 +6,7 @@ FILES.c = net.c date.c mix.c main.c
 FILES.h = date.h config.h main.h
 FILES.o = ${FILES.c:.c=.o}
 
-CC      = gcc #/opt/local/libexec/llvm-14/bin/clang
+CC      = gcc-11 #/opt/local/libexec/llvm-14/bin/clang
 SFLAGS  = -std=c11 -D_POSIX_C_SOURCE=200112L -DSkipmain #-ansi
 GFLAGS  = -g
 OFLAGS  = -O3
@@ -19,7 +19,7 @@ WFLAGS  = ${WFLAG1} ${WFLAG2} ${WFLAG3} ${WFLAG4} ${WFLAG5}
 UFLAGS  = # Set on command line only
 
 CFLAGS  = ${SFLAGS} ${GFLAGS} ${OFLAGS} ${WFLAGS} ${UFLAGS}
-LDFLAGS = `pkg-config --cflags --libs xlsxwriter` 
+LDFLAGS =  `pkg-config --cflags --libs openssl` `pkg-config --cflags --libs xlsxwriter` 
 LDLIBS  = 
 
 all: ${PROGRAM}
