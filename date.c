@@ -18,7 +18,7 @@
 static struct tm TM;
 static double km;
 char longdate[64];
-char luna[16];
+char *luna;
 static int dayz;
 /* static int parcursi; */
 int array[MAX_DAYS];
@@ -26,7 +26,7 @@ static int (*is_holiday)(int, int, int);
 /* static char *tmp_luna; */
 int current_year;
 
-static char *literal_mon(int month) {
+static inline char *literal_mon(const int month) {
   return &"\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ianuarie\0\0\0\0\0\0\0\0februari"
           "e\0\0\0"
           "\0\0\0\0martie\0\0\0\0\0\0\0\0\0\0aprilie\0\0\0\0\0\0\0\0\0mai\0"
@@ -41,32 +41,44 @@ static char *literal_mon(int month) {
 void date_now(void) {
   /* const time_t t = time(0); */
   struct tm *tm = localtime(&(time_t){time(0)});
+
   strftime(longdate, 64, "%d.%m.%Y", tm);
+  luna = literal_mon(tm->tm_mon);
 
-  puts(literal_mon(tm->tm_mon));
+  /* tm->tm_mon--; */
+  /* strftime(luna, 64, "%B", tm); */
+  /* *luna |= ' '; // convert lowercase */
 
-  tm->tm_mon--;
-  strftime(luna, 64, "%B", tm);
-  *luna |= ' '; // convert lowercase
+  /* current_year = tm->tm_year; */
 
-  tm->tm_year += 1900;
-  current_year = tm->tm_year;
-  tm->tm_mon += 2;
+  tm->tm_mon = 1;
+  if (tm->tm_mon == 1) {
+    tm->tm_year--;
+    tm->tm_mon -= 2;
+    mktime(tm);
+  }
+  printf("tm mon %s\n", asctime(tm));
+  printf("%d %d\n", tm->tm_mday, tm->tm_wday);
+
+  current_year = tm->tm_year += 1900;
+  tm->tm_mon += 1;
   TM = *tm;
   tm = NULL;
 }
 
 static void date_cmdl(const int year, const int mon, const int day) {
   struct tm tm = {.tm_year = year - 1900, .tm_mon = mon - 1, .tm_mday = day};
+
   mktime(&tm);
 
   strftime(longdate, 64, "%d.%m.%Y", &tm);
-  tm.tm_mon--;
-  strftime(luna, 64, "%B", &tm);
-  *luna |= ' ';
+  /* tm.tm_mon--; */
+  /* strftime(luna, 64, "%B", &tm); */
+  /* *luna |= ' '; */
+  luna = literal_mon(tm.tm_mon + 1);
 
-  tm.tm_mon += 2;
   tm.tm_year += 1900;
+  tm.tm_mon += 1;
   current_year = tm.tm_year;
   TM = tm;
 }
@@ -128,7 +140,7 @@ static int is_holiday_static(const int year, const int month, const int day) {
 static int is_holiday_net(const int year, const int month, const int day) {
   /* h_ptr = hh; */
   (void)year;
-  for (int i = 0; i < MAX_DAYS; i++)
+  for (int i = 0; i < dayz; i++)
     if (month == h_ptr[i].month && day == h_ptr[i].day)
       return 1;
   return 0;
@@ -152,10 +164,13 @@ static void generate_array(int *arr) {
 
     arr[i] = is_weekend(ti.tm_wday);
     arr[i] |= is_holiday(ti.tm_year + 1900, ti.tm_mon + 1, ti.tm_mday);
-
-    printf("wday: %d %s wk: %d\t hol: %d %d\n", ti.tm_wday, asctime(&ti),
-           is_weekend(ti.tm_wday),
-           is_holiday(ti.tm_year + 1900, ti.tm_mon + 1, ti.tm_mday), arr[i]);
+#if 0
+    printf("weekday: %d\t is weekend? %d\t is_holiday?: %d\t validation array: "
+           "%d\t %s",
+           ti.tm_wday, is_weekend(ti.tm_wday),
+           is_holiday(ti.tm_year + 1900, ti.tm_mon + 1, ti.tm_mday), arr[i],
+           asctime(&ti));
+#endif
   }
 }
 
@@ -164,6 +179,8 @@ void generate_time(void) {
   /* process_cmdl(argc, argv); */
   /* net        = 0; */
   is_holiday = h_ptr ? is_holiday_net : is_holiday_static;
+  if (h_ptr)
+    fprintf(stderr, "%s\n", "using net\n");
   generate_array(array);
   write_km();
 }

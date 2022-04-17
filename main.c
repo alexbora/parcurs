@@ -15,9 +15,8 @@
 /* struct Net hh[32], *h_ptr; */
 struct Net *h_ptr;
 
-int main(int argc, char **argv)
-{
-  /* h_ptr = (struct Net[32]){{4, 1}}; */
+int main(int argc, char **argv) {
+  h_ptr = (struct Net[32]){{0}};
 
   process_cmdl(argc, argv);
 
@@ -26,7 +25,7 @@ int main(int argc, char **argv)
   net_fetch();
   mix();
   generate_time();
-  printf("current: %d\n", current_year);
+  printf("current: %d %s %s\n", current_year, luna, longdate);
 #if 0
   FILE *f = fopen("config.h", "r");
   rewind(f);
