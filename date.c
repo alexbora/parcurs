@@ -50,7 +50,7 @@ void date_now(void) {
   /* *luna |= ' '; // convert lowercase */
 
   /* current_year = tm->tm_year; */
-  tm->tm_mon = 1;
+  /* tm->tm_mon = 1; */
   if (tm->tm_mon == 1) {
     /* tm->tm_year--; */
     tm->tm_mon -= 2;

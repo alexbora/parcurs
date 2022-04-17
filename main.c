@@ -26,6 +26,7 @@ int main(int argc, char **argv) {
   mix();
   generate_time();
   printf("current: %d %s %s\n", current_year, luna, longdate);
+  h_ptr = NULL;
 #if 0
   FILE *f = fopen("config.h", "r");
   rewind(f);
