@@ -2,8 +2,8 @@
 
 
 PROGRAM = foaie_2
-FILES.c = main.c date.c net.c mix.c
-FILES.h = date.h config.h
+FILES.c = net.c date.c mix.c main.c
+FILES.h = date.h config.h main.h
 FILES.o = ${FILES.c:.c=.o}
 
 CC      = gcc #/opt/local/libexec/llvm-14/bin/clang

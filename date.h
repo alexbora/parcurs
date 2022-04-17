@@ -18,13 +18,12 @@ struct Net {
 };
 
 extern struct Net *h_ptr;
-/* extern int         net; */
-extern int current_year;
-extern char longdate[64];
-extern char *luna;
+extern int         current_year;
+extern char        longdate[64];
+extern char       *luna;
 
 extern struct Route tmp;
 
-extern int array[32];
+/* extern int array[32]; */
 
 #endif /* end of include guard DATE_H */
