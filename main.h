@@ -8,5 +8,7 @@
 
 #define MAIN_H
 
+#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
 extern int array[32];
+
 #endif /* end of include guard MAIN_H */

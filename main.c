@@ -11,13 +11,20 @@
 #include <stdlib.h>
 /* int net; */
 
-#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
+#ifdef LOG
+#undef stderr
+#define stderr l
+#endif
 
 /* struct Net hh[32], *h_ptr; */
 struct Net *h_ptr;
 
 int main(int argc, char **argv)
 {
+#ifdef LOG
+  FILE *l = fopen("log", "w++");
+#endif
+
   h_ptr = (struct Net[32]){{0}};
 
   process_cmdl(argc, argv);
@@ -38,6 +45,10 @@ int main(int argc, char **argv)
   while (!feof(f))
     bb[i++] = getc(f);
   puts(bb);
+#endif
+
+#ifdef LOG
+  fclose(stderr);
 #endif
   return 0;
 }
