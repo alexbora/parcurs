@@ -16,7 +16,6 @@
 #define stderr l
 #endif
 
-/* struct Net hh[32], *h_ptr; */
 struct Net *h_ptr;
 
 int main(int argc, char **argv)
