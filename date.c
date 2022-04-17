@@ -50,10 +50,9 @@ void date_now(void) {
   /* *luna |= ' '; // convert lowercase */
 
   /* current_year = tm->tm_year; */
-
   tm->tm_mon = 1;
   if (tm->tm_mon == 1) {
-    tm->tm_year--;
+    /* tm->tm_year--; */
     tm->tm_mon -= 2;
     mktime(tm);
   }
@@ -156,7 +155,10 @@ static int days_in_month(const int month, const int year) {
 }
 
 static void generate_array(int *arr) {
-  dayz = days_in_month(TM.tm_mon, TM.tm_year + 1900);
+  dayz = days_in_month(TM.tm_mon, TM.tm_year);
+  printf("%d\n", dayz);
+  printf("%d\n", TM.tm_year);
+  printf("%d\n", TM.tm_mon);
   for (int i = 1; i <= dayz; ++i) {
     struct tm ti = {59, 59, 12, i, TM.tm_mon - 1, TM.tm_year - 1900,
                     0,  0,  0,  0, NULL};
@@ -164,7 +166,12 @@ static void generate_array(int *arr) {
 
     arr[i] = is_weekend(ti.tm_wday);
     arr[i] |= is_holiday(ti.tm_year + 1900, ti.tm_mon + 1, ti.tm_mday);
+
+    printf("validation: %d %s", arr[i], asctime(&ti));
 #if 0
+    arr[i] = is_weekend(ti.tm_wday);
+    arr[i] |= is_holiday(ti.tm_year + 1900, ti.tm_mon + 1, ti.tm_mday);
+    printf("%d\t", arr[i]);
     printf("weekday: %d\t is weekend? %d\t is_holiday?: %d\t validation array: "
            "%d\t %s",
            ti.tm_wday, is_weekend(ti.tm_wday),
@@ -172,6 +179,7 @@ static void generate_array(int *arr) {
            asctime(&ti));
 #endif
   }
+  puts("\n");
 }
 
 void generate_time(void) {
