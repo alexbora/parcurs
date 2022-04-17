@@ -9,6 +9,7 @@
 ######################################################################
 
 rm -rf config.h
+touch config.h
 compiles ()
 {
 	stage="$(mktemp -d)"

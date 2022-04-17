@@ -7,6 +7,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/_types/_u_int64_t.h>
 #ifndef __linux__
 #include <sys/_types/_ucontext.h>
 #endif
@@ -15,7 +16,27 @@
 #include <sys/types.h>
 #include <time.h>
 
-int array[32];
+#ifdef HAVE_ARC4RANDOM
+#define foo4random_uniform() (arc4random_uniform(((unsigned)RAND_MAX + 1)))
+#undef rand
+#define rand foo4random_uniform
+#endif
+
+/* #define HAVE_OPENSSL */
+
+/* #ifdef HAVE_OPENSSL */
+/* #include <openssl/rand.h> */
+/* #undef rand */
+/* #define rand ssl_rand */
+/* #endif */
+
+/* u_int64_t ssl_rand(void) */
+/* { */
+/*   unsigned char bytes[128] = {'\0'}; */
+/*   RAND_bytes(bytes, sizeof(bytes)); */
+/*   uint64_t res = *(uint64_t *)bytes; */
+/*   return res; */
+/* } */
 
 static struct Route {
   char         *route;

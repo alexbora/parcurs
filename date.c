@@ -25,6 +25,7 @@ static int       dayz;
 static int (*is_holiday)(int, int, int);
 /* static char *tmp_luna; */
 int current_year;
+int array[32];
 
 static inline char *literal_mon(const int month)
 {

@@ -9,5 +9,4 @@
 #define MAIN_H
 
 extern int array[32];
-
 #endif /* end of include guard MAIN_H */

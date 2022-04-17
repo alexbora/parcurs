@@ -56,11 +56,12 @@
 #define stderr f
 #endif
 
-#define HAVE_ARC4RANDOM 1
-
-#define foo4random_uniform() (arc4random_uniform(((unsigned) RAND_MAX + 1)))
+/* #define HAVE_ARC4RANDOM 1 */
+#ifdef HAVE_ARC4RANDOM
+#define foo4random_uniform() (arc4random_uniform(((unsigned)RAND_MAX + 1)))
 #undef rand
 #define rand foo4random_uniform
+#endif
 
 #define FREE_AND_NULL(p)                                                       \
   do {                                                                         \
@@ -107,30 +108,28 @@ static struct {
 static char longdate[128];
 /* static unsigned days_pattern[32]; */
 static unsigned row;
-static char name[256];
+static char     name[256];
 
 static struct Route {
   char *route;
-  long km;
+  long  km;
   char *obs;
-} tmp[128], parcurs[16] = {
-                {     "Cluj-Oradea", 321, "Interes Serviciu"},
-                {      "Cluj-Turda", 121, "Interes Serviciu"},
-                {      "Cluj-Zalau", 156, "Interes Serviciu"},
-                {  "Cluj-Baia-Mare", 356, "Interes Serviciu"},
-                {   "Cluj-Bistrita", 257, "Interes Serviciu"},
-                {        "Cluj-Dej", 101, "Interes Serviciu"},
-                {       "Cluj-Cluj",  47, "Interes Serviciu"},
-                {     "Acasa-Birou",  30,                " "},
-                {     "Acasa-Birou",  30,                " "},
-                {     "Acasa-Birou",  30,                " "},
-                {     "Acasa-Birou",  30,                " "},
-                {     "Acasa-Birou",  30,                " "},
-                {"Cluj-Cmp. Turzii", 152, "Interes Serviciu"},
-                {    "Cluj-Apahida",  85, "Interes Serviciu"},
-                {    "Cluj-Bontida",  92, "Interes Serviciu"},
-                {  "Cluj-Satu-Mare", 421, "Interes Serviciu"}
-};
+} tmp[128], parcurs[16] = {{"Cluj-Oradea", 321, "Interes Serviciu"},
+                           {"Cluj-Turda", 121, "Interes Serviciu"},
+                           {"Cluj-Zalau", 156, "Interes Serviciu"},
+                           {"Cluj-Baia-Mare", 356, "Interes Serviciu"},
+                           {"Cluj-Bistrita", 257, "Interes Serviciu"},
+                           {"Cluj-Dej", 101, "Interes Serviciu"},
+                           {"Cluj-Cluj", 47, "Interes Serviciu"},
+                           {"Acasa-Birou", 30, " "},
+                           {"Acasa-Birou", 30, " "},
+                           {"Acasa-Birou", 30, " "},
+                           {"Acasa-Birou", 30, " "},
+                           {"Acasa-Birou", 30, " "},
+                           {"Cluj-Cmp. Turzii", 152, "Interes Serviciu"},
+                           {"Cluj-Apahida", 85, "Interes Serviciu"},
+                           {"Cluj-Bontida", 92, "Interes Serviciu"},
+                           {"Cluj-Satu-Mare", 421, "Interes Serviciu"}};
 
 static inline unsigned days_in_month(const unsigned month, const unsigned year)
 {
@@ -145,48 +144,48 @@ static inline unsigned days_in_month(const unsigned month, const unsigned year)
 static inline bool isholiday(const unsigned day, const unsigned month,
                              const unsigned year)
 {
-  struct tm tm = {.tm_year = (const int) (year - 1900),
-                  .tm_mon = (const int) (month - 1),
-                  .tm_mday = (const int) day,
+  struct tm tm = {.tm_year  = (const int)(year - 1900),
+                  .tm_mon   = (const int)(month - 1),
+                  .tm_mday  = (const int)day,
                   .tm_isdst = -1};
   mktime(&tm);
   /* if (tm.tm_year != 2022) return true; */
 
-  if (tm.tm_wday == 0 || tm.tm_wday == 6) return true;
+  if (tm.tm_wday == 0 || tm.tm_wday == 6)
+    return true;
   static const struct {
     unsigned day, mon;
-  } hol[2024][16] = {
-      [2022] = {{1, 1},
-                {2, 1},
-                {24, 1},
-                {22, 4},
-                {24, 4},
-                {25, 4},
-                {1, 5},
-                {1, 5},
-                {1, 6},
-                {12, 6},
-                {13, 6},
-                {15, 8},
-                {30, 11},
-                {1, 12},
-                {25, 12},
-                {26, 12}},
-      [2023] = {{1, 1},
-                {24, 1},
-                {14, 4},
-                {17, 4},
-                {1, 5},
-                {1, 5},
-                {5, 1},
-                {15, 8},
-                {30, 11},
-                {1, 12},
-                {25, 12},
-                {26, 12} }
-  };
+  } hol[2024][16] = {[2022] = {{1, 1},
+                               {2, 1},
+                               {24, 1},
+                               {22, 4},
+                               {24, 4},
+                               {25, 4},
+                               {1, 5},
+                               {1, 5},
+                               {1, 6},
+                               {12, 6},
+                               {13, 6},
+                               {15, 8},
+                               {30, 11},
+                               {1, 12},
+                               {25, 12},
+                               {26, 12}},
+                     [2023] = {{1, 1},
+                               {24, 1},
+                               {14, 4},
+                               {17, 4},
+                               {1, 5},
+                               {1, 5},
+                               {5, 1},
+                               {15, 8},
+                               {30, 11},
+                               {1, 12},
+                               {25, 12},
+                               {26, 12}}};
 
-  if (tm.tm_wday == 0 || tm.tm_wday == 6) return true;
+  if (tm.tm_wday == 0 || tm.tm_wday == 6)
+    return true;
   size_t size = (sizeof(hol) / sizeof(hol[0]));
   for (size_t i = 0; i < size; i++)
     if (day == hol[tm.tm_year][i].day && month == hol[tm.tm_year][i].mon)
@@ -199,7 +198,7 @@ static inline bool isholiday(const unsigned day, const unsigned month,
     } year;
   } holiday[32];
 
-  holiday[22] = (struct Holiday){1, 1};
+  holiday[22]                = (struct Holiday){1, 1};
   holiday[tm.tm_year - 2000] = (struct Holiday){1, 1};
 }
 struct Holidays {
@@ -214,10 +213,12 @@ struct Holidays {
 
 static inline bool isholiday_ex2(struct tm *tm, struct Holidays *h)
 {
-  if (tm->tm_wday == 0 || tm->tm_wday == 6) return true;
+  if (tm->tm_wday == 0 || tm->tm_wday == 6)
+    return true;
 
   for (struct Holidays *p = h; p; p++)
-    if (p->day == tm->tm_mday) return true;
+    if (p->day == tm->tm_mday)
+      return true;
 
   return false;
 }
@@ -228,7 +229,8 @@ __pure static inline bool isholiday_ex(const int day, const int month,
   struct tm tm = TM_INITIAILIZER;
   mktime(&tm);
 
-  if (tm.tm_wday == 0 || tm.tm_wday == 6) return true;
+  if (tm.tm_wday == 0 || tm.tm_wday == 6)
+    return true;
 
   const struct Holidays *hol =
       h ? h
@@ -244,7 +246,8 @@ __pure static inline bool isholiday_ex(const int day, const int month,
 
   /* if (hol) { */
   for (size_t i = 0; i < 16; i++)
-    if (day == hol[i].day && month == hol[i].month) return true;
+    if (day == hol[i].day && month == hol[i].month)
+      return true;
   /* } */
   return false;
 }
@@ -255,14 +258,16 @@ __pure static bool is_vacation_net(const int day, const int month,
   struct tm tm = TM_INITIAILIZER;
   mktime(&tm);
 
-  if (tm.tm_wday == 0 || tm.tm_wday == 6) return true;
+  if (tm.tm_wday == 0 || tm.tm_wday == 6)
+    return true;
   return false;
 };
 
 static inline bool vacation(const int day, const int month, const int year,
                             unsigned flag)
 {
-  if (flag) return is_vacation_net(day, month, year);
+  if (flag)
+    return is_vacation_net(day, month, year);
   return isholiday(day, month, year);
 }
 
@@ -270,13 +275,12 @@ static inline bool isvacation(const unsigned day, const unsigned month)
 {
   struct {
     unsigned day, mon;
-  } vacation[] = {
-      {day, month}
-  };
+  } vacation[] = {{day, month}};
 
   size_t size = (sizeof(vacation) / sizeof(vacation[0]));
   for (size_t i = 0; i < size; i++)
-    if (day == vacation[i].day && month == vacation[i].mon) return true;
+    if (day == vacation[i].day && month == vacation[i].mon)
+      return true;
   return false;
 }
 
@@ -295,25 +299,28 @@ month_name(const unsigned day, const unsigned month, const unsigned year)
 static inline void get_previous(void)
 {
   struct tm *tm = localtime(&(time_t){time(0)});
-  current.day = tm->tm_mday;
+  current.day   = tm->tm_mday;
   current.month = tm->tm_mon + 1;
-  current.year = tm->tm_year + 1900;
-  previous = current;
+  current.year  = tm->tm_year + 1900;
+  previous      = current;
   previous.month--;
-  if (previous.month == 0) previous.year--;
+  if (previous.month == 0)
+    previous.year--;
   strftime(longdate, 64, "%d.%m.%Y", tm);
 }
 
 __attribute__((unused)) static inline void shuffle(int *pattern, const int n)
 {
   int i;
-  for (i = 0; i < n; i++) { pattern[i] = i; }
+  for (i = 0; i < n; i++) {
+    pattern[i] = i;
+  }
   for (i = n - 1; i > 0; i--) {
     int j;
     j = rand() % (i + 1);
     if (j != i) {
       int swap;
-      swap = pattern[j];
+      swap       = pattern[j];
       pattern[j] = pattern[i];
       pattern[i] = swap;
     }
@@ -326,7 +333,7 @@ static inline void random_shuffle(void)
 
   for (unsigned i = 0; i < 128; i++) {
     for (unsigned j = 0; j < n; j++) {
-      tmp[i] = parcurs[(unsigned long) rand() % n];
+      tmp[i] = parcurs[(unsigned long)rand() % n];
     }
   }
 
@@ -338,10 +345,11 @@ static inline void random_shuffle(void)
 
   for (; cycle < tmp_size; cycle++) {
     do {
-      play = rand() % parc;
+      play  = rand() % parc;
       found = 0;
       for (k = 0; k < parc; k++)
-        if (recent[k] == play) found = 1;
+        if (recent[k] == play)
+          found = 1;
     } while (found);
 
     tmp[cycle] = parcurs[play];
@@ -358,7 +366,8 @@ static inline bool
 repeating(struct Route in[] /*similar to "struct Route *in" */)
 {
   for (unsigned i = 0; i < 32; i++) {
-    if (in[i + 1].km == in[i].km && in[i].km != 30) return true;
+    if (in[i + 1].km == in[i].km && in[i].km != 30)
+      return true;
   }
   return false;
 }
@@ -378,36 +387,41 @@ repeating(struct Route in[] /*similar to "struct Route *in" */)
 __pure static const ssize_t fetch(const uint_fast64_t year,
                                   const char buf[static const restrict 1])
 {
-  struct addrinfo hints = {.ai_family = AF_INET,
+  struct addrinfo hints = {.ai_family   = AF_INET,
                            .ai_socktype = SOCK_STREAM,
                            .ai_protocol = IPPROTO_TCP,
-                           .ai_flags = AI_PASSIVE},
-                  *res = NULL;
+                           .ai_flags    = AI_PASSIVE},
+                  *res  = NULL;
 
   const char *restrict const host =
       "us-central1-romanian-bank-holidays.cloudfunctions.net";
   int register x = getaddrinfo(host, "80", &hints, &res);
-  if (x) return 0;
+  if (x)
+    return 0;
 
   const int sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
-  if (sockfd < 0) return 0;
+  if (sockfd < 0)
+    return 0;
   x = connect(sockfd, res->ai_addr, res->ai_addrlen);
-  if (x) return 0;
+  if (x)
+    return 0;
   puts("\n\x1b[32mConnected.\x1b[0m\n");
 
-  char header[256] = {'\0'};
+  char      header[256] = {'\0'};
   const int len_header =
       sprintf(header,
               "GET /romanian_bank_holidays/?year=%llu HTTP/1.1\r\nHost: "
               "%s\r\n\r\n",
               year, host);
 
-  const ssize_t sent = send(sockfd, header, (size_t) len_header, 0);
-  if (sent <= 0) return 0;
+  const ssize_t sent = send(sockfd, header, (size_t)len_header, 0);
+  if (sent <= 0)
+    return 0;
 
-  char *restrict p = (char *restrict) buf;
+  char *restrict p       = (char *restrict)buf;
   const ssize_t received = recv(sockfd, p, 4 * 1024, 0);
-  if (received < 1) return 0;
+  if (received < 1)
+    return 0;
   freeaddrinfo(res);
   res = NULL;
   shutdown(sockfd, SHUT_RDWR);
@@ -420,7 +434,8 @@ __pure static ssize_t parse(char **in, ssize_t received)
   received -= 14;
   char *tmp = *in;
   while (received--) {
-    if (*tmp++ == '[') break;
+    if (*tmp++ == '[')
+      break;
   }
   return received;
 }
@@ -431,39 +446,46 @@ static inline void struct_fill(const char *in, struct Holidays *h)
     puts("\nh null\n");
     return;
   }
-  const char *x = in;
+  const char      *x  = in;
   struct Holidays *hx = h;
-  int i = 0;
+  int              i  = 0;
 
   while (x++) {
-    if (*x == '[') break;
+    if (*x == '[')
+      break;
   }
   while (x++) {
     x = strstr(x, "date");
-    if (!x) break;
-    hx[i].day = atoi(x + 7);
+    if (!x)
+      break;
+    hx[i].day   = atoi(x + 7);
     hx[i].month = atoi(x + 10);
     i++;
   }
 }
 
 static inline void array_fill(const char in[static restrict const 1],
-                              unsigned row[][4])
+                              unsigned   row[][4])
 {
-  const register char *restrict x = (const char *restrict) in;
-  u64 k = 0;
+  const register char *restrict x = (const char *restrict)in;
+  u64 k                           = 0;
   do {
     x = strstr(x, "date");
-    if (!x) break;
+    if (!x)
+      break;
     unsigned register m = atoi(x + 10);
     unsigned register n = atoi(x + 7);
-    while (row[m][k]) k++;
+    while (row[m][k])
+      k++;
     row[m][k] = n;
     k ^= k;
   } while (x++);
 }
 
-static void fnull(void) { puts("no holiday\n"); }
+static void fnull(void)
+{
+  puts("no holiday\n");
+}
 static void fn(void)
 {
   /* param: worksheet,  *row,  col,  text,  format) */
@@ -474,7 +496,7 @@ static void fn(void)
 static void wkend(lxw_worksheet *s, int *row, const int col, const char *text,
                   lxw_format *f)
 {
-  (void) text;
+  (void)text;
   worksheet_write_blank(s, *row, col, f);
   (*row)++;
 }
@@ -516,9 +538,9 @@ int main(int argc, char **argv)
   }
 
   if (argc < 6) {
-    tm_ = init_time(1, atoi(argv[2]), atoi(argv[3]));
-    previous.year = tm_->tm_year;
-    previous.day = tm_->tm_mday;
+    tm_            = init_time(1, atoi(argv[2]), atoi(argv[3]));
+    previous.year  = tm_->tm_year;
+    previous.day   = tm_->tm_mday;
     previous.month = tm_->tm_mon;
     strftime(longdate, 64, "%d.%m.%Y", tm_);
   } else {
@@ -529,12 +551,8 @@ int main(int argc, char **argv)
   return 0;
   struct Test init = BUF_INIT;
 
-  struct Holidays h[16] = {
-      {0, 0},
-      {1, 3},
-      {5, 0}
-  };
-  int recv = 0;
+  struct Holidays  h[16] = {{0, 0}, {1, 3}, {5, 0}};
+  int              recv  = 0;
   struct Holidays *hx[2] = {NULL, h};
   printf("%d\n", isholiday_ex(1, 1, 2022, hx[recv > 0]));
 
@@ -542,19 +560,20 @@ int main(int argc, char **argv)
                    "orl $0x40000, (%rsp)\n"
                    "popf");
 
-  char *buf = malloc(4096);
-  char **buf_p = &buf;
-  ssize_t received = fetch((uint_fast64_t) previous.year, *buf_p);
+  char   *buf      = malloc(4096);
+  char  **buf_p    = &buf;
+  ssize_t received = fetch((uint_fast64_t)previous.year, *buf_p);
 
-  if (received) parse(buf_p, received);
+  if (received)
+    parse(buf_p, received);
   static unsigned array[13][4] = {{'\0'}};
   array_fill(*buf_p, array);
 
   FREE_AND_NULL(*buf_p);
   FREE_AND_NULL(buf_p);
 
-  char bff[4096] = {'\0'};
-  ssize_t rr = fetch(2022, bff);
+  char    bff[4096] = {'\0'};
+  ssize_t rr        = fetch(2022, bff);
 
   char *bff_ptr = strstr(bff, "Content-Length:");
   /* int   content_length = */
@@ -572,20 +591,23 @@ int main(int argc, char **argv)
   /* while (content_length-- && *bff_ptr++ != '[') ; */
   struct Holidays *hh = rr > 0 ? (struct Holidays[16]){{0}} : NULL;
 
-  if (received <= 0) hh = NULL;
-  if (hh) struct_fill(bff, hh);
+  if (received <= 0)
+    hh = NULL;
+  if (hh)
+    struct_fill(bff, hh);
 
   printf("hh %d\n", hh[12].day);
   printf("hh %d\n", hh[12].month);
 
   /* return 0; */
-  unsigned days = days_in_month(previous.month, previous.year);
-  int arr_month[32] = {0};
+  unsigned days          = days_in_month(previous.month, previous.year);
+  int      arr_month[32] = {0};
 
   get_previous();
-  int m = previous.month;
+  int m    = previous.month;
   int flag = received > 0;
-  for (unsigned i = 0; i < 3; i++) arr_month[array[m][i]] = array[m][i];
+  for (unsigned i = 0; i < 3; i++)
+    arr_month[array[m][i]] = array[m][i];
   for (unsigned i = 1; i <= days; i++) {
     arr_month[i] = vacation(i, m, previous.year, flag);
   }
@@ -595,9 +617,13 @@ int main(int argc, char **argv)
   puts("\n");
 
   void (*f[days])(void);
-  for (unsigned i = 0; i < days; i++) { f[i] = arr_month[i] ? fn : fnull; }
+  for (unsigned i = 0; i < days; i++) {
+    f[i] = arr_month[i] ? fn : fnull;
+  }
 
-  for (unsigned i = 0; i < days; i++) { f[i](); }
+  for (unsigned i = 0; i < days; i++) {
+    f[i]();
+  }
   puts("\n");
   for (unsigned i = 1; i <= days; i++)
     printf("arr_mon: %d %d\n", i, arr_month[i]);
@@ -608,7 +634,7 @@ int main(int argc, char **argv)
     write[i] = arr_month[i] ? wkend : wday;
   }
 
-  lxw_workbook *wkk = workbook_new("text.xlsx");
+  lxw_workbook  *wkk = workbook_new("text.xlsx");
   lxw_worksheet *wss = workbook_add_worksheet(wkk, "text");
 
   lxw_format *format_yellow = workbook_add_format(wkk);
@@ -634,7 +660,9 @@ int main(int argc, char **argv)
 
   void (*pf[13][4])(void);
   for (unsigned i = 0; i <= 12; i++) {
-    for (unsigned j = 0; j <= 3; j++) { pf[i][j] = array[i][j] ? fn : fnull; }
+    for (unsigned j = 0; j <= 3; j++) {
+      pf[i][j] = array[i][j] ? fn : fnull;
+    }
   }
   pf[12][1]();
   /* printf("%d\n", row[11][1]); */
@@ -642,9 +670,9 @@ int main(int argc, char **argv)
 
   struct Write {
     lxw_workbook *book;
-    int row, col;
+    int           row, col;
     union {
-      char *string;
+      char         *string;
       uint_fast64_t no;
     };
     union {
@@ -656,8 +684,8 @@ int main(int argc, char **argv)
 
   struct Write2 {
     lxw_workbook *book;
-    lxw_format *format;
-    void *data;
+    lxw_format   *format;
+    void         *data;
     void (*fn)(void);
     int row, col;
   };
@@ -677,12 +705,12 @@ int main(int argc, char **argv)
 
   /* FILE *f = fopen("z", "w++"); */
 
-  srand((unsigned) time(0));
+  srand((unsigned)time(0));
   do {
     random_shuffle();
   } while (repeating(tmp));
 
-  FILE *file = fopen("km", "r+");
+  FILE           *file = fopen("km", "r+");
   static unsigned km;
 
   if (argc < 5) {
@@ -692,14 +720,16 @@ int main(int argc, char **argv)
     /* printf("%d\n", k); */
     /* puts("default conf\n"); */
   } else {
-    previous.day = 1;
-    previous.month = (unsigned) atoi(argv[2]);
-    previous.year = (unsigned) atoi(argv[3]);
-    km = (unsigned) atoi(argv[4]);
-    if (km == 0) fscanf(file, "%d", &km);
+    previous.day   = 1;
+    previous.month = (unsigned)atoi(argv[2]);
+    previous.year  = (unsigned)atoi(argv[3]);
+    km             = (unsigned)atoi(argv[4]);
+    if (km == 0)
+      fscanf(file, "%d", &km);
     /* printf("%d-%d-%d    %d\n", dy, m, y, k); */
     /* previous.month--; */
-    if (previous.month == 0) previous.year--;
+    if (previous.month == 0)
+      previous.year--;
     /* puts(month_name(dy, m, y)); */
     /* puts("custom conf\n"); */
   }
@@ -713,7 +743,8 @@ int main(int argc, char **argv)
 
   const unsigned day = days_in_month(2, 2022);
   for (unsigned i = 1; i <= day; i++) {
-    if (isholiday(i, 2, 2022)) tmp[i] = (struct Route){"", 0, ""};
+    if (isholiday(i, 2, 2022))
+      tmp[i] = (struct Route){"", 0, ""};
   }
 
   double pa = 0;
@@ -722,10 +753,11 @@ int main(int argc, char **argv)
   for (i = 1; i <= day; i++) {
     strcpy(data[i].route, tmp[i].route);
     strcpy(data[i].obs, tmp[i].obs);
-    if (tmp[i].km == 0) strcpy(data[i].km, "");
+    if (tmp[i].km == 0)
+      strcpy(data[i].km, "");
     pa += tmp[i].km;
   }
-  lxw_workbook *w = workbook_new("test.xlsx");
+  lxw_workbook  *w = workbook_new("test.xlsx");
   lxw_worksheet *s = workbook_add_worksheet(w, "1");
 
   for (i = 0; i < day; i++) {
@@ -768,10 +800,10 @@ int main(int argc, char **argv)
           previous.year);
 
   char cwd[PATH_MAX + 1];
-  *cwd = '\0';
+  *cwd                         = '\0';
   lxw_workbook_options options = {.constant_memory = LXW_FALSE,
-                                  .tmpdir = cwd, /* .tmpdir =
-                                                    getcwd(NULL, 0), */
+                                  .tmpdir          = cwd, /* .tmpdir =
+                                                             getcwd(NULL, 0), */
                                   .use_zip64 = LXW_TRUE};
   /* char* buf = getcwd(NULL, 0); */
 
@@ -779,22 +811,22 @@ int main(int argc, char **argv)
   getcwd(cwd, sizeof(cwd));
 
   lxw_doc_properties properties = {
-      .title = name,
-      .subject = "",
-      .author = "Alex Bora",
-      .manager = "",
-      .company = "Volvo",
+      .title    = name,
+      .subject  = "",
+      .author   = "Alex Bora",
+      .manager  = "",
+      .company  = "Volvo",
       .category = "foaie parcurs",
       .keywords = "foaie parcurs",
       .comments = "",
-      .status = "Done",
+      .status   = "Done",
   };
 
   lxw_data_validation *data_validation =
-      &(lxw_data_validation){.validate = LXW_VALIDATION_TYPE_ANY,
-                             .criteria = LXW_VALIDATION_TYPE_ANY,
+      &(lxw_data_validation){.validate     = LXW_VALIDATION_TYPE_ANY,
+                             .criteria     = LXW_VALIDATION_TYPE_ANY,
                              .ignore_blank = LXW_VALIDATION_OFF,
-                             .show_input = LXW_VALIDATION_OFF};
+                             .show_input   = LXW_VALIDATION_OFF};
 
   // Set the properties in the workbook.
   lxw_workbook *workbook = workbook_new_opt(name, &options);
@@ -910,35 +942,38 @@ int main(int argc, char **argv)
   /* /1* worksheet_set_column(worksheet, 2, 10, 20, NULL); *1/ */
 
   const unsigned daysinmonth = days_in_month(previous.month, previous.year);
-  unsigned parcursi = 0;
+  unsigned       parcursi    = 0;
   /* efficency .... compute pattern array and use it here*/
   for (unsigned i = 1; i <= daysinmonth; i++) {
     worksheet_write_number(worksheet, i + offset, COL1, i, format_local);
     /* switch (days_pattern[i]) { */
     switch (isholiday_ex(i, previous.month, previous.year, hh) ? 1 : 0) {
-    case false:
-      parcursi += tmp[i].km;
-      worksheet_write_string(worksheet, i + offset, COL3, tmp[i].route,
-                             format_local);
-      worksheet_write_number(worksheet, i + offset, COL2, (double) tmp[i].km,
-                             format_local);
-      worksheet_write_string(worksheet, i + offset, COL4, tmp[i].obs,
-                             format_local);
-      break;
-    case true:
-      for (unsigned short m = COL2; m < 4; m++) {
-        worksheet_write_string(worksheet, i + offset, m, "", format_local);
-      }
-      break;
-    default: break;
+      case false:
+        parcursi += tmp[i].km;
+        worksheet_write_string(worksheet, i + offset, COL3, tmp[i].route,
+                               format_local);
+        worksheet_write_number(worksheet, i + offset, COL2, (double)tmp[i].km,
+                               format_local);
+        worksheet_write_string(worksheet, i + offset, COL4, tmp[i].obs,
+                               format_local);
+        break;
+      case true:
+        for (unsigned short m = COL2; m < 4; m++) {
+          worksheet_write_string(worksheet, i + offset, m, "", format_local);
+        }
+        break;
+      default:
+        break;
     }
     offset++;
   }
 
   /* efficency ..... calculate beforehand,  not here */
   unsigned total = 0;
-  total = km + parcursi;
-  for (unsigned i = 0; i < daysinmonth; i++) { printf("%s\n", tmp[i].route); }
+  total          = km + parcursi;
+  for (unsigned i = 0; i < daysinmonth; i++) {
+    printf("%s\n", tmp[i].route);
+  }
 
   printf("parcursi: %d\t%d\n", parcursi, total);
 
@@ -1333,7 +1368,7 @@ int main() {
 #define fileprintf(...) fprintf(f, __VA_ARGS__)
 #define doubleprintf(human, machine)                                           \
   do {                                                                         \
-    printf human;                                                              \
+    printf     human;                                                          \
     fileprintf machine;                                                        \
   } while (0)
 

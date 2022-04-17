@@ -25,17 +25,10 @@ int main(int argc, char **argv)
   /* if (argv[1] && *argv[1] == 'h') */
   /* usage(); */
   net_fetch();
-  mix();
   generate_time();
+  mix();
   printf("current: %d %s %s\n", current_year, luna, longdate);
   h_ptr = NULL;
-
-  printf("%d\n", array[0]);
-  printf("%d\n", array[1]);
-  printf("%d\n", array[2]);
-  printf("%d\n", array[3]);
-  printf("%d\n", array[4]);
-  printf("%d\n", array[5]);
 
 #if 0
   FILE *f = fopen("config.h", "r");
