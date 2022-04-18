@@ -17,7 +17,6 @@
 #define MAX_DAYS 32
 
 static struct tm TM;
-static double    km;
 char             longdate[64];
 char            *luna;
 static int       dayz;
@@ -76,7 +75,7 @@ void date_now(void)
   tm = NULL;
 }
 
-static void date_cmdl(const int year, const int mon, const int day)
+void date_cmdl(const int year, const int mon, const int day)
 {
   struct tm tm = {.tm_year = year - 1900, .tm_mon = mon - 1, .tm_mday = day};
 
@@ -92,46 +91,6 @@ static void date_cmdl(const int year, const int mon, const int day)
   tm.tm_mon += 1;
   current_year = tm.tm_year;
   TM           = tm;
-}
-
-static void get_km(void)
-{
-  FILE *f = fopen("km", "r");
-  if (fscanf(f, "%lf", &km))
-    fclose(f);
-  f = NULL;
-}
-
-static void write_km(void)
-{
-  FILE *f = fopen("km", "w++");
-  fprintf(f, "%lf", km);
-  fclose(f);
-  f = NULL;
-}
-
-__attribute__((noreturn)) void usage(void)
-{
-  puts("\nExecute like './prog year month day km', for example './prog "
-       "2022 4 10 100'.\nIf 0 km, file km is read.\nIf no arguments, "
-       "current "
-       "date is chosen and file km is read.\n");
-  exit(EXIT_SUCCESS);
-}
-
-void process_cmdl(int argc, char **argv)
-{
-  if (argv[1] && *argv[1] == 'h')
-    usage();
-
-  if (argv[1] && argv[2] && argv[3])
-    date_cmdl(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
-  else
-    date_now();
-  if (argc > 4 && argv[4])
-    km = atof(argv[4]);
-  else
-    get_km();
 }
 
 static int is_weekend(const int day)
