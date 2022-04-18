@@ -5,10 +5,10 @@
  */
 
 #ifndef MAIN_H
-
 #define MAIN_H
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
+
 extern int    array[32];
 extern double km;
 
