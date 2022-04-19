@@ -7,10 +7,10 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/_types/_u_int64_t.h>
-#ifndef __linux__
-#include <sys/_types/_ucontext.h>
-#endif
+#ifndef __linux__ 
+//#include <sys/_types/_u_int64_t.h>
+//#include <sys/_types/_ucontext.h>
+//#endif
 #include "main.h"
 
 #include <sys/types.h>
@@ -30,7 +30,7 @@
 #define rand ssl_rand
 #endif
 
-u_int64_t ssl_rand(void)
+uint64_t ssl_rand(void)
 {
 #ifdef HAVE_OPENSSL
   unsigned char bytes[128] = {'\0'};
@@ -45,6 +45,7 @@ static struct Route {
   char         *route;
   unsigned long km;
   char         *obs;
+  int dummy;
 } tmp[128];
 
 static void random_shuffle(void)

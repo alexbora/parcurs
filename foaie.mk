@@ -6,7 +6,7 @@ FILES.c = net.c date.c mix.c main.c
 FILES.h = date.h config.h main.h
 FILES.o = ${FILES.c:.c=.o}
 
-CC      = gcc-11 #/opt/local/libexec/llvm-14/bin/clang
+CC      = clang #gcc #/opt/local/libexec/llvm-14/bin/clang
 SFLAGS  = -std=c11 -D_POSIX_C_SOURCE=200112L -DSkipmain #-ansi
 GFLAGS  = -g
 OFLAGS  = -O3
@@ -15,7 +15,8 @@ WFLAG2  = -Wextra
 WFLAG3  = #-Weverything  #-Werror
 WFLAG4  = # -Wstrict-prototypes
 WFLAG5  = #-Wmissing-prototypes
-WFLAGS  = ${WFLAG1} ${WFLAG2} ${WFLAG3} ${WFLAG4} ${WFLAG5}
+WFALG6	= -Weverything
+WFLAGS  = ${WFLAG1} ${WFLAG2} ${WFLAG3} ${WFLAG4} ${WFLAG5} ${WFLAG6}
 UFLAGS  = # Set on command line only
 
 CFLAGS  = ${SFLAGS} ${GFLAGS} ${OFLAGS} ${WFLAGS} ${UFLAGS}
