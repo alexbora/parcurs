@@ -14,8 +14,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define MAX_DAYS 32
-
 static struct tm TM;
 char             longdate[64];
 char            *luna;
@@ -173,7 +171,6 @@ void generate_time(void)
   if (h_ptr)
     fprintf(stderr, "%s\n", "using net\n");
   generate_array(array);
-  write_km();
 }
 
 /* #define Skipmain */
@@ -192,7 +189,7 @@ int main(int argc, char *argv[argc + 1])
   puts(luna);
 
   /* generate_array(array); */
-  write_km();
+  /* write_km(); */
   return 0;
 }
 #endif

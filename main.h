@@ -12,10 +12,16 @@
 extern int    array[32];
 extern double km;
 
-void                           date_cmdl(const int, const int, const int);
-__attribute__((noreturn)) void usage(void);
-void                           date_now(void);
-void                           get_km(void);
-void                           write_km(void);
+extern struct Route {
+  char         *route;
+  unsigned long km;
+  char         *obs;
+} tmp[128];
+
+void date_cmdl(const int, const int, const int);
+void date_now(void);
+void net_fetch(void);
+void generate_time(void);
+void mix(void);
 
 #endif /* end of include guard MAIN_H */

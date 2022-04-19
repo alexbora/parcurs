@@ -10,6 +10,8 @@
 
 rm -rf config.h
 touch config.h
+rm -rf log
+touch log
 compiles ()
 {
 	stage="$(mktemp -d)"

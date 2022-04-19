@@ -6,16 +6,16 @@ FILES.c = net.c date.c mix.c main.c
 FILES.h = date.h config.h main.h
 FILES.o = ${FILES.c:.c=.o}
 
-CC      = clang #gcc #/opt/local/libexec/llvm-14/bin/clang
-SFLAGS  = -std=c11 -D_POSIX_C_SOURCE=200112L -DSkipmain #-ansi
+CC      = gcc-11 #/opt/local/libexec/llvm-14/bin/clang
+SFLAGS  = -std=c11 -D_POSIX_C_SOURCE=200112L -DSkipmain #-DLOG#-ansi
 GFLAGS  = -g
 OFLAGS  = -O3
 WFLAG1  = -Wall
 WFLAG2  = -Wextra
-WFLAG3  = #-Weverything  #-Werror
+WFLAG3  = #-Werror
 WFLAG4  = # -Wstrict-prototypes
 WFLAG5  = #-Wmissing-prototypes
-WFALG6	= -Weverything
+WFLAG6	= #-Weverything -Wno-declaration-after-statement
 WFLAGS  = ${WFLAG1} ${WFLAG2} ${WFLAG3} ${WFLAG4} ${WFLAG5} ${WFLAG6}
 UFLAGS  = # Set on command line only
 

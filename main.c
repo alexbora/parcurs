@@ -11,6 +11,8 @@
 #include <stdlib.h>
 /* int net; */
 
+FILE *l;
+
 #ifdef LOG
 #undef stderr
 #define stderr l
@@ -19,7 +21,32 @@
 struct Net *h_ptr;
 double      km;
 
-void process_cmdl(int argc, char **argv)
+__attribute__((noreturn)) static void usage(void)
+{
+  puts("\nExecute like './prog year month day km', for example './prog "
+       "2022 4 10 100'.\nIf 0 km, file km is read.\nIf no arguments, "
+       "current "
+       "date is chosen and file km is read.\n");
+  exit(EXIT_SUCCESS);
+}
+
+static void get_km(void)
+{
+  FILE *f = fopen("km", "r");
+  if (fscanf(f, "%lf", &km))
+    fclose(f);
+  f = NULL;
+}
+
+static void write_km(void)
+{
+  FILE *f = fopen("km", "w++");
+  fprintf(f, "%lf", km);
+  fclose(f);
+  f = NULL;
+}
+
+static void process_cmdl(int argc, char **argv)
 {
   if (argv[1] && *argv[1] == 'h')
     usage();
@@ -34,35 +61,10 @@ void process_cmdl(int argc, char **argv)
     get_km();
 }
 
-void usage(void)
-{
-  puts("\nExecute like './prog year month day km', for example './prog "
-       "2022 4 10 100'.\nIf 0 km, file km is read.\nIf no arguments, "
-       "current "
-       "date is chosen and file km is read.\n");
-  exit(EXIT_SUCCESS);
-}
-
-void get_km(void)
-{
-  FILE *f = fopen("km", "r");
-  if (fscanf(f, "%lf", &km))
-    fclose(f);
-  f = NULL;
-}
-
-void write_km(void)
-{
-  FILE *f = fopen("km", "w++");
-  fprintf(f, "%lf", km);
-  fclose(f);
-  f = NULL;
-}
-
 int main(int argc, char **argv)
 {
 #ifdef LOG
-  FILE *l = fopen("log", "w++");
+  l = fopen("log", "w++");
 #endif
 
   h_ptr = (struct Net[32]){{0}};
@@ -74,8 +76,10 @@ int main(int argc, char **argv)
   net_fetch();
   generate_time();
   mix();
-  printf("current: %d %s %s\n", current_year, luna, longdate);
+  fprintf(stderr, "current: %d %s %s\n", current_year, luna, longdate);
   h_ptr = NULL;
+
+  write_km();
 
 #if 0
   FILE *f = fopen("config.h", "r");

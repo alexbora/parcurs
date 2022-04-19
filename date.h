@@ -8,10 +8,8 @@
 
 #define DATE_H
 
-void generate_time(void);
-void net_fetch(void);
-void process_cmdl(int argc, char **argv);
-void mix(void);
+/* void generate_time(void); */
+/* void process_cmdl(int argc, char **argv); */
 
 struct Net {
   int month, day;
@@ -22,7 +20,7 @@ extern int         current_year;
 extern char        longdate[64];
 extern char       *luna;
 
-extern struct Route tmp;
+/* extern struct Route tmp; */
 
 /* extern int array[32]; */
 
