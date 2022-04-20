@@ -19,6 +19,7 @@ extern struct Net *h_ptr;
 extern int         current_year;
 extern char        longdate[64];
 extern char       *luna;
+extern unsigned    dayz;
 
 /* extern struct Route tmp; */
 

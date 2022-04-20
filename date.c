@@ -17,7 +17,7 @@
 static struct tm TM;
 char             longdate[64];
 char            *luna;
-static int       dayz;
+unsigned         dayz;
 /* static int parcursi; */
 static int (*is_holiday)(int, int, int);
 /* static char *tmp_luna; */
@@ -119,7 +119,7 @@ static int is_holiday_net(const int year, const int month, const int day)
   return 0;
 }
 
-static int days_in_month(const int month, const int year)
+static unsigned days_in_month(const int month, const int year)
 {
   if (month == 4 || month == 6 || month == 9 || month == 11)
     return 30;
