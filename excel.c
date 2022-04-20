@@ -6,6 +6,7 @@
 
 #include "date.h"
 #include "excel.h"
+#include "main.h"
 
 #include <stdint.h>
 #include <stdio.h>
@@ -45,11 +46,22 @@ struct Work {
                 lxw_format *);
 };
 
+struct Work2 {
+  struct Route *r;
+  void (*write)(struct Work *w);
+};
+
 void workload()
 {
+  struct Work w[32];
   for (unsigned i = 0; i < 2; i++) {
-    fp[i] = arr[i] ? wkend : wday;
+    fp[i]   = arr[i] ? wkend : wday;
+    w[i].km = arr[i] ? 1 : 0;
+    if (arr[i])
+      w[i] = (struct Work){tmp[i].route, tmp[i].km, tmp[i].obs, wday};
   }
+
+  struct Work2 w2[2] = {{.r = &(struct Route){NULL, 0, NULL}, NULL}};
 }
 
 void write_excel(void)
