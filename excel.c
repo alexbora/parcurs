@@ -12,6 +12,8 @@
 #include <unistd.h>
 #include <xlsxwriter.h>
 
+int fn_array[32];
+
 void write_excel(void)
 {
   int  row = 0;
@@ -20,20 +22,19 @@ void write_excel(void)
           current_year);
   sprintf(worksheet_name, "%s %d", luna, current_year);
 
-  /* char                 cwd[PATH_MAX + 1] = {'\0'}; */
   lxw_workbook_options options = {.constant_memory = LXW_FALSE,
                                   .tmpdir          = getcwd(NULL, 0),
                                   .use_zip64       = LXW_TRUE};
 
   lxw_doc_properties properties = {
       .title    = name,
-      .subject  = "",
+      .subject  = "foaie",
       .author   = "Alex Bora",
       .manager  = "",
       .company  = "Volvo",
       .category = "foaie parcurs",
       .keywords = "foaie parcurs",
-      .comments = "",
+      .comments = "VERSION 2.0",
       .status   = "Done",
   };
 
@@ -116,7 +117,6 @@ void write_excel(void)
   format_set_pattern(format_header, LXW_PATTERN_SOLID);
   format_set_bg_color(format_header, LXW_COLOR_YELLOW_PALE);
   format_set_align(format_header, LXW_ALIGN_VERTICAL_CENTER);
-  /* format_set_shrink(format_header); */
 
   worksheet_write_string(worksheet, row + 12, COL1, "Ziua", format_header);
   worksheet_write_string(worksheet, row + 12, COL2, "Km_parcursi",
