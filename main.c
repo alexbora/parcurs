@@ -69,6 +69,7 @@ int main(int argc, char **argv)
 
   h_ptr = (struct Net[32]){{0}};
 
+  get_km();
   process_cmdl(argc, argv);
 
   /* if (argv[1] && *argv[1] == 'h') */
@@ -80,7 +81,7 @@ int main(int argc, char **argv)
   h_ptr = NULL;
 
   write_km();
-
+  write_excel();
 #if 0
   FILE *f = fopen("config.h", "r");
   rewind(f);

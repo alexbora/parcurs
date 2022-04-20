@@ -26,7 +26,7 @@ int array[32];
 
 static inline char *literal_mon(const int month)
 {
-  return &"ianuarie\0\0\0\0\0\0\0\0februari"
+  return &"\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ianuarie\0\0\0\0\0\0\0\0februari"
           "e\0\0\0"
           "\0\0\0\0martie\0\0\0\0\0\0\0\0\0\0aprilie\0\0\0\0\0\0\0\0\0mai\0"
           "\0\0\0\0"
@@ -50,7 +50,6 @@ void date_now(void)
   }
 
   luna = literal_mon(tm->tm_mon);
-
   /* tm->tm_mon--; */
   /* strftime(luna, 64, "%B", tm); */
   /* *luna |= ' '; // convert lowercase */
@@ -64,11 +63,8 @@ void date_now(void)
   /*   mktime(tm); */
   /* } */
 
-  printf("tm mon %s\n", asctime(tm));
-  printf("%d %d\n", tm->tm_mday, tm->tm_wday);
-
   current_year = tm->tm_year += 1900;
-  tm->tm_mon += 1;
+  /* tm->tm_mon += 1; */
   TM = *tm;
   tm = NULL;
 }

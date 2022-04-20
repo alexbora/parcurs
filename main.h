@@ -23,5 +23,6 @@ void date_now(void);
 void net_fetch(void);
 void generate_time(void);
 void mix(void);
+void write_excel();
 
 #endif /* end of include guard MAIN_H */
