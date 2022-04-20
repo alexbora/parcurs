@@ -7,12 +7,50 @@
 #include "date.h"
 #include "excel.h"
 
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include <xlsxwriter.h>
 
-int fn_array[32];
+int arr[3] = {1, 0, 1};
+
+void (*fp[32])(lxw_worksheet *, uint32_t *, const uint16_t, const char *,
+               lxw_format *);
+
+static void wkend(lxw_worksheet *s, uint32_t *row, const uint16_t col,
+                  const char *text, lxw_format *f)
+{
+  (void)text;
+  worksheet_write_string(s, *row, col, "", f);
+  (*row)++;
+}
+static void wday(lxw_worksheet *s, uint32_t *row, const uint16_t col,
+                 const char *text, lxw_format *f)
+{
+  worksheet_write_string(s, *row, col, text, f);
+  worksheet_write_number(s, *row, col + 1, 1, f);
+  worksheet_write_string(s, *row, col + 2, "inte", f);
+  (*row)++;
+}
+
+struct Work {
+  struct {
+    char *route;
+    float km;
+    char *obs;
+  };
+  void (*write)(lxw_worksheet *, uint32_t *, const uint16_t, struct Work,
+                lxw_format *);
+};
+
+void workload()
+{
+  for (unsigned i = 0; i < 2; i++) {
+    fp[i] = arr[i] ? wkend : wday;
+  }
+}
 
 void write_excel(void)
 {
