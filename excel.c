@@ -15,8 +15,6 @@
 #include <unistd.h>
 #include <xlsxwriter.h>
 
-int arr[3] = {1, 0, 1};
-
 void (*fp[32])(lxw_worksheet *, uint32_t *, const uint16_t, const char *,
                lxw_format *);
 
@@ -36,35 +34,56 @@ static void wday(lxw_worksheet *s, uint32_t *row, const uint16_t col,
   (*row)++;
 }
 
-struct Work {
-  struct {
-    char *route;
-    float km;
-    char *obs;
-  };
-  void (*write)(lxw_worksheet *, uint32_t *, const uint16_t, struct Work,
-                lxw_format *);
-};
+void fn(void){};
+void fnull(void);
 
-struct Work2 {
-  struct Route *r;
-  void (*write)(struct Work *w);
-};
-
-void workload()
+void prepare_work()
 {
-  struct Work w[32];
-  for (unsigned i = 0; i < 2; i++) {
-    fp[i]   = arr[i] ? wkend : wday;
-    w[i].km = arr[i] ? 1 : 0;
-    if (arr[i])
-      w[i] = (struct Work){tmp[i].route, tmp[i].km, tmp[i].obs, NULL};
-  }
+  struct {
+    struct Route r;
+    void (*fn)(void);
+  } wa[32];
 
-  struct Work2 w2[2] = {{.r = &(struct Route){NULL, 0, NULL}, NULL}};
-  struct Work2 w4[2] = {{.r = &(struct Route){tmp[0].route, 0, NULL}, NULL}};
-  struct Work2 w3[2] = {{.r = &tmp[0]}, NULL};
+  for (unsigned i = 0; i < dayz; i++) {
+    wa[i].r.route = tmp[i].route;
+  }
 }
+
+/* struct Work { */
+/*   struct { */
+/*     char *route; */
+/*     float km; */
+/*     char *obs; */
+/*   }; */
+/*   void (*write)(lxw_worksheet *, uint32_t *, const uint16_t, struct Work, */
+/*                 lxw_format *); */
+/* }; */
+
+/* struct Work2 { */
+/*   struct Route *r; */
+/*   void (*write)(struct Work *w); */
+/* }; */
+
+/* void workload() */
+/* { */
+/*   int         arr[dayz]; */
+/*   struct Work w[32]; */
+/*   for (unsigned i = 0; i < dayz; i++) { */
+/*     fp[i]   = arr[i] ? wkend : wday; */
+/*     w[i].km = arr[i] ? 1 : 0; */
+/*     if (arr[i]) */
+/*       w[i] = (struct Work){tmp[i].route, tmp[i].km, tmp[i].obs, NULL}; */
+/*   } */
+
+/*   struct Work2 w2[2] = {{.r = &(struct Route){NULL, 0, NULL}, NULL}}; */
+/*   struct Work2 w4[2] = {{.r = &(struct Route){tmp[0].route, 0, NULL}, NULL}};
+ */
+/*   struct Work2 w3[2] = {{.r = &tmp[0]}, NULL}; */
+
+/*   for (unsigned i = 0; i < dayz; i++) { */
+/*     struct Work tmp = {.r = tmp[i], NULL}; */
+/*   } */
+/* } */
 
 void write_excel(void)
 {
