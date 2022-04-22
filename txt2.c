@@ -9,6 +9,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 int main()
@@ -35,6 +36,47 @@ int main()
   mktime(tm);
 
   printf("%d  %d %d\n", tm->tm_mon, tm->tm_year + 1900, tm->tm_wday);
+
+  struct Entropy {
+    int   which, q;
+    char *t;
+  } entropy = {0, 0, "t"};
+
+  char *p = (char *)((size_t)&entropy + 4 * sizeof(int));
+  puts("---\n");
+  puts(p);
+
+  typedef struct {
+    int    a, b;
+    double c, d;
+  } abcd_s;
+  abcd_s list;
+
+  list.b    = 11;
+  size_t xx = (size_t)&list + sizeof(int);
+
+  printf("%zu\n", xx);
+
+  typedef struct _st_L3 {
+    int e;
+    int f;
+    int bb[5];
+    int g;
+  } st_L3;
+
+  st_L3 var;
+  int   array[5];   // int_data
+  void *pnt = &var; // base_address_of_st_L3
+
+  // using operator `[]`
+  memcpy(&((char *)pnt)[offsetof(st_L3, bb)], array, sizeof(int) * 5);
+
+  // using pointer arithmetics
+  memcpy(((char *)pnt) + offsetof(st_L3, bb), array, sizeof(int) * 5);
+
+  // one variable at a time
+  for (int i = 0; i < 5; ++i)
+    memcpy(&((char *)pnt)[offsetof(st_L3, bb) + i], &array[i], sizeof(int));
 
   return 0;
 }

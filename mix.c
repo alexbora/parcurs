@@ -30,7 +30,7 @@
 #define rand ssl_rand
 #endif
 
-struct Route tmp[128];
+struct Route route_[128];
 
 static uint64_t ssl_rand(void)
 {
@@ -66,20 +66,20 @@ static void random_shuffle(void)
       {"Cluj-Satu-Mare", 421, "Interes Serviciu"}};
 
   static const size_t n = ARRAY_SIZE(parcurs);
-  /* tmp                   = (struct Route[128]){{0}}; */
+  /* route_                   = (struct Route[128]){{0}}; */
 
-  for (unsigned i = 0; i < ARRAY_SIZE(tmp); i++) {
+  for (unsigned i = 0; i < ARRAY_SIZE(route_); i++) {
     for (unsigned j = 0; j < n; j++) {
-      tmp[i] = parcurs[(unsigned long)rand() % n];
+      route_[i] = parcurs[(unsigned long)rand() % n];
     }
   }
 
   unsigned long found, play, cycle, k = 0, recent[128] = {0};
   found = play = cycle = k;
 
-  static const unsigned tmp_size = ARRAY_SIZE(tmp);
+  static const unsigned route__size = ARRAY_SIZE(route_);
 
-  for (; cycle < tmp_size; cycle++) {
+  for (; cycle < route__size; cycle++) {
     do {
       play  = (unsigned long)rand() % n;
       found = 0;
@@ -88,7 +88,7 @@ static void random_shuffle(void)
           found = 1;
     } while (found);
 
-    tmp[cycle] = parcurs[play];
+    route_[cycle] = parcurs[play];
   }
 }
 
@@ -106,7 +106,7 @@ void mix(void)
   srand((unsigned)time(0));
   do {
     random_shuffle();
-  } while (repeating(tmp));
+  } while (repeating(route_));
 }
 
 #ifndef Skipmain
@@ -114,10 +114,10 @@ int main()
 {
   mix();
 
-  /* struct Route *tmp_ = (struct Route[128]){0}; */
+  /* struct Route *route__ = (struct Route[128]){0}; */
 
   for (unsigned i = 0; i < 16; ++i) {
-    printf("%s\n", tmp[i].route);
+    printf("%s\n", route_[i].route);
   }
 
   return 0;

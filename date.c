@@ -113,7 +113,7 @@ static int is_holiday_net(const int year, const int month, const int day)
 {
   /* h_ptr = hh; */
   (void)year;
-  for (int i = 0; i < dayz; i++)
+  for (unsigned i = 0; i < dayz; i++)
     if (month == h_ptr[i].month && day == h_ptr[i].day)
       return 1;
   return 0;
@@ -135,7 +135,7 @@ static void generate_array(int *arr)
   printf("%d\n", dayz);
   printf("%d\n", TM.tm_year);
   printf("%d\n", TM.tm_mon);
-  for (int i = 1; i <= dayz; ++i) {
+  for (unsigned i = 1; i <= dayz; ++i) {
     struct tm ti = {59, 59, 12, i, TM.tm_mon - 1, TM.tm_year - 1900,
                     0,  0,  0,  0, NULL};
     mktime(&ti);

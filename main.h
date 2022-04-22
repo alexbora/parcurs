@@ -16,7 +16,7 @@ extern struct Route {
   char         *route;
   unsigned long km;
   char         *obs;
-} tmp[128];
+} route_[128];
 
 void date_cmdl(const int, const int, const int);
 void date_now(void);

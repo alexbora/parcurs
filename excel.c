@@ -8,6 +8,7 @@
 #include "excel.h"
 #include "main.h"
 
+#include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,6 +26,7 @@ static void wkend(lxw_worksheet *s, uint32_t *row, const uint16_t col,
   worksheet_write_string(s, *row, col, "", f);
   (*row)++;
 }
+
 static void wday(lxw_worksheet *s, uint32_t *row, const uint16_t col,
                  const char *text, lxw_format *f)
 {
@@ -34,18 +36,20 @@ static void wday(lxw_worksheet *s, uint32_t *row, const uint16_t col,
   (*row)++;
 }
 
-void fn(void){};
+struct Work;
+void fn(struct Work *p){};
 void fnull(void);
 
 void prepare_work()
 {
-  struct {
+  struct Work {
     struct Route r;
-    void (*fn)(void);
+    void (*fn)(struct Work *);
   } wa[32];
 
   for (unsigned i = 0; i < dayz; i++) {
-    wa[i].r.route = tmp[i].route;
+    wa[i] = (struct Work){route_[i], NULL};
+    puts(wa[i].r.route);
   }
 }
 
@@ -87,6 +91,9 @@ void prepare_work()
 
 void write_excel(void)
 {
+
+  prepare_work();
+
   /* set data */
   const uint32_t row         = 0;
   const unsigned daysinmonth = dayz;

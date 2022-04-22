@@ -35,12 +35,16 @@ CL_N	SCRATCH/opt3.c	/^#define CL_N /;"	d	file:
 CL_RED	SCRATCH/opt3.c	/^#define CL_RED /;"	d	file:
 CL_WHT	SCRATCH/opt3.c	/^#define CL_WHT /;"	d	file:
 CL_YLW	SCRATCH/opt3.c	/^#define CL_YLW /;"	d	file:
+COL1	excel.h	/^#define COL1 /;"	d
 COL1	foaie_2.c	/^#define COL1 /;"	d	file:
 COL1	foaie_2_bak.c	/^#define COL1 /;"	d	file:
+COL2	excel.h	/^#define COL2 /;"	d
 COL2	foaie_2.c	/^#define COL2 /;"	d	file:
 COL2	foaie_2_bak.c	/^#define COL2 /;"	d	file:
+COL3	excel.h	/^#define COL3 /;"	d
 COL3	foaie_2.c	/^#define COL3 /;"	d	file:
 COL3	foaie_2_bak.c	/^#define COL3 /;"	d	file:
+COL4	excel.h	/^#define COL4 /;"	d
 COL4	foaie_2.c	/^#define COL4 /;"	d	file:
 COL4	foaie_2_bak.c	/^#define COL4 /;"	d	file:
 CONNECT_VERBOSE	SCRATCH/string_ex2.c	/^#define CONNECT_VERBOSE /;"	d	file:
@@ -53,8 +57,9 @@ DEBRIS	foaie.mk	/^DEBRIS = a.out core *~ *.dSYM *.o$/;"	m
 DIV_ROUND_UP	SCRATCH/sterge2.c	/^#define DIV_ROUND_UP(/;"	d	file:
 EMPTY	foaie_2.c	/^#define EMPTY /;"	d	file:
 EMPTY	foaie_2_bak.c	/^#define EMPTY /;"	d	file:
-FILES.c	foaie.mk	/^FILES.c = net.c date.c mix.c main.c$/;"	m
-FILES.h	foaie.mk	/^FILES.h = date.h config.h main.h$/;"	m
+EXCEL_H	excel.h	/^#define EXCEL_H$/;"	d
+FILES.c	foaie.mk	/^FILES.c = net.c date.c mix.c excel.c main.c$/;"	m
+FILES.h	foaie.mk	/^FILES.h = date.h config.h excel.h main.h$/;"	m
 FILES.o	foaie.mk	/^FILES.o = ${FILES.c:.c=.o}$/;"	m
 FREE_AND_NULL	foaie_2.c	/^#define FREE_AND_NULL(/;"	d	file:
 FREE_AND_NULL	foaie_2_bak.c	/^#define FREE_AND_NULL(/;"	d	file:
@@ -76,10 +81,10 @@ LOG_ERR	SCRATCH/opt3.c	/^  LOG_ERR,$/;"	e	enum:__anon2	file:
 LOG_INFO	SCRATCH/opt3.c	/^  LOG_INFO,$/;"	e	enum:__anon2	file:
 LOG_NOTICE	SCRATCH/opt3.c	/^  LOG_NOTICE,$/;"	e	enum:__anon2	file:
 LOG_WARNING	SCRATCH/opt3.c	/^  LOG_WARNING,$/;"	e	enum:__anon2	file:
+LXW_COLOR_YELLOW_PALE	excel.h	/^#define LXW_COLOR_YELLOW_PALE /;"	d
 LXW_COLOR_YELLOW_PALE	foaie_2.c	/^#define LXW_COLOR_YELLOW_PALE /;"	d	file:
 LXW_COLOR_YELLOW_PALE	foaie_2_bak.c	/^#define LXW_COLOR_YELLOW_PALE /;"	d	file:
 MAIN_H	main.h	/^#define MAIN_H$/;"	d
-MAX_DAYS	date.c	/^#define MAX_DAYS /;"	d	file:
 MAX_DAYS	sterge.c	/^#define MAX_DAYS /;"	d	file:
 MONTH	SCRATCH/string_ex2.c	/^#define MONTH /;"	d	file:
 Mem	SCRATCH/opt2.c	/^struct Mem {$/;"	s	file:
@@ -102,10 +107,10 @@ Route	SCRATCH/play_ex.c	/^struct Route {$/;"	s	file:
 Route	SCRATCH/wplay_2.c	/^static struct Route {$/;"	s	file:
 Route	foaie_2.c	/^static struct Route {$/;"	s	file:
 Route	foaie_2_bak.c	/^static struct Route {$/;"	s	file:
-Route	mix.c	/^static struct Route {$/;"	s	file:
+Route	main.h	/^extern struct Route {$/;"	s
 SAY	SCRATCH/string_ex2.c	/^#define SAY(/;"	d	file:
 SAY2	SCRATCH/string_ex2.c	/^#define SAY2(/;"	d	file:
-SFLAGS	foaie.mk	/^SFLAGS  = -std=c11 -D_POSIX_C_SOURCE=200112L -DSkipmain #-ansi$/;"	m
+SFLAGS	foaie.mk	/^SFLAGS  = -std=c11 -D_POSIX_C_SOURCE=200112L -DSkipmain #-DLOG#-ansi$/;"	m
 STR	SCRATCH/string_ex2.c	/^#define STR(/;"	d	file:
 STR_	SCRATCH/string_ex2.c	/^#define STR_(/;"	d	file:
 System_w_printf	SCRATCH/opt2.c	/^#define System_w_printf(/;"	d	file:
@@ -127,14 +132,14 @@ Testclaim	foaie_2_bak.c	/^#define Testclaim(/;"	d	file:
 UFLAGS	foaie.mk	/^UFLAGS  = # Set on command line only$/;"	m
 WFLAG1	foaie.mk	/^WFLAG1  = -Wall$/;"	m
 WFLAG2	foaie.mk	/^WFLAG2  = -Wextra$/;"	m
-WFLAG3	foaie.mk	/^WFLAG3  = #-Weverything  #-Werror$/;"	m
+WFLAG3	foaie.mk	/^WFLAG3  = #-Werror$/;"	m
 WFLAG4	foaie.mk	/^WFLAG4  = # -Wstrict-prototypes$/;"	m
 WFLAG5	foaie.mk	/^WFLAG5  = #-Wmissing-prototypes$/;"	m
-WFLAGS	foaie.mk	/^WFLAGS  = ${WFLAG1} ${WFLAG2} ${WFLAG3} ${WFLAG4} ${WFLAG5}$/;"	m
+WFLAG6	foaie.mk	/^WFLAG6	= #-Weverything -Wno-declaration-after-statement$/;"	m
+WFLAGS	foaie.mk	/^WFLAGS  = ${WFLAG1} ${WFLAG2} ${WFLAG3} ${WFLAG4} ${WFLAG5} ${WFLAG6}$/;"	m
 Write_Data	SCRATCH/play2.c	/^struct Write_Data {$/;"	s	file:
 Write_Data	SCRATCH/play_ex.c	/^struct Write_Data {$/;"	s	file:
 _GNU_SOURCE	SCRATCH/opt2.c	/^#define _GNU_SOURCE /;"	d	file:
-__POSIX_C_SOURCE	net.c	/^#define __POSIX_C_SOURCE /;"	d	file:
 __pure	foaie_2.c	/^#define __pure /;"	d	file:
 __pure	foaie_2_bak.c	/^#define __pure /;"	d	file:
 add	SCRATCH/iggy.c	/^#define add(/;"	d	file:
@@ -165,7 +170,7 @@ current_year	date.c	/^int current_year;$/;"	v
 data	SCRATCH/play2.c	/^  void* data;$/;"	m	struct:Write_Data	file:
 data	SCRATCH/play_ex.c	/^  void* data;$/;"	m	struct:Write_Data	file:
 date	foaie.py	/^from datetime import date$/;"	i
-date_cmdl	date.c	/^static void date_cmdl(const int year, const int mon, const int day)$/;"	f	file:
+date_cmdl	date.c	/^void date_cmdl(const int year, const int mon, const int day)$/;"	f
 date_cmdl	sterge.c	/^static void date_cmdl(int year, int mon, int day) {$/;"	f	file:
 date_now	date.c	/^void date_now(void)$/;"	f
 date_now	sterge.c	/^static void date_now(void) {$/;"	f	file:
@@ -181,11 +186,11 @@ day	foaie_2_bak.c	/^  int day, month, year;$/;"	m	struct:__anon1	file:
 day	foaie_2_bak.c	/^  int day, month;$/;"	m	struct:Holidays	file:
 days	SCRATCH/iggy.c	/^int days[N];$/;"	v
 days_in_month	SCRATCH/wplay_2.c	/^static inline unsigned days_in_month(const unsigned month,$/;"	f	file:
-days_in_month	date.c	/^static int days_in_month(const int month, const int year)$/;"	f	file:
+days_in_month	date.c	/^static unsigned days_in_month(const int month, const int year)$/;"	f	file:
 days_in_month	foaie_2.c	/^static inline unsigned days_in_month(const unsigned month, const unsigned year)$/;"	f	file:
 days_in_month	foaie_2_bak.c	/^static unsigned days_in_month(const unsigned month, const unsigned year)$/;"	f	file:
 days_in_month	sterge.c	/^static unsigned days_in_month(const int month, const int year) {$/;"	f	file:
-dayz	date.c	/^static int       dayz;$/;"	v	file:
+dayz	date.c	/^unsigned         dayz;$/;"	v
 dayz	sterge.c	/^static int dayz;$/;"	v	file:
 direction_s	SCRATCH/box.c	/^} direction_s;$/;"	t	typeref:struct:__anon3	file:
 display2DArrayUnknownSize	SCRATCH/string_ex2.c	/^__pure static void display2DArrayUnknownSize(const int *const restrict arr,$/;"	f	file:
@@ -202,10 +207,10 @@ fetch	SCRATCH/string_ex.c	/^static const char* fetch(ssize_t* len, int year) {$/
 fetch	SCRATCH/string_ex2.c	/^fetch(ssize_t *restrict const len, const int year)$/;"	f	file:
 fetch	foaie_2.c	/^__pure static const ssize_t fetch(const uint_fast64_t year,$/;"	f	file:
 fetch	foaie_2_bak.c	/^__pure static const ssize_t fetch(const int year,$/;"	f	file:
-fetch	net.c	/^static ssize_t fetch(char *buf, const int year) {$/;"	f	file:
-fetch_simple	net.c	/^__attribute__((unused)) static char *fetch_simple(const int year) {$/;"	f	file:
+fetch	net.c	/^static ssize_t fetch(char *buf, const int year)$/;"	f	file:
 fileprintf	SCRATCH/f.c	/^#define fileprintf(/;"	d	file:
-fill_struct	net.c	/^static void fill_struct(char *in, struct Net *h) {$/;"	f	file:
+fill_struct	net.c	/^static void fill_struct(char *in, struct Net *h)$/;"	f	file:
+fn	excel.c	/^void fn(void){};$/;"	f
 fn	foaie_2.c	/^static void fn(void)$/;"	f	file:
 fn	foaie_2_bak.c	/^static void fn(void)$/;"	f	file:
 fn	sterge.c	/^void fn(void) { puts("fn\\n"); }$/;"	f
@@ -214,6 +219,7 @@ fnull	foaie_2_bak.c	/^static void fnull(void) { puts("no holiday\\n"); }$/;"	f	f
 foo4random_uniform	foaie_2.c	/^#define foo4random_uniform(/;"	d	file:
 foo4random_uniform	foaie_2_bak.c	/^#define foo4random_uniform(/;"	d	file:
 foo4random_uniform	mix.c	/^#define foo4random_uniform(/;"	d	file:
+fp	excel.c	/^void (*fp[32])(lxw_worksheet *, uint32_t *, const uint16_t, const char *,$/;"	v
 func	SCRATCH/play2.c	/^  void (*func)(void);$/;"	m	struct:Write_Data	file:
 func	SCRATCH/play_ex.c	/^  void (*func)(void);$/;"	m	struct:Write_Data	file:
 func1	SCRATCH/play2.c	/^void func1(struct Route in[]) {$/;"	f
@@ -233,7 +239,7 @@ get_json	SCRATCH/opt2.c	/^char* get_json() {$/;"	f
 get_json	SCRATCH/parse_holidays.c	/^char* get_json() {$/;"	f
 get_json2	SCRATCH/opt2.c	/^char* get_json2() {$/;"	f
 get_json2	SCRATCH/parse_holidays.c	/^char* get_json2() {$/;"	f
-get_km	date.c	/^static void get_km(void)$/;"	f	file:
+get_km	main.c	/^static void get_km(void)$/;"	f	file:
 get_km	sterge.c	/^static void get_km(double *km) {$/;"	f	file:
 get_previous	foaie_2.c	/^static inline void get_previous(void)$/;"	f	file:
 get_previous	foaie_2_bak.c	/^static void get_previous(void)$/;"	f	file:
@@ -272,12 +278,13 @@ km	SCRATCH/play.c	/^  int km;$/;"	m	struct:Route	file:
 km	SCRATCH/play2.c	/^  int km;$/;"	m	struct:Route	file:
 km	SCRATCH/play_ex.c	/^  int km;$/;"	m	struct:Route	file:
 km	SCRATCH/wplay_2.c	/^  long km;$/;"	m	struct:Route	file:
-km	date.c	/^static double    km;$/;"	v	file:
 km	foaie_2.c	/^  long  km;$/;"	m	struct:Route	file:
 km	foaie_2_bak.c	/^  long km;$/;"	m	struct:Route	file:
-km	mix.c	/^  unsigned long km;$/;"	m	struct:Route	file:
+km	main.c	/^double      km;$/;"	v
+km	main.h	/^  unsigned long km;$/;"	m	struct:Route
 km	sterge.c	/^static double km;$/;"	v	file:
 km_	foaie_2_bak.c	/^static double *km_;$/;"	v	file:
+l	main.c	/^FILE *l;$/;"	v
 leapyear	SCRATCH/row.c	/^static inline bool leapyear(unsigned year) {$/;"	f	file:
 left	SCRATCH/box.c	/^  int left, right, up, down;$/;"	m	struct:__anon3	file:
 literal_mon	date.c	/^static inline char *literal_mon(const int month)$/;"	f	file:
@@ -349,7 +356,7 @@ name	SCRATCH/box.c	/^  char* name;$/;"	m	struct:__anon3	file:
 name	foaie.py	/^def name():$/;"	f
 name	foaie_2.c	/^static char     name[256];$/;"	v	file:
 name	foaie_2_bak.c	/^static char name[256];$/;"	v	file:
-net_fetch	net.c	/^void net_fetch() {$/;"	f
+net_fetch	net.c	/^void net_fetch()$/;"	f
 no_date	SCRATCH/string_ex2.c	/^static inline int no_date(struct tm *tm)$/;"	f	file:
 obs	SCRATCH/play.c	/^  char* obs;$/;"	m	struct:Route	file:
 obs	SCRATCH/play2.c	/^  char* obs;$/;"	m	struct:Route	file:
@@ -357,7 +364,7 @@ obs	SCRATCH/play_ex.c	/^  char* obs;$/;"	m	struct:Route	file:
 obs	SCRATCH/wplay_2.c	/^  char* obs;$/;"	m	struct:Route	file:
 obs	foaie_2.c	/^  char *obs;$/;"	m	struct:Route	file:
 obs	foaie_2_bak.c	/^  char *obs;$/;"	m	struct:Route	file:
-obs	mix.c	/^  char         *obs;$/;"	m	struct:Route	file:
+obs	main.h	/^  char         *obs;$/;"	m	struct:Route
 os	foaie.py	/^import glob,  os$/;"	i
 out	SCRATCH/opt2.c	/^  char *in, *out;$/;"	m	struct:Mem	file:
 parcurs	SCRATCH/wplay_2.c	/^} tmp[32], parcurs[16] = {{"Cluj-Oradea", 321, "Interes Serviciu"},$/;"	v	typeref:struct:Route	file:
@@ -366,7 +373,7 @@ parcurs	foaie_2_bak.c	/^} tmp[128], parcurs[16] = {$/;"	v	typeref:struct:Route	f
 parcursi	sterge.c	/^static int parcursi;$/;"	v	file:
 parse	foaie_2.c	/^__pure static ssize_t parse(char **in, ssize_t received)$/;"	f	file:
 parse	foaie_2_bak.c	/^__pure static ssize_t parse(char **in, ssize_t received)$/;"	f	file:
-parse	net.c	/^static char *parse(char *in) {$/;"	f	file:
+parse	net.c	/^static char *parse(char *in)$/;"	f	file:
 parse_buf	SCRATCH/string_ex.c	/^static void parse_buf(const char* in, ssize_t len, struct H2* h_ptr) {$/;"	f	file:
 parse_buf	SCRATCH/string_ex2.c	/^static struct H2 *parse_buf(const char in[static restrict 1], ssize_t len)$/;"	f	file:
 parse_buf_bun	SCRATCH/string_ex.c	/^__attribute__((unused)) static void parse_buf_bun(char* in, int len) {$/;"	f	file:
@@ -374,10 +381,11 @@ parse_buf_bun	SCRATCH/string_ex2.c	/^__unused static void parse_buf_bun(char *in
 parse_json	SCRATCH/opt2.c	/^int parse_json(const char* in) {$/;"	f
 parse_json	SCRATCH/parse_holidays.c	/^int parse_json(const char* in[]) {$/;"	f
 pointcontents	SCRATCH/opt2.c	/^#define pointcontents /;"	d	file:
+prepare_work	excel.c	/^void prepare_work()$/;"	f
 previous	foaie_2.c	/^} current, previous;$/;"	v	typeref:struct:__anon4	file:
 previous	foaie_2_bak.c	/^} current, previous;$/;"	v	typeref:struct:__anon1	file:
 printArray	SCRATCH/reservoir.c	/^static void printArray(int stream[], int n) {$/;"	f	file:
-process_cmdl	date.c	/^void process_cmdl(int argc, char **argv)$/;"	f
+process_cmdl	main.c	/^static void process_cmdl(int argc, char **argv)$/;"	f	file:
 process_cmdl	sterge.c	/^static void process_cmdl(int argc, char *argv[restrict argc + 1]) {$/;"	f	file:
 rand	foaie_2.c	/^#define rand /;"	d	file:
 rand	foaie_2.c	/^#undef rand$/;"	d	file:
@@ -412,7 +420,8 @@ route	SCRATCH/play_ex.c	/^  char* route;$/;"	m	struct:Route	file:
 route	SCRATCH/wplay_2.c	/^  char* route;$/;"	m	struct:Route	file:
 route	foaie_2.c	/^  char *route;$/;"	m	struct:Route	file:
 route	foaie_2_bak.c	/^  char *route;$/;"	m	struct:Route	file:
-route	mix.c	/^  char         *route;$/;"	m	struct:Route	file:
+route	main.h	/^  char         *route;$/;"	m	struct:Route
+route_	mix.c	/^struct Route route_[128];$/;"	v	typeref:struct:Route
 row	foaie_2.c	/^static unsigned row;$/;"	v	file:
 row	foaie_2_bak.c	/^static unsigned row;$/;"	v	file:
 say	SCRATCH/sterge1.c	/^#define say(/;"	d	file:
@@ -430,7 +439,7 @@ shuffle2	SCRATCH/play.c	/^void shuffle2() { printf("shuffle 2\\n"); }$/;"	f
 shuffle2	SCRATCH/play2.c	/^void shuffle2(void) { printf("shuffle 2\\n"); }$/;"	f
 shuffle2	SCRATCH/play_ex.c	/^void shuffle2(void) { printf("shuffle 2\\n"); }$/;"	f
 skip_prefix	SCRATCH/sterge2.c	/^static inline int skip_prefix(const char *str, const char *prefix,$/;"	f	file:
-ssl_rand	mix.c	/^u_int64_t ssl_rand(void)$/;"	f
+ssl_rand	mix.c	/^static uint64_t ssl_rand(void)$/;"	f	file:
 stderr	SCRATCH/f.c	/^#define stderr /;"	d	file:
 stderr	SCRATCH/f.c	/^#undef stderr$/;"	d	file:
 stderr	SCRATCH/opt.c	/^#define stderr /;"	d	file:
@@ -457,7 +466,6 @@ tm_	foaie_2_bak.c	/^static struct tm *tm_;$/;"	v	typeref:struct:tm	file:
 tmp	SCRATCH/wplay_2.c	/^} tmp[32], parcurs[16] = {{"Cluj-Oradea", 321, "Interes Serviciu"},$/;"	v	typeref:struct:Route	file:
 tmp	foaie_2.c	/^} tmp[128], parcurs[16] = {{"Cluj-Oradea", 321, "Interes Serviciu"},$/;"	v	typeref:struct:Route	file:
 tmp	foaie_2_bak.c	/^} tmp[128], parcurs[16] = {$/;"	v	typeref:struct:Route	file:
-tmp	mix.c	/^} tmp[128];$/;"	v	typeref:struct:Route	file:
 tmp1	SCRATCH/string_ex.c	/^static char **tmp1, **tmp2;$/;"	v	file:
 tmp1	SCRATCH/string_ex2.c	/^static char     **tmp1, **tmp2;$/;"	v	file:
 tmp2	SCRATCH/string_ex.c	/^static char **tmp1, **tmp2;$/;"	v	file:
@@ -469,9 +477,9 @@ trace2_cmd_exit_fl	SCRATCH/sterge2.c	/^int trace2_cmd_exit_fl(const char *file, 
 u64	foaie_2.c	/^#define u64 /;"	d	file:
 u64	foaie_2_bak.c	/^#define u64 /;"	d	file:
 up	SCRATCH/box.c	/^  int left, right, up, down;$/;"	m	struct:__anon3	file:
-usage	date.c	/^__attribute__((noreturn)) void usage(void)$/;"	f
 usage	foaie_2.c	/^static const char usage[] = "usage:\\n[-h][help]\\n[no input][current time]\\n";$/;"	v	file:
 usage	foaie_2_bak.c	/^static const char usage[] = "usage:\\n[-h][help]\\n[no input][current time]\\n";$/;"	v	file:
+usage	main.c	/^__attribute__((noreturn)) static void usage(void)$/;"	f	file:
 use_colors	SCRATCH/opt3.c	/^int use_colors = 1;$/;"	v
 vacation	SCRATCH/string_ex2.c	/^__pure static inline bool vacation(const int *const restrict arr,$/;"	f	file:
 vacation	foaie_2.c	/^static inline bool vacation(const int day, const int month, const int year,$/;"	f	file:
@@ -479,12 +487,15 @@ vacation	foaie_2_bak.c	/^static inline bool vacation(const int day, const int mo
 validate_data	SCRATCH/play2.c	/^void validate_data(struct Write_Data in[], struct Route route[]) {$/;"	f
 validate_data	SCRATCH/play_ex.c	/^void validate_data(struct Write_Data in[], struct Route route[]) {$/;"	f
 verify	SCRATCH/row.c	/^__attribute__((unused)) static char* verify(int buffer[restrict static 17]) {$/;"	f	file:
+wday	excel.c	/^static void wday(lxw_worksheet *s, uint32_t *row, const uint16_t col,$/;"	f	file:
 wday	foaie_2.c	/^static void wday(lxw_worksheet *s, int *row, const int col, const char *text,$/;"	f	file:
 wday	foaie_2_bak.c	/^static void wday(lxw_worksheet *s, int *row, const int col, const char *text,$/;"	f	file:
+wkend	excel.c	/^static void wkend(lxw_worksheet *s, uint32_t *row, const uint16_t col,$/;"	f	file:
 wkend	foaie_2.c	/^static void wkend(lxw_worksheet *s, int *row, const int col, const char *text,$/;"	f	file:
 wkend	foaie_2_bak.c	/^static void wkend(lxw_worksheet *s, int *row, const int col, const char *text,$/;"	f	file:
 write_body_fn	sterge.c	/^typedef void (*write_body_fn)(void);$/;"	t	file:
-write_km	date.c	/^static void write_km(void)$/;"	f	file:
+write_excel	excel.c	/^void write_excel(void)$/;"	f
+write_km	main.c	/^static void write_km(void)$/;"	f	file:
 write_km	sterge.c	/^static void write_km(double *km) {$/;"	f	file:
 x	SCRATCH/row.c	/^  int x;$/;"	m	struct:rat	file:
 x	SCRATCH/scratch7.c	/^  int x;$/;"	m	struct:T	file:
