@@ -36,21 +36,32 @@ static void wday(lxw_worksheet *s, uint32_t *row, const uint16_t col,
   (*row)++;
 }
 
-struct Work;
-void fn(struct Work *p){};
-void fnull(void);
+void fn(struct Route *p)
+{
+  puts(p->route);
+  puts("\n");
+};
+void fnull(struct Route *p)
+{
+  puts("free\n");
+};
 
 void prepare_work()
 {
   struct Work {
     struct Route r;
-    void (*fn)(struct Work *);
+    void (*f)(struct Route *);
   } wa[32];
 
   for (unsigned i = 0; i < dayz; i++) {
-    wa[i] = (struct Work){route_[i], NULL};
-    puts(wa[i].r.route);
+    if (array[i])
+      wa[i] = (struct Work){route_[i], .f = fnull};
+    else
+      wa[i] = (struct Work){route_[i], .f = fn};
   }
+
+  for (unsigned i = 0; i < dayz; i++)
+    wa[i].f(&route_[i]);
 }
 
 /* struct Work { */
