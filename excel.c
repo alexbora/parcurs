@@ -19,20 +19,26 @@
 struct Work {
   struct Route r;
   void (*f)(struct Route *);
+  void (*we)(struct Route *, lxw_worksheet *, uint32_t *, const uint16_t,
+             float *, lxw_format *);
 };
 
-static void wkend(lxw_worksheet *s, uint32_t *row, const uint16_t col,
-                  const char *text, lxw_format *f) {
-  (void)text;
+static void wkend(struct Route *r, lxw_worksheet *s, uint32_t *row,
+                  const uint16_t col, float *parcursi, lxw_format *f) {
+  (void)r;
+  (void)parcursi;
   worksheet_write_string(s, *row, col, "", f);
+  worksheet_write_string(s, *row, col + 1, "", f);
+  worksheet_write_string(s, *row, col + 2, "", f);
   (*row)++;
 }
 
-static void wday(lxw_worksheet *s, uint32_t *row, const uint16_t col,
-                 const char *text, lxw_format *f) {
-  worksheet_write_string(s, *row, col, text, f);
-  worksheet_write_number(s, *row, col + 1, 1, f);
-  worksheet_write_string(s, *row, col + 2, "inte", f);
+static void wday(struct Route *r, lxw_worksheet *s, uint32_t *row,
+                 const uint16_t col, float *parcursi, lxw_format *f) {
+  worksheet_write_number(s, *row, col, r->km, f);
+  worksheet_write_string(s, *row, col + 1, r->route, f);
+  worksheet_write_string(s, *row, col + 2, r->obs, f);
+  (*parcursi) += r->km;
   (*row)++;
 }
 
@@ -41,17 +47,23 @@ void fn(struct Route *p) {
   puts("\n");
 };
 
-void fnull(struct Route *p) { puts("free\n"); };
+void fnull(struct Route *p) {
+  (void)p;
+  puts("free\n");
+};
 
 static struct Work *prepare_work() {
   static struct Work wa[32];
 
   for (unsigned i = 0; i < dayz; i++) {
-    if (array[i])
-      wa[i] = (struct Work){route_[i], .f = fnull};
+    if (!array[i])
+      wa[i] = (struct Work){.r = route_[i], .f = fn, .we = wday};
     else
-      wa[i] = (struct Work){{0}, .f = fn};
+      wa[i] = (struct Work){.r = {0}, .f = fnull, .we = wkend};
   }
+
+  /* for (unsigned i = 0; i < dayz; i++) */
+  /* wa[i].f(&wa[i].r); */
 
   return &wa[0];
 }
@@ -61,10 +73,13 @@ void write_excel(void) {
   /* prepare array */
   struct Work *w = prepare_work();
 
+  /* w[0].f(&w[0].r); */
+
   /* set data */
-  const uint32_t row = 0;
+  uint32_t row = 0;
   const unsigned daysinmonth = dayz;
-  unsigned total = 0, parcursi = 0, offset = 13;
+  unsigned total = 0, offset = 13;
+  float parcursi = 0;
 
   char name[128], worksheet_name[128], data_predarii[128];
   sprintf(name, "foaie_parcurs_B-151-VGT_%s_%d_Alex_Bora.xlsx", luna,
@@ -187,7 +202,18 @@ void write_excel(void) {
   worksheet_write_string(worksheet, row + 12, COL4, "Observatii utilizator",
                          format_header);
 
+  row += 13;
+
+  for (unsigned i = 1; i <= dayz; ++i) {
+    worksheet_write_number(worksheet, i + offset - 1, COL1, i, format);
+  }
+
+  for (unsigned i = 0; i < dayz; ++i) {
+    w[i].we(&w[i].r, worksheet, &row, 1, &parcursi, format);
+  }
+
   total = km + parcursi;
+  km = total;
 
   worksheet_write_string(worksheet, daysinmonth + offset, COL1,
                          "Km parcursi:", format_header);

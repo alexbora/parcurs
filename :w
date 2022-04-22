@@ -32,20 +32,21 @@ static inline char *literal_mon(const int month) {
 }
 
 void date_now(void) {
-  struct tm tm = *(localtime(&(time_t){time(0)}));
+  struct tm tm = &(localtime(&(time_t){time(0)}));
 
-  sprintf(longdate, "%02d.%02d.%d", tm.tm_mday, tm.tm_mon + 1,
-          tm.tm_year + 1900);
+  sprintf(longdate, "%02d.%02d.%d", tm->tm_mday, tm->tm_mon + 1,
+          tm->tm_year + 1900);
 
-  if (tm.tm_mon == 11) {
-    tm.tm_year--;
-    mktime(&tm);
+  if (tm->tm_mon == 11) {
+    tm->tm_year--;
+    mktime(tm);
   }
 
-  luna = literal_mon(tm.tm_mon);
+  luna = literal_mon(tm->tm_mon);
 
-  current_year = tm.tm_year += 1900;
-  TM = tm;
+  current_year = tm->tm_year += 1900;
+  TM = *tm;
+  tm = NULL;
 }
 
 void date_cmdl(const int year, const int mon, const int day) {
