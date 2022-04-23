@@ -8,21 +8,14 @@
 
 #define DATE_H
 
-/* void generate_time(void); */
-/* void process_cmdl(int argc, char **argv); */
-
 struct Net {
   int month, day;
 };
 
 extern struct Net *h_ptr;
-extern int current_year;
-extern char longdate[32];
-extern char *luna;
-extern unsigned dayz;
-
-/* extern struct Route tmp; */
-
-/* extern int array[32]; */
+extern int         current_year;
+extern char        longdate[32];
+extern char       *luna;
+extern unsigned    dayz;
 
 #endif /* end of include guard DATE_H */

@@ -8,6 +8,7 @@
 #define MAIN_H
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
+#define FIN_MSG       "\n\x1b[32m[Task completed]\x1b[0m\n"
 
 extern int    array[32];
 extern double km;

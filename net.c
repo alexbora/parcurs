@@ -17,7 +17,9 @@
 #include <sys/socket.h> /* socket, connect */
 #include <unistd.h>
 
-void net_fetch(void);
+/* void net_fetch(void); */
+
+#define CON_MSG "\n\x1b[32mConnected.\x1b[0m\n"
 
 static ssize_t fetch(char *buf, const int year)
 {
@@ -52,7 +54,9 @@ static ssize_t fetch(char *buf, const int year)
   x = connect(sockfd, res->ai_addr, res->ai_addrlen);
   if (x)
     return 0;
-  puts("\n\x1b[32mConnected.\x1b[0m\n");
+
+  /* fprintf(stderr, "\n\x1b[32mConnected.\x1b[0m\n"); */
+  fprintf(stderr, CON_MSG);
 
   char      header[256] = {'\0'};
   const int len_header =
