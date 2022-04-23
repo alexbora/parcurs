@@ -22,8 +22,6 @@
 #define rand foo4random_uniform
 #endif
 
-struct Route route_[128];
-
 #ifdef HAVE_OPENSSL
 #include <openssl/rand.h>
 #undef rand
@@ -33,9 +31,10 @@ static uint64_t ssl_rand(void) {
   RAND_bytes(bytes, sizeof(bytes));
   uint64_t res = *(uint64_t *)bytes;
   return res % RAND_MAX;
-  return 0;
 }
 #endif
+
+struct Route route_[128];
 
 static void random_shuffle(void) {
   static const struct Route parcurs[16] = {

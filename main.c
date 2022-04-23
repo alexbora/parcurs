@@ -20,7 +20,7 @@ FILE *l;
 #endif
 
 #ifdef LOG
-#define fd open("log", O_CREAT | O_RDWR)
+#define fd open("log", O_CREAT | O_RDWR | O_APPEND, 0777)
 #else
 #define fd 2 // stderr
 #endif
@@ -45,7 +45,7 @@ __attribute__((noreturn)) static void usage(void) {
 }
 
 static void get_km(void) {
-  FILE *f = fopen("km", "r");
+  FILE *f = fopen("km", "w++");
   if (fscanf(f, "%lf", &km))
     fclose(f);
   f = NULL;
