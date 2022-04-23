@@ -9,6 +9,17 @@
 
 #include <stdio.h>
 
+#ifdef LOG
+#undef stderr
+#define stderr l
+#endif
+
+#ifdef LOG
+#define fd open("log", O_CREAT | O_RDWR | O_APPEND, 0777)
+#else
+#define fd 2 // stderr
+#endif
+
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
 #define FIN_MSG "\n\x1b[32m[Task completed]\x1b[0m\n"
 

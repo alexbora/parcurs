@@ -14,17 +14,6 @@
 
 FILE *l;
 
-#ifdef LOG
-#undef stderr
-#define stderr l
-#endif
-
-#ifdef LOG
-#define fd open("log", O_CREAT | O_RDWR | O_APPEND, 0777)
-#else
-#define fd 2 // stderr
-#endif
-
 /* struct Net *h_ptr = (struct Net[32]){{0}}; */
 struct Net *h_ptr;
 double km;
