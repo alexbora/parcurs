@@ -9,12 +9,19 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 FILE *l;
 
 #ifdef LOG
 #undef stderr
 #define stderr l
+#endif
+
+#ifdef LOG
+#define fd open("xxx", O_RDWR)
+#else
+#define fd 2
 #endif
 
 /* struct Net *h_ptr = (struct Net[32]){{0}}; */
@@ -89,6 +96,7 @@ int main(int argc, char **argv)
 
   fprintf(stderr, "current: %d %s %s\n", current_year, luna, longdate);
 
+  write(fd, longdate, 10);
   write_excel();
 
   write_km();

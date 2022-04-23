@@ -5,12 +5,15 @@
  */
 
 #include <errno.h>
+#include <fcntl.h>
 #include <openssl/rand.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/fcntl.h>
 #include <time.h>
+#include <unistd.h>
 
 int main()
 {
@@ -78,5 +81,17 @@ int main()
   for (int i = 0; i < 5; ++i)
     memcpy(&((char *)pnt)[offsetof(st_L3, bb) + i], &array[i], sizeof(int));
 
+  int o = open("test22", O_RDWR);
+
+  write(o, "test", 4);
+  write(2, "test", 4);
+
+#ifdef LOG
+#define ab open("xxx", O_RDWR)
+#else
+#define ab 2
+#endif
+
+  write(ab, "abc\n", 4);
   return 0;
 }
