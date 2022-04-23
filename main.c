@@ -45,7 +45,7 @@ __attribute__((noreturn)) static void usage(void) {
 }
 
 static void get_km(void) {
-  FILE *f = fopen("km", "w++");
+  FILE *f = fopen("km", "r");
   if (fscanf(f, "%lf", &km))
     fclose(f);
   f = NULL;

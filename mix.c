@@ -4,6 +4,7 @@
  * @created     : sâmbătă apr 16, 2022 16:03:13 EEST
  */
 
+#include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -55,11 +56,12 @@ static void random_shuffle(void) {
       {"Cluj-Bontida", 92, "Interes Serviciu"},
       {"Cluj-Satu-Mare", 421, "Interes Serviciu"}};
 
-  static const size_t n = ARRAY_SIZE(parcurs);
   /* route_                   = (struct Route[128]){{0}}; */
+  static const size_t n = ARRAY_SIZE(parcurs);
+  static const size_t m = ARRAY_SIZE(route_);
 
-  for (unsigned i = 0; i < ARRAY_SIZE(route_); i++) {
-    for (unsigned j = 0; j < n; j++) {
+  for (size_t i = 0; i < m; i++) {
+    for (size_t j = 0; j < n; j++) {
       route_[i] = parcurs[(unsigned long)rand() % n];
     }
   }
@@ -67,9 +69,9 @@ static void random_shuffle(void) {
   unsigned long found, play, cycle, k = 0, recent[128] = {0};
   found = play = cycle = k;
 
-  static const unsigned route__size = ARRAY_SIZE(route_);
+  /* static const unsigned route__size = ARRAY_SIZE(route_); */
 
-  for (; cycle < route__size; cycle++) {
+  for (; cycle < m; cycle++) {
     do {
       play = (unsigned long)rand() % n;
       found = 0;

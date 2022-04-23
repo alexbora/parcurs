@@ -13,15 +13,14 @@
 #include <time.h>
 
 static struct tm TM;
-char             longdate[32];
-char            *luna;
-unsigned         dayz;
+char longdate[32];
+char *luna;
+unsigned dayz;
 static int (*is_holiday)(int, int, int);
 int current_year;
 int array[32];
 
-static inline char *literal_mon(const int month)
-{
+static inline char *literal_mon(const int month) {
   return &"\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ianuarie\0\0\0\0\0\0\0\0februari"
           "e\0\0\0"
           "\0\0\0\0martie\0\0\0\0\0\0\0\0\0\0aprilie\0\0\0\0\0\0\0\0\0mai\0"
@@ -33,8 +32,7 @@ static inline char *literal_mon(const int month)
           "embrie\0\0\0\0\0\0\0decembrie\0\0\0\0\0\0\0"[16 * month];
 }
 
-void date_now(void)
-{
+void date_now(void) {
   struct tm tm = *(localtime(&(time_t){time(0)}));
 
   sprintf(longdate, "%02d.%02d.%d", tm.tm_mday, tm.tm_mon + 1,
@@ -48,11 +46,10 @@ void date_now(void)
   luna = literal_mon(tm.tm_mon);
 
   current_year = tm.tm_year += 1900;
-  TM           = tm;
+  TM = tm;
 }
 
-void date_cmdl(const int year, const int mon, const int day)
-{
+void date_cmdl(const int year, const int mon, const int day) {
   struct tm tm = {.tm_year = year - 1900, .tm_mon = mon - 1, .tm_mday = day};
 
   mktime(&tm);
@@ -65,16 +62,13 @@ void date_cmdl(const int year, const int mon, const int day)
   tm.tm_year += 1900;
   tm.tm_mon += 1;
   current_year = tm.tm_year;
-  TM           = tm;
+  TM = tm;
 }
 
-static inline int is_weekend(const int day)
-{
-  return (day == 6) | (day == 0);
-}
+static inline int is_weekend(const int day) { return (day == 6) | (day == 0); }
 
-static int is_holiday_static(const int year, const int month, const int day)
-{
+static inline int is_holiday_static(const int year, const int month,
+                                    const int day) {
   if (year != 2022)
     return 0;
   static const struct {
@@ -90,8 +84,8 @@ static int is_holiday_static(const int year, const int month, const int day)
   return 0;
 }
 
-static inline int is_holiday_net(const int year, const int month, const int day)
-{
+static inline int is_holiday_net(const int year, const int month,
+                                 const int day) {
   (void)year;
   for (unsigned i = 0; i < dayz; i++)
     if (month == h_ptr[i].month && day == h_ptr[i].day)
@@ -99,8 +93,7 @@ static inline int is_holiday_net(const int year, const int month, const int day)
   return 0;
 }
 
-static inline unsigned days_in_month(const int month, const int year)
-{
+static inline unsigned days_in_month(const int month, const int year) {
   if (month == 4 || month == 6 || month == 9 || month == 11)
     return 30;
   else if (month == 2)
@@ -109,8 +102,7 @@ static inline unsigned days_in_month(const int month, const int year)
   return 31;
 }
 
-static inline void generate_array(int *arr)
-{
+static inline void generate_array(int *const arr) {
   dayz = days_in_month(TM.tm_mon, TM.tm_year);
   for (unsigned i = 1; i <= dayz; ++i) {
     struct tm ti = {59, 59, 12, i, TM.tm_mon - 1, TM.tm_year - 1900,
@@ -125,8 +117,7 @@ static inline void generate_array(int *arr)
   /* puts("\n"); */
 }
 
-void generate_time(void)
-{
+void generate_time(void) {
   is_holiday = h_ptr ? is_holiday_net : is_holiday_static;
   return generate_array(array);
 }
