@@ -64,8 +64,8 @@ ls3() {
   	RAND_bytes(bytes, sizeof(bytes));
   	uint64_t res = *(uint64_t *)bytes;
   	return res % RAND_MAX;}" > test5.c
-	gcc-11 -lssl -lcrypto test5.c
-	rm -rf test5.c
+	gcc-11 -lssl -lcrypto test5.c -o test5
+	rm -rf test5.c test5
 }
 
 if ls3;
