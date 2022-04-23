@@ -25,5 +25,11 @@ void net_fetch(void);
 void generate_time(void);
 void mix(void);
 void write_excel();
+void x_error(char *);
+
+static inline char *test(char *a)
+{
+  return (a);
+}
 
 #endif /* end of include guard MAIN_H */

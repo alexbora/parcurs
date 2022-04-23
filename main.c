@@ -21,6 +21,17 @@ FILE *l;
 struct Net *h_ptr;
 double      km;
 
+__attribute__((noreturn)) static inline void a_error(char *m)
+{
+  fprintf(stderr, "%s\n", m);
+  exit(1);
+}
+
+void x_error(char *m)
+{
+  return a_error(m);
+}
+
 __attribute__((noreturn)) static void usage(void)
 {
   puts("\nExecute like './prog year month day km', for example './prog "
@@ -85,7 +96,7 @@ int main(int argc, char **argv)
 #ifdef LOG
   fclose(stderr);
 #endif
-
   puts(FIN_MSG);
+
   return 0;
 }
