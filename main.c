@@ -29,13 +29,6 @@ FILE *l;
 struct Net *h_ptr;
 double km;
 
-__attribute__((noreturn)) static inline void a_error(char *m) {
-  fprintf(stderr, "%s\n", m);
-  exit(1);
-}
-
-void x_error(char *m) { return a_error(m); }
-
 __attribute__((noreturn)) static void usage(void) {
   puts("\nExecute like './prog year month day km', for example './prog "
        "2022 4 10 100'.\nIf 0 km, file km is read.\nIf no arguments, "
@@ -60,7 +53,7 @@ static void write_km(void) {
 
 static void process_cmdl(int argc, char **argv) {
   if (argv[1] && *argv[1] == 'h')
-    return usage();
+    usage();
 
   if (argv[1] && argv[2] && argv[3])
     date_cmdl(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
@@ -96,7 +89,9 @@ int main(int argc, char **argv) {
 #ifdef LOG
   fclose(stderr);
 #endif
-  puts(FIN_MSG);
+  int e = 0;
+  if (e == 0)
+    puts(FIN_MSG);
 
   return 0;
 }

@@ -15,7 +15,7 @@
 #define COL2 (uint16_t)(1)
 #define COL3 (uint16_t)(2)
 #define COL4 (uint16_t)(3)
-extern uint32_t row;
-extern double   km;
+/* extern uint32_t row; */
+extern double km;
 
 #endif /* end of include guard EXCEL_H */

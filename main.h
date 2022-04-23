@@ -7,16 +7,19 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
-#define FIN_MSG       "\n\x1b[32m[Task completed]\x1b[0m\n"
+#include <stdio.h>
 
-extern int    array[32];
+#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
+#define FIN_MSG "\n\x1b[32m[Task completed]\x1b[0m\n"
+
+extern int array[32];
 extern double km;
+extern FILE *l;
 
 extern struct Route {
-  char         *route;
+  char *route;
   unsigned long km;
-  char         *obs;
+  char *obs;
 } route_[128];
 
 void date_cmdl(const int, const int, const int);
@@ -24,7 +27,6 @@ void date_now(void);
 void net_fetch(void);
 void generate_time(void);
 void mix(void);
-void write_excel();
-void x_error(char *);
+int write_excel(void);
 
 #endif /* end of include guard MAIN_H */

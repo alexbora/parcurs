@@ -16,7 +16,7 @@ static struct tm TM;
 char longdate[32];
 char *luna;
 unsigned dayz;
-static int (*is_holiday)(int, int, int);
+static int (*is_holiday)(const int, const int, const int);
 int current_year;
 int array[32];
 
@@ -105,8 +105,8 @@ static inline unsigned days_in_month(const int month, const int year) {
 static inline void generate_array(int *const arr) {
   dayz = days_in_month(TM.tm_mon, TM.tm_year);
   for (unsigned i = 1; i <= dayz; ++i) {
-    struct tm ti = {59, 59, 12, i, TM.tm_mon - 1, TM.tm_year - 1900,
-                    0,  0,  0,  0, NULL};
+    struct tm ti = {59, 59, 12, (int)i, TM.tm_mon - 1, TM.tm_year - 1900,
+                    0,  0,  0,  0,      NULL};
     mktime(&ti);
 
     arr[i] = is_weekend(ti.tm_wday);
@@ -119,5 +119,5 @@ static inline void generate_array(int *const arr) {
 
 void generate_time(void) {
   is_holiday = h_ptr ? is_holiday_net : is_holiday_static;
-  return generate_array(array);
+  generate_array(array);
 }

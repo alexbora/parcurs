@@ -17,7 +17,7 @@
 #include <xlsxwriter.h>
 
 typedef void (*fx)(const struct Route *, lxw_worksheet *, uint32_t *,
-                   const uint16_t, float *, lxw_format *);
+                   const uint16_t, double *, lxw_format *);
 
 struct Work {
   struct Route r;
@@ -25,7 +25,7 @@ struct Work {
 };
 
 static void wkend(const struct Route *r, lxw_worksheet *s, uint32_t *row,
-                  const uint16_t col, float *parcursi, lxw_format *f) {
+                  const uint16_t col, double *parcursi, lxw_format *f) {
   (void)r;
   (void)parcursi;
   worksheet_write_string(s, *row, col, "", f);
@@ -35,15 +35,15 @@ static void wkend(const struct Route *r, lxw_worksheet *s, uint32_t *row,
 }
 
 static void wday(const struct Route *r, lxw_worksheet *s, uint32_t *row,
-                 const uint16_t col, float *parcursi, lxw_format *f) {
-  worksheet_write_number(s, *row, col, r->km, f);
+                 const uint16_t col, double *parcursi, lxw_format *f) {
+  worksheet_write_number(s, *row, col, (double)r->km, f);
   worksheet_write_string(s, *row, col + 1, r->route, f);
   worksheet_write_string(s, *row, col + 2, r->obs, f);
-  (*parcursi) += r->km;
+  (*parcursi) += (unsigned)r->km;
   (*row)++;
 }
 
-static struct Work *prepare_work() {
+static struct Work *prepare_work(void) {
   static struct Work wa[32] = {0};
 
   for (unsigned i = 0; i < dayz; i++) {
@@ -59,7 +59,7 @@ static struct Work *prepare_work() {
   return &wa[0];
 }
 
-void write_excel(void) {
+int write_excel(void) {
 
   /* prepare array */
   const struct Work *w = prepare_work();
@@ -68,7 +68,7 @@ void write_excel(void) {
   uint32_t row = 0;
   const unsigned daysinmonth = dayz;
   unsigned total = 0, offset = 13;
-  float parcursi = 0;
+  double parcursi = 0;
 
   char name[128], worksheet_name[128], data_predarii[128];
   sprintf(name, "foaie_parcurs_B-151-VGT_%s_%d_Alex_Bora.xlsx", luna,
@@ -201,8 +201,8 @@ void write_excel(void) {
     w[i].we(&w[i].r, worksheet, &row, 1, &parcursi, format);
   }
 
-  total = km + parcursi;
-  km = total;
+  total = (unsigned)km + (unsigned)parcursi;
+  km = (unsigned)total;
 
   worksheet_write_string(worksheet, daysinmonth + offset, COL1,
                          "Km parcursi:", format_header);
@@ -238,5 +238,5 @@ void write_excel(void) {
   worksheet_write_string(worksheet, r + 9, COL1, "……………………………………………………",
                          format_footer);
 
-  workbook_close(workbook);
+  return workbook_close(workbook);
 }
