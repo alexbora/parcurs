@@ -60,8 +60,6 @@ int main(int argc, char **argv) {
   l = fopen("log", "w++");
 #endif
 
-  h_ptr = (struct Net[32]){{0}};
-
   get_km();
 
   process_cmdl(argc, argv);

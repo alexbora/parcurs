@@ -82,9 +82,8 @@ static ssize_t fetch(char *buf, const int year, const int flags) {
   if (flags & CONNECT_VERBOSE)
     fprintf(stderr, "%s\n", p);
 
-  if (strstr(p, "500"))
-    return 0;
-
+  /* if (strstr(p, "500")) */
+  /* return 0; */
   /* safety */
   memset(res, 0, sizeof(struct addrinfo));
   freeaddrinfo(res);
@@ -96,14 +95,14 @@ static ssize_t fetch(char *buf, const int year, const int flags) {
   return received;
 }
 
-static inline char *parse(char in[const static 1]) {
+static inline char *parse(char *in) {
   char *p = in;
   while (p++) {
-    if (*p == '[') {
+    if (*p == '[')
       break;
-      return p;
-    }
+    return p;
   }
+  puts("not found\n");
   return NULL;
 }
 
@@ -126,20 +125,21 @@ void net_fetch(const int flags) {
   char buf[4 * 1024] = {'\0'};
 
   int f = fetch(buf, current_year, flags);
+  char *result = NULL;
+
+  printf("%d\n", f);
 
   if (!f)
     return;
 
-  char *result = parse(buf);
+  result = parse(buf);
+
+  puts(result);
 
   if (!result) {
     h_ptr = NULL;
     return;
   }
-
-  h_ptr = (struct Net[32]){{0}};
-  fill_struct(result, h_ptr);
-
   result = NULL;
 
   /* safety */

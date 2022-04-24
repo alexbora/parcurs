@@ -19,6 +19,8 @@
 #include <sys/socket.h> /* socket, connect */
 #include <unistd.h>
 
+/* void net_fetch(void); */
+
 #ifdef LOG
 #define fd open("log", O_CREAT | O_RDWR | O_APPEND, 0777)
 #else
@@ -26,7 +28,12 @@
 #endif
 
 #define CON_MSG "\n\x1b[32mConnected.\x1b[0m\n"
+
+#define ATTENTION_REQ_FLAG 0x0008
+#define DATA_RECEIVE_COMPLETE 0x0001
 #define CONNECT_VERBOSE (1u << 1)
+
+uint16_t event;
 
 static ssize_t fetch(char *buf, const int year, const int flags) {
   struct addrinfo hints = {.ai_family = AF_INET,
@@ -58,10 +65,11 @@ static ssize_t fetch(char *buf, const int year, const int flags) {
   if (x)
     return 0;
 
-  if (flags & CONNECT_VERBOSE) {
+  if (flags & CONNECT_VERBOSE)
     fprintf(stderr, "done.");
-    fprintf(stderr, CON_MSG);
-  }
+
+  /* fprintf(stderr, "\n\x1b[32mConnected.\x1b[0m\n"); */
+  fprintf(stderr, CON_MSG);
 
   char header[256] = {'\0'};
   const int len_header =
@@ -75,16 +83,16 @@ static ssize_t fetch(char *buf, const int year, const int flags) {
     return 0;
 
   char *p = buf;
+  *p = '\0';
   const ssize_t received = recv(sockfd, p, 4 * 1024, 0);
   if (received < 1)
     return 0;
 
-  if (flags & CONNECT_VERBOSE)
-    fprintf(stderr, "%s\n", p);
+  /* fprintf(stderr, "%s\n", p); */
+  write(fd, p, strlen(p));
 
   if (strstr(p, "500"))
     return 0;
-
   /* safety */
   memset(res, 0, sizeof(struct addrinfo));
   freeaddrinfo(res);
@@ -92,23 +100,18 @@ static ssize_t fetch(char *buf, const int year, const int flags) {
 
   shutdown(sockfd, SHUT_RDWR);
   close(sockfd);
+  event = DATA_RECEIVE_COMPLETE;
 
   return received;
 }
 
-static inline char *parse(char in[const static 1]) {
-  char *p = in;
-  while (p++) {
-    if (*p == '[') {
-      break;
-      return p;
-    }
-  }
-  return NULL;
+static inline char *parse(char *in) {
+  while (*in++ != '[')
+    ;
+  return in;
 }
 
-static inline void fill_struct(char in[const static 1],
-                               struct Net *restrict const h) {
+static inline void fill_struct(char *const in, struct Net *const h) {
   char *x = in;
   int i = 0;
   while (x++) {
@@ -121,27 +124,52 @@ static inline void fill_struct(char in[const static 1],
   }
 }
 
-void net_fetch(const int flags) {
+static inline struct Net *fill(char *const in) {
+  if (event != DATA_RECEIVE_COMPLETE)
+    return NULL;
 
-  char buf[4 * 1024] = {'\0'};
+  static struct Net *hp;
+  hp = (struct Net[32]){{0}};
 
-  int f = fetch(buf, current_year, flags);
-
-  if (!f)
-    return;
-
-  char *result = parse(buf);
-
-  if (!result) {
-    h_ptr = NULL;
-    return;
+  char *x = in;
+  int i = 0;
+  while (x++) {
+    x = strstr(x, "date");
+    if (!x)
+      break;
+    hp[i].day = atoi(x + 7);
+    hp[i].month = atoi(x + 10);
+    i++;
   }
+  return hp;
+}
 
-  h_ptr = (struct Net[32]){{0}};
-  fill_struct(result, h_ptr);
+void net_fetch(const int flags) {
+  char *buf = calloc(1, 4 * 1024);
 
-  result = NULL;
+  fetch(buf, current_year, flags);
 
+  puts("---");
+  char *s = parse(buf);
+  if (*s == '\0')
+    puts("NULL\n");
+  puts("---");
+
+  if (event & DATA_RECEIVE_COMPLETE) {
+    char *result = parse(buf);
+    h_ptr = (struct Net[32]){{0}};
+    fill_struct(result, h_ptr);
+    event &= ~DATA_RECEIVE_COMPLETE;
+    result = NULL;
+  } else {
+    event = ATTENTION_REQ_FLAG;
+    h_ptr = NULL;
+  }
+  fprintf(stderr, "event: %d\n", event);
+
+  /* h_ptr = fill(buf); */
   /* safety */
   memset(buf, '\0', 4 * 1024);
+  free(buf);
+  buf = NULL;
 }
