@@ -82,9 +82,6 @@ static ssize_t fetch(char *buf, const int year, const int flags) {
   if (flags & CONNECT_VERBOSE)
     fprintf(stderr, "%s\n", p);
 
-  if (strstr(p, "500"))
-    return 0;
-
   /* safety */
   memset(res, 0, sizeof(struct addrinfo));
   freeaddrinfo(res);
@@ -98,6 +95,9 @@ static ssize_t fetch(char *buf, const int year, const int flags) {
 
 static inline char *parse(char in[const static 1]) {
   char *p = in;
+  if (strstr(p, "500"))
+    return NULL;
+
   while (p++) {
     if (*p == '[') {
       break;

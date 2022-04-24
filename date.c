@@ -118,7 +118,7 @@ static inline void generate_array(int *const arr) {
 }
 
 void generate_time(void) {
-  is_holiday = h_ptr != NULL ? is_holiday_net : is_holiday_static;
-  h_ptr != NULL ? puts("net\n") : puts("static\n");
+  is_holiday = h_ptr ? is_holiday_net : is_holiday_static;
+  h_ptr ? fprintf(stderr, "net\n") : fprintf(stderr, "static\n");
   generate_array(array);
 }
