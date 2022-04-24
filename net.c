@@ -12,6 +12,7 @@
 #include <fcntl.h>
 #include <netdb.h>
 #include <netinet/in.h> /* struct sockaddr_in, struct sockaddr */
+#include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -107,8 +108,7 @@ static inline char *parse(char in[const static 1]) {
   return NULL;
 }
 
-static inline void fill_struct(char in[const static 1],
-                               struct Net *restrict const h) {
+static inline void fill_struct(char in[const static 1], struct Net *const h) {
   char *x = in;
   int i = 0;
   while (x++) {
@@ -125,7 +125,7 @@ void net_fetch(const int flags) {
 
   char buf[4 * 1024] = {'\0'};
 
-  int f = fetch(buf, current_year, flags);
+  ssize_t f = fetch(buf, current_year, flags);
 
   if (!f)
     return;
@@ -144,4 +144,7 @@ void net_fetch(const int flags) {
 
   /* safety */
   memset(buf, '\0', 4 * 1024);
+  f = 0;
+#undef CONNECT_VERBOSE
+#undef CON_MSG
 }
