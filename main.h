@@ -35,7 +35,7 @@ extern struct Route {
 
 void date_cmdl(const int, const int, const int);
 void date_now(void);
-void net_fetch(void);
+void net_fetch(const int);
 void generate_time(void);
 void mix(void);
 int write_excel(void);
