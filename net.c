@@ -12,6 +12,7 @@
 #include <fcntl.h>
 #include <netdb.h>
 #include <netinet/in.h> /* struct sockaddr_in, struct sockaddr */
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -28,12 +29,18 @@
 
 #define CON_MSG "\n\x1b[32mConnected.\x1b[0m\n"
 
-static ssize_t fetch(char *buf, const int year) {
-  struct addrinfo hints = {.ai_family = AF_INET,
+#define ATTENTION_REQ_FLAG    0x0008
+#define DATA_RECEIVE_COMPLETE 0x0001
+
+uint16_t event;
+
+static ssize_t fetch(char *buf, const int year)
+{
+  struct addrinfo hints = {.ai_family   = AF_INET,
                            .ai_socktype = SOCK_STREAM,
                            .ai_protocol = IPPROTO_TCP,
-                           .ai_flags = AI_PASSIVE},
-                  *res = NULL;
+                           .ai_flags    = AI_PASSIVE},
+                  *res  = NULL;
 
   const char *const host =
       "us-central1-romanian-bank-holidays.cloudfunctions.net";
@@ -51,7 +58,7 @@ static ssize_t fetch(char *buf, const int year) {
   /* fprintf(stderr, "\n\x1b[32mConnected.\x1b[0m\n"); */
   fprintf(stderr, CON_MSG);
 
-  char header[256] = {'\0'};
+  char      header[256] = {'\0'};
   const int len_header =
       sprintf(header,
               "GET /romanian_bank_holidays/?year=%d HTTP/1.1\r\nHost: "
@@ -62,16 +69,17 @@ static ssize_t fetch(char *buf, const int year) {
   if (sent <= 0)
     return 0;
 
-  char *p = buf;
-  *p = '\0';
+  char *p                = buf;
+  *p                     = '\0';
   const ssize_t received = recv(sockfd, p, 4 * 1024, 0);
   if (received < 1)
     return 0;
 
   /* fprintf(stderr, "%s\n", p); */
-
   write(fd, p, strlen(p));
 
+  if (strstr(p, "500"))
+    return 0;
   /* safety */
   memset(res, 0, sizeof(struct addrinfo));
   freeaddrinfo(res);
@@ -79,35 +87,46 @@ static ssize_t fetch(char *buf, const int year) {
 
   shutdown(sockfd, SHUT_RDWR);
   close(sockfd);
+  event = DATA_RECEIVE_COMPLETE;
+
   return received;
 }
 
-static inline char *parse(char *in) {
+static inline char *parse(char *in)
+{
   while (*in++ != '[')
     ;
   return in;
 }
 
-static inline void fill_struct(char *const in, struct Net *const h) {
+static inline void fill_struct(char *const in, struct Net *const h)
+{
   char *x = in;
-  int i = 0;
+  int   i = 0;
   while (x++) {
     x = strstr(x, "date");
     if (!x)
       break;
-    h[i].day = atoi(x + 7);
+    h[i].day   = atoi(x + 7);
     h[i].month = atoi(x + 10);
     i++;
   }
 }
 
-void net_fetch(void) {
+void net_fetch(void)
+{
   char *buf = calloc(1, 4 * 1024);
-  fetch(buf, current_year);
-  char *result = parse(buf);
-  /* h_ptr = (struct Net[32]){{0}}; */
-  fill_struct(result, h_ptr);
 
+  fetch(buf, current_year);
+  if (event & DATA_RECEIVE_COMPLETE) {
+    char *result = parse(buf);
+    /* h_ptr = (struct Net[32]){{0}}; */
+    fill_struct(result, h_ptr);
+    event &= ~DATA_RECEIVE_COMPLETE;
+  } else {
+    event = ATTENTION_REQ_FLAG;
+  }
+  fprintf(stderr, "event: %d\n", event);
   /* safety */
   memset(buf, '\0', 4 * 1024);
   free(buf);
