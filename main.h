@@ -39,7 +39,7 @@ void generate_time(void);
 void mix(void);
 int write_excel(void);
 
-extern struct Net { int month, day; } * h_ptr;
+extern struct Net { int month, day; } h, *h_ptr;
 
 /* extern struct Net *h_ptr; */
 extern int current_year;

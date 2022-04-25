@@ -20,11 +20,13 @@
 #include <sys/socket.h> /* socket, connect */
 #include <unistd.h>
 
-/* #ifdef LOG */
-/* #define fd open("log", O_CREAT | O_RDWR | O_APPEND, 0777) */
-/* #else */
-/* #define fd 2 // stderr */
-/* #endif */
+#ifdef LOG
+#define fd open("log", O_CREAT | O_RDWR | O_APPEND, 0777)
+#undef stderr
+#define stderr l
+#else
+#define fd 2 // stderr
+#endif
 
 #define CON_MSG "\n\x1b[32mConnected.\x1b[0m\n"
 
@@ -66,7 +68,7 @@ static ssize_t fetch(char *buf, const int year, const int flags) {
     fprintf(stderr, CON_MSG);
   }
 
-  char header[256] = {'\0'};
+  char header[256] = {'\000'};
   const int len_header =
       sprintf(header,
               "GET /romanian_bank_holidays/?year=%d HTTP/1.1\r\nHost: "
@@ -110,17 +112,19 @@ static inline char *parse(char in[const static 1]) {
   return NULL;
 }
 
-static inline void fill_struct(char in[const static 1], struct Net *const h) {
+static inline void fill_struct(char in[const static 1], struct Net *h) {
   char *x = in;
   int i = 0;
+  struct Net tmp[32] = {{0}};
   while (x++) {
     x = strstr(x, "date");
     if (!x)
       break;
-    h[i].day = atoi(x + 7);
-    h[i].month = atoi(x + 10);
+    tmp[i].day = atoi(x + 7);
+    tmp[i].month = atoi(x + 10);
     i++;
   }
+  memcpy(h, tmp, sizeof(tmp));
 }
 
 void net_fetch(const int flags) {

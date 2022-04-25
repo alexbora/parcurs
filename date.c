@@ -89,7 +89,8 @@ static inline int is_holiday_static(const int year, const int month,
 static inline int is_holiday_net(const int year, const int month,
                                  const int day) {
   (void)year;
-  for (unsigned i = 0; i < dayz; i++)
+  const unsigned d = dayz;
+  for (unsigned i = 0; i < d; i++)
     if (month == h_ptr[i].month && day == h_ptr[i].day)
       return 1;
   return 0;
@@ -106,7 +107,8 @@ static inline unsigned days_in_month(const int month, const int year) {
 
 static inline void generate_array(int *const arr) {
   dayz = days_in_month(TM.tm_mon, TM.tm_year);
-  for (unsigned i = 1; i <= dayz; ++i) {
+  const unsigned d = dayz;
+  for (unsigned i = 1; i <= d; ++i) {
     struct tm ti = {59, 59, 12, (int)i, TM.tm_mon - 1, TM.tm_year - 1900,
                     0,  0,  0,  0,      NULL};
     mktime(&ti);
@@ -123,6 +125,7 @@ void generate_time(void) {
   is_holiday = h_ptr ? is_holiday_net : is_holiday_static;
   h_ptr ? fprintf(stderr, "\nUsing net.\n")
         : fprintf(stderr, "\nUsing static table.\n");
+
   generate_array(array);
 
   /* typedef int (*holiday_check)(const int, const int, const int); */

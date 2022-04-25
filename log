@@ -1,2 +1,27 @@
+Looking up us-central1-romanian-bank-holidays.cloudfunctions.net ... done.
+Connecting to us-central1-romanian-bank-holidays.cloudfunctions.net (port 80) ... done.
+[32mConnected.[0m
+HTTP/1.1 500 Internal Server Error
+X-Cloud-Trace-Context: 05a94b4df88b0c33466e560f09cf75d5;o=1
+Date: Mon, 25 Apr 2022 14:08:55 GMT
+Content-Type: text/html; charset=UTF-8
+Server: Google Frontend
+Content-Length: 323
+
+
+<html><head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<title>500 Server Error</title>
+</head>
+<body text=#000000 bgcolor=#ffffff>
+<h1>Error: Server Error</h1>
+<h2>The server encountered an error and could not complete your request.<p>Please try again in 30 seconds.</h2>
+<h2></h2>
+</body></html>
+
 
 Using static table.
+current: 2022 martie 25.04.2022
+
+[32m[Task completed][0m
+

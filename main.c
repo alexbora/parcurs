@@ -13,13 +13,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#ifdef LOG
-FILE *l;
-#endif
-
 /* struct Net *h_ptr = (struct Net[32]){{0}}; */
 struct Net *h_ptr;
 double km;
+FILE *l;
 
 __attribute__((noreturn)) static void usage(void) {
   puts("\nExecute like './prog year month day km', for example './prog "
@@ -76,13 +73,13 @@ int main(int argc, char **argv) {
 
   write_km();
 
+  fprintf(stderr, "current: %d %s %s\n", current_year, luna, longdate);
+  write(fd, longdate, 10);
+  fprintf(stderr, "%s\n", FIN_MSG);
+  /* puts(FIN_MSG); */
 #ifdef LOG
   fclose(stderr);
 #endif
-
-  fprintf(stderr, "current: %d %s %s\n", current_year, luna, longdate);
-  write(fd, longdate, 10);
-  puts(FIN_MSG);
 
   return 0;
 }
