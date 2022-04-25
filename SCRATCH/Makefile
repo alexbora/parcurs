@@ -1,2 +1,2 @@
 clean:
-	rm -rf *.dSYM row string_ex2 sterge1 sterge2 sterge7 sterge8
+	rm -rf *.dSYM row string_ex2 sterge1 sterge2 sterge7 sterge8 find

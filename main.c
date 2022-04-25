@@ -15,6 +15,8 @@
 
 FILE *l;
 
+#define CONNECT_VERBOSE 2
+
 /* struct Net *h_ptr = (struct Net[32]){{0}}; */
 struct Net *h_ptr;
 double km;
@@ -64,7 +66,7 @@ int main(int argc, char **argv) {
 
   process_cmdl(argc, argv);
 
-  net_fetch(2);
+  net_fetch(CONNECT_VERBOSE);
 
   generate_time();
 
