@@ -4,8 +4,8 @@
  * @created     : Marţi Apr 19, 2022 19:11:39 EEST
  */
 
-#include "excel.h"
 #include "date.h"
+#include "excel.h"
 #include "main.h"
 
 #include <stddef.h>
@@ -21,11 +21,12 @@ typedef void (*fx)(const struct Route *, lxw_worksheet *, uint32_t *,
 
 struct Work {
   struct Route r;
-  fx we;
+  fx           we;
 };
 
 static void wkend(const struct Route *r, lxw_worksheet *s, uint32_t *row,
-                  const uint16_t col, double *parcursi, lxw_format *f) {
+                  const uint16_t col, double *parcursi, lxw_format *f)
+{
   (void)r;
   (void)parcursi;
   worksheet_write_string(s, *row, col, "", f);
@@ -35,7 +36,8 @@ static void wkend(const struct Route *r, lxw_worksheet *s, uint32_t *row,
 }
 
 static void wday(const struct Route *r, lxw_worksheet *s, uint32_t *row,
-                 const uint16_t col, double *parcursi, lxw_format *f) {
+                 const uint16_t col, double *parcursi, lxw_format *f)
+{
   worksheet_write_number(s, *row, col, (double)r->km, f);
   worksheet_write_string(s, *row, col + 1, r->route, f);
   worksheet_write_string(s, *row, col + 2, r->obs, f);
@@ -43,13 +45,15 @@ static void wday(const struct Route *r, lxw_worksheet *s, uint32_t *row,
   (*row)++;
 }
 
-static struct Work *prepare_work(void) {
+static struct Work *prepare_work(void)
+{
   static struct Work wa[32] = {0};
 
   for (unsigned i = 0; i < dayz; i++) {
-    if (!array[i])
+    if (!array[i]) {
       wa[i] = (struct Work){.r = route_[i], .we = wday};
-    else
+      return &wa[0];
+    } else
       wa[i] = (struct Work){.r = {0}, .we = wkend};
   }
 
@@ -59,16 +63,17 @@ static struct Work *prepare_work(void) {
   return &wa[0];
 }
 
-int write_excel(void) {
+int write_excel(void)
+{
 
   /* prepare array */
   const struct Work *w = prepare_work();
 
   /* set data */
-  uint32_t row = 0;
+  uint32_t       row         = 0;
   const unsigned daysinmonth = dayz;
-  unsigned total = 0, offset = 13;
-  double parcursi = 0;
+  unsigned       total = 0, offset = 13;
+  double         parcursi = 0;
 
   char name[128], worksheet_name[128], data_predarii[128];
   sprintf(name, "foaie_parcurs_B-151-VGT_%s_%d_Alex_Bora.xlsx", luna,
@@ -78,27 +83,27 @@ int write_excel(void) {
           longdate);
 
   lxw_workbook_options options = {.constant_memory = LXW_FALSE,
-                                  .tmpdir = getcwd(NULL, 0),
-                                  .use_zip64 = LXW_TRUE};
+                                  .tmpdir          = getcwd(NULL, 0),
+                                  .use_zip64       = LXW_TRUE};
 
   /* set properties */
   lxw_doc_properties properties = {
-      .title = name,
-      .subject = "foaie",
-      .author = "Alex Bora",
-      .manager = "tot el",
-      .company = "Volvo",
+      .title    = name,
+      .subject  = "foaie",
+      .author   = "Alex Bora",
+      .manager  = "tot el",
+      .company  = "Volvo",
       .category = "foaie parcurs",
       .keywords = "foaie parcurs",
       .comments = "VERSION 2.0",
-      .status = "Done",
+      .status   = "Done",
   };
 
   lxw_data_validation *data_validation =
-      &(lxw_data_validation){.validate = LXW_VALIDATION_TYPE_ANY,
-                             .criteria = LXW_VALIDATION_TYPE_ANY,
+      &(lxw_data_validation){.validate     = LXW_VALIDATION_TYPE_ANY,
+                             .criteria     = LXW_VALIDATION_TYPE_ANY,
                              .ignore_blank = LXW_VALIDATION_OFF,
-                             .show_input = LXW_VALIDATION_OFF};
+                             .show_input   = LXW_VALIDATION_OFF};
   /* open workbook */
   lxw_workbook *workbook = workbook_new_opt(name, &options);
   workbook_set_properties(workbook, &properties);
@@ -126,11 +131,11 @@ int write_excel(void) {
   worksheet_insert_image(worksheet, row + 1, COL4, "logo.png");
 
   /* add formats */
-  lxw_format *format_bold = workbook_add_format(workbook);
+  lxw_format *format_bold       = workbook_add_format(workbook);
   lxw_format *format_bold_right = workbook_add_format(workbook);
-  lxw_format *format_header = workbook_add_format(workbook);
-  lxw_format *format = workbook_add_format(workbook);
-  lxw_format *format_footer = workbook_add_format(workbook);
+  lxw_format *format_header     = workbook_add_format(workbook);
+  lxw_format *format            = workbook_add_format(workbook);
+  lxw_format *format_footer     = workbook_add_format(workbook);
   format_set_bold(format_bold);
   format_set_border(format_bold, LXW_BORDER_NONE);
   format_set_align(format_bold_right, LXW_ALIGN_RIGHT);
@@ -202,7 +207,7 @@ int write_excel(void) {
   }
 
   total = (unsigned)km + (unsigned)parcursi;
-  km = (unsigned)total;
+  km    = (unsigned)total;
 
   worksheet_write_string(worksheet, daysinmonth + offset, COL1,
                          "Km parcursi:", format_header);
