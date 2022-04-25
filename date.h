@@ -13,9 +13,9 @@ struct Net {
 };
 
 extern struct Net *h_ptr;
-extern int current_year;
-extern char longdate[32];
-extern char *luna;
-extern unsigned dayz;
+extern int         current_year;
+extern char        longdate[32];
+extern char       *luna;
+extern unsigned    dayz;
 
 #endif /* end of include guard DATE_H */
