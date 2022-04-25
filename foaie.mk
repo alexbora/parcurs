@@ -9,7 +9,7 @@ FILES.o = ${FILES.c:.c=.o}
 CC      = gcc-11 #/opt/local/libexec/llvm-14/bin/clang
 SFLAGS  = -std=c11 -D_POSIX_C_SOURCE=200112L -DSkipmain #-DLOG#-ansi -std=gnu99
 GFLAGS  = -g
-OFLAGS  = #-O3
+OFLAGS  = -O3
 WFLAG1  = -Wall
 WFLAG2  = -Wextra
 WFLAG3  = #-Werror

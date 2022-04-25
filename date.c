@@ -5,21 +5,20 @@
  */
 
 /* time includes */
-#include "date.h"
+/* #include "date.h" */
+/* definitions are in main, uninclude date.h */
 #include "main.h"
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/wait.h>
+/* #include <sys/wait.h> */
 #include <time.h>
 
 static struct tm TM;
-char longdate[32];
-char *luna;
+char longdate[32], *luna;
+int current_year, array[32];
 unsigned dayz;
 static int (*is_holiday)(const int, const int, const int);
-int current_year;
-int array[32];
 
 static inline char *literal_mon(const int month) {
   return &"\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ianuarie\0\0\0\0\0\0\0\0februari"
@@ -81,7 +80,6 @@ static inline int is_holiday_static(const int year, const int month,
       {1, 6}, {12, 6}, {13, 6}, {15, 8}, {30, 11}, {1, 12}, {25, 12}, {26, 12},
   };
   const size_t size = ARRAY_SIZE(hol);
-
   for (size_t i = 0; i < size; i++)
     if (month == hol[i].month && day == hol[i].day)
       return 1;

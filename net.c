@@ -6,7 +6,7 @@
 
 /* #define __POSIX_C_SOURCE = 200112L */
 #include "date.h"
-
+#include "main.h"
 #include <arpa/inet.h>
 #include <assert.h>
 #include <fcntl.h>
@@ -20,14 +20,16 @@
 #include <sys/socket.h> /* socket, connect */
 #include <unistd.h>
 
-#ifdef LOG
-#define fd open("log", O_CREAT | O_RDWR | O_APPEND, 0777)
-#else
-#define fd 2 // stderr
-#endif
+/* #ifdef LOG */
+/* #define fd open("log", O_CREAT | O_RDWR | O_APPEND, 0777) */
+/* #else */
+/* #define fd 2 // stderr */
+/* #endif */
 
 #define CON_MSG "\n\x1b[32mConnected.\x1b[0m\n"
-#define CONNECT_VERBOSE (1u << 1)
+
+/* extern int current_year; */
+/* extern struct Net *h_ptr; */
 
 static ssize_t fetch(char *buf, const int year, const int flags) {
   struct addrinfo hints = {.ai_family = AF_INET,

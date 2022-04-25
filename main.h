@@ -11,10 +11,8 @@
 
 #ifdef LOG
 #undef stderr
+extern FILE *l;
 #define stderr l
-#endif
-
-#ifdef LOG
 #define fd open("log", O_CREAT | O_RDWR | O_APPEND, 0777)
 #else
 #define fd 2 // stderr
@@ -23,9 +21,10 @@
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
 #define FIN_MSG "\n\x1b[32m[Task completed]\x1b[0m\n"
 
+#define CONNECT_VERBOSE (1u << 1)
+
 extern int array[32];
 extern double km;
-extern FILE *l;
 
 extern struct Route {
   char *route;
@@ -39,5 +38,13 @@ void net_fetch(const int);
 void generate_time(void);
 void mix(void);
 int write_excel(void);
+
+extern struct Net { int month, day; } * h_ptr;
+
+/* extern struct Net *h_ptr; */
+extern int current_year;
+extern char longdate[32];
+extern char *luna;
+extern unsigned dayz;
 
 #endif /* end of include guard MAIN_H */

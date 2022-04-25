@@ -5,7 +5,7 @@
  */
 
 #include "main.h"
-#include "date.h"
+/* #include "date.h" */
 
 #include <fcntl.h>
 #include <stdarg.h>
@@ -13,9 +13,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#ifdef LOG
 FILE *l;
-
-#define CONNECT_VERBOSE 2
+#endif
 
 /* struct Net *h_ptr = (struct Net[32]){{0}}; */
 struct Net *h_ptr;
