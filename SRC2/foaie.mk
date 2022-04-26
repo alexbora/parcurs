@@ -3,7 +3,7 @@
 
 PROGRAM = foaie_2
 FILES.c = net.c date.c mix.c excel.c main.c
-FILES.h = date.h config.h excel.h main.h
+FILES.h = main.h date.h config.h excel.h
 FILES.o = ${FILES.c:.c=.o}
 
 CC      = gcc-11 #/opt/local/libexec/llvm-14/bin/clang
