@@ -88,7 +88,7 @@ static inline int is_holiday_static(const int year, const int month,
   };
   const size_t size = ARRAY_SIZE(hol);
   for (size_t i = 0; i < size; i++)
-    if (!((month - hol[i].month) | (day - hol[i].day)))
+    if (((month - hol[i].month) | (day - hol[i].day)) == 0)
       return 1;
   return 0;
 }
