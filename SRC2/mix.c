@@ -4,15 +4,14 @@
  * @created     : sâmbătă apr 16, 2022 16:03:13 EEST
  */
 
+#include "main.h"
+
 #include <stddef.h>
 #include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
 #ifndef __linux__
 #include <sys/_types/_u_int64_t.h>
 #include <sys/_types/_ucontext.h>
 #endif
-#include "main.h"
 
 #include <sys/types.h>
 #include <time.h>
@@ -27,8 +26,7 @@
 #include <openssl/rand.h>
 #undef rand
 #define rand ssl_rand
-static uint64_t ssl_rand(void)
-{
+static uint64_t ssl_rand(void) {
   unsigned char bytes[128] = {'\0'};
   RAND_bytes(bytes, sizeof(bytes));
   uint64_t res = *(uint64_t *)bytes;
@@ -38,8 +36,7 @@ static uint64_t ssl_rand(void)
 
 struct Route route_[128];
 
-static void random_shuffle(void)
-{
+static void random_shuffle(void) {
   static const struct Route parcurs[16] = {
       {"Cluj-Oradea", 321, "Interes Serviciu"},
       {"Cluj-Turda", 121, "Interes Serviciu"},
@@ -75,7 +72,7 @@ static void random_shuffle(void)
 
   for (; cycle < m; cycle++) {
     do {
-      play  = (unsigned long)rand() % n;
+      play = (unsigned long)rand() % n;
       found = 0;
       for (k = 0; k < n; k++)
         if (recent[k] == play)
@@ -86,8 +83,7 @@ static void random_shuffle(void)
   }
 }
 
-static inline int repeating(const struct Route *in)
-{
+static inline int repeating(const struct Route *in) {
   for (unsigned i = 0; i < 32; i++) {
     if (in[i + 1].km == in[i].km && in[i].km != 30)
       return 1;
@@ -95,8 +91,7 @@ static inline int repeating(const struct Route *in)
   return 0;
 }
 
-void mix(void)
-{
+void mix(void) {
   srand((unsigned)time(0));
   do {
     random_shuffle();
@@ -104,8 +99,7 @@ void mix(void)
 }
 
 #ifndef Skipmain
-int main()
-{
+int main() {
   mix();
 
   /* struct Route *route__ = (struct Route[128]){0}; */
