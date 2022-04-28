@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
   TM           = tm2;
 
   for (unsigned i = 0; i < 7; i++) {
-    if (tm.tm_wday++ == 6)
+    if (tm.tm_wday + i == 6 || !(tm.tm_wday + i))
       puts("hol\n");
     else
       puts("no hol\n");
