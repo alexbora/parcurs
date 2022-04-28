@@ -23,9 +23,23 @@ int cmpare()
   return result;
 }
 
+// y for lanes where a < b, x otherwise
+inline __m128 compareLessThan_xy(__m128 a, __m128 b, float x, float y)
+{
+  const __m128 cmp = _mm_cmplt_ps(a, b);
+  return _mm_blendv_ps(_mm_set1_ps(x), _mm_set1_ps(y), cmp);
+}
+
+typedef void (*f)(void);
+// 1.0 for lanes where a < b, zero otherwise
+inline __m128 compareLessThan_01(__m128 a, __m128 b)
+{
+  const __m128 cmp = _mm_cmplt_ps(a, b);
+  return _mm_and_ps(cmp, _mm_set1_ps(1));
+}
+
 int main(int argc, char *argv[])
 {
-
   /* normal time */
   struct tm tm = *localtime(&(time_t){time(NULL)});
   /* printf("Today is           %s", asctime(&tm)); */
