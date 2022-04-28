@@ -18,6 +18,11 @@ int main(int argc, char **argv)
   struct tm tm = *localtime(&(time_t){time(NULL)});
   /* printf("Today is           %s", asctime(&tm)); */
   printf("Today is           %s", asctime(&*localtime(&(time_t){time(NULL)})));
+  char longdate[128];
+  sprintf(longdate, "%02d.%02d.%d", tm.tm_mday, tm.tm_mon + 1,
+          tm.tm_year + 1900);
+  puts(longdate);
+
   tm.tm_mon -= 1; // go previous
   tm.tm_mday = 1; // reset to 1st
   mktime(&tm);    // tm_isdst is not set to -1; today's DST status is used
@@ -27,9 +32,7 @@ int main(int argc, char **argv)
   struct tm tm2 = {50, 50, 12, 1, 3, 2022};
   mktime(&tm2);
   printf("1 month ago was %d - %s", tm2.tm_wday, asctime(&tm2));
-  char longdate[128];
-  sprintf(longdate, "%0d.%0d.%d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
-  puts(longdate);
+
   /* ---------------------------------------------------------- */
   if (argc > 1) {
     char *m = strstr(mths, argv[1]);
