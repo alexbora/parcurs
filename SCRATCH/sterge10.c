@@ -4,6 +4,8 @@
  * @created     : Miercuri Apr 27, 2022 18:20:48 EEST
  */
 
+#include <immintrin.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
