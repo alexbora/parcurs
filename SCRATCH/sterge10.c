@@ -6,32 +6,35 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <sys/_types/_off_t.h>
 #include <time.h>
 
-int main(int argc, char *argv[]) {
+char mths[] = "ian feb mar apr mai iun iul aug sep oct noi dec";
+
+int main(int argc, char *argv[argc + 1])
+{
   /* normal time */
   struct tm tm = *localtime(&(time_t){time(NULL)});
   /* printf("Today is           %s", asctime(&tm)); */
   printf("Today is           %s", asctime(&*localtime(&(time_t){time(NULL)})));
   tm.tm_mon -= 1; // go previous
   tm.tm_mday = 1; // reset to 1st
-  /* tm.tm_mon -= 1; // tm_mon is now outside its normal range */
-  mktime(&tm); // tm_isdst is not set to -1; today's DST status is used
+  mktime(&tm);    // tm_isdst is not set to -1; today's DST status is used
   printf("1 month ago was %d - %s", tm.tm_wday, asctime(&tm));
 
   /* time input */
   struct tm tm2 = {50, 50, 12, 1, 3, 2022};
   mktime(&tm2);
-  printf("1 month ago was %d - %s", tm.tm_wday, asctime(&tm));
+  printf("1 month ago was %d - %s", tm2.tm_wday, asctime(&tm2));
 
-  struct tm TM = tm;
-  TM = tm2;
-
-  for (unsigned i = 0; i < 7; i++) {
-    if (((tm.tm_wday + i) - 6) * tm.tm_wday <= 0)
-      puts("hol\n");
-    else
-      puts("no hol\n");
+  if (argc > 1) {
+    char *m = strstr(mths, argv[1]);
+    /* int   offset = (m - mths) >> 2; */
+    /* printf("%d\n", offset); */
+    struct tm tm = {0, 0, -1, 1, (m - mths) / 4, 2022};
+    mktime(&tm);
+    printf("1 month ago was %d - %s", tm.tm_wday, asctime(&tm));
   }
 
   return 0;
