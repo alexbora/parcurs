@@ -15,10 +15,11 @@
 
 /* struct Net *h_ptr = (struct Net[32]){{0}}; */
 struct Net *h_ptr;
-double km;
-FILE *l;
+double      km;
+FILE       *l;
 
-__attribute__((noreturn)) static void usage(void) {
+__attribute__((noreturn)) static void usage(void)
+{
   puts("\nExecute like './prog year month day km', for example './prog "
        "2022 4 10 100'.\nIf 0 km, file km is read.\nIf no arguments, "
        "current "
@@ -26,21 +27,24 @@ __attribute__((noreturn)) static void usage(void) {
   exit(EXIT_SUCCESS);
 }
 
-static void get_km(void) {
+static void get_km(void)
+{
   FILE *f = fopen("km", "r");
   if (fscanf(f, "%lf", &km))
     fclose(f);
   f = NULL;
 }
 
-static void write_km(void) {
+static void write_km(void)
+{
   FILE *f = fopen("km", "w++");
   fprintf(f, "%lf", km);
   fclose(f);
   f = NULL;
 }
 
-static void process_cmdl(int argc, char **argv) {
+static void process_cmdl(int argc, char **argv)
+{
   if (argv[1] && *argv[1] == 'h')
     usage();
 
@@ -54,7 +58,8 @@ static void process_cmdl(int argc, char **argv) {
     get_km();
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
 #ifdef LOG
   l = fopen("log", "w++");
 #endif

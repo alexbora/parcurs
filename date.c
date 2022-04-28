@@ -132,6 +132,8 @@ static inline void generate_array(int *const arr)
 
 void generate_time(void)
 {
+  fprintf(stderr, "Today is           %s",
+          asctime(&*localtime(&(time_t){time(NULL)})));
   is_holiday = h_ptr ? is_holiday_net : is_holiday_static;
   h_ptr ? fprintf(stderr, "\nUsing net.\n")
         : fprintf(stderr, "\nUsing static table.\n");
