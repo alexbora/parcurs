@@ -4,42 +4,11 @@
  * @created     : Miercuri Apr 27, 2022 18:20:48 EEST
  */
 
-#include <immintrin.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-int cmpare()
-{
-  int32_t __attribute__((aligned(16))) vector1[4] = {1, 2, 3, 4};
-  int32_t __attribute__((aligned(16))) vector2[4] = {1, 2, 2, 2};
-
-  __m128i  v1     = _mm_load_si128((__m128i *)vector1);
-  __m128i  v2     = _mm_load_si128((__m128i *)vector2);
-  __m128i  vcmp   = _mm_cmpeq_epi32(v1, v2);
-  uint16_t mask   = _mm_movemask_epi8(vcmp);
-  int      result = (mask == 0xffff);
-  return result;
-}
-
-// y for lanes where a < b, x otherwise
-inline __m128 compareLessThan_xy(__m128 a, __m128 b, float x, float y)
-{
-  const __m128 cmp = _mm_cmplt_ps(a, b);
-  return _mm_blendv_ps(_mm_set1_ps(x), _mm_set1_ps(y), cmp);
-}
-
-typedef void (*f)(void);
-// 1.0 for lanes where a < b, zero otherwise
-inline __m128 compareLessThan_01(__m128 a, __m128 b)
-{
-  const __m128 cmp = _mm_cmplt_ps(a, b);
-  return _mm_and_ps(cmp, _mm_set1_ps(1));
-}
-
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   /* normal time */
   struct tm tm = *localtime(&(time_t){time(NULL)});
   /* printf("Today is           %s", asctime(&tm)); */
@@ -56,7 +25,7 @@ int main(int argc, char *argv[])
   printf("1 month ago was %d - %s", tm.tm_wday, asctime(&tm));
 
   struct tm TM = tm;
-  TM           = tm2;
+  TM = tm2;
 
   for (unsigned i = 0; i < 7; i++) {
     if (((tm.tm_wday + i) - 6) * tm.tm_wday <= 0)
@@ -64,8 +33,6 @@ int main(int argc, char *argv[])
     else
       puts("no hol\n");
   }
-
-  printf("%d\n", cmpare());
 
   return 0;
 }
