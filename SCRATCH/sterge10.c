@@ -7,13 +7,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef __linux__
 #include <sys/_types/_off_t.h>
+#endif
 #include <time.h>
 
 static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi dec";
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
   /* normal time */
   struct tm tm = *localtime(&(time_t){time(NULL)});
   /* printf("Today is           %s", asctime(&tm)); */
@@ -23,9 +24,14 @@ int main(int argc, char **argv)
           tm.tm_year + 1900);
   puts(longdate);
 
-  tm.tm_mon -= 1; // go previous
-  tm.tm_mday = 1; // reset to 1st
-  mktime(&tm);    // tm_isdst is not set to -1; today's DST status is used
+  /* goto previous */
+  tm.tm_mon -= 1;
+  /* reset to the first of month */
+  tm.tm_mday = 1;
+  /* adjust year to jump to previous if december */
+  tm.tm_year = tm.tm_mon != 11 ? tm.tm_year : tm.tm_year - 1;
+  /* tm.tm_mon -= 1; // tm_mon is now outside its normal range */
+  mktime(&tm); // tm_isdst is not set to -1; today's DST status is used
   printf("1 month ago was %d - %s", tm.tm_wday, asctime(&tm));
 
   /* time input */
