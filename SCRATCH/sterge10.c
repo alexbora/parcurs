@@ -15,6 +15,16 @@
 static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi dec";
 static char        longdate[128];
 
+static inline unsigned days_in_month(const int month, const int year)
+{
+  if (month == 4 || month == 6 || month == 9 || month == 11)
+    return 30;
+  else if (month == 2)
+    return (((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) ? 29
+                                                                      : 28);
+  return 31;
+}
+
 int main(int argc, char **argv)
 {
   /* normal time */
@@ -33,7 +43,9 @@ int main(int argc, char **argv)
   tm.tm_year = tm.tm_mon != 11 ? tm.tm_year : tm.tm_year - 1;
   /* tm.tm_mon -= 1; // tm_mon is now outside its normal range */
   mktime(&tm); // tm_isdst is not set to -1; today's DST status is used
-  printf("1 month ago was %d - %s", tm.tm_wday, asctime(&tm));
+  printf("1 month ago was %d - %d - %s",
+         days_in_month(tm.tm_mon + 1, tm.tm_year + 1900), tm.tm_wday,
+         asctime(&tm));
 
   /* time input */
   struct tm tm2 = {50, 50, 12, 1, 3, 2022};
