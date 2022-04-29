@@ -52,6 +52,9 @@ static int now() {
   mktime(&tm); // tm_isdst is not set to -1; today's DST status is used
   luna = literal_mon(tm.tm_mon);
 
+  tm.tm_mday = 0;
+  printf("%d\n", tm.tm_wday);
+
   return 1;
 }
 
