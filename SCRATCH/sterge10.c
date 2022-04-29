@@ -13,13 +13,14 @@
 #include <time.h>
 
 static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi dec";
+static char        longdate[128];
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
   /* normal time */
   struct tm tm = *localtime(&(time_t){time(NULL)});
   /* printf("Today is           %s", asctime(&tm)); */
   printf("Today is           %s", asctime(&*localtime(&(time_t){time(NULL)})));
-  char longdate[128];
   sprintf(longdate, "%02d.%02d.%d", tm.tm_mday, tm.tm_mon + 1,
           tm.tm_year + 1900);
   puts(longdate);
@@ -38,7 +39,9 @@ int main(int argc, char **argv) {
   struct tm tm2 = {50, 50, 12, 1, 3, 2022};
   mktime(&tm2);
   printf("1 month ago was %d - %s", tm2.tm_wday, asctime(&tm2));
-
+  sprintf(longdate, "%02d.%02d.%d", tm.tm_mday, tm.tm_mon + 1,
+          tm.tm_year + 1900);
+  puts(longdate);
   /* ---------------------------------------------------------- */
   if (argc > 1) {
     char *m = strstr(mths, argv[1]);
