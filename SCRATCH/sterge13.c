@@ -14,7 +14,8 @@
 #include <assert.h>
 #include <time.h>
 
-static inline char *literal_mon(const int month) {
+static inline char *literal_mon(const int month)
+{
   return &"ianuarie\0\0\0\0\0\0\0\0februari"
           "e\0\0\0"
           "\0\0\0\0martie\0\0\0\0\0\0\0\0\0\0aprilie\0\0\0\0\0\0\0\0\0mai\0"
@@ -27,11 +28,12 @@ static inline char *literal_mon(const int month) {
 }
 
 static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi dec";
-static char longdate[128], *luna;
-static unsigned dayz;
-struct tm TM;
+static char        longdate[128], *luna;
+static unsigned    dayz;
+static struct tm   TM;
 
-static inline unsigned days_in_month(const int month, const int year) {
+static inline unsigned days_in_month(const int month, const int year)
+{
   if (month == 4 || month == 6 || month == 9 || month == 11)
     return 30;
   else if (month == 2)
@@ -40,7 +42,8 @@ static inline unsigned days_in_month(const int month, const int year) {
   return 31;
 }
 
-static int now() {
+static int now()
+{
   /* normal time */
   struct tm tm = *localtime(&(time_t){time(NULL)});
   /* printf("Today is           %s", asctime(&tm)); */
@@ -59,8 +62,9 @@ static int now() {
   return 1;
 }
 
-static int then(char **argv) {
-  char *m = strstr(mths, argv[1]);
+static int then(char **argv)
+{
+  char     *m   = strstr(mths, argv[1]);
   struct tm tm2 = {50, 50, 12, 1, (int)((m - mths) / 4), 2000 + atoi(argv[2])};
   mktime(&tm2);
   sprintf(longdate, "%02d.%02d.%d", tm2.tm_mday, tm2.tm_mon + 1, tm2.tm_year);
@@ -69,18 +73,30 @@ static int then(char **argv) {
   return 1;
 }
 
-int cmdl(int argc, char **argv) {
+static int cmdl(int argc, char **argv)
+{
   if (argc > 2)
     return then(argv);
   return now();
 }
 
-void globals() {
+static void globals()
+{
   luna = literal_mon(TM.tm_mon);
   dayz = days_in_month(TM.tm_mon + 1, TM.tm_year);
 }
 
-int main(int argc, char **argv) {
+__attribute__((noreturn)) static void usage()
+{
+  puts("Usage: <mon> <year> <km>");
+  exit(0);
+}
+
+int main(int argc, char **argv)
+{
+
+  if (argv[1] && (strcmp(argv[1], "-h") == 0 || *argv[1] == 'h'))
+    usage();
 
   cmdl(argc, argv);
 
