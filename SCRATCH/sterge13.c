@@ -7,12 +7,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/_types/_ucontext.h>
 #ifndef __linux__
 #include <sys/_types/_off_t.h>
 #endif
+#include <assert.h>
 #include <time.h>
 
-static inline char *literal_mon(const int month) {
+static inline char *literal_mon(const int month)
+{
   return &"ianuarie\0\0\0\0\0\0\0\0februari"
           "e\0\0\0"
           "\0\0\0\0martie\0\0\0\0\0\0\0\0\0\0aprilie\0\0\0\0\0\0\0\0\0mai\0"
@@ -25,9 +28,12 @@ static inline char *literal_mon(const int month) {
 }
 
 static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi dec";
-static char longdate[128], *luna;
+static char        longdate[128], *luna;
+static unsigned    dayz;
+struct tm          TM;
 
-static inline unsigned days_in_month(const int month, const int year) {
+static inline unsigned days_in_month(const int month, const int year)
+{
   if (month == 4 || month == 6 || month == 9 || month == 11)
     return 30;
   else if (month == 2)
@@ -36,7 +42,8 @@ static inline unsigned days_in_month(const int month, const int year) {
   return 31;
 }
 
-static int now() {
+static int now()
+{
   /* normal time */
   struct tm tm = *localtime(&(time_t){time(NULL)});
   /* printf("Today is           %s", asctime(&tm)); */
@@ -51,34 +58,48 @@ static int now() {
   tm.tm_year = tm.tm_mon != 11 ? tm.tm_year : tm.tm_year - 1;
   mktime(&tm); // tm_isdst is not set to -1; today's DST status is used
   luna = literal_mon(tm.tm_mon);
+  dayz = days_in_month(tm.tm_mon + 1, tm.tm_year);
 
-  tm.tm_mday = 0;
-  printf("%d\n", tm.tm_wday);
-
+  TM = tm;
   return 1;
 }
 
-static int then(char **argv) {
-  char *m = strstr(mths, argv[1]);
+static int then(char **argv)
+{
+  char     *m   = strstr(mths, argv[1]);
   struct tm tm2 = {50, 50, 12, 1, (int)((m - mths) / 4), 2000 + atoi(argv[2])};
   mktime(&tm2);
   sprintf(longdate, "%02d.%02d.%d", tm2.tm_mday, tm2.tm_mon + 1, tm2.tm_year);
   luna = literal_mon(tm2.tm_mon);
+  dayz = days_in_month(tm2.tm_mon + 1, tm2.tm_year);
+
+  TM = tm2;
   return 1;
 }
 
-int cmdl(int argc, char **argv) {
+int cmdl(int argc, char **argv)
+{
   if (argc > 2)
     return then(argv);
   return now();
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
 
   cmdl(argc, argv);
 
   puts(longdate);
 
-  printf("%s\n", luna);
+  puts(luna);
+
+  printf("%d\n", dayz);
+
+  for (unsigned i = 0; i < 7; i++) {
+    TM.tm_mday++;
+    mktime(&TM);
+    printf("%d\n", TM.tm_wday);
+  }
+
   return 0;
 }
