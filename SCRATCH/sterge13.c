@@ -19,6 +19,18 @@ static char longdate[128], *luna;
 static unsigned dayz;
 static struct tm TM;
 
+struct Data;
+typedef void (*fp)(struct Data *);
+
+struct Data {
+  void *data;
+  fp func;
+};
+
+void func1(struct Data *in) { puts((char *)in->data); }
+
+struct Data d = {"func1", func1};
+
 static inline char *literal_mon(const int month) {
   return &"ianuarie\0\0\0\0\0\0\0\0februari"
           "e\0\0\0"
@@ -88,8 +100,7 @@ __attribute__((noreturn)) static void usage() {
 
 int main(int argc, char **argv) {
 
-  if (argv[1] && (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "help") == 0) ||
-      *argv[1] == 'h')
+  if (argc > 1 && (*argv[1] == 'h' || strcmp(argv[1], "-h") == 0))
     usage();
 
   cmdl(argc, argv);
@@ -107,6 +118,8 @@ int main(int argc, char **argv) {
     mktime(&TM);
     printf("%d\n", TM.tm_wday);
   }
+
+  d.func(&d);
 
   return 0;
 }
