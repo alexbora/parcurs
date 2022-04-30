@@ -4,12 +4,14 @@
  * @created     : Miercuri Apr 27, 2022 18:20:48 EEST
  */
 
+#define _POSIX_C_SOURCE 200112L // for setenv on gcc
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #ifndef __linux__
 #include <sys/_types/_off_t.h>
 #endif
+#include <assert.h>
 #include <time.h>
 
 static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi dec";
@@ -27,6 +29,8 @@ static inline unsigned days_in_month(const int month, const int year)
 
 int main(int argc, char **argv)
 {
+
+  setenv("TZ", "/usr/share/zoneinfo/Europe/Bucharest", 1);
   /* normal time */
   struct tm tm = *localtime(&(time_t){time(NULL)});
   /* printf("Today is           %s", asctime(&tm)); */
@@ -49,12 +53,18 @@ int main(int argc, char **argv)
          asctime(&tm));
 
   /* time input */
-  struct tm tm2 = {50, 50, 12, 1, 3, 2022};
+  struct tm tm2 = {50,  50, 12,
+                   1, // day
+                   3, // month
+                   2022};
   mktime(&tm2);
   printf("1 month ago was %d - %s", tm2.tm_wday, asctime(&tm2));
   sprintf(longdate, "%02d.%02d.%d", tm.tm_mday, tm.tm_mon + 1,
           tm.tm_year + 1900);
   puts(longdate);
+
+  printf("%d\n", tm2.tm_wday);
+
   /* ---------------------------------------------------------- */
   if (argc > 2) {
     char *m = strstr(mths, argv[1]);
