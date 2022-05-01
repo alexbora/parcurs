@@ -111,7 +111,8 @@ __attribute__((noreturn)) static void usage()
 int main(int argc, char **argv)
 {
 
-  if (argc > 1 && (*argv[1] == 'h' || strcmp(argv[1], "-h") == 0))
+  if (argc > 1 && (*argv[1] == 'h' || strcmp(argv[1], "-h") == 0 ||
+                   strcmp(argv[1], "--h") == 0))
     usage();
 
   cmdl(argc, argv);
