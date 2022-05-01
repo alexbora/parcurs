@@ -27,6 +27,14 @@ struct Data {
   fp    func;
 };
 
+typedef struct player_s {
+  void *data;
+} player_t;
+
+struct player_s s1 = {
+    NULL,
+};
+
 void func1(struct Data *in)
 {
   puts((char *)in->data);
