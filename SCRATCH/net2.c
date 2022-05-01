@@ -13,15 +13,16 @@
 #include <sys/socket.h> /* socket, connect */
 #include <unistd.h>
 
-#define CON_MSG "\n\x1b[32mConnected.\x1b[0m\n"
+#define CON_MSG         "\n\x1b[32mConnected.\x1b[0m\n"
 #define CONNECT_VERBOSE 1
 
-static ssize_t fetch(char *buf, const int year, const int flags, SSL *ssl) {
-  struct addrinfo hints = {.ai_family = AF_INET,
+static ssize_t fetch(char *buf, const int year, const int flags, SSL *ssl)
+{
+  struct addrinfo hints = {.ai_family   = AF_INET,
                            .ai_socktype = SOCK_STREAM,
                            .ai_protocol = IPPROTO_TCP,
-                           .ai_flags = AI_PASSIVE},
-                  *res = NULL;
+                           .ai_flags    = AI_PASSIVE},
+                  *res  = NULL;
 
   const char *const host = "www.calendarific.com";
 
@@ -38,7 +39,7 @@ static ssize_t fetch(char *buf, const int year, const int flags, SSL *ssl) {
     fprintf(stderr, "done.\nConnecting to %s (port %s) ... ", host, "443");
 
   int sockfd = -1;
-  sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+  sockfd     = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
 
   if (sockfd < 0)
     return 0;
@@ -56,14 +57,14 @@ static ssize_t fetch(char *buf, const int year, const int flags, SSL *ssl) {
     fprintf(stderr, CON_MSG);
   }
 
-  char header[256] = {'\000'};
-  const int len_header = sprintf(
-      header,
-      "GET "
-      "/api/v2/"
-      "holidays?&api_key=6354938168d76b7df8711085ba5dd4aab9759cd2&country=RO&"
-      "year=%d HTTP/1.1\r\nHost: calendarific.com\r\n\r\n",
-      year);
+  char      header[256] = {'\000'};
+  const int len_header  = sprintf(
+       header,
+       "GET /"
+        "/api/v2/"
+        "holidays?&api_key=6354938168d76b7df8711085ba5dd4aab9759cd2&country=RO&"
+        "year=%d HTTP/1.1\r\nHost: calendarific.com\r\n\r\n",
+       year);
 
   int err = SSL_write(ssl, header, len_header);
   printf("%d\n", err);
@@ -99,7 +100,8 @@ static ssize_t fetch(char *buf, const int year, const int flags, SSL *ssl) {
   /* return received; */
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
   SSL_library_init();
   OpenSSL_add_all_algorithms();
   SSL_CTX *ctx = SSL_CTX_new(TLS_client_method());
