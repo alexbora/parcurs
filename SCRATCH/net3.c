@@ -27,17 +27,18 @@
 #include <sys/socket.h> /* socket, connect */
 #include <unistd.h>
 
-#define CON_MSG "\n\x1b[32mConnected.\x1b[0m\n"
+#define CON_MSG         "\n\x1b[32mConnected.\x1b[0m\n"
 #define CONNECT_VERBOSE 1
 
 const char *const host = "example.org";
 
-static int sock(const int flags) {
-  struct addrinfo hints = {.ai_family = AF_INET,
+static int sock(const int flags)
+{
+  struct addrinfo hints = {.ai_family   = AF_INET,
                            .ai_socktype = SOCK_STREAM,
                            .ai_protocol = IPPROTO_TCP,
-                           .ai_flags = AI_PASSIVE},
-                  *res = NULL;
+                           .ai_flags    = AI_PASSIVE},
+                  *res  = NULL;
 
   if (flags & CONNECT_VERBOSE)
     fprintf(stderr, "Looking up %s ... ", host);
@@ -52,15 +53,20 @@ static int sock(const int flags) {
     fprintf(stderr, "done.\nConnecting to %s (port %s) ... ", host, "443");
 
   int sockfd = -1;
-  sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
-  int c = connect(sockfd, res->ai_addr, res->ai_addrlen);
+  sockfd     = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+  int c      = connect(sockfd, res->ai_addr, res->ai_addrlen);
   if (sockfd == 3 && flags & CONNECT_VERBOSE)
     fprintf(stderr, "done.\n");
 
-  char *w = "GET HTTP/1.1\r\nHost: example.org\r\n\r\n";
-  write(sockfd, w, strlen(w));
-  char buf[4096];
-  read(sockfd, buf, 4096);
+  char      header[256] = {'\000'};
+  const int len_header  = sprintf(header,
+                                  "GET /index.html HTTP/1.1\r\nHost: "
+                                   "%s\r\n\r\n",
+                                  host);
+
+  send(sockfd, header, len_header, 0);
+  char buf[4096] = {'\1'};
+  recv(sockfd, buf, 4096, 0);
   puts(buf);
   /* safety */
   memset(res, 0, sizeof(struct addrinfo));
@@ -70,24 +76,26 @@ static int sock(const int flags) {
   return sockfd;
 }
 
-int main(int argc, char *argv[]) {
-  SSL_library_init();
-  OpenSSL_add_all_algorithms();
-  SSL_CTX *ctx = SSL_CTX_new(SSLv23_client_method());
-  SSL_CTX_set_options(ctx, SSL_OP_SINGLE_DH_USE | SSL_OP_NO_TLSv1_3);
-  SSL *ssl = SSL_new(ctx);
+int main(int argc, char *argv[])
+{
+  /* SSL_library_init(); */
+  /* OpenSSL_add_all_algorithms(); */
+  /* SSL_CTX *ctx = SSL_CTX_new(SSLv23_client_method()); */
+  /* SSL_CTX_set_options(ctx, SSL_OP_SINGLE_DH_USE | SSL_OP_NO_TLSv1_3); */
+  /* SSL *ssl = SSL_new(ctx); */
 
   int s = sock(CONNECT_VERBOSE);
 
-  send(s, "GET host HTTP/1.1\r\n\r\n", strlen("GET host HTTP/1.1\r\n\r\n"), 0);
+  /* send(s, "GET host HTTP/1.1\r\n\r\n", strlen("GET host HTTP/1.1\r\n\r\n"),
+   * 0); */
   /* SSL_set_fd(ssl, s); */
   /* SSL_write(ssl, "GET host HTTP/1.1\r\n\r\n", */
   /* strlen("GET host HTTP/1.1\r\n\r\n")); */
 
-  char buf[4096];
-  recv(s, buf, 4096, 0);
+  /* char buf[4096]; */
+  /* recv(s, buf, 4096, 0); */
   /* SSL_read(ssl, buf, 4096); */
 
-  puts(buf);
+  /* puts(buf); */
   return 0;
 }
