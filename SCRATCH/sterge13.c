@@ -15,35 +15,21 @@
 #include <time.h>
 
 static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi dec";
-static char        longdate[128], *luna;
-static unsigned    dayz;
-static struct tm   TM;
+static char longdate[128], *luna;
+static unsigned dayz;
+static struct tm TM;
 
 struct Data;
 typedef void (*fp)(struct Data *);
 
 struct Data {
   void *data;
-  fp    func;
+  fp func;
 };
 
-typedef struct player_s {
-  void *data;
-} player_t;
+void func1(struct Data *in) { puts((char *)in->data); }
 
-struct player_s s1 = {
-    NULL,
-};
-
-void func1(struct Data *in)
-{
-  puts((char *)in->data);
-}
-
-struct Data d = {"func1", func1};
-
-static inline char *literal_mon(const int month)
-{
+static inline char *literal_mon(const int month) {
   return &"ianuarie\0\0\0\0\0\0\0\0februari"
           "e\0\0\0"
           "\0\0\0\0martie\0\0\0\0\0\0\0\0\0\0aprilie\0\0\0\0\0\0\0\0\0mai\0"
@@ -56,8 +42,7 @@ static inline char *literal_mon(const int month)
           "embrie\0\0\0\0\0\0\0decembrie\0\0\0\0\0\0\0"[month << 4];
 }
 
-static inline unsigned days_in_month(const int month, const int year)
-{
+static inline unsigned days_in_month(const int month, const int year) {
   if (month == 4 || month == 6 || month == 9 || month == 11)
     return 30;
   else if (month == 2)
@@ -66,8 +51,7 @@ static inline unsigned days_in_month(const int month, const int year)
   return 31;
 }
 
-static int now()
-{
+static int now() {
   /* normal time */
   struct tm tm = *localtime(&(time_t){time(NULL)});
   /* printf("Today is           %s", asctime(&tm)); */
@@ -86,9 +70,8 @@ static int now()
   return 1;
 }
 
-static int then(char **argv)
-{
-  char     *m   = strstr(mths, argv[1]);
+static int then(char **argv) {
+  char *m = strstr(mths, argv[1]);
   struct tm tm2 = {50, 50, 12, 1, (int)((m - mths) / 4), 2000 + atoi(argv[2])};
   mktime(&tm2);
   sprintf(longdate, "%02d.%02d.%d", tm2.tm_mday, tm2.tm_mon + 1, tm2.tm_year);
@@ -97,27 +80,23 @@ static int then(char **argv)
   return 1;
 }
 
-static int cmdl(int argc, char **argv)
-{
+static int cmdl(int argc, char **argv) {
   if (argc > 2)
     return then(argv);
   return now();
 }
 
-static void globals()
-{
+static void globals() {
   luna = literal_mon(TM.tm_mon);
   dayz = days_in_month(TM.tm_mon + 1, TM.tm_year);
 }
 
-__attribute__((noreturn)) static void usage()
-{
+__attribute__((noreturn)) static void usage() {
   puts("Usage: <mon> <year> <km>");
   exit(0);
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
 
   if (argc > 1 && (*argv[1] == 'h' || strcmp(argv[1], "-h") == 0 ||
                    strcmp(argv[1], "--h") == 0))
@@ -139,7 +118,21 @@ int main(int argc, char **argv)
     printf("%d\n", TM.tm_wday);
   }
 
+  struct Data d = {"func1", func1};
   d.func(&d);
+
+  static const struct {
+    int day, month;
+  } hol[] = {
+      {1, 1},  {2, 1},  {24, 1}, {22, 4},  {24, 4}, {25, 4},  {1, 5},   {1, 6},
+      {12, 6}, {13, 6}, {15, 8}, {30, 11}, {1, 12}, {25, 12}, {26, 12},
+  };
+
+  enum { ian = 1, feb = 2, mar = 3, apr = 4 } mon;
+  int arr_hol[][4] = {[ian] = {1, 2, 24}, [apr] = {22, 24, 24}};
+
+  if (TM.tm_mon == ian && TM.tm_mday == arr_hol[0][0])
+    puts(" whatever\n");
 
   return 0;
 }
