@@ -19,6 +19,19 @@ static char        longdate[128], *luna;
 static unsigned    dayz;
 static struct tm   TM;
 
+struct Data;
+typedef void (*fp)(struct Data *);
+
+struct Data {
+  void *data;
+  fp    func;
+};
+
+void func1(struct Data *in)
+{
+  puts((char *)in->data);
+}
+
 static inline char *literal_mon(const int month)
 {
   return &"ianuarie\0\0\0\0\0\0\0\0februari"
@@ -110,33 +123,40 @@ int main(int argc, char **argv)
 
   printf("%d\n", dayz);
 
-  int arr[32] = {'\0'};
-
   for (unsigned i = 0; i < 7; i++) {
     TM.tm_mday++;
     mktime(&TM);
     printf("%d\n", TM.tm_wday);
-    arr[i] = (TM.tm_wday != 6 && TM.tm_wday != 0) ? 1 : 0;
   }
 
-  for (unsigned i = 0; i < 7; i++) {
-    printf("arr: %d\n", arr[i]);
+  struct Data d = {"func1", func1};
+  d.func(&d);
+
+  static const struct {
+    int day, month;
+  } hol[] = {
+      {1, 1},  {2, 1},  {24, 1}, {22, 4},  {24, 4}, {25, 4},  {1, 5},   {1, 6},
+      {12, 6}, {13, 6}, {15, 8}, {30, 11}, {1, 12}, {25, 12}, {26, 12},
+  };
+
+  enum { ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, nov, dec } mon = ian;
+  int arr_hol[][4] = {[ian] = {1, 2, 24},  [apr] = {22, 24, 24}, [mai] = {1},
+                      [iun] = {1, 12, 13}, [aug] = {15},         [nov] = {30},
+                      [dec] = {1, 35, 26}};
+
+  TM.tm_mon = apr;
+  int i     = 1;
+  if (TM.tm_mon == apr) {
+    printf("apr: %d\n", arr_hol[apr][i]);
   }
 
-  int hol[][4] = {{1, 1}, {2, 3}};
+  if (TM.tm_mon == ian && TM.tm_mday == arr_hol[0][0])
+    puts(" whatever\n");
 
-  printf("%ld\n", *(hol + 1) - *hol);
+  for (int i = 0; i < 4; ++i)
+    printf("i %d\n", *(*arr_hol + i));
 
-  if (1 == (hol[1] - *hol))
-    puts("true");
-
-  struct Row {
-    int month, days[4];
-  } row[32] = {1, {1, 2, 3, 4}, 2, {1, 2, 3, 4}};
-
-  for (unsigned i = 0; i < 4; i++) {
-    printf("%d\n", row[0].days[i]);
-  }
+  printf("ia: %d\n", arr_hol[3][0]);
 
   return 0;
 }
