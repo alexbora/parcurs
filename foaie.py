@@ -69,8 +69,10 @@ def mail3():
     longdate = datetime.today().strftime('%d.%m.%Y')
    
     excel="foaie_parcurs_B-151-VGT_" + month.lower() + "_2022_Alex_Bora.xlsx"
-    exe="./foaie_2"
-    subprocess.call(exe)
+    exe=r'./foaie_2'
+    
+    subprocess.run(exe, shell=True)
+    #subprocess.call(exe)
     sender_email = "t400.linux@gmail.com"
     receiver_email = "t400.linux@gmail.com", 'alexandru.bora@renault-trucks.com'
     subject = "foaie_parcurs_B-151-VGT"+ "_" + month.lower()  + "_" + str(previous_year) + "_Alex Bora" 
@@ -81,5 +83,5 @@ def mail3():
 
 
 # name()
-# mail()
+#mail()
 mail3()
