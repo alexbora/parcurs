@@ -141,16 +141,16 @@ int main(int argc, char **argv)
 
   enum { ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, nov, dec } mon = ian;
   int arr_hol[][4] = {[ian] = {1, 2, 24},  [apr] = {22, 24, 24}, [mai] = {1},
-                      [iun] = {1, 12, 13}, [aug] = 15,           [nov] = {30},
+                      [iun] = {1, 12, 13}, [aug] = {15},         [nov] = {30},
                       [dec] = {1, 35, 26}};
-
-  TM.tm_mon = 0;
 
   if (TM.tm_mon == ian && TM.tm_mday == arr_hol[0][0])
     puts(" whatever\n");
 
-  printf("%d\n", *arr_hol[3]);
-  printf("%d\n", arr_hol[3][0]);
+  for (int i = 0; i < 4; ++i)
+    printf("i %d\n", *(*arr_hol + i));
+
+  printf("ia: %d\n", arr_hol[3][0]);
 
   return 0;
 }
