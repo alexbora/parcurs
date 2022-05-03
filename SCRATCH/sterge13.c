@@ -118,10 +118,12 @@ int main(int argc, char **argv)
     mktime(&TM);
     printf("%d\n", TM.tm_wday);
     arr[i] = (TM.tm_wday != 6 && TM.tm_wday != 0) ? 1 : 0;
+    tmx[i] = TM;
+    printf("wday: %d\n", tmx[i].tm_wday);
   }
 
   mktime(&tmx[0]);
-  printf("wday: %d\n", tmx[0].tm_wday);
+  printf("WWW: %d\n", tmx[6].tm_wday);
 
   for (unsigned i = 0; i < 7; i++) {
     printf("arr: %d\n", arr[i]);
@@ -136,7 +138,7 @@ int main(int argc, char **argv)
 
   struct Row {
     int month, days[4];
-  } row[32] = {1, {1, 2, 3, 4}, 2, {1, 2, 3, 4}};
+  } row[32] = {{1, {1, 2, 3, 4}}, {2, {1, 2, 3, 4}}};
 
   for (unsigned i = 0; i < 4; i++) {
     printf("%d\n", row[0].days[i]);
