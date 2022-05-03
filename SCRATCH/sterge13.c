@@ -147,6 +147,5 @@ int main(int argc, char **argv)
   for (unsigned i = 0; i < 4; i++) {
     printf("%d\n", row[0].days[i]);
   }
-
   return 0;
 }
