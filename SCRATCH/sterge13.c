@@ -110,7 +110,8 @@ int main(int argc, char **argv)
 
   printf("%d\n", dayz);
 
-  int arr[32] = {'\0'};
+  int       arr[32] = {'\0'};
+  struct tm tmx[32];
 
   for (unsigned i = 0; i < 7; i++) {
     TM.tm_mday++;
@@ -118,6 +119,9 @@ int main(int argc, char **argv)
     printf("%d\n", TM.tm_wday);
     arr[i] = (TM.tm_wday != 6 && TM.tm_wday != 0) ? 1 : 0;
   }
+
+  mktime(&tmx[0]);
+  printf("wday: %d\n", tmx[0].tm_wday);
 
   for (unsigned i = 0; i < 7; i++) {
     printf("arr: %d\n", arr[i]);
@@ -127,8 +131,8 @@ int main(int argc, char **argv)
 
   printf("%ld\n", *(hol + 1) - *hol);
 
-  if (1 == (hol[1] - *hol))
-    puts("true");
+  /* if (1 == (hol[1] - *hol)) */
+  /* puts("true"); */
 
   struct Row {
     int month, days[4];
