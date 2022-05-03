@@ -16,10 +16,12 @@
 #include <errno.h>
 #include <time.h>
 
-static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi dec";
-static char        longdate[128], *luna;
-static unsigned    dayz;
-static struct tm   TM;
+static const char   *mths = "ian feb mar apr mai iun iul aug sep oct noi dec";
+static char          longdate[128], *luna;
+static unsigned      dayz;
+static struct tm     TM;
+extern struct Route *route;
+extern struct Work  *work;
 
 static inline char *literal_mon(const int month)
 {
@@ -111,13 +113,43 @@ int main(int argc, char **argv)
 
   printf("%d\n", dayz);
 
+  int       arr[32] = {'\0'};
   struct tm tmx[32];
 
   for (unsigned i = 0; i < 7; i++) {
     TM.tm_mday++;
     mktime(&TM);
+    printf("%d\n", TM.tm_wday);
+    arr[i] = (TM.tm_wday != 6 && TM.tm_wday != 0) ? 1 : 0;
     tmx[i] = TM;
     printf("wday: %d\n", tmx[i].tm_wday);
   }
+
+  printf("dates: %d\t%d\t%d\n", tmx[3].tm_mday, tmx[3].tm_mon, tmx[3].tm_year);
+
+  time_t ret = mktime(&tmx[0]);
+  if (ret == -1 || errno == EOVERFLOW)
+    puts("stop");
+  printf("WWW: %d\n", tmx[6].tm_wday);
+
+  for (unsigned i = 0; i < 7; i++) {
+    printf("arr: %d\n", arr[i]);
+  }
+
+  int hol[][4] = {{1, 1}, {2, 3}};
+
+  printf("%ld\n", *(hol + 1) - *hol);
+
+  /* if (1 == (hol[1] - *hol)) */
+  /* puts("true"); */
+
+  struct Row {
+    int month, days[4];
+  } row[32] = {{1, {1, 2, 3, 4}}, {2, {1, 2, 3, 4}}};
+
+  for (unsigned i = 0; i < 4; i++) {
+    printf("%d\n", row[0].days[i]);
+  }
+
   return 0;
 }
