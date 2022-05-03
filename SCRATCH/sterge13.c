@@ -14,10 +14,12 @@
 #include <assert.h>
 #include <time.h>
 
-static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi dec";
-static char        longdate[128], *luna;
-static unsigned    dayz;
-static struct tm   TM;
+static const char   *mths = "ian feb mar apr mai iun iul aug sep oct noi dec";
+static char          longdate[128], *luna;
+static unsigned      dayz;
+static struct tm     TM;
+extern struct Route *route;
+extern struct Work  *work;
 
 static inline char *literal_mon(const int month)
 {
@@ -121,6 +123,8 @@ int main(int argc, char **argv)
     tmx[i] = TM;
     printf("wday: %d\n", tmx[i].tm_wday);
   }
+
+  printf("dates: %d\t%d\t%d\n", tmx[3].tm_mday, tmx[3].tm_mon, tmx[3].tm_year);
 
   mktime(&tmx[0]);
   printf("WWW: %d\n", tmx[6].tm_wday);
