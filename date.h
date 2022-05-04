@@ -8,17 +8,14 @@
 
 #define DATE_H
 
-/* uninclude it */
-
-#if 0
 struct Net {
   int month, day;
 };
 
 extern struct Net *h_ptr;
-extern int current_year;
-extern char longdate[32];
-extern char *luna;
-extern unsigned dayz;
-#endif
+extern int         current_year;
+extern char        longdate[32];
+extern char       *luna;
+extern unsigned    dayz;
+
 #endif /* end of include guard DATE_H */

@@ -6,7 +6,7 @@
 
 /* #define __POSIX_C_SOURCE = 200112L */
 #include "date.h"
-#include "main.h"
+
 #include <arpa/inet.h>
 #include <assert.h>
 #include <fcntl.h>
@@ -22,23 +22,20 @@
 
 #ifdef LOG
 #define fd open("log", O_CREAT | O_RDWR | O_APPEND, 0777)
-#undef stderr
-#define stderr l
 #else
 #define fd 2 // stderr
 #endif
 
-#define CON_MSG "\n\x1b[32mConnected.\x1b[0m\n"
+#define CON_MSG         "\n\x1b[32mConnected.\x1b[0m\n"
+#define CONNECT_VERBOSE (1u << 1)
 
-/* extern int current_year; */
-/* extern struct Net *h_ptr; */
-
-static ssize_t fetch(char *buf, const int year, const int flags) {
-  struct addrinfo hints = {.ai_family = AF_INET,
+static ssize_t fetch(char *buf, const int year, const int flags)
+{
+  struct addrinfo hints = {.ai_family   = AF_INET,
                            .ai_socktype = SOCK_STREAM,
                            .ai_protocol = IPPROTO_TCP,
-                           .ai_flags = AI_PASSIVE},
-                  *res = NULL;
+                           .ai_flags    = AI_PASSIVE},
+                  *res  = NULL;
 
   const char *const host =
       "us-central1-romanian-bank-holidays.cloudfunctions.net";
@@ -54,7 +51,7 @@ static ssize_t fetch(char *buf, const int year, const int flags) {
     fprintf(stderr, "done.\nConnecting to %s (port %s) ... ", host, "80");
 
   int sockfd = -1;
-  sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+  sockfd     = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
 
   if (sockfd < 0)
     return 0;
@@ -68,7 +65,7 @@ static ssize_t fetch(char *buf, const int year, const int flags) {
     fprintf(stderr, CON_MSG);
   }
 
-  char header[256] = {'\000'};
+  char      header[256] = {'\0'};
   const int len_header =
       sprintf(header,
               "GET /romanian_bank_holidays/?year=%d HTTP/1.1\r\nHost: "
@@ -79,7 +76,7 @@ static ssize_t fetch(char *buf, const int year, const int flags) {
   if (sent <= 0)
     return 0;
 
-  char *p = buf;
+  char         *p        = buf;
   const ssize_t received = recv(sockfd, p, 4 * 1024, 0);
   if (received < 1)
     return 0;
@@ -98,7 +95,8 @@ static ssize_t fetch(char *buf, const int year, const int flags) {
   return received;
 }
 
-static inline char *parse(char in[const static 1]) {
+static inline char *parse(char in[const static 1])
+{
   char *p = in;
   if (strstr(p, "500"))
     return NULL;
@@ -112,22 +110,22 @@ static inline char *parse(char in[const static 1]) {
   return NULL;
 }
 
-static inline void fill_struct(char in[const static 1], struct Net *h) {
+static inline void fill_struct(char in[const static 1], struct Net *const h)
+{
   char *x = in;
-  int i = 0;
-  struct Net tmp[32] = {{0}};
+  int   i = 0;
   while (x++) {
     x = strstr(x, "date");
     if (!x)
       break;
-    tmp[i].day = atoi(x + 7);
-    tmp[i].month = atoi(x + 10);
+    h[i].day   = atoi(x + 7);
+    h[i].month = atoi(x + 10);
     i++;
   }
-  memcpy(h, tmp, sizeof(tmp));
 }
 
-void net_fetch(const int flags) {
+void net_fetch(const int flags)
+{
 
   char buf[4 * 1024] = {'\0'};
 
