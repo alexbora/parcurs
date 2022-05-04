@@ -102,11 +102,14 @@ int main(int argc, char **argv) {
   printf("current: %s\t last month: %s\t days of last mo: %d\n", longdate, luna,
          dayz);
 
+  int arr[32];
+
   for (unsigned i = 0; i < 7; i++) {
     TM.tm_mday++;
     mktime(&TM);
     tmx[i] = TM;
     printf("wday: %d %s\n", tmx[i].tm_wday, asctime(&tmx[i]));
+    arr[i] = tmx[i].tm_wday == 6 ? 0 : tmx[i].tm_wday;
   }
   return 0;
 }
