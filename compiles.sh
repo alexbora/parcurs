@@ -18,7 +18,7 @@ touch config.h
 compiles (){
 	stage="$(mktemp -d)"
 	echo "$2" > "$stage/test.c"
-	(gcc-11 -Werror "$1" -o "$stage/test" "$stage/test.c" >/dev/null 2>&1)
+	(gcc -Werror "$1" -o "$stage/test" "$stage/test.c" >/dev/null 2>&1)
 	cc_success=$?
 	rm -rf "$stage"
 	return $cc_success
@@ -64,13 +64,13 @@ ls3() {
   	RAND_bytes(bytes, sizeof(bytes));
   	uint64_t res = *(uint64_t *)bytes;
   	return res % RAND_MAX;}" > test5.c
-	gcc-11 -lssl -lcrypto test5.c -o test5
+	gcc -lssl -lcrypto test5.c -o test5
 	rm -rf test5.c test5
 }
 
-if ls3;
-then
-	echo "#define HAVE_OPENSSL 1" >> config.h
-fi
+#if ls3;
+#then
+#	echo "#define HAVE_OPENSSL 1" >> config.h
+#fi
 
 # echo $(gcc-11 --version)

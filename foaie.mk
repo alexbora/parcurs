@@ -6,7 +6,7 @@ FILES.c = net.c date.c mix.c excel.c main.c
 FILES.h = date.h config.h excel.h main.h
 FILES.o = ${FILES.c:.c=.o}
 
-CC      = gcc-11 #/opt/local/libexec/llvm-14/bin/clang
+CC      = gcc #/opt/local/libexec/llvm-14/bin/clang
 SFLAGS  = -std=c11 -D_POSIX_C_SOURCE=200112L -DSkipmain #-DLOG#-ansi -std=gnu99
 GFLAGS  = -g
 OFLAGS  = -O3

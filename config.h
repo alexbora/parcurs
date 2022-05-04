@@ -1,2 +1,1 @@
 #define HAVE_DEVRANDOM 1
-#define HAVE_OPENSSL 1
