@@ -13,7 +13,7 @@ typedef struct Data {
   char *user;
 } data_t;
 
-void f1(data_t *in)
+void f(data_t *in)
 {
   puts(in->user);
 }
