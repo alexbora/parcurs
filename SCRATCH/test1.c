@@ -15,14 +15,11 @@ typedef struct Data {
   char *user;
 } data_t;
 
-void f(data_t *in)
-{
-  puts(in->user);
-}
+void f(data_t *in) { puts(in->user); }
 
 struct ssl_async_args {
-  SSL   *s;
-  void  *buf;
+  SSL *s;
+  void *buf;
   size_t num;
   enum { READFUNC, WRITEFUNC, OTHERFUNC } type;
   union {
@@ -32,32 +29,30 @@ struct ssl_async_args {
   } f;
 };
 
-static int ssl_io_intern(void *vargs)
-{
+static int ssl_io_intern(void *vargs) {
   struct ssl_async_args *args;
-  SSL                   *s;
-  void                  *buf;
-  size_t                 num;
+  SSL *s;
+  void *buf;
+  size_t num;
 
   args = (struct ssl_async_args *)vargs;
-  s    = args->s;
-  buf  = args->buf;
-  num  = args->num;
+  s = args->s;
+  buf = args->buf;
+  num = args->num;
   switch (args->type) {
-    case READFUNC:
-      /* return args->f.func_read(s, buf, num, &s->asyncrw); */
-    case WRITEFUNC:
-      /* return args->f.func_write(s, buf, num, &s->asyncrw); */
-    case OTHERFUNC:
-      return args->f.func_other(s);
+  case READFUNC:
+    /* return args->f.func_read(s, buf, num, &s->asyncrw); */
+  case WRITEFUNC:
+    /* return args->f.func_write(s, buf, num, &s->asyncrw); */
+  case OTHERFUNC:
+    return args->f.func_other(s);
   }
   return -1;
 }
 
-bool is_multiple_of_100_ex(int32_t n)
-{
-  const uint32_t multiplier   = 42949673;
-  const uint32_t bound        = 42949669;
+bool is_multiple_of_100_ex(int32_t n) {
+  const uint32_t multiplier = 42949673;
+  const uint32_t bound = 42949669;
   const uint32_t max_dividend = 1073741799;
 
   const uint32_t offset = max_dividend / 2 / 100 * 100; //  536870800
@@ -65,29 +60,22 @@ bool is_multiple_of_100_ex(int32_t n)
   return multiplier * (n + offset) < bound;
 }
 
-bool is_multiple_100(int year)
-{
-  return year % 100 == 0;
-}
+bool is_multiple_100(int year) { return year % 100 == 0; }
 
-bool is_leap(int year)
-{
+bool is_leap(int year) {
   return (year & (is_multiple_of_100_ex(year) ? 15 : 3)) == 0;
 }
 
-bool is_leap3(int year)
-{
+bool is_leap3(int year) {
   unsigned y = year + 16000;
-  return (y % 100) ? !(y % 4) : !(y % 16);
+  return (y & 15) ? !(y & 3) : !(y % 16);
 }
 
-int last_day_of_mon(int year, int mon)
-{
+int last_day_of_mon(int year, int mon) {
   return mon != 2 ? ((mon ^ (mon >> 3))) | 30 : is_leap3(year) ? 29 : 28;
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   printf("%d\n", last_day_of_mon(2022, 3));
 
   printf("t %d\n", (8 >> 3));
@@ -102,13 +90,19 @@ int main(int argc, char *argv[])
   d2[0].fn(&d2[0]);
   d2[1].fn(&d2[1]);
 
-  int t  = (5 - 6) >> 31;
+  int t = (5 - 6) >> 31;
   int t2 = ~t & 7;
   printf("%d\n", t2);
 
   int z = 1, y = 3;
   printf("%d\n", z ^ y);
 
-  printf(">>>>>> %d\n", 6 >> 2);
+  printf(">>>>>> %d\n", (-1 >> 31));
+  printf("%d\n", 4 >> 2);
+
+  int w = z > 1 ? 1 : y == 3 ? 0 : 0;
+
+  printf("    %-10d\t\t %-12s\t\t %8d\t %8.2f\n\n", w, "z", y, t);
+
   return 0;
 }
