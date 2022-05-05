@@ -53,6 +53,17 @@ static int ssl_io_intern(void *vargs)
   return -1;
 }
 
+bool is_multiple_of_100_ex(int32_t n)
+{
+  const uint32_t multiplier   = 42949673;
+  const uint32_t bound        = 42949669;
+  const uint32_t max_dividend = 1073741799;
+
+  const uint32_t offset = max_dividend / 2 / 100 * 100; //  536870800
+
+  return multiplier * (n + offset) < bound;
+}
+
 bool is_multiple_100(int year)
 {
   return year % 100 == 0;
@@ -60,7 +71,7 @@ bool is_multiple_100(int year)
 
 bool is_leap(int year)
 {
-  return (year & (is_multiple_100(year) ? 15 : 3)) == 0;
+  return (year & (is_multiple_of_100_ex(year) ? 15 : 3)) == 0;
 }
 
 int last_day_of_mon(int year, int mon)
@@ -70,8 +81,12 @@ int last_day_of_mon(int year, int mon)
 
 int main(int argc, char *argv[])
 {
+  printf("%d\n", last_day_of_mon(2022, 3));
 
-  printf("leap: %d\n", is_leap(1901));
+  printf("t %d\n", (8 >> 3));
+  printf("t %d\n", 8 ^ (8 >> 3));
+  printf("t %d\n", 8 | 30);
+  printf("tx %d\n", 2 | 1);
 
   data_t d1 = {f, "test"};
   d1.fn(&d1);
