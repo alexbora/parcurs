@@ -106,5 +106,9 @@ int main(int argc, char *argv[])
   int t2 = ~t & 7;
   printf("%d\n", t2);
 
+  int z = 1, y = 3;
+  printf("%d\n", z ^ y);
+
+  printf(">>>>>> %d\n", 6 >> 2);
   return 0;
 }
