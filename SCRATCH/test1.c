@@ -74,9 +74,15 @@ bool is_leap(int year)
   return (year & (is_multiple_of_100_ex(year) ? 15 : 3)) == 0;
 }
 
+bool is_leap3(int year)
+{
+  unsigned y = year + 16000;
+  return (y % 100) ? !(y % 4) : !(y % 16);
+}
+
 int last_day_of_mon(int year, int mon)
 {
-  return mon != 2 ? ((mon ^ (mon >> 3))) | 30 : is_leap(year) ? 29 : 28;
+  return mon != 2 ? ((mon ^ (mon >> 3))) | 30 : is_leap3(year) ? 29 : 28;
 }
 
 int main(int argc, char *argv[])
