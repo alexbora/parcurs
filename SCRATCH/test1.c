@@ -6,6 +6,7 @@
 
 #include <openssl/ssl.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -101,5 +102,6 @@ int main(int argc, char *argv[])
   d2[0].fn(&d2[0]);
   d2[1].fn(&d2[1]);
 
+  printf(">> %d\n", 0x7FFFFFFF);
   return 0;
 }
