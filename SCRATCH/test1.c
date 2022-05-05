@@ -102,6 +102,9 @@ int main(int argc, char *argv[])
   d2[0].fn(&d2[0]);
   d2[1].fn(&d2[1]);
 
-  printf(">> %d\n", 0x7FFFFFFF);
+  int t  = (5 - 6) >> 31;
+  int t2 = ~t & 7;
+  printf("%d\n", t2);
+
   return 0;
 }
