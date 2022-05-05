@@ -5,6 +5,7 @@
  */
 
 #include <openssl/ssl.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -52,13 +53,30 @@ static int ssl_io_intern(void *vargs)
   return -1;
 }
 
+bool is_multiple_100(int year)
+{
+  return year % 100 == 0;
+}
+
+bool is_leap(int year)
+{
+  return (year & (is_multiple_100(year) ? 15 : 3)) == 0;
+}
+
+int last_day_of_mon(int year, int mon)
+{
+  return mon != 2 ? ((mon ^ (mon >> 3))) | 30 : is_leap(year) ? 29 : 28;
+}
+
 int main(int argc, char *argv[])
 {
 
-  data_t d1 = {f1, "test"};
+  printf("leap: %d\n", is_leap(1901));
+
+  data_t d1 = {f, "test"};
   d1.fn(&d1);
 
-  data_t d2[2] = {{f1, "1"}, {f1, "0"}};
+  data_t d2[2] = {{f, "1"}, {f, "0"}};
   d2[0].fn(&d2[0]);
   d2[1].fn(&d2[1]);
 
