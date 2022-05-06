@@ -157,5 +157,9 @@ int main(int argc, char *argv[])
   printf("%d %d %d\n", 6 % 6, 0 % 6, 2 % 6);
   printf("%d %d %d\n", 1 ^ (6 % 6), 1 ^ (0 % 6), 1 ^ (2 % 6));
 
+  int v  = 5;
+  int vv = (1 << 6) >> v;
+  printf("vv: %d\n", vv);
+
   return 0;
 }
