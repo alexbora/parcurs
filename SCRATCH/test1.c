@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
 
   int w = z > 1 ? 1 : y == 3 ? 0 : 0;
 
-  printf("    %-10d\t\t %-12s\t\t %8d\t %8.2f\n\n", w, "z", y, t);
+  printf("----- %d\n", 0 ^ (5 >> 2));
 
   return 0;
 }

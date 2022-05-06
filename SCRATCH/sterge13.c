@@ -129,7 +129,8 @@ int main(int argc, char **argv)
     TM.tm_mday++;
     mktime(&TM);
     tmx[i] = TM;
-    printf("wday: %d %s\n", tmx[i].tm_wday, asctime(&tmx[i]));
+    printf("wday: %d %d %s\n", (0 ^ (tmx[i].tm_wday >> 2)), tmx[i].tm_wday,
+           asctime(&tmx[i]));
     arr[i] = tmx[i].tm_wday == 6 ? 0 : tmx[i].tm_wday;
   }
   return 0;
