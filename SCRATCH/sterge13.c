@@ -16,13 +16,14 @@
 #include <errno.h>
 #include <time.h>
 
-static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi dec";
-static char        longdate[128], *luna;
-static unsigned    dayz;
-static struct tm   TM, tmx[32];
+#define ONE_DAY (long)(60 * 60 * 24)
 
-static inline char *literal_mon(const int month)
-{
+static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi dec";
+static char longdate[128], *luna;
+static unsigned dayz;
+static struct tm TM, tmx[32];
+
+static inline char *literal_mon(const int month) {
   return &"ianuarie\0\0\0\0\0\0\0\0februari"
           "e\0\0\0"
           "\0\0\0\0martie\0\0\0\0\0\0\0\0\0\0aprilie\0\0\0\0\0\0\0\0\0mai\0"
@@ -46,19 +47,16 @@ static inline char *literal_mon(const int month)
 /*   return 31; */
 /* } */
 
-int is_leap3(const int year)
-{
+int is_leap3(const int year) {
   unsigned y = year + 16000;
   return (y % 100) ? !(y % 4) : !(y % 16);
 }
 
-int last_day_of_mon(int year, int mon)
-{
+int last_day_of_mon(int year, int mon) {
   return mon != 2 ? ((mon ^ (mon >> 3))) | 30 : is_leap3(year) ? 29 : 28;
 }
 
-static int now()
-{
+static int now() {
   /* normal time */
   struct tm tm = *localtime(&(time_t){time(NULL)});
   /* printf("Today is           %s", asctime(&tm)); */
@@ -73,45 +71,52 @@ static int now()
   tm.tm_year = tm.tm_mon != 11 ? tm.tm_year : tm.tm_year - 1;
   mktime(&tm); // tm_isdst is not set to -1; today's DST status is used
 
-  TM     = tm;
+  TM = tm;
   tmx[0] = tm;
   return 1;
 }
 
-static int then(char **argv)
-{
-  char     *m   = strstr(mths, argv[1]);
+static int then(char **argv) {
+  char *m = strstr(mths, argv[1]);
   struct tm tm2 = {50, 50, 12, 1, (int)((m - mths) / 4), 2000 + atoi(argv[2])};
   mktime(&tm2);
   sprintf(longdate, "%02d.%02d.%d", tm2.tm_mday, tm2.tm_mon + 1, tm2.tm_year);
 
-  TM     = tm2;
+  TM = tm2;
   tmx[0] = tm2;
   return 1;
 }
 
-static int cmdl(int argc, char **argv)
-{
+static int cmdl(int argc, char **argv) {
   if (argc > 2)
     return then(argv);
   return now();
 }
 
-static void globals()
-{
+static void globals() {
   luna = literal_mon(TM.tm_mon);
   /* dayz = days_in_month(TM.tm_mon + 1, TM.tm_year); */
   dayz = last_day_of_mon(TM.tm_year, TM.tm_mon + 1);
 }
 
-__attribute__((noreturn)) static void usage()
-{
+__attribute__((noreturn)) static void usage() {
   puts("Usage: <mon> <year> <km>");
   exit(0);
 }
 
-int main(int argc, char **argv)
-{
+int days_from_civil(int y, unsigned m, unsigned d) {
+  y -= m <= 2;
+  const int era = (y >= 0 ? y : y - 399) / 400;
+  const unsigned yoe = (y - era * 400); // [0, 399]
+  const unsigned doy =
+      (153 * (m > 2 ? m - 3 : m + 9) + 2) / 5 + d - 1;        // [0, 365]
+  const unsigned doe = yoe * 365 + yoe / 4 - yoe / 100 + doy; // [0, 146096]
+  return era * 146097 + doe - 719468;
+}
+
+static inline unsigned weekday_from_days(unsigned z) { return (z + 4) % 7; }
+
+int main(int argc, char **argv) {
   if (argc > 1 && (*argv[1] == 'h' || strcmp(argv[1], "-h") == 0 ||
                    strcmp(argv[1], "--h") == 0))
     usage();
@@ -125,12 +130,22 @@ int main(int argc, char **argv)
 
   int arr[32];
 
+  printf("wday: %d\n", weekday_from_days(time(0) / ONE_DAY));
+
+  time_t ti = time(0);
+  int r = ti / ONE_DAY;
+
+  int civil = days_from_civil(2022, 5, 6);
+
+  for (unsigned i = 0; i < 4; i++) {
+    printf("wi: %d\n", weekday_from_days(civil + i));
+    printf("i: %d\n", weekday_from_days(r++));
+  }
   for (unsigned i = 0; i < 7; i++) {
     TM.tm_mday++;
     mktime(&TM);
     tmx[i] = TM;
-    printf("wday: %d %d %s\n", (0 ^ (tmx[i].tm_wday >> 2)), tmx[i].tm_wday,
-           asctime(&tmx[i]));
+    printf("wday: %d %s\n", tmx[i].tm_wday, asctime(&tmx[i]));
     arr[i] = tmx[i].tm_wday == 6 ? 0 : tmx[i].tm_wday;
   }
   return 0;
