@@ -123,5 +123,8 @@ int main(int argc, char *argv[])
 
   printf("%d\n", (3 ^ (3 >> 3)) | 30);
 
+  int tt = (130 - 128) >> 31;
+  printf("%d\t %d\t %d\n", tt, ~tt, (~tt & 130));
+
   return 0;
 }
