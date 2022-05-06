@@ -86,9 +86,34 @@ int last_day_of_mon(int year, int mon)
   return mon != 2 ? ((mon ^ (mon >> 3))) | 30 : is_leap3(year) ? 29 : 28;
 }
 
+int days_from_civil(int y, unsigned m, unsigned d)
+{
+  y -= m <= 2;
+  const int      era = (y >= 0 ? y : y - 399) / 400;
+  const unsigned yoe = (y - era * 400); // [0, 399]
+  const unsigned doy =
+      (153 * (m > 2 ? m - 3 : m + 9) + 2) / 5 + d - 1;        // [0, 365]
+  const unsigned doe = yoe * 365 + yoe / 4 - yoe / 100 + doy; // [0, 146096]
+  return era * 146097 + doe - 719468;
+}
+
+unsigned weekday_from_days(int z)
+{
+  return (z + 4) % 7;
+}
+
+#define ONE_DAY (long)(60 * 60 * 24)
+
 int main(int argc, char *argv[])
 {
-  printf("%d\n", last_day_of_mon(2022, 3));
+
+  printf("days from civil: %d %ld\n", days_from_civil(2022, 5, 6),
+         time(0) / ONE_DAY);
+  printf("days in mon: %d\n", last_day_of_mon(2022, 3));
+
+  int civil = days_from_civil(2022, 5, 6);
+  printf("wday: %d\n", weekday_from_days(civil - 1));
+  printf("wday: %d\n", weekday_from_days(time(0) / ONE_DAY));
 
   printf("t %d\n", (8 >> 3));
   printf("t %d\n", 8 ^ (8 >> 3));
@@ -125,6 +150,9 @@ int main(int argc, char *argv[])
 
   int tt = (130 - 128) >> 31;
   printf("%d\t %d\t %d\n", tt, ~tt, (~tt & 130));
+
+  printf("%d %d %d\n", 6 % 6, 0 % 6, 2 % 6);
+  printf("%d %d %d\n", 1 ^ (6 % 6), 1 ^ (0 % 6), 1 ^ (2 % 6));
 
   return 0;
 }
