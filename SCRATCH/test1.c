@@ -115,6 +115,9 @@ int main(int argc, char *argv[])
   printf("wday: %d\n", weekday_from_days(civil - 1));
   printf("wday: %d\n", weekday_from_days(time(0) / ONE_DAY));
 
+  for (unsigned i = 0; i < 4; i++)
+    printf("wi: %d\n", weekday_from_days(civil + i));
+
   printf("t %d\n", (8 >> 3));
   printf("t %d\n", 8 ^ (8 >> 3));
   printf("t %d\n", 8 | 30);
