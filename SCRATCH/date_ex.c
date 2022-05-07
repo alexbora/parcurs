@@ -18,6 +18,9 @@
 
 /* https://github.com/cassioneri/calendar/blob/master/fast_eaf.cpp */
 
+/* https://en.cppreference.com/w/c/chrono/mktime */
+
+#define _POSIX_C_SOURCE 200112L // for setenv on gcc
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -87,7 +90,7 @@ static inline int days_from_civil(int y, const int m, const int d)
   return era * 146097 + doe - 719468;
 }
 
-static inline int weekday_from_days(int z)
+static inline int weekday_from_days(const int z)
 {
   return (z + 4) % 7;
 }
@@ -145,34 +148,39 @@ static void globals()
   luna = literal_mon(TM.tm_mon);
   /* dayz = days_in_month(TM.tm_mon + 1, TM.tm_year); */
   dayz = last_day_of_mon(TM.tm_year, TM.tm_mon + 1);
+  for (int i = 0; i < dayz; i++) {
+    arr[i] = weekday_from_days(days_past + i);
+  }
 }
 
 __attribute__((noreturn)) static void usage()
 {
-  puts("Usage: <mon> <year> <km>");
+  puts("Usage: <mon> <year> <km>\ne.g. iun 22 80000\n");
   exit(0);
 }
 
-int main(int argc, char **argv)
+static int init_time(int argc, char **argv)
 {
   if (argc > 1 && (*argv[1] == 'h' || strcmp(argv[1], "-h") == 0 ||
                    strcmp(argv[1], "--h") == 0))
     usage();
 
+  setenv("TZ", "/usr/share/zoneinfo/Europe/Bucharest", 1); // POSIX-specific
   ti = time(0);
 
   cmdl(argc, argv);
 
   globals();
 
+  return 0;
+}
+
+int main(int argc, char *argv[])
+{
+  init_time(argc, argv);
   printf("current: %s\t last month: %s\t days of last mo: %d\n", longdate, luna,
          dayz);
-
   printf("past: %d\n", days_past);
-
-  for (int i = 0; i < 32; i++) {
-    arr[i] = weekday_from_days(days_past + i);
-  }
   printf("%d\n", arr[0]);
   printf("%d\n", arr[1]);
   printf("%d\n", arr[2]);
