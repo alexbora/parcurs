@@ -109,7 +109,7 @@ static int now() {
 
 static int then(char **argv) {
   char *m = strstr(mths, argv[1]);
-  int mon = (int)(m - mths) / 4;
+  int mon = (int)((m - mths) / 4);
   int year = 2000 + atoi(argv[2]);
   struct tm tm2 = {50, 50, 12, 1, mon, year};
   mktime(&tm2);
@@ -152,10 +152,7 @@ int main(int argc, char **argv) {
   printf("current: %s\t last month: %s\t days of last mo: %d\n", longdate, luna,
          dayz);
 
-  for (unsigned i = 0; i < 4; i++) {
-    printf("wi: %d\t", weekday_from_days(days_past + i));
-    printf("j: %d\t", weekday_from_days(days_past) % 6);
-    printf("i: %d\n", weekday_from_days(days_past++));
-  }
+  printf("%d\n", days_past);
+
   return 0;
 }
