@@ -30,14 +30,15 @@
 #include <errno.h>
 #include <time.h>
 
-#define ONE_DAY (long)(60 * 60 * 24)
+#define ONE_DAY (time_t)(60 * 60 * 24)
 
-time_t ti;
+static time_t ti;
+static int    arr[32];
 
 static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi dec";
 static char        longdate[128], *luna;
-static unsigned    dayz;
-static struct tm   TM, tmx[32];
+static int         dayz;
+static struct tm   TM;
 static int         days_past;
 
 static inline char *literal_mon(const int month)
@@ -67,7 +68,7 @@ static inline char *literal_mon(const int month)
 
 static inline int is_leap3(const int year)
 {
-  unsigned y = year + 16000;
+  int y = year + 16000;
   return (y % 100) ? !(y % 4) : !(y % 16);
 }
 
@@ -76,18 +77,17 @@ static inline int last_day_of_mon(int year, int mon)
   return mon != 2 ? ((mon ^ (mon >> 3))) | 30 : is_leap3(year) ? 29 : 28;
 }
 
-static inline int days_from_civil(int y, unsigned m, unsigned d)
+static inline int days_from_civil(int y, const int m, const int d)
 {
   y -= m <= 2;
-  const int      era = (y >= 0 ? y : y - 399) / 400;
-  const unsigned yoe = (y - era * 400); // [0, 399]
-  const unsigned doy =
-      (153 * (m > 2 ? m - 3 : m + 9) + 2) / 5 + d - 1;        // [0, 365]
-  const unsigned doe = yoe * 365 + yoe / 4 - yoe / 100 + doy; // [0, 146096]
+  const int era = (y >= 0 ? y : y - 399) / 400;
+  const int yoe = (y - era * 400);                                 // [0, 399]
+  const int doy = (153 * (m > 2 ? m - 3 : m + 9) + 2) / 5 + d - 1; // [0, 365]
+  const int doe = yoe * 365 + yoe / 4 - yoe / 100 + doy; // [0, 146096]
   return era * 146097 + doe - 719468;
 }
 
-static inline unsigned weekday_from_days(unsigned z)
+static inline int weekday_from_days(int z)
 {
   return (z + 4) % 7;
 }
@@ -108,11 +108,9 @@ static int now()
   tm.tm_year = tm.tm_mon != 11 ? tm.tm_year : tm.tm_year - 1;
   mktime(&tm); // tm_isdst is not set to -1; today's DST status is used
 
-  TM     = tm;
-  tmx[0] = tm;
-
+  TM = tm;
   /* days_past = days_from_civil(TM.tm_year + 1900, TM.tm_mon + 1, 1); */
-  days_past = ti / ONE_DAY;
+  days_past = (int)(ti / ONE_DAY);
   return 1;
 }
 
@@ -121,12 +119,16 @@ static int then(char **argv)
   char     *m    = strstr(mths, argv[1]);
   int       mon  = (int)((m - mths) / 4);
   int       year = 2000 + atoi(argv[2]);
-  struct tm tm2  = {50, 50, 12, 1, mon, year};
+  struct tm tm2  = {.tm_sec  = 50,
+                    .tm_min  = 50,
+                    .tm_hour = 12,
+                    .tm_mday = 1,
+                    .tm_mon  = mon,
+                    .tm_year = year};
   mktime(&tm2);
   sprintf(longdate, "%02d.%02d.%d", tm2.tm_mday, tm2.tm_mon + 1, tm2.tm_year);
 
   TM        = tm2;
-  tmx[0]    = tm2;
   days_past = days_from_civil(year, mon + 1, 1);
   return 1;
 }
@@ -168,6 +170,11 @@ int main(int argc, char **argv)
 
   printf("past: %d\n", days_past);
 
-  printf("%d\n", weekday_from_days(days_past));
+  for (int i = 0; i < 32; i++) {
+    arr[i] = weekday_from_days(days_past + i);
+  }
+  printf("%d\n", arr[0]);
+  printf("%d\n", arr[1]);
+  printf("%d\n", arr[2]);
   return 0;
 }
