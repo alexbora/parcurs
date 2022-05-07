@@ -128,32 +128,15 @@ int main(int argc, char **argv) {
   printf("current: %s\t last month: %s\t days of last mo: %d\n", longdate, luna,
          dayz);
 
-  int arr[32], arr2[32];
-
-  printf("wday: %d\n", weekday_from_days(time(0) / ONE_DAY));
-
   time_t ti = time(0);
   int r = ti / ONE_DAY;
 
-  int civil = days_from_civil(2022, 5, 6);
+  int civil = days_from_civil(2022, 5, 7);
 
   for (unsigned i = 0; i < 4; i++) {
-    printf("wi: %d\n", weekday_from_days(civil + i));
+    printf("wi: %d\t", weekday_from_days(civil + i));
+    printf("j: %d\t", weekday_from_days(r) % 6);
     printf("i: %d\n", weekday_from_days(r++));
   }
-  for (unsigned i = 0; i < 7; i++) {
-    TM.tm_mday++;
-    mktime(&TM);
-    tmx[i] = TM;
-    printf("wday: %d %s\n", tmx[i].tm_wday, asctime(&tmx[i]));
-    arr[i] = tmx[i].tm_wday == 6 ? 0 : tmx[i].tm_wday;
-    arr2[i] = tmx[i].tm_wday % 6;
-    printf("w: %d %s\n", arr2[i], asctime(&tmx[i]));
-  }
-
-  int mm = 9;
-  int mx = ((mm ^ (mm >> 3)));
-  printf("mx %d\n", mx);
-
   return 0;
 }
