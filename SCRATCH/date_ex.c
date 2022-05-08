@@ -75,6 +75,23 @@ static inline char *literal_mon(const int month)
 /*   return 31; */
 /* } */
 
+static inline int is_multiple_of_100(int32_t n)
+{
+  const int32_t multiplier   = 42949673;
+  const int32_t bound        = 42949669;
+  const int32_t max_dividend = 1073741799;
+  const int32_t offset       = max_dividend / 2 / 100 * 100; //  536870800
+  return multiplier * (n + offset) < bound;
+}
+
+static inline int is_leap(int y)
+{
+  // Originally, the ternary expression was similar to
+  //   is_multiple_of_100(y) ? y % 16 == 0 : y % 4 == 0;
+  // and Ulrich Drepper suggested the following twist.
+  return (y & (is_multiple_of_100(y) ? 15 : 3)) == 0;
+}
+
 static inline int is_leap3(const int year)
 {
   int y = year + 16000;
