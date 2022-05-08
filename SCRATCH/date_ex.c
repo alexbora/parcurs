@@ -115,7 +115,8 @@ static int now()
 
   TM = tm;
   /* days_past = days_from_civil(TM.tm_year + 1900, TM.tm_mon + 1, 1); */
-  days_past = (int)(ti / ONE_DAY);
+  days_past = days_from_civil(tm.tm_year + 1900, tm.tm_mon + 1, 1);
+  /* days_past = (int)(ti / ONE_DAY); */
   return 1;
 }
 
@@ -151,7 +152,7 @@ static void globals()
   /* dayz = days_in_month(TM.tm_mon + 1, TM.tm_year); */
   dayz = last_day_of_mon(TM.tm_year, TM.tm_mon + 1);
   for (int i = 0; i < dayz; i++) {
-    arr[i] = (weekday_from_days(days_past + i) % 6) > 0;
+    arr[i] = (weekday_from_days(days_past++));
   }
 }
 
@@ -184,13 +185,13 @@ int main(int argc, char *argv[])
          dayz);
 
   printf("past: %d\n", days_past);
-  printf("%d\n", arr[0]);
-  printf("%d\n", arr[1]);
-  printf("%d\n", arr[2]);
-  printf("%d\n", arr[3]);
-  printf("%d\n", arr[4]);
-  printf("%d\n", arr[5]);
-  printf("%d\n", arr[6]);
+  printf("%d %d %s", arr[0], TM.tm_wday, asctime(&TM));
+  /* printf("%d\n", arr[1]); */
+  /* printf("%d\n", arr[2]); */
+  /* printf("%d\n", arr[3]); */
+  /* printf("%d\n", arr[4]); */
+  /* printf("%d\n", arr[5]); */
+  /* printf("%d\n", arr[6]); */
 
   /* x |= 1 << 0; */
   /* x |= 1 << 1; */
