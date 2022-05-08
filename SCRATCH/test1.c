@@ -139,11 +139,19 @@ int main(int argc, char *argv[]) {
   printf("%d\t %d\t %d\n", tt, ~tt, (~tt & 130));
 
   printf("%% %d %d %d\n", 6 % 6, 0 % 6, 2 % 6);
-  printf("%d %d %d\n", ~  (6 % 6), ~ (0 % 6), ~ (2 % 6));
-printf("%d\n", 6);
+  printf("%d %d %d\n", ~(6 % 6), ~(0 % 6), ~(2 % 6));
+  printf("%d\n", 6);
   int v = 5;
   int vv = (1 << 6) >> v;
   printf("vv: %d\n", vv);
+
+  printf("FU: %d\n", 0xFFF);
+
+  int ww = 0;
+  ww |= 1 << 0;
+  ww |= 1 << 1;
+
+  printf("%d %d %d\n", ww, ww | 4, ww >> 1);
 
   return 0;
 }
