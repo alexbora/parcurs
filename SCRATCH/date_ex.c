@@ -35,8 +35,7 @@
 #include <stdint.h>
 #include <time.h>
 
-#define ONE_DAY      (time_t)(60 * 60 * 24)
-#define SETBIT(A, k) (A[(k / 32)] |= (1 << (k % 32)))
+#define ONE_DAY (time_t)(60 * 60 * 24)
 
 static time_t ti;
 static int    arr[32];
@@ -46,7 +45,6 @@ static char        longdate[128], *luna;
 static int         dayz;
 static struct tm   TM;
 static int         days_past;
-static uint32_t    A[32];
 
 static inline char *literal_mon(const int month)
 {
@@ -184,6 +182,7 @@ int main(int argc, char *argv[])
   init_time(argc, argv);
   printf("current: %s\t last month: %s\t days of last mo: %d\n", longdate, luna,
          dayz);
+
   printf("past: %d\n", days_past);
   printf("%d\n", arr[0]);
   printf("%d\n", arr[1]);
