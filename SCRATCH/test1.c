@@ -169,9 +169,7 @@ int main(int argc, char *argv[])
 
   printf("%d %d %d\n", ww, ww | 4, ww >> 1);
 
-  unsigned long v1 = 10;
-  unsigned long v2 = ((1 << 11) << ~v1) | (v1 & ~15);
-  printf("%d\n", v2);
+  printf("%d\n", 0b00000111);
 
   return 0;
 }
