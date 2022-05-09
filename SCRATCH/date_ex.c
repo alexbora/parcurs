@@ -236,9 +236,10 @@ int main(int argc, char *argv[]) {
   int hol[12][4] = {{1, 1, 1, 1}, {0, 0, 0, 0}};
 
   int *h1 = hol[0];
-
+  int arrr[32];
   for (unsigned i = 0; i < 4; ++i) {
     printf("%d\n", hol[0][i]);
+    arrr[i] = hol[0][i];
   }
 
   return 0;
