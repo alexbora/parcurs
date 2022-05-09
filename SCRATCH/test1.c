@@ -170,6 +170,19 @@ int main(int argc, char *argv[])
   printf("%d %d %d\n", ww, ww | 4, ww >> 1);
 
   printf("%d\n", 0b00000111);
+  printf("%d\n", 0b00000110);
+  printf("%d\n", 0b00000101);
+  printf("%d\n", 0b00000100);
+  printf("%d\n", 0b00000010);
+  printf("%d\n", 0b00000001);
+
+  printf("%d\n", (1 << 6) >> 4);
+
+  printf("%d\n", 0 != 0);
+  int x = 2;
+  printf("%d\n", (0 & x | x & 6));
+
+  printf("BIT: %d\n", 6 & (1 << 2));
 
   return 0;
 }

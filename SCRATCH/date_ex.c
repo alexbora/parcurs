@@ -40,14 +40,14 @@
 
 #define ONE_DAY (time_t)(60 * 60 * 24)
 
-typedef struct lxw_struct lxw_struct;
-extern struct Route       route;
-void                      write(lxw_struct *p, struct Route *r){};
+/* typedef struct lxw_struct lxw_struct; */
+/* extern struct Route       route; */
+/* void                      write(lxw_struct *p, struct Route *r){}; */
 
-typedef struct lxw_worksheet lxw_worksheet;
-typedef struct lxw_format    lxw_format;
-typedef void (*fx)(const struct Route *, lxw_worksheet *, unsigned *,
-                   const unsigned, double *, lxw_format *);
+/* typedef struct lxw_worksheet lxw_worksheet; */
+/* typedef struct lxw_format    lxw_format; */
+/* typedef void (*fx)(const struct Route *, lxw_worksheet *, unsigned *, */
+/*                    const unsigned, double *, lxw_format *); */
 
 /* static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi
  * dec";
@@ -56,7 +56,7 @@ static time_t    global_time;
 static struct tm TM;
 
 static char longdate[128], *luna;
-static int  dayz;
+static int  dayz_in_mon;
 static int  days_past;
 
 static int arr[32];
@@ -190,9 +190,9 @@ static void globals()
   /* printf("date recoderd: %d %d\n", TM.tm_year, TM.tm_mon); */
   /* printf("date recoderd: %d %d\n", TM.tm_year + 1900, TM.tm_mon + 1); */
 
-  days_past = days_from_civil(TM.tm_year + 1900, TM.tm_mon + 1, 1);
-  dayz      = last_day_of_mon(TM.tm_year + 1900, TM.tm_mon + 1);
-  for (int i = 0; i < dayz; i++) {
+  days_past   = days_from_civil(TM.tm_year + 1900, TM.tm_mon + 1, 1);
+  dayz_in_mon = last_day_of_mon(TM.tm_year + 1900, TM.tm_mon + 1);
+  for (int i = 0; i < dayz_in_mon; i++) {
     arr[i] = (weekday_from_days(days_past + i));
   }
 }
@@ -227,7 +227,7 @@ int main(int argc, char *argv[])
   init_time(argc, argv);
 
   printf("current: %s\t last month: %s\t days of last mo: %d\n", longdate, luna,
-         dayz);
+         dayz_in_mon);
 
   printf("long: %s\n", longdate);
   printf("past: %d\n", days_past);
