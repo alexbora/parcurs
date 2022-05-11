@@ -203,7 +203,8 @@ static void globals()
 
   days_past   = days_from_civil(TM.tm_year + 1900, TM.tm_mon + 1, 1);
   dayz_in_mon = last_day_of_mon(TM.tm_year + 1900, TM.tm_mon + 1);
-  for (int i = 0; i < dayz_in_mon; i++) {
+  arr[0]      = arr[1];
+  for (int i = 0; i < 32; i++) {
     arr[i] = (weekday_from_days(days_past + i));
   }
 }
@@ -243,7 +244,7 @@ int main(int argc, char *argv[])
   printf("long: %s\n", longdate);
   printf("past: %d\n", days_past);
   printf("past days till today,  not the 1st: %ld\n", global_time / ONE_DAY);
-  printf("%d %d %s", arr[0], TM.tm_wday, asctime(&TM));
+  printf("ARR: %d %d %s", arr[0], TM.tm_wday, asctime(&TM));
   printf("weekday: %d\n", weekday_from_days(days_past));
 
   /* printf("%d\n", arr[1]); */
