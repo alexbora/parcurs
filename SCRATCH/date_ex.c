@@ -203,9 +203,11 @@ static void globals()
 
   days_past   = days_from_civil(TM.tm_year + 1900, TM.tm_mon + 1, 1);
   dayz_in_mon = last_day_of_mon(TM.tm_year + 1900, TM.tm_mon + 1);
-  arr[0]      = arr[1];
-  for (int i = 0; i < 32; i++) {
-    arr[i] = (weekday_from_days(days_past + i));
+  /* arr[0]      = arr[1]; */
+  /* fill starting with 1, so you can avoid branching in holiday loop */
+  for (int i = 1; i < dayz_in_mon; i++) {
+    arr[i] = (weekday_from_days(days_past + i - 1));
+    /* otherwise the days past will not be correct */
   }
 }
 
@@ -244,7 +246,7 @@ int main(int argc, char *argv[])
   printf("long: %s\n", longdate);
   printf("past: %d\n", days_past);
   printf("past days till today,  not the 1st: %ld\n", global_time / ONE_DAY);
-  printf("ARR: %d %d %s", arr[0], TM.tm_wday, asctime(&TM));
+  printf("ARR: %d %d %s", arr[1], TM.tm_wday, asctime(&TM));
   printf("weekday: %d\n", weekday_from_days(days_past));
 
   /* printf("%d\n", arr[1]); */
@@ -257,7 +259,17 @@ int main(int argc, char *argv[])
   /* x |= 1 << 0; */
   /* x |= 1 << 1; */
 
-  int hol[12][4] = {{1, 1, 1, 1}, {0, 0, 0, 0}};
+  enum months { ian, feb } months;
+  int hol[12][4] = {
+      [ian] = {0, 0, 0, 1}, [feb] = {0, 0, 0, 0}, {7, 1, 1, 1}, {}, {}, {}};
+
+  for (unsigned i = 0; i < 4; i++) {
+    arr[hol[2][i]]   = hol[2][i] > 0;
+    arr[hol[ian][i]] = hol[ian][i] > 0;
+  }
+
+  printf("ARR2: %d %d %d %d %s", arr[0], TM.tm_wday, TM.tm_mday, TM.tm_mon,
+         asctime(&TM));
 
   int *h1 = hol[0];
   int  arrr[32];
