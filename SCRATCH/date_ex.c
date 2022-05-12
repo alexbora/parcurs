@@ -259,17 +259,24 @@ int main(int argc, char *argv[])
   /* x |= 1 << 0; */
   /* x |= 1 << 1; */
 
-  enum months { ian, feb } months;
-  int hol[12][4] = {
-      [ian] = {0, 0, 0, 1}, [feb] = {0, 0, 0, 0}, {7, 1, 1, 1}, {}, {}, {}};
+  enum months { ian, feb, mar };
+  int hol[12][4] = {[ian] = {0, 0, 0, 1},
+                    [feb] = {0, 0, 0, 0},
+                    [mar] = {7, 1, 1, 1},
+                    {},
+                    {},
+                    {}};
 
   for (unsigned i = 0; i < 4; i++) {
     arr[hol[2][i]]   = hol[2][i] > 0;
     arr[hol[ian][i]] = hol[ian][i] > 0;
+    arr[hol[mar][i]] = hol[mar][i];
   }
 
   printf("ARR2: %d %d %d %d %s", arr[0], TM.tm_wday, TM.tm_mday, TM.tm_mon,
          asctime(&TM));
+  printf("ARR3: arr mar: %d %d %d %d %s", arr[mar], TM.tm_wday, TM.tm_mday,
+         TM.tm_mon, asctime(&TM));
 
   int *h1 = hol[0];
   int  arrr[32];
