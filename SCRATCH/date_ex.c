@@ -65,6 +65,10 @@ static int days_past;
 
 static int arr[32];
 
+int fn(void);
+int fnull(void);
+int (*fx[32])(void), (*fp[2])(void) = {fnull, fn};
+
 static inline char *literal_mon(const int month) {
   return &"ianuarie\0\0\0\0\0\0\0\0februari"
           "e\0\0\0"
@@ -228,12 +232,12 @@ static int init_time(int argc, char **argv) {
   return 0;
 }
 
-void fnull(void);
-
 int main(int argc, char *argv[]) {
 
   init_time(argc, argv);
 
+/* SCRATCH CODE */
+#if 0
   /* printf("current: %s\t last month: %s\t days of last mo: %d\n", longdate,
    * luna, */
   /*        dayz_in_mon); */
@@ -284,6 +288,11 @@ int main(int argc, char *argv[]) {
   printf("ARR2: %d %d %d %d %s", arr[0], TM.tm_wday, TM.tm_mday, TM.tm_mon,
          asctime(&TM));
 
+
+
+  /* DO NOT DELETE!!! */
+
+
   int *h1 = hol[0];
   int arrr[32] = {0};
   for (unsigned i = 0; i < 4; ++i) {
@@ -292,5 +301,6 @@ int main(int argc, char *argv[]) {
     arr[hol[ian][i]] = hol[ian][i];
   }
   printf("\n\n%d\n", arr[hol[ian][0]]);
+#endif
   return 0;
 }
