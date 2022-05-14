@@ -8,6 +8,8 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 static inline int fn1(void) { return 0; }
 
@@ -28,7 +30,22 @@ void sys_error(char *error, ...) {
   exit(1);
 }
 
+void debug_log(char *file, char *fmt, ...) {
+  va_list argptr = {};
+  static char data[1024] = {'\0'};
+  int fd = 0;
+
+  va_start(argptr, fmt);
+  vsprintf(data, fmt, argptr);
+  va_end(argptr);
+  fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0666);
+  write(fd, data, strlen(data));
+  close(fd);
+}
+
 int main(int argc, char *argv[]) {
+
+  debug_log("test", "1");
 
   struct Route {
     char *a;
@@ -45,7 +62,7 @@ int main(int argc, char *argv[]) {
 
   w1.route = (struct Route){"a", 1, NULL};
 
-  sys_error("error");
+  /* sys_error("error"); */
 
   return 0;
 }
