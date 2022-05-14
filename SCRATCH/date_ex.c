@@ -65,10 +65,6 @@ static int days_past;
 
 static int arr[32];
 
-int fn(void);
-int fnull(void);
-int (*fx[32])(void), (*fp[2])(void) = {fnull, fn};
-
 static inline char *literal_mon(const int month) {
   return &"ianuarie\0\0\0\0\0\0\0\0februari"
           "e\0\0\0"
@@ -196,18 +192,22 @@ static void globals() {
   dayz_in_mon = last_day_of_mon(TM.tm_year + 1900, TM.tm_mon + 1);
   /* arr[0]      = arr[1]; */
   /* fill starting with 1, so you can avoid branching in holiday loop */
-  for (int i = 1; i < dayz_in_mon; i++) {
-    arr[i] = (weekday_from_days(days_past + i - 1));
-    /* otherwise the days past will not be correct */
-  }
-  enum months { ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, noi, dec };
-  int hol[12][4] = {[ian] = {1, 2, 24},  [apr] = {22, 24, 25}, [mai] = {1, 5},
-                    [iun] = {1, 12, 13}, [aug] = {15},         [noi] = {30},
-                    [dec] = {25, 26}};
 
-  for (unsigned i = 0; i < 4; ++i) {
-    arr[hol[TM.tm_mon][i]] = hol[TM.tm_mon][i];
-  }
+#pragma omp parallel for
+  for (int i = 1; i < dayz_in_mon; i++)
+    arr[i] = ((weekday_from_days(days_past + i - 1)) % 6) != 0;
+  /* otherwise the days past will not be correct */
+
+  enum months { ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, noi, dec };
+  static const int hol[12][4] = {
+      [ian] = {1, 2, 24},  [apr] = {22, 24, 25}, [mai] = {1, 5},
+      [iun] = {1, 12, 13}, [aug] = {15},         [noi] = {30},
+      [dec] = {25, 26}};
+
+#pragma omp parallel for
+  for (unsigned i = 0; i < 4; ++i)
+    /* arr[hol[TM.tm_mon][i]] = hol[TM.tm_mon][i]; */
+    arr[hol[TM.tm_mon][i]] = 0;
 }
 
 __attribute__((noreturn)) static void usage() {
@@ -235,6 +235,11 @@ static int init_time(int argc, char **argv) {
 int main(int argc, char *argv[]) {
 
   init_time(argc, argv);
+
+  /* yap, works */
+  for (unsigned i = 1; i < 30; ++i) {
+    printf("%d %d\n", i, arr[i]);
+  }
 
 /* SCRATCH CODE */
 #if 0
