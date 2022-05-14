@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/time.h>
+#include <time.h>
 #include <unistd.h>
 
 static inline int fn1(void) { return 0; }
@@ -43,9 +45,27 @@ void debug_log(char *file, char *fmt, ...) {
   close(fd);
 }
 
+double Sys_FloatTime(void) {
+  struct timeval tp;
+  struct timezone tzp;
+  static int secbase;
+
+  gettimeofday(&tp, &tzp);
+
+  if (!secbase) {
+    secbase = tp.tv_sec;
+    return tp.tv_usec / 1000000.0;
+  }
+
+  return (tp.tv_sec - secbase) + tp.tv_usec / 1000000.0;
+}
+
 int main(int argc, char *argv[]) {
 
-  debug_log("test", "1");
+  printf("%f\n", Sys_FloatTime());
+
+  debug_log("test", "1\n");
+  debug_log("test", "2\n");
 
   struct Route {
     char *a;
