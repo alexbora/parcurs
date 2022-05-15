@@ -31,16 +31,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-/* #include <sys/errno.h> */
-/* #ifndef __linux__ */
-/* #include <sys/_types/_off_t.h> */
-/* #include <sys/_types/_ucontext.h> */
-/* #endif */
-/* #include <assert.h> */
-/* #include <errno.h> */
 #include <time.h>
 
+#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
+
 #define ONE_DAY (time_t)(60 * 60 * 24)
+
 #define __isleap(year)                                                         \
   ((year) % 4 == 0 && ((year) % 100 != 0 || (year) % 400 == 0))
 
@@ -64,6 +60,21 @@ static int dayz_in_mon;
 static int days_past;
 
 static int arr[32];
+
+static struct Route {
+  char *r;
+  double km;
+  char *obs;
+} route_[128];
+
+struct Work {
+  char longdate[128];
+  char *luna;
+  int dayz_in_mon;
+  int arr[32];
+  struct Route *routes;
+  void (*f)(void);
+};
 
 static inline char *literal_mon(const int month) {
   return &"ianuarie\0\0\0\0\0\0\0\0februari"
@@ -140,6 +151,7 @@ static int now() {
   tm.tm_mday = 1;
   /* adjust year to jump to previous if december */
   tm.tm_year = tm.tm_mon != 11 ? tm.tm_year : tm.tm_year - 1;
+  /* make time again, referencing the previous month */
   mktime(&tm); // tm_isdst is not set to -1; today's DST status is used
 
   TM = tm;
@@ -232,10 +244,73 @@ static int init_time(int argc, char **argv) {
   return 0;
 }
 
+static void random_shuffle(void) {
+  static const struct Route parcurs[16] = {
+      {"Cluj-Oradea", 321, "Interes Serviciu"},
+      {"Cluj-Turda", 121, "Interes Serviciu"},
+      {"Cluj-Zalau", 156, "Interes Serviciu"},
+      {"Cluj-Baia-Mare", 356, "Interes Serviciu"},
+      {"Cluj-Bistrita", 257, "Interes Serviciu"},
+      {"Cluj-Dej", 101, "Interes Serviciu"},
+      {"Cluj-Cluj", 47, "Interes Serviciu"},
+      {"Acasa-Birou", 30, " "},
+      {"Acasa-Birou", 30, " "},
+      {"Acasa-Birou", 30, " "},
+      {"Acasa-Birou", 30, " "},
+      {"Acasa-Birou", 30, " "},
+      {"Cluj-Cmp. Turzii", 152, "Interes Serviciu"},
+      {"Cluj-Apahida", 85, "Interes Serviciu"},
+      {"Cluj-Bontida", 92, "Interes Serviciu"},
+      {"Cluj-Satu-Mare", 421, "Interes Serviciu"}};
+
+  /* route_                   = (struct Route[128]){{0}}; */
+  static const size_t n = ARRAY_SIZE(parcurs);
+  static const size_t m = ARRAY_SIZE(route_);
+
+  for (size_t i = 0; i < m; i++) {
+    for (size_t j = 0; j < n; j++) {
+      route_[i] = parcurs[(unsigned long)rand() % n];
+    }
+  }
+
+  unsigned long found, play, cycle, k = 0, recent[128] = {[0 ... 127] = 0};
+  found = play = cycle = k;
+
+  /* static const unsigned route__size = ARRAY_SIZE(route_); */
+
+  for (; cycle < m; cycle++) {
+    do {
+      play = (unsigned long)rand() % n;
+      found = 0;
+      for (k = 0; k < n; k++)
+        if (recent[k] == play)
+          found = 1;
+    } while (found);
+
+    route_[cycle] = parcurs[play];
+  }
+}
+__attribute__((const)) static inline unsigned
+repeating(const struct Route *const in) {
+  for (unsigned i = 0; i < 32; i++) {
+    if (in[i + 1].km == in[i].km && in[i].km != 30)
+      return 1;
+  }
+  return 0;
+}
+
+void mix(void) {
+  srand(global_time);
+  do {
+    random_shuffle();
+  } while (repeating(route_));
+}
+
+#ifndef Skipmain
 int main(int argc, char *argv[]) {
 
   init_time(argc, argv);
-
+  mix();
   /* yap, works */
   for (unsigned i = 1; i < 30; ++i) {
     printf("%d %d\n", i, arr[i]);
@@ -309,3 +384,4 @@ int main(int argc, char *argv[]) {
 #endif
   return 0;
 }
+#endif
