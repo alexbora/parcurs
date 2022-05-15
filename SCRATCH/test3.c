@@ -46,6 +46,14 @@ void debug_log(char *file, char *fmt, ...) {
   close(fd);
 }
 
+void fnull(char *file, char *fmt, ...){};
+
+#ifdef DEBUG
+#define DEBUG_LOG debug_log
+#else
+#define DEBUG_LOG fnull
+#endif
+
 double Sys_FloatTime(void) {
   struct timeval tp;
   struct timezone tzp;
@@ -125,9 +133,13 @@ int main(int argc, char *argv[]) {
   static char end2[] = "\x1b[?7h\x1b[40m\x1b[2J\x1b[0;1;41m\x1b[1;1H        "
                        "QUAKE \x1b[33mby \x1b[44mid\x1b[41m Software";
 
-  printf("%s\n %s\n", end1, end2);
+  /* printf("%s\n %s\n", end1, end2); */
+
+  time_t t = time(0);
+  struct tm tm = *localtime(&t);
+#define LOG "log_parcurs"
 
   mkdir("path", 0777);
-
+  DEBUG_LOG(LOG, asctime(&tm));
   return 0;
 }
