@@ -81,11 +81,12 @@ static inline int weekday_from_days(const int z)
 
 int main(int argc, char *argv[])
 {
-  int days = days_from_civil(2022, 5, 15);
+  int days = days_from_civil(2022, 5, 14);
   to_date(days);
 
   printf("%d %d %d\n", today.day, today.month, today.year);
   printf("%d\n", last_day_of_mon(today.year, today.month));
-  printf("%d\n", weekday_from_days(days));
+  printf("%d\n", weekday_from_days(days + 1));
+
   return 0;
 }
