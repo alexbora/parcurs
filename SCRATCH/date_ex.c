@@ -290,6 +290,7 @@ static void random_shuffle(void) {
     route_[cycle] = parcurs[play];
   }
 }
+
 __attribute__((const)) static inline unsigned
 repeating(const struct Route *const in) {
   for (unsigned i = 0; i < 32; i++) {

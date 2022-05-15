@@ -33,8 +33,12 @@ date.o: ${FILES.h}
 main.o: ${FILES.h}
 # file2.o: ${FILES.h}
 
+lib: net.o date.o mix.o excel.o 
+	ar rcs libmylib.a net.o date.o mix.o excel.o
+	ranlib libmylib.a
+
 # If it exists, prog1.dSYM is a directory on macOS
-DEBRIS = a.out core *~ *.dSYM *.o
+DEBRIS = a.out core *~ *.dSYM *.o *.a
 RM_FR  = rm -fr
 
 clean:
