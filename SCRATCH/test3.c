@@ -24,7 +24,7 @@ int fn(void)
   return fn1();
 }
 
-void sys_error(char *error, ...)
+__attribute__((noreturn)) void error(char *error, ...)
 {
   va_list argptr;
   char    string[1024];
@@ -42,7 +42,7 @@ void sys_error(char *error, ...)
 
 void debug_log(char *file, char *fmt, ...)
 {
-  va_list     argptr     = {};
+  va_list     argptr     = {0};
   static char data[1024] = {'\0'};
   int         fd         = 0;
 
@@ -54,12 +54,17 @@ void debug_log(char *file, char *fmt, ...)
   close(fd);
 }
 
-void fnull(char *file, char *fmt, ...){};
+void fnull(char *file, char *fmt, ...)
+{
+  __asm__("nop");
+}
 
 #ifdef DEBUG
 #define DEBUG_LOG debug_log
+#define LOG       "log_parcurs"
 #else
 #define DEBUG_LOG fnull
+#define LOG       (void *)0
 #endif
 
 double Sys_FloatTime(void)
@@ -147,7 +152,6 @@ int main(int argc, char *argv[])
 
   time_t    t  = time(0);
   struct tm tm = *localtime(&t);
-#define LOG "log_parcurs"
 
   mkdir("path", 0777);
   DEBUG_LOG(LOG, asctime(&tm));
