@@ -206,10 +206,12 @@ static void globals() {
   /* fill starting with 1, so you can avoid branching in holiday loop */
 
 #pragma omp parallel for
-  for (int i = 1; i < dayz_in_mon; i++)
+  char tmp[] = {0, 1, 1, 1, 1, 0};
+  for (int i = 1; i < dayz_in_mon; i++) {
     arr[i] = ((weekday_from_days(days_past + i - 1)) % 6) != 0;
-  /* otherwise the days past will not be correct */
-
+    arr[i] = tmp[weekday_from_days(days_past + i - 2)];
+    /* otherwise the days past will not be correct */
+  }
   enum months { ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, noi, dec };
   static const int hol[12][4] = {
       [ian] = {1, 2, 24},  [apr] = {22, 24, 25}, [mai] = {1, 5},
