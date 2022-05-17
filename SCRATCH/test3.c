@@ -14,20 +14,13 @@
 #include <time.h>
 #include <unistd.h>
 
-static inline int fn1(void)
-{
-  return 0;
-}
+static inline int fn1(void) { return 0; }
 
-int fn(void)
-{
-  return fn1();
-}
+int fn(void) { return fn1(); }
 
-__attribute__((noreturn)) void error(char *error, ...)
-{
+__attribute__((noreturn)) void error(char *error, ...) {
   va_list argptr;
-  char    string[1024];
+  char string[1024];
 
   // change stdin to non blocking
   fcntl(0, F_SETFL, fcntl(0, F_GETFL, 0) & ~FNDELAY);
@@ -40,11 +33,10 @@ __attribute__((noreturn)) void error(char *error, ...)
   exit(1);
 }
 
-void debug_log(char *file, char *fmt, ...)
-{
-  va_list     argptr     = {0};
+void debug_log(char *file, char *fmt, ...) {
+  va_list argptr = {0};
   static char data[1024] = {'\0'};
-  int         fd         = 0;
+  int fd = 0;
 
   va_start(argptr, fmt);
   vsprintf(data, fmt, argptr);
@@ -54,24 +46,20 @@ void debug_log(char *file, char *fmt, ...)
   close(fd);
 }
 
-void fnull(char *file, char *fmt, ...)
-{
-  __asm__("nop");
-}
+void fnull(char *file, char *fmt, ...) { __asm__("nop"); }
 
 #ifdef DEBUG
 #define DEBUG_LOG debug_log
-#define LOG       "log_parcurs"
+#define LOG "log_parcurs"
 #else
 #define DEBUG_LOG fnull
-#define LOG       (void *)0
+#define LOG (void *)0
 #endif
 
-double Sys_FloatTime(void)
-{
-  struct timeval  tp;
+double Sys_FloatTime(void) {
+  struct timeval tp;
   struct timezone tzp;
-  static int      secbase;
+  static int secbase;
 
   gettimeofday(&tp, &tzp);
 
@@ -83,8 +71,7 @@ double Sys_FloatTime(void)
   return (tp.tv_sec - secbase) + tp.tv_usec / 1000000.0;
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
 
   printf("%f\n", Sys_FloatTime());
 
@@ -93,7 +80,7 @@ int main(int argc, char *argv[])
 
   struct Route {
     char *a;
-    int   x;
+    int x;
     void (*fn)(struct Route *);
   };
 
@@ -101,7 +88,7 @@ int main(int argc, char *argv[])
     struct Route route;
   } work_t;
 
-  work_t        w1;
+  work_t w1;
   struct work_s w2 = {{}};
 
   w1.route = (struct Route){"a", 1, NULL};
@@ -150,14 +137,14 @@ int main(int argc, char *argv[])
 
   /* printf("%s\n %s\n", end1, end2); */
 
-  time_t    t  = time(0);
+  time_t t = time(0);
   struct tm tm = *localtime(&t);
 
   mkdir("path", 0777);
   DEBUG_LOG(LOG, asctime(&tm));
 
   struct test_s {
-    int   x;
+    int x;
     char *a;
   } test[4] = {{1, "a"}, {1, "b"}, {1, "a"}};
 
@@ -168,6 +155,9 @@ int main(int argc, char *argv[])
   char *test2 = "a";
 
   printf("%ld\n", test2 - test1);
+
+  int arr2[] = {0, 1};
+  printf("arr1: %d\n", *((int[]){0, 1, 1} + 2));
 
   return 0;
 }
