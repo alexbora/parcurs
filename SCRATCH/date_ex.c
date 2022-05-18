@@ -243,14 +243,16 @@ static void globals()
       [iun] = {1, 12, 13}, [aug] = {15},         [noi] = {30},
       [dec] = {25, 26}};
 
+  memset(arr + hol[TM.tm_mon][0], 0, 4 * sizeof(int));
+
   /* memset(&arr[hol[TM.tm_mon][0]], 0, 1); */
   /* memset(&arr[hol[TM.tm_mon][1]], 0, 1); */
   /* memset(&arr[hol[TM.tm_mon][2]], 0, 1); */
   /* memset(&arr[hol[TM.tm_mon][3]], 0, 1); */
-#pragma omp parallel for
-  for (unsigned i = 0; i < 4; ++i)
-    /* arr[hol[TM.tm_mon][i]] = hol[TM.tm_mon][i]; */
-    arr[hol[TM.tm_mon][i]] = 0;
+  /* #pragma omp parallel for */
+  /*   for (unsigned i = 0; i < 4; ++i) */
+  /*     /1* arr[hol[TM.tm_mon][i]] = hol[TM.tm_mon][i]; *1/ */
+  /*     arr[hol[TM.tm_mon][i]] = 0; */
 }
 
 __attribute__((noreturn)) static void usage()
