@@ -23,7 +23,7 @@ __attribute__((noreturn)) void error(char *error, ...) {
   char string[1024];
 
   // change stdin to non blocking
-  fcntl(0, F_SETFL, fcntl(0, F_GETFL, 0) & ~FNDELAY);
+  /* fcntl(0, F_SETFL, fcntl(0, F_GETFL, 0) & ~FNDELAY); */
 
   va_start(argptr, error);
   vsprintf(string, error, argptr);
@@ -58,10 +58,10 @@ void fnull(char *file, char *fmt, ...) { __asm__("nop"); }
 
 double Sys_FloatTime(void) {
   struct timeval tp;
-  struct timezone tzp;
+  /* struct timezone tzp; */
   static int secbase;
 
-  gettimeofday(&tp, &tzp);
+  /* gettimeofday(&tp, &tzp); */
 
   if (!secbase) {
     secbase = tp.tv_sec;
