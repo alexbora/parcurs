@@ -60,8 +60,6 @@ static int dayz_in_mon;
 static int days_past;
 
 static int arr[32];
-void fnull(void) {}
-void fn(void) {}
 
 static struct Route {
   char *r;
@@ -69,13 +67,23 @@ static struct Route {
   char *obs;
 } route_[128];
 
+#include <stdint.h>
+typedef struct lxw_format lxw_format;
+typedef struct lxw_worksheet lxw_worksheet;
+typedef void (*fx)(const struct Route *, lxw_worksheet *, uint32_t *,
+                   const uint16_t, double *, lxw_format *);
+
+void fnull(const struct Route *r, lxw_worksheet *w, uint32_t *row,
+           const uint16_t col, double *km, lxw_format *format) {}
+
+void fn(const struct Route *r, lxw_worksheet *w, uint32_t *row,
+        const uint16_t col, double *km, lxw_format *format) {}
+
+fx validation_array[32];
+
 struct Work {
-  char longdate[128];
-  char *luna;
-  int dayz_in_mon;
-  int arr[32];
   struct Route *routes;
-  void (*f)(void);
+  void (*fx)(void);
 };
 
 static inline char *literal_mon(const int month) {
@@ -208,11 +216,15 @@ static void globals() {
   /* fill starting with 1, so you can avoid branching in holiday loop */
 #pragma omp parallel for
   void (*f[32])(void);
-  void (*fp[])(void) = {fnull, fn, fn, fn, fn, fn, fnull};
+  /* fx fmx[] = {fnull, fn, fn, fn, fn, fn, fnull}; */
   char tmp[] = {0, 1, 1, 1, 1, 1, 0};
+
+  fx fmx[32], fmp[] = {fnull, fn, fn, fn, fn, fnull};
+
   for (int i = 1; i < dayz_in_mon; i++) {
     arr[i] = ((weekday_from_days(days_past + i - 1)) % 6) != 0;
     arr[i] = tmp[weekday_from_days(days_past + i - 1)];
+    fmx[i] = fmp[weekday_from_days(days_past + i - 1)];
     /* arr[i] = */
     /* *((char[]){0, 1, 1, 1, 1, 0} + weekday_from_days(days_past + i - 1)); */
     /* arr[i] = */
@@ -229,13 +241,16 @@ static void globals() {
   /* memset(arr + hol[TM.tm_mon][0], 0, 4 * sizeof(int)); */
 
   /* memset(&arr[hol[TM.tm_mon][0]], 0, 1); */
-/* memset(&arr[hol[TM.tm_mon][1]], 0, 1); */
-/* memset(&arr[hol[TM.tm_mon][2]], 0, 1); */
-/* memset(&arr[hol[TM.tm_mon][3]], 0, 1); */
+  /* memset(&arr[hol[TM.tm_mon][1]], 0, 1); */
+  /* memset(&arr[hol[TM.tm_mon][2]], 0, 1); */
+  /* memset(&arr[hol[TM.tm_mon][3]], 0, 1); */
 #pragma omp parallel for
-  for (unsigned i = 0; i < 4; ++i)
+  for (unsigned i = 0; i < 4; ++i) {
     /* arr[hol[TM.tm_mon][i]] = hol[TM.tm_mon][i]; */
     arr[hol[TM.tm_mon][i]] = 0;
+    fmx[hol[TM.tm_mon][i]] = fnull;
+  }
+  memcpy(&validation_array, &fmx, 32 * sizeof(void *));
 }
 
 __attribute__((noreturn)) static void usage() {
