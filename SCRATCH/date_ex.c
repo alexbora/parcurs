@@ -219,7 +219,7 @@ static void globals() {
   /* fx fmx[] = {fnull, fn, fn, fn, fn, fn, fnull}; */
   char tmp[] = {0, 1, 1, 1, 1, 1, 0};
 
-  fx fmx[32], fmp[] = {fnull, fn, fn, fn, fn, fnull};
+  fx fmx[32], fmp[] = {fnull, fn, fn, fn, fn, fnull, NULL, NULL};
 
   for (int i = 1; i < dayz_in_mon; i++) {
     arr[i] = ((weekday_from_days(days_past + i - 1)) % 6) != 0;
