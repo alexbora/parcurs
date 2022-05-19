@@ -55,21 +55,22 @@
  */
 
 char longdate[128], *luna;
-int dayz_in_mon;
-int current_year;
+int  dayz_in_mon;
+int  current_year;
 
-static int days_past;
-static int arr[32];
-static time_t global_time;
+static int       days_past;
+static int       arr[32];
+static time_t    global_time;
 static struct tm TM;
 
 static struct Route {
-  char *r;
+  char  *r;
   double km;
-  char *obs;
+  char  *obs;
 } route_[128];
 
-static inline char *literal_mon(const int month) {
+static inline char *literal_mon(const int month)
+{
   return &"ianuarie\0\0\0\0\0\0\0\0februari"
           "e\0\0\0"
           "\0\0\0\0martie\0\0\0\0\0\0\0\0\0\0aprilie\0\0\0\0\0\0\0\0\0mai\0"
@@ -93,33 +94,38 @@ static inline char *literal_mon(const int month) {
 /*   return 31; */
 /* } */
 
-static inline unsigned long is_multiple_of_100(unsigned n) {
-  const unsigned long multiplier = 42949673;
-  const unsigned long bound = 42949669;
+static inline unsigned long is_multiple_of_100(unsigned n)
+{
+  const unsigned long multiplier   = 42949673;
+  const unsigned long bound        = 42949669;
   const unsigned long max_dividend = 1073741799;
-  const unsigned long offset = max_dividend / 2 / 100 * 100; //  536870800
+  const unsigned long offset       = max_dividend / 2 / 100 * 100; //  536870800
   return multiplier * (n + offset) < bound;
 }
 
-static inline int is_leap(int y) {
+static inline int is_leap(int y)
+{
   // Originally, the ternary expression was similar to
   //   is_multiple_of_100(y) ? y % 16 == 0 : y % 4 == 0;
   // and Ulrich Drepper suggested the following twist.
   return (y & (is_multiple_of_100(y) ? 15 : 3)) == 0;
 }
 
-static inline int is_leap3(const int year) {
+static inline int is_leap3(const int year)
+{
   int y = year + 16000;
   return (y % 100) ? !(y % 4) : !(y % 16);
   /* return (is_multiple_of_100((unsigned)y)) ? !(y >> 2) : !(y >> 4); */
 }
 
-static inline int last_day_of_mon(int year, int mon) {
+static inline int last_day_of_mon(int year, int mon)
+{
   /* return mon != 2 ? ((mon ^ (mon >> 3))) | 30 : is_leap3(year) ? 29 : 28; */
   return mon != 2 ? ((mon ^ (mon >> 3))) | 30 : is_leap(year) ? 29 : 28;
 }
 
-static inline int days_from_civil(int y, const int m, const int d) {
+static inline int days_from_civil(int y, const int m, const int d)
+{
   y -= m <= 2;
   const int era = (y >= 0 ? y : y - 399) / 400;
   const int yoe = (y - era * 400);                                 // [0, 399]
@@ -128,9 +134,13 @@ static inline int days_from_civil(int y, const int m, const int d) {
   return era * 146097 + doe - 719468;
 }
 
-static inline int weekday_from_days(const int z) { return (z + 4) % 7; }
+__attribute__((pure)) static inline int weekday_from_days(const int z)
+{
+  return (z + 4) % 7;
+}
 
-static int now() {
+static int now()
+{
   /* normal time */
   /* struct tm tm = *localtime(&(time_t){time(NULL)}); */
   struct tm tm = *localtime(&global_time);
@@ -151,7 +161,8 @@ static int now() {
   return 1;
 }
 
-static int then(char **argv) {
+static int then(char **argv)
+{
   /* shorten year to two digits, in case you enter 2022 instead of 22 */
   char *p = argv[2];
   while (*p++ != '\0') // forward to the end
@@ -161,19 +172,19 @@ static int then(char **argv) {
 
   /* shorten the month name to three charachters, case is entered ianuarie
    * instead of ian */
-  argv[1][3] = '\0';
+  argv[1][3]              = '\0';
   static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi dec ";
   /* char *m = strstr("ian feb mar apr mai iun iul aug sep oct noi dec",
      argv[1]); */
-  char *m = strstr(mths, argv[1]);
-  int mon = (int)((m - mths) / 4);
-  int year = atoi(argv[2]); // atoi(p) ?
-  struct tm tm2 = {.tm_sec = 50,
-                   .tm_min = 50,
-                   .tm_hour = 12,
-                   .tm_mday = 1,
-                   .tm_mon = mon,
-                   .tm_year = year + 100};
+  char     *m    = strstr(mths, argv[1]);
+  int       mon  = (int)((m - mths) / 4);
+  int       year = atoi(argv[2]); // atoi(p) ?
+  struct tm tm2  = {.tm_sec  = 50,
+                    .tm_min  = 50,
+                    .tm_hour = 12,
+                    .tm_mday = 1,
+                    .tm_mon  = mon,
+                    .tm_year = year + 100};
   mktime(&tm2);
   sprintf(longdate, "%02d.%02d.%d", tm2.tm_mday, tm2.tm_mon + 1,
           tm2.tm_year + 1900);
@@ -182,22 +193,26 @@ static int then(char **argv) {
   return 1;
 }
 
-static int cmdl(int argc, char **argv) {
+static int cmdl(int argc, char *argv[static argc + 1])
+{
   if (argc > 2)
     return then(argv);
   return now();
 }
 
-static void globals() {
+static void globals()
+{
   luna = literal_mon(TM.tm_mon);
 
-  days_past = days_from_civil(TM.tm_year + 1900, TM.tm_mon + 1, 1);
-  dayz_in_mon = last_day_of_mon(TM.tm_year + 1900, TM.tm_mon + 1);
+  days_past    = days_from_civil(TM.tm_year + 1900, TM.tm_mon + 1, 1);
+  dayz_in_mon  = last_day_of_mon(TM.tm_year + 1900, TM.tm_mon + 1);
   current_year = TM.tm_year + 1900;
   /* fill starting with 1, so you can avoid branching in holiday loop */
+  const int dayz  = days_past;
+  const int dayzm = dayz_in_mon;
 #pragma omp parallel for
-  for (int i = 1; i < dayz_in_mon; i++)
-    arr[i] = ((weekday_from_days(days_past + i - 1)) % 6) != 0;
+  for (int i = 1; i < dayzm; i++)
+    arr[i] = ((weekday_from_days(dayz + i - 1)) % 6) != 0;
 
   enum months { ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, noi, dec };
   static const int hol[12][4] = {
@@ -210,13 +225,15 @@ static void globals() {
     arr[hol[TM.tm_mon][i]] = 0;
 }
 
-__attribute__((noreturn)) static void usage() {
+__attribute__((noreturn)) static void usage()
+{
   puts("Usage: <mon> <year> <km>\ne.g. iun 22 80000\n");
   /* puts("No error checking whatsoever, you're on your own\n"); */
   exit(0);
 }
 
-static int init_time(int argc, char **argv) {
+static int init_time(int argc, char **argv)
+{
   if (argc > 1 && (*argv[1] == 'h' || strcmp(argv[1], "-h") == 0 ||
                    strcmp(argv[1], "--h") == 0))
     usage();
@@ -232,7 +249,8 @@ static int init_time(int argc, char **argv) {
   return 0;
 }
 
-static void random_shuffle(void) {
+static void random_shuffle(void)
+{
   static const struct Route parcurs[16] = {
       {"Cluj-Oradea", 321, "Interes Serviciu"},
       {"Cluj-Turda", 121, "Interes Serviciu"},
@@ -266,7 +284,7 @@ static void random_shuffle(void) {
 
   for (; cycle < m; cycle++) {
     do {
-      play = (unsigned long)rand() % n;
+      play  = (unsigned long)rand() % n;
       found = 0;
       for (k = 0; k < n; k++)
         if (recent[k] == play)
@@ -278,7 +296,9 @@ static void random_shuffle(void) {
 }
 
 __attribute__((const)) static inline unsigned
-repeating(const struct Route *const in) {
+repeating(const struct Route *const in)
+{
+#pragma - Ofast
 #pragma optimize "align-loops=32"
 #pragma omp parallel for
   for (unsigned i = 0; i < 32; i++) {
@@ -288,15 +308,17 @@ repeating(const struct Route *const in) {
   return 0;
 }
 
-void mix(void) {
-  srand(global_time);
+void mix(void)
+{
+  srand((unsigned)global_time);
   do {
     random_shuffle();
   } while (repeating(route_));
 }
 
 #ifndef Skipmain
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 
   init_time(argc, argv);
   mix();
