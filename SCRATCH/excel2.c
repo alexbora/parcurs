@@ -20,7 +20,7 @@ typedef struct Route {
 #define COL3                  (uint16_t)(2)
 #define COL4                  (uint16_t)(3)
 /* extern uint32_t row; */
-extern int    days_in_month;
+extern int    dayz_in_mon;
 extern double km;
 extern char  *luna, *longdate;
 extern int    current_year;
@@ -177,7 +177,7 @@ int write_excel(void)
                          format_header);
 
   row += 13;
-  int dayz = days_in_month;
+  int dayz = dayz_in_mon;
 
   for (unsigned i = 1; i <= dayz; ++i) {
     worksheet_write_number(worksheet, i + offset - 1, COL1, i, format);
