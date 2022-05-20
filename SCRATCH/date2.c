@@ -298,7 +298,11 @@ static void random_shuffle(void)
 __attribute__((const)) static inline unsigned
 repeating(const struct Route *const in)
 {
-#pragma - Ofast
+#pragma optimize("t", on)
+#pragma inline
+#pragma intrinsic(memset, strlen)
+#pragma GCC optimize("Ofast")
+#pragma GCC target("avx,avx2,fma")
 #pragma optimize "align-loops=32"
 #pragma omp parallel for
   for (unsigned i = 0; i < 32; i++) {
