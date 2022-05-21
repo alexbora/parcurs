@@ -211,7 +211,7 @@ static void globals()
   const int dayz  = days_past;
   const int dayzm = dayz_in_mon;
 #pragma omp parallel for
-  for (int i = 1; i < dayzm; i++)
+  for (int i = 1; i <= dayzm; i++)
     arr[i] = ((weekday_from_days(dayz + i - 1)) % 6) != 0;
 
   enum months { ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, noi, dec };
@@ -327,7 +327,7 @@ int main(int argc, char *argv[])
   init_time(argc, argv);
   mix();
   /* yap, works */
-  for (unsigned i = 1; i < 30; ++i) {
+  for (unsigned i = 1; i <= dayz_in_mon; ++i) {
     printf("%d %d\n", i, arr[i]);
   }
 
