@@ -36,10 +36,10 @@
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
 
-#define ONE_DAY (time_t)(60 * 60 * 24)
+/* #define ONE_DAY (time_t)(60 * 60 * 24) */
 
-#define __isleap(year)                                                         \
-  ((year) % 4 == 0 && ((year) % 100 != 0 || (year) % 400 == 0))
+/* #define __isleap(year) \ */
+/* ((year) % 4 == 0 && ((year) % 100 != 0 || (year) % 400 == 0)) */
 
 /* typedef struct lxw_struct lxw_struct; */
 /* extern struct Route       route; */
@@ -211,7 +211,7 @@ static void globals()
   const int dayz = days_past;
   /* const int dayzm = dayz_in_mon; */
 #pragma omp parallel for
-  for (int i = 1; i < 32; i++)
+  for (int i = 1; i < 32 /*<=daysm */; i++)
     arr[i] = ((weekday_from_days(dayz + i - 1)) % 6) != 0;
 
   enum months { ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, noi, dec };

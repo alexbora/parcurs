@@ -12,7 +12,17 @@ typedef struct Route {
   char *route;
   float km;
   char *obs;
+  void (*fx)(struct Route);
 } route_t;
+void fn(route_t);
+
+typedef struct Work {
+  void (*f)(route_t);
+  route_t route;
+} work_t;
+work_t  w1    = {NULL, {"a", 1, "b"}};
+route_t route = {"a", 1, "b", fn};
+/* work_t  w2 = {NULL, route}; */
 
 #define LXW_COLOR_YELLOW_PALE (0xFFFFCA)
 #define COL1                  (uint16_t)(0)
