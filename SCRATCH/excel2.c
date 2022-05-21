@@ -14,6 +14,9 @@ typedef struct Route {
   char *obs;
   void (*fx)(struct Route);
 } route_t;
+
+route_t rx[32];
+
 void fn(route_t);
 
 typedef struct Work {
