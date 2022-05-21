@@ -208,10 +208,10 @@ static void globals()
   dayz_in_mon  = last_day_of_mon(TM.tm_year + 1900, TM.tm_mon + 1);
   current_year = TM.tm_year + 1900;
   /* fill starting with 1, so you can avoid branching in holiday loop */
-  const int dayz  = days_past;
-  const int dayzm = dayz_in_mon;
+  const int dayz = days_past;
+  /* const int dayzm = dayz_in_mon; */
 #pragma omp parallel for
-  for (int i = 1; i <= dayzm; i++)
+  for (int i = 1; i < 32; i++)
     arr[i] = ((weekday_from_days(dayz + i - 1)) % 6) != 0;
 
   enum months { ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, noi, dec };
@@ -294,19 +294,19 @@ static void random_shuffle(void)
     route_[cycle] = parcurs[play];
   }
 }
-#pragma optimize("t", on)
-#pragma inline
-#pragma intrinsic(memset, strlen)
-#pragma GCC optimize("Ofast")
-#pragma GCC target("avx,avx2,fma")
-#pragma optimize "align-loops=32"
+/* #pragma optimize("t", on) */
+/* #pragma inline */
+/* #pragma intrinsic(memset, strlen) */
+/* #pragma GCC optimize("Ofast") */
+/* #pragma GCC target("avx,avx2,fma") */
+/* #pragma optimize "align-loops=32" */
 __attribute__((const)) static inline unsigned
 repeating(const struct Route *const in)
 {
 
 #pragma omp parallel for
   for (unsigned i = 0; i < 32; i++) {
-    if (in[i + 1].km == in[i].km && in[i].km != 30)
+    if (in[i + 1].km == in[i].km && in[i].km > 30)
       return 1;
   }
   return 0;
