@@ -310,6 +310,7 @@ void mix(void) {
 void get_km() {
   int fd = open("km", O_RDONLY | O_CREAT, 0666);
   char x[16];
+  memset(x, 'x', 16);
   read(fd, x, 8);
   printf("%s\n", x);
   km = (double)(atoi(x));
