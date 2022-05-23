@@ -30,12 +30,16 @@ route_t route = {"a", 1, "b", fn};
 /* work_t  w2 = {NULL, route}; */
 
 #endif
-extern struct Route *route_;
+
+#define LEN_MAX 128u
+
 struct Route {
   char  *route;
   double km;
   char  *obs;
 };
+
+extern struct Route route_[128];
 
 #define LXW_COLOR_YELLOW_PALE (0xFFFFCA)
 #define COL1                  (uint16_t)(0)
