@@ -8,9 +8,11 @@ CFLAGS+=-D_POSIX_C_SOURCE=200112L
 LDLIBS:= `pkg-config --cflags --libs xlsxwriter` 
 LDLIBS+= `pkg-config --cflags --libs openssl` 
 
+
 .DELETE_ON_ERROR:
 date2: date2.o excel2.o 
-	gcc-11 $(CFLAGS) $(LDLIBS) date2.o excel2.o -o date2 `pkg-config --cflags --libs xlsxwriter` 
+	 gcc-11 $(CFLAGS) $(LDLIBS) date2.o excel2.o -o date2 
+	 @# gcc-11 $(CFLAGS) $(LDLIBS) date2.o excel2.o -o date2 `pkg-config --cflags --libs xlsxwriter` 
 
 # date2.o: date2.c 
 # 	gcc-11 -O3 -c date2.c -o date2.o 
