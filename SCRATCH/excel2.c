@@ -69,6 +69,12 @@ static void wday(const struct Route *r, lxw_worksheet *s, uint32_t *row,
   (*row)++;
 }
 
+typedef void (*fn)(const struct Route *, lxw_worksheet *, uint32_t *,
+                   const uint16_t, double *, lxw_format *);
+typedef struct Work {
+  struct Route r;
+  fn           func;
+} work_t;
 /* char *get_longdate(void); */
 int write_excel(void)
 {
