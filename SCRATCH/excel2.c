@@ -6,6 +6,7 @@
 
 #include "main.h"
 
+#include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <xlsxwriter.h>
@@ -72,8 +73,20 @@ static void wday(const struct Route *r, lxw_worksheet *s, uint32_t *row,
 
 typedef void (*fn)(const struct Route *, lxw_worksheet *, uint32_t *,
                    const uint16_t, double *, lxw_format *);
+
+typedef struct Params {
+  lxw_worksheet *ws;
+  uint32_t      *row;
+  const uint32_t col;
+  double        *parcurs;
+  lxw_format    *format;
+} params_t;
+
+/* typedef void (*fn)(const struct Route *, params_t *); */
+
 typedef struct Work {
   struct Route r;
+  params_t     params;
   fn           func;
 } work_t;
 
