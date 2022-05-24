@@ -4,6 +4,8 @@
  * @created     : Miercuri Mai 18, 2022 22:17:44 EEST
  */
 
+#include "main.h"
+
 #include <stdlib.h>
 #include <unistd.h>
 #include <xlsxwriter.h>
@@ -32,12 +34,6 @@ route_t route = {"a", 1, "b", fn};
 #endif
 
 #define LEN_MAX 128u
-
-struct Route {
-  char  *route;
-  double km;
-  char  *obs;
-};
 
 extern struct Route route_[128];
 
@@ -73,11 +69,11 @@ static void wday(const struct Route *r, lxw_worksheet *s, uint32_t *row,
   (*row)++;
 }
 
-char *get_longdate(void);
-int   write_excel(void)
+/* char *get_longdate(void); */
+int write_excel(void)
 {
 
-  puts(get_longdate());
+  /* puts(get_longdate()); */
   /* prepare array */
   /* set data */
   uint32_t row   = 0;

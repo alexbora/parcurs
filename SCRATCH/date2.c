@@ -56,6 +56,7 @@
  * dec";
  */
 
+#include "main.h"
 char   longdate[128], *luna;
 int    dayz_in_mon;
 int    current_year;
@@ -66,11 +67,7 @@ static int       arr[32];
 static time_t    global_time;
 static struct tm TM;
 
-struct Route {
-  char  *route;
-  double km;
-  char  *obs;
-} route_[128];
+struct Route route_[128];
 
 static inline char *literal_mon(const int month)
 {
@@ -341,10 +338,10 @@ void write_km()
   fclose(f);
 }
 
-int   write_excel(void);
-char *get_longdate(void)
+int         write_excel(void);
+const char *get_longdate(void)
 {
-  return longdate;
+  return (const char *)longdate;
 }
 
 #ifndef Skipmain
