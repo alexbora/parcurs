@@ -63,10 +63,10 @@ int    current_year;
 double km;
 
 static int       days_past;
-static int       arr[32];
 static time_t    global_time;
 static struct tm TM;
 
+int          arr[32];
 struct Route route_[128];
 
 static inline char *literal_mon(const int month)
@@ -338,7 +338,9 @@ void write_km()
   fclose(f);
 }
 
-int         write_excel(void);
+void gen(void);
+int  write_excel(void);
+
 const char *get_longdate(void)
 {
   return (const char *)longdate;
@@ -357,6 +359,7 @@ int main(int argc, char *argv[])
 
   get_km();
   printf("%f\n", km);
+  gen();
   write_excel();
 #if 0
   int *h1 = hol[0];

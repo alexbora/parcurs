@@ -47,6 +47,7 @@ extern int    dayz_in_mon;
 extern double km;
 extern char  *luna, longdate[128];
 extern int    current_year;
+extern int    arr[32];
 
 static void wkend(const struct Route *r, lxw_worksheet *s, uint32_t *row,
                   const uint16_t col, double *parcursi, lxw_format *f)
@@ -75,6 +76,19 @@ typedef struct Work {
   struct Route r;
   fn           func;
 } work_t;
+
+work_t fn_array[32];
+
+void gen()
+{
+  fn fn_tmp[2] = {wkend, wday};
+  for (unsigned i = 0; i < dayz_in_mon; i++) {
+    fn_array[i].r    = route_[i];
+    fn_array[i].func = fn_tmp[arr[i]];
+    puts(fn_array[i].r.route);
+  }
+}
+
 /* char *get_longdate(void); */
 int write_excel(void)
 {
