@@ -341,7 +341,11 @@ void write_km()
   fclose(f);
 }
 
-int write_excel(void);
+int   write_excel(void);
+char *get_longdate(void)
+{
+  return longdate;
+}
 
 #ifndef Skipmain
 int main(int argc, char *argv[])

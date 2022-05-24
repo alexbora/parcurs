@@ -73,9 +73,11 @@ static void wday(const struct Route *r, lxw_worksheet *s, uint32_t *row,
   (*row)++;
 }
 
-int write_excel(void)
+char *get_longdate(void);
+int   write_excel(void)
 {
 
+  puts(get_longdate());
   /* prepare array */
   /* set data */
   uint32_t row   = 0;
