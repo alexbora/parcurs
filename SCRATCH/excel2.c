@@ -85,7 +85,6 @@ void gen()
   for (unsigned i = 0; i < dayz_in_mon; i++) {
     fn_array[i].r    = route_[i];
     fn_array[i].func = fn_tmp[arr[i]];
-    puts(fn_array[i].r.route);
   }
 }
 
