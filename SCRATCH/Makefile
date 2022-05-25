@@ -12,6 +12,8 @@ LDFLAGS:=-fopenmp
 LDFLAGS+=-fno-strict-aliasing
 LDFLAGS+=-mavx
 LDFLAGS+=-ffunction-sections
+LDFLAGS+=-fno-rtti
+LDFLAGS+=-fno-unwind-tables
 
 
 .DELETE_ON_ERROR:

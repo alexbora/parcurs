@@ -27,5 +27,9 @@ int main(int argc, char *argv[])
   puts(w_arr[0].r.a);
   puts(w_arr[1].r.a);
 
+  int x = 30;
+  int y = 30;
+  printf("%d\n", (x ^ y) ^ (y ^ 30));
+
   return 0;
 }

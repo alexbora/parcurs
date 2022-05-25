@@ -303,7 +303,6 @@ static void random_shuffle(void)
 __attribute__((const)) static inline unsigned
 repeating(const struct Route *const in)
 {
-
   /* #pragma omp parallel for */
   for (unsigned i = 0; i < 32; i++) {
     if (in[i + 1].km == in[i].km && in[i].km > 30)
