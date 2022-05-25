@@ -14,6 +14,7 @@ LDFLAGS+=-mavx
 LDFLAGS+=-ffunction-sections
 LDFLAGS+=-fno-rtti
 LDFLAGS+=-fno-unwind-tables
+LDFLAGS+=-Winline
 
 
 .DELETE_ON_ERROR:
