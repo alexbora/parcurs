@@ -6,6 +6,7 @@ CC:=gcc-11
 CFLAGS:=-O3
 CFLAGS+=-std=c11 
 CFLAGS+=-D_POSIX_C_SOURCE=200112L
+CFLAGS+=-ffunction-sections
 LDLIBS:= `pkg-config --cflags --libs xlsxwriter` 
 LDLIBS+= `pkg-config --cflags --libs openssl` 
 LDFLAGS:=-fopenmp

@@ -95,7 +95,7 @@ work_t fn_array[32];
 void gen()
 {
   fn fn_tmp[2] = {wkend, wday};
-  for (unsigned i = 0; i < dayz_in_mon; i++) {
+  for (unsigned i = 1; i <= dayz_in_mon; i++) {
     fn_array[i].r    = route_[i];
     fn_array[i].func = fn_tmp[arr[i]];
   }
@@ -240,6 +240,7 @@ int write_excel(void)
     worksheet_write_number(worksheet, i + offset - 1, COL1, i, format);
   }
 
+  params_t p1 = {worksheet, &row, 1, &parcursi, format};
   /* for (unsigned i = 0; i < dayz; ++i) { */
   /*   w[i].we(&w[i].r, worksheet, &row, 1, &parcursi, format); */
   /* } */
