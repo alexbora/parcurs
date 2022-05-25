@@ -177,5 +177,15 @@ int main(int argc, char *argv[])
   int arr2[] = {0, 1};
   printf("arr1: %d\n", *((int[]){0, 1, 1} + 2));
 
+  struct R {
+    char *a;
+  };
+  struct Work {
+    struct R r;
+  };
+
+  struct Work w[2];
+  struct R    r[2];
+
   return 0;
 }
