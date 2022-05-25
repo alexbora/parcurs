@@ -92,6 +92,11 @@ typedef struct Work {
 
 work_t fn_array[32];
 
+struct W {
+  struct Route r[32];
+  fn           func[32];
+};
+
 void gen()
 {
   fn fn_tmp[2] = {wkend, wday};
@@ -99,6 +104,9 @@ void gen()
     fn_array[i].r    = route_[i];
     fn_array[i].func = fn_tmp[arr[i]];
   }
+  struct W w1;
+
+  memcpy(&w1.r, &route_, 32);
 }
 
 /* char *get_longdate(void); */
