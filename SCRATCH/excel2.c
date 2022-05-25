@@ -55,10 +55,13 @@ static void wkend(const struct Route *r, lxw_worksheet *s, uint32_t *row,
 {
   (void)r;
   (void)parcursi;
+  uint32_t tmp_row = *row;
   worksheet_write_string(s, *row, col, "", f);
   worksheet_write_string(s, *row, col + 1, "", f);
   worksheet_write_string(s, *row, col + 2, "", f);
-  (*row)++;
+  tmp_row++;
+  *row = tmp_row;
+  /* (*row)++; */
 }
 
 static void wday(const struct Route *r, lxw_worksheet *s, uint32_t *row,
