@@ -68,7 +68,7 @@ def mail3():
 
     longdate = datetime.today().strftime('%d.%m.%Y')
    
-    excel="/home/alex/tmp/parcurs/foaie_parcurs_B-151-VGT_" + month.lower() + "_2022_Alex_Bora.xlsx"
+    excel="foaie_parcurs_B-151-VGT_" + month.lower() + "_2022_Alex_Bora.xlsx"
     exe="/home/alex/tmp/parcurs/./foaie_2"
     subprocess.call(exe)
     sender_email = "t400.linux@gmail.com"
