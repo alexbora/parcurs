@@ -256,6 +256,20 @@ int write_excel(void)
   /*   w[i].we(&w[i].r, worksheet, &row, 1, &parcursi, format); */
   /* } */
 
+  struct Route *rr = &(struct Route){"a", 1, "b"};
+
+#if 0
+  static const int labels[2] = {&&foo - &&foo, &&foo - &&bar};
+  goto *(&&foo + labels[1]);
+foo:
+  worksheet_write_number(worksheet, row, 1, (double)rr->km, format);
+  worksheet_write_string(worksheet, row, 2, rr->route, format);
+  worksheet_write_string(worksheet, row, 3, rr->obs, format);
+  parcursi += (unsigned)rr->km;
+  row++;
+#endif
+bar:
+
   total = (unsigned)km + (unsigned)parcursi;
   km    = (unsigned)total;
 
