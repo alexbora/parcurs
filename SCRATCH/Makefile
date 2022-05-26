@@ -4,17 +4,17 @@
 TARGET:=final_program
 CC:=gcc-11
 CFLAGS:=-O3
-CFLAGS+=-std=c11 
+CFLAGS+=-std=c11 -fstrict-aliasing -fopenmp -mavx -ffunction-sections 
 CFLAGS+=-D_POSIX_C_SOURCE=200112L
 LDLIBS:= `pkg-config --cflags --libs xlsxwriter` 
 LDLIBS+= `pkg-config --cflags --libs openssl` 
-LDFLAGS:=-fopenmp
-LDFLAGS+=-fno-strict-aliasing
-LDFLAGS+=-mavx
-LDFLAGS+=-ffunction-sections
-LDFLAGS+=-fno-rtti
-LDFLAGS+=-fno-unwind-tables
-LDFLAGS+=-Winline
+LDFLAGS:=
+# LDFLAGS+=-fno-strict-aliasing
+# LDFLAGS+=-mavx
+# LDFLAGS+=-ffunction-sections
+# LDFLAGS+=-fno-rtti
+# LDFLAGS+=-fno-unwind-tables
+# LDFLAGS+=-Winline
 
 
 .DELETE_ON_ERROR:
