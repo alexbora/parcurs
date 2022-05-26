@@ -319,8 +319,9 @@ void mix(void)
   } while (repeating(route_));
 }
 
-void get_km()
+void get_km(char *argv)
 {
+  printf("%d\n", atoi(argv));
   int  fd = open("km", O_RDONLY | O_CREAT, 0666);
   char x[16];
   memset(x, 'x', 16);
@@ -356,7 +357,11 @@ int main(int argc, char *argv[])
     printf("%d %d\n", i, arr[i]);
   }
 
-  get_km();
+  if (argc > 3)
+    get_km(argv[argc - 1]);
+  else
+    get_km(0);
+
   printf("%f\n", km);
   gen();
   write_excel();
