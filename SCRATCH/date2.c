@@ -317,6 +317,9 @@ void mix(void)
   do {
     random_shuffle();
   } while (repeating(route_));
+  for (unsigned i = 0; i < 32; i++) {
+    puts(route_[i].route);
+  }
 }
 
 void get_km(char *argv)
@@ -326,7 +329,7 @@ void get_km(char *argv)
   char x[16];
   memset(x, 'x', 16);
   read(fd, x, 8);
-  printf("%s\n", x);
+  /* printf("%s\n", x); */
   km = (double)(atoi(x));
   close(fd);
 }
@@ -357,10 +360,10 @@ int main(int argc, char *argv[])
     printf("%d %d\n", i, arr[i]);
   }
 
-  if (argc > 3)
-    get_km(argv[argc - 1]);
-  else
-    get_km(NULL);
+  /* if (argc > 3) */
+  /* get_km(argv[argc - 1]); */
+  /* else */
+  get_km(NULL);
 
   /* printf("%f\n", km); */
   gen();

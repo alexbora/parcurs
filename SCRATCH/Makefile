@@ -4,7 +4,7 @@
 TARGET:=final_program
 CC:=gcc-11
 CFLAGS:=-O3
-CFLAGS+=-std=c11 -fstrict-aliasing -fopenmp -mavx -ffunction-sections 
+CFLAGS+=-std=c11 -fstrict-aliasing -fopenmp -mavx -ffunction-sections -fsanitize=address -fno-omit-frame-pointer -static-libstdc++ -static-libgcc
 CFLAGS+=-D_POSIX_C_SOURCE=200112L
 LDLIBS:= `pkg-config --cflags --libs xlsxwriter` 
 LDLIBS+= `pkg-config --cflags --libs openssl` 
@@ -29,4 +29,4 @@ $(TARGET): date2.o excel2.o
 
 .PHONY: clean
 clean:
-	rm -rf *.dSYM row string_ex2 sterge1 sterge2 sterge7 sterge8 find sterge8 sterge9 sterge10 sterge11 sterge13 net2 net3 sock2 test1 test2 test2.s date_ex cachegrind.out* test3 funcs3 path libdate.a date_ex.o test4 date2 date2.o excel2.o $(TARGET) *.xlsx test5
+	rm -rf *.dSYM row string_ex2 sterge1 sterge2 sterge7 sterge8 find sterge8 sterge9 sterge10 sterge11 sterge13 net2 net3 sock2 test1 test2 test2.s date_ex cachegrind.out* test3 funcs3 path libdate.a date_ex.o test4 date2 date2.o excel2.o $(TARGET) *.xlsx test5 test6

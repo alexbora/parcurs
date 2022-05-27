@@ -31,5 +31,8 @@ int main(int argc, char *argv[])
   int y = 30;
   printf("%d\n", (x ^ y) ^ (y ^ 30));
 
+  unsigned v = 0;
+  printf("%d\n", (1 << 6) >> v);
+
   return 0;
 }
