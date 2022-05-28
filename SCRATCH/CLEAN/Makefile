@@ -2,7 +2,7 @@
 	 # gcc -O3 -std=c11 date2.c excel2.c -o date2 `pkg-config --cflags --libs xlsxwriter`
 
 TARGET:=final_program
-CC:=gcc
+CC:=gcc-10.1
 CFLAGS:=-O3
 CFLAGS+=-std=c11 -fstrict-aliasing -fopenmp -mavx -ffunction-sections -fsanitize=address -fno-omit-frame-pointer -static-libstdc++ -static-libgcc
 CFLAGS+=-D_POSIX_C_SOURCE=200112L
