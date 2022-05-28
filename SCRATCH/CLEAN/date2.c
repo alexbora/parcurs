@@ -366,7 +366,7 @@ int main(int argc, char *argv[])
   get_km(NULL);
 
   /* printf("%f\n", km); */
-  gen();
+  /* gen(); */
   write_excel();
 #if 0
   int *h1 = hol[0];

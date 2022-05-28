@@ -11,6 +11,14 @@
 #include <unistd.h>
 #include <xlsxwriter.h>
 
+typedef void (*fx)(const struct Route *, lxw_worksheet *, uint32_t *,
+                   const uint16_t, double *, lxw_format *);
+
+struct Work {
+  struct Route r;
+  fx           we;
+};
+
 #if 0
 
 typedef struct Route {
@@ -74,42 +82,59 @@ static void wday(const struct Route *r, lxw_worksheet *s, uint32_t *row,
   (*row)++;
 }
 
-typedef void (*fn)(const struct Route *, lxw_worksheet *, uint32_t *,
-                   const uint16_t, double *, lxw_format *);
+/* typedef void (*fn)(const struct Route *, lxw_worksheet *, uint32_t *, */
+/*                    const uint16_t, double *, lxw_format *); */
 
-typedef struct Params {
-  lxw_worksheet *ws;
-  uint32_t      *row;
-  const uint32_t col;
-  double        *parcurs;
-  lxw_format    *format;
-} params_t;
+/* typedef struct Params { */
+/*   lxw_worksheet *ws; */
+/*   uint32_t      *row; */
+/*   const uint32_t col; */
+/*   double        *parcurs; */
+/*   lxw_format    *format; */
+/* } params_t; */
 
 /* typedef void (*fn)(const struct Route *, params_t *); */
 
-typedef struct Work {
-  struct Route r;
-  params_t     params;
-  fn           func;
-} work_t;
+/* typedef struct Work { */
+/*   struct Route r; */
+/*   params_t     params; */
+/*   fn           func; */
+/* } work_t; */
 
-work_t fn_array[32];
+/* work_t fn_array[32]; */
 
-struct W {
-  struct Route r[32];
-  fn           func[32];
-};
+/* struct W { */
+/*   struct Route r[32]; */
+/*   fn           func[32]; */
+/* }; */
 
-void gen()
+/* void gen() */
+/* { */
+/*   fn fn_tmp[2] = {wkend, wday}; */
+/*   for (unsigned i = 1; i <= dayz_in_mon; i++) { */
+/*     fn_array[i].r    = route_[i]; */
+/*     fn_array[i].func = fn_tmp[arr[i]]; */
+/*   } */
+/*   struct W w1; */
+
+/*   memcpy(&w1.r, &route_, 32); */
+/* } */
+
+static struct Work *prepare_work(void)
 {
-  fn fn_tmp[2] = {wkend, wday};
-  for (unsigned i = 1; i <= dayz_in_mon; i++) {
-    fn_array[i].r    = route_[i];
-    fn_array[i].func = fn_tmp[arr[i]];
-  }
-  struct W w1;
+  static struct Work wa[32] = {0};
 
-  memcpy(&w1.r, &route_, 32);
+  for (unsigned i = 0; i < dayz_in_mon; i++) {
+    if (arr[i])
+      wa[i] = (struct Work){.r = route_[i], .we = wday};
+    else
+      wa[i] = (struct Work){.r = {0}, .we = wkend};
+  }
+
+  /* for (unsigned i = 0; i < dayz; i++) */
+  /* wa[i].f(&wa[i].r); */
+
+  return &wa[0];
 }
 
 /* char *get_longdate(void); */
@@ -251,6 +276,16 @@ int write_excel(void)
     worksheet_write_number(worksheet, i + offset - 1, COL1, i, format);
   }
 
+  const struct Work *w = prepare_work();
+  for (unsigned i = 0; i < dayz; ++i) {
+    w[i].we(&w[i].r, worksheet, &row, 1, &parcursi, format);
+  }
+
+#if 0
+  for (unsigned i = 1; i <= dayz; ++i) {
+    worksheet_write_number(worksheet, i + offset - 1, COL1, i, format);
+  }
+
   params_t p1 = {worksheet, &row, 1, &parcursi, format};
   /* for (unsigned i = 0; i < dayz; ++i) { */
   /*   w[i].we(&w[i].r, worksheet, &row, 1, &parcursi, format); */
@@ -258,7 +293,6 @@ int write_excel(void)
 
   struct Route *rr = &(struct Route){"a", 1, "b"};
 
-#if 0
   static const int labels[2] = {&&foo - &&foo, &&foo - &&bar};
   goto *(&&foo + labels[1]);
 foo:
@@ -267,9 +301,9 @@ foo:
   worksheet_write_string(worksheet, row, 3, rr->obs, format);
   parcursi += (unsigned)rr->km;
   row++;
-#endif
 bar:
 
+#endif
   total = (unsigned)km + (unsigned)parcursi;
   km    = (unsigned)total;
 
