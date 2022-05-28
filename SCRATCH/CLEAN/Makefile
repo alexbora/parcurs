@@ -2,7 +2,7 @@
 	 # gcc -O3 -std=c11 date2.c excel2.c -o date2 `pkg-config --cflags --libs xlsxwriter`
 
 TARGET:=final_program
-CC:=gcc-11
+CC:=gcc
 CFLAGS:=-O3
 CFLAGS+=-std=c11 -fstrict-aliasing -fopenmp -mavx -ffunction-sections -fsanitize=address -fno-omit-frame-pointer -static-libstdc++ -static-libgcc
 CFLAGS+=-D_POSIX_C_SOURCE=200112L
@@ -19,7 +19,7 @@ LDFLAGS:=
 
 .DELETE_ON_ERROR:
 $(TARGET): date2.o excel2.o 
-	 gcc-11 $(CFLAGS) $(LDLIBS) $(LDFLAGS) date2.o excel2.o -o $(TARGET) 
+	 gcc $(CFLAGS) $(LDLIBS) $(LDFLAGS) date2.o excel2.o -o $(TARGET) 
 	 @# gcc-11 $(CFLAGS) $(LDLIBS) date2.o excel2.o -o date2 `pkg-config --cflags --libs xlsxwriter` 
 
 # date2.o: date2.c 
