@@ -18,32 +18,34 @@ void f2(void *p)
   printf("2: %s\n", (char *)p);
 }
 
-struct Work {
-  void *data;
-  void (*fn)(void *);
-};
-
 struct Method {
   union {
     void (*f1)(void *in);
     void (*f2)(void *in);
   };
 };
+struct Work {
+  void *data;
+  void (*fn)(void *);
+  struct Method *m;
+};
 
 struct Process {
-  struct Route  *r;
-  lxw_worksheet *ws;
-  uint32_t       row;
-  uint16_t       col;
-  double         parcursi;
-  lxw_format    *format;
+  struct Route *r;
+  /* lxw_worksheet *ws; */
+  uint32_t row;
+  uint16_t col;
+  double   parcursi;
+  /* lxw_format    *format; */
 };
 
 int main(int argc, char *argv[])
 {
 
-  struct Work w1 = {"test", f1};
+  struct Method *m  = &(struct Method){0};
+  struct Work    w1 = {"test", f1, m};
   w1.fn(w1.data);
+  w1.m->f1(w1.data);
 
   long array[] = {&&foo - &&foo, &&bar - &&foo};
 
