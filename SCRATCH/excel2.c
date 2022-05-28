@@ -251,24 +251,32 @@ int write_excel(void)
     worksheet_write_number(worksheet, i + offset - 1, COL1, i, format);
   }
 
-  params_t p1 = {worksheet, &row, 1, &parcursi, format};
   /* for (unsigned i = 0; i < dayz; ++i) { */
   /*   w[i].we(&w[i].r, worksheet, &row, 1, &parcursi, format); */
   /* } */
 
-  struct Route *rr = &(struct Route){"a", 1, "b"};
+  /* params_t p1 = {worksheet, &row, 1, &parcursi, format}; */
+  /* struct Route *rr = &(struct Route){"a", 1, "b"}; */
 
-#if 0
-  static const int labels[2] = {&&foo - &&foo, &&foo - &&bar};
-  goto *(&&foo + labels[1]);
+  /* #if 0 */
+  static const int labels[2] = {&&foo - &&foo, &&bar - &&foo};
+  struct Route    *rr        = route_;
+  worksheet_write_number(worksheet, row, 1, (double)rr[0].km, format);
+  worksheet_write_number(worksheet, row, 1, (double)rr[1].km, format);
+  printf("ROUTE: %s\n", rr[1].route);
+  for (unsigned i = 1; i <= dayz; i++)
+    goto *(&&foo + labels[arr[i]]);
 foo:
   worksheet_write_number(worksheet, row, 1, (double)rr->km, format);
   worksheet_write_string(worksheet, row, 2, rr->route, format);
   worksheet_write_string(worksheet, row, 3, rr->obs, format);
   parcursi += (unsigned)rr->km;
   row++;
-#endif
+/* #endif */
 bar:
+  worksheet_write_string(worksheet, row, 1, "", format);
+  worksheet_write_string(worksheet, row, 2, "", format);
+  worksheet_write_string(worksheet, row, 3, "", format);
 
   total = (unsigned)km + (unsigned)parcursi;
   km    = (unsigned)total;
