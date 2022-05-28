@@ -8,7 +8,7 @@ CFLAGS+=-std=c11 -fstrict-aliasing -fopenmp -mavx -ffunction-sections -fsanitize
 CFLAGS+=-D_POSIX_C_SOURCE=200112L
 LDLIBS:= `pkg-config --cflags --libs xlsxwriter` 
 LDLIBS+= `pkg-config --cflags --libs openssl` 
-LDFLAGS:=
+LDFLAGS:=-lxlsxwriter
 # LDFLAGS+=-fno-strict-aliasing
 # LDFLAGS+=-mavx
 # LDFLAGS+=-ffunction-sections
