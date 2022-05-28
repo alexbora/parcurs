@@ -120,7 +120,7 @@ static void wday(const struct Route *r, lxw_worksheet *s, uint32_t *row,
 /*   memcpy(&w1.r, &route_, 32); */
 /* } */
 
-static struct Work *prepare_work(void)
+static inline struct Work *prepare_work(void)
 {
   static struct Work wa[32] = {0};
 
