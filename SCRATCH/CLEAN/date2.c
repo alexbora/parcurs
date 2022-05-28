@@ -327,13 +327,17 @@ void mix(void)
 void get_km(char *argv)
 {
   /* printf("%d\n", atoi(argv)); */
-  int  fd = open("km", O_RDONLY | O_CREAT, 0666);
-  char x[16];
-  memset(x, 'x', 16);
-  read(fd, x, 8);
-  /* printf("%s\n", x); */
-  km = (double)(atoi(x));
-  close(fd);
+  if (argv == NULL) {
+    int  fd = open("km", O_RDONLY | O_CREAT, 0666);
+    char x[16];
+    memset(x, 'x', 16);
+    read(fd, x, 8);
+    km = (double)(atoi(x));
+    close(fd);
+  } else {
+    km = (double)(atoi(argv));
+  }
+  printf("KM: %f\n", km);
 }
 
 void write_km()
@@ -365,7 +369,7 @@ int main(int argc, char *argv[])
   /* if (argc > 3) */
   /* get_km(argv[argc - 1]); */
   /* else */
-  get_km(NULL);
+  get_km(argc > 3 ? argv[argc - 1] : NULL);
 
   /* printf("%f\n", km); */
   /* gen(); */
