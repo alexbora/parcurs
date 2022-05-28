@@ -212,7 +212,9 @@ static void globals()
   /* const int dayzm = dayz_in_mon; */
 #pragma omp parallel for
   for (int i = 1; i < 32 /*<=daysm */; i++)
-    arr[i] = ((weekday_from_days(dayz + i - 1)) % 6) != 0;
+    /* arr[i] = ((weekday_from_days(dayz + i - 1)) % 6) != 0; */
+    arr[i] = ((weekday_from_days(dayz + i - 1)) != 0 &&
+              (weekday_from_days(dayz + i - 1) != 6));
 
   enum months { ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, noi, dec };
   static const int hol[12][4] = {
