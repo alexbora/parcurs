@@ -6,7 +6,7 @@
 
 all: 
 	@./compiles.sh
-	@gcc-12 foaie_2.c -o foaie_2 `pkg-config --cflags --libs xlsxwriter`
+	@gcc-11 foaie_2.c -o foaie_2 `pkg-config --cflags --libs xlsxwriter`
 
 	@echo "compiling..."
 clean:
