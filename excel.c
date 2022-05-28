@@ -237,6 +237,6 @@ int write_excel(void) {
 
   worksheet_write_string(worksheet, r + 9, COL1, "……………………………………………………",
                          format_footer);
-
+  puts("Closing\n");
   return workbook_close(workbook);
 }
