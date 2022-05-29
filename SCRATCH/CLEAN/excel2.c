@@ -11,8 +11,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-typedef void (*fx)(const struct Route *, lxw_worksheet *, uint32_t *,
-                   const uint16_t, double *, lxw_format *);
+typedef void (*fx)(const struct Route *, lxw_worksheet *, uint32_t,
+                   lxw_format *);
 
 struct Work {
   struct Route r;
@@ -58,25 +58,25 @@ extern char *luna, longdate[128];
 extern int current_year;
 extern int arr[32];
 
-static void wkend(const struct Route *r, lxw_worksheet *s, uint32_t *row,
-                  const uint16_t col, double *parcursi, lxw_format *f) {
+static void wkend(const struct Route *r, lxw_worksheet *s, uint32_t row,
+                  lxw_format *f) {
   (void)r;
-  (void)parcursi;
+  /* (void)parcursi; */
   /* uint32_t tmp_row = *row; */
-  worksheet_write_string(s, *row, col, "", f);
-  worksheet_write_string(s, *row, col + 1, "", f);
-  worksheet_write_string(s, *row, col + 2, "", f);
+  worksheet_write_string(s, row, 1, "", f);
+  worksheet_write_string(s, row, 2, "", f);
+  worksheet_write_string(s, row, 3, "", f);
   /* tmp_row++; */
   /* *row = tmp_row; */
   /* (*row)++; */
 }
 
-static void wday(const struct Route *r, lxw_worksheet *s, uint32_t *row,
-                 const uint16_t col, double *parcursi, lxw_format *f) {
-  worksheet_write_number(s, *row, col, (double)r->km, f);
-  worksheet_write_string(s, *row, col + 1, r->route, f);
-  worksheet_write_string(s, *row, col + 2, r->obs, f);
-  (*parcursi) += (unsigned)r->km;
+static void wday(const struct Route *r, lxw_worksheet *s, uint32_t row,
+                 lxw_format *f) {
+  worksheet_write_number(s, row, 1, (double)r->km, f);
+  worksheet_write_string(s, row, 2, r->route, f);
+  worksheet_write_string(s, row, 3, r->obs, f);
+  /* (*parcursi) += (unsigned)r->km; */
   /* (*row)++; */
 }
 
@@ -279,10 +279,11 @@ int write_excel(void) {
   const struct Work *w = prepare_work();
 
   for (unsigned i = 1; i <= dayz; ++i) {
-    w[i].we(&w[i].r, worksheet, &row, 1, &parcursi, format);
+    w[i].we(&w[i].r, worksheet, row, format);
+    parcursi += w[i].r.km;
     row++;
   }
-
+  printf("parcursi: %f\n", parcursi);
 #if 0
   params_t p1 = {worksheet, &row, 1, &parcursi, format};
   /* for (unsigned i = 0; i < dayz; ++i) { */
