@@ -4,12 +4,12 @@
 HOST=$(shell hostname)
 TARGET:=final_program
 CC= #:=gcc-10.1
-CFLAGS:=-O3
-CFLAGS+=-std=c11 -fstrict-aliasing -fopenmp -mavx -ffunction-sections -fsanitize=address -fno-omit-frame-pointer -static-libstdc++ -static-libgcc
+CFLAGS:=-O3 -lgcc #-v#-static
+CFLAGS+=-std=c11 -fstrict-aliasing -fopenmp -m64 -mavx -ffunction-sections -fsanitize=address -fno-omit-frame-pointer -static-libstdc++ -static-libgcc #/home/linuxbrew/.linuxbrew/Cellar/gcc@12/12.1.0/lib/gcc/12/gcc/x86_64-pc-linux-gnu/12/libgcc.a
 CFLAGS+=-D_POSIX_C_SOURCE=200112L
 LDLIBS:= `pkg-config --cflags --libs xlsxwriter` 
 LDLIBS+= `pkg-config --cflags --libs openssl` 
-LDFLAGS:=-lxlsxwriter
+LDFLAGS:=-lgcc -lxlsxwriter -lasan
 # LDFLAGS+=-fno-strict-aliasing
 # LDFLAGS+=-mavx
 # LDFLAGS+=-ffunction-sections
@@ -30,7 +30,10 @@ $(TARGET): date2.o excel2.o
 
 ifeq ($(HOST),  mac.local)
 CC:=/usr/local/Cellar/gcc@12/12*/bin/gcc-12
-else 
+endif
+ifeq ($(HOST), T460)
+CC:=gcc-12
+else
 CC:=gcc-10.1
 endif
 
