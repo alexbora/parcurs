@@ -156,7 +156,7 @@ int write_excel(void) {
           longdate);
 
   lxw_workbook_options options = {.constant_memory = LXW_FALSE,
-                                  .tmpdir = getcwd(NULL, 0),
+                                  /* .tmpdir = getcwd(NULL, 0), */
                                   .use_zip64 = LXW_TRUE};
 
   /* set properties */
