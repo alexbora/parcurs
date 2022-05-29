@@ -33,9 +33,11 @@ CC:=/usr/local/Cellar/gcc@12/12*/bin/gcc-12
 endif
 ifeq ($(HOST), T460)
 CC:=gcc-12
-else
+endif
+ifeq ($(HOST),  T400)
 CC:=gcc-10.1
 endif
+
 
 .PHONY: clean
 clean:
