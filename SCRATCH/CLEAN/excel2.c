@@ -56,7 +56,7 @@ extern int dayz_in_mon;
 extern unsigned km;
 extern char *luna, longdate[128];
 extern int current_year;
-extern char arr[32];
+extern unsigned char arr[32];
 
 static void wkend(const struct Route *r, lxw_worksheet *s, uint32_t row,
                   lxw_format *f) {
@@ -286,9 +286,7 @@ int write_excel(void) {
   printf("parcursi: %u\n", parcursi);
 
   total = km + parcursi;
-  unsigned *k = &km;
-  *k = total;
-  /* *&km = total; */
+  *&km = total;
 
   worksheet_write_string(worksheet, dayz + offset, COL1,
                          "Km parcursi:", format_header);

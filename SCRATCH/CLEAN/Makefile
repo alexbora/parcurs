@@ -4,7 +4,7 @@
 HOST=$(shell hostname)
 TARGET:=final_program
 CC= #:=gcc-10.1
-CFLAGS:=-O3 -lgcc #-v#-static
+CFLAGS:=-O3 -ggdb3 -lgcc #-v#-static
 CFLAGS+=-std=c11 -fstrict-aliasing -fopenmp -m64 -mavx -ffunction-sections -fsanitize=address -fno-omit-frame-pointer -static-libstdc++ -static-libgcc #/home/linuxbrew/.linuxbrew/Cellar/gcc@12/12.1.0/lib/gcc/12/gcc/x86_64-pc-linux-gnu/12/libgcc.a
 CFLAGS+=-D_POSIX_C_SOURCE=200112L
 LDLIBS:= `pkg-config --cflags --libs xlsxwriter` 
@@ -39,4 +39,4 @@ endif
 
 .PHONY: clean
 clean:
-	rm -rf *.dSYM row string_ex2 sterge1 sterge2 sterge7 sterge8 find sterge8 sterge9 sterge10 sterge11 sterge13 net2 net3 sock2 test1 test2 test2.s date_ex cachegrind.out* test3 funcs3 path libdate.a date_ex.o test4 date2 date2.o excel2.o $(TARGET) *.xlsx test5 test6 test7 callgrind.out.*
+	rm -rf *.dSYM row string_ex2 sterge1 sterge2 sterge7 sterge8 find sterge8 sterge9 sterge10 sterge11 sterge13 net2 net3 sock2 test1 test2 test2.s date_ex cachegrind.out* test3 funcs3 path libdate.a date_ex.o test4 date2 date2.o excel2.o $(TARGET) *.xlsx test5 test6 test7 callgrind.out.* perf.data

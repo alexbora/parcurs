@@ -66,7 +66,7 @@ static int days_past;
 static time_t global_time;
 static struct tm TM;
 
-char arr[32];
+unsigned char arr[32];
 struct Route route_[128];
 
 static inline char *literal_mon(const int month) {
