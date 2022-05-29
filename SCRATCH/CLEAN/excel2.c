@@ -53,10 +53,10 @@ extern struct Route route_[128];
 #define COL4 (uint16_t)(3)
 /* extern uint32_t row; */
 extern int dayz_in_mon;
-extern double km;
+extern unsigned km;
 extern char *luna, longdate[128];
 extern int current_year;
-extern int arr[32];
+extern char arr[32];
 
 static void wkend(const struct Route *r, lxw_worksheet *s, uint32_t row,
                   lxw_format *f) {
@@ -146,7 +146,7 @@ int write_excel(void) {
   /* set data */
   uint32_t row = 0;
   unsigned total = 0, offset = 13;
-  double parcursi = 0;
+  unsigned parcursi = 0;
 
   char name[128], worksheet_name[128], data_predarii[128];
   sprintf(name, "foaie_parcurs_B-151-VGT_%s_%d_Alex_Bora.xlsx", luna,
@@ -270,7 +270,7 @@ int write_excel(void) {
                          format_header);
 
   row += 13;
-  int dayz = dayz_in_mon;
+  unsigned dayz = dayz_in_mon;
 
   for (unsigned i = 1; i <= dayz; ++i) {
     worksheet_write_number(worksheet, i + offset - 1, COL1, i, format);
@@ -283,11 +283,12 @@ int write_excel(void) {
     parcursi += w[i].r.km;
     row++;
   }
-  printf("parcursi: %f\n", parcursi);
+  printf("parcursi: %u\n", parcursi);
 
-  total = (unsigned)km + (unsigned)parcursi;
-  double *k = &km;
-  *k = (unsigned)total;
+  total = km + parcursi;
+  unsigned *k = &km;
+  *k = total;
+  /* *&km = total; */
 
   worksheet_write_string(worksheet, dayz + offset, COL1,
                          "Km parcursi:", format_header);

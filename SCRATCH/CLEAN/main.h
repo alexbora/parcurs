@@ -9,9 +9,9 @@
 #define MAIN_H
 
 struct Route {
-  char  *route;
-  double km;
-  char  *obs;
+  char *route;
+  unsigned km;
+  char *obs;
 };
 
 #endif /* end of include guard MAIN_H */
