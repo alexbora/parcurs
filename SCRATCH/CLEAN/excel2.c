@@ -59,19 +59,19 @@ extern int           current_year;
 extern unsigned char arr[32];
 unsigned             parcursi;
 
-static void wkend(const struct Route *r, lxw_worksheet *s, uint32_t row,
-                  lxw_format *f)
-{
-  (void)r;
-  /* (void)parcursi; */
-  /* uint32_t tmp_row = *row; */
-  worksheet_write_string(s, row, 1, "", f);
-  worksheet_write_string(s, row, 2, "", f);
-  worksheet_write_string(s, row, 3, "", f);
-  /* tmp_row++; */
-  /* *row = tmp_row; */
-  /* (*row)++; */
-}
+/* static void wkend(const struct Route *r, lxw_worksheet *s, uint32_t row, */
+/*                   lxw_format *f) */
+/* { */
+/*   (void)r; */
+/*   /1* (void)parcursi; *1/ */
+/*   /1* uint32_t tmp_row = *row; *1/ */
+/*   worksheet_write_string(s, row, 1, "", f); */
+/*   worksheet_write_string(s, row, 2, "", f); */
+/*   worksheet_write_string(s, row, 3, "", f); */
+/*   /1* tmp_row++; *1/ */
+/*   /1* *row = tmp_row; *1/ */
+/*   /1* (*row)++; *1/ */
+/* } */
 
 static void wday(const struct Route *r, lxw_worksheet *s, uint32_t row,
                  lxw_format *f)
@@ -130,7 +130,7 @@ static inline const struct Work *prepare_work(void)
     if (arr[i])
       wa[i] = (struct Work){.r = route_[i], .we = wday};
     else
-      wa[i] = (struct Work){.r = {"", 0, ""}, .we = wkend};
+      wa[i] = (struct Work){.r = {"", 0, ""}, .we = wday};
   }
 
   /* for (unsigned i = 0; i < dayz; i++) */
@@ -147,7 +147,7 @@ static inline const struct Work *prepare_work(void)
 }
 
 /* char *get_longdate(void); */
-int write_excel(void)
+lxw_error write_excel(void)
 {
 
   /* puts(get_longdate()); */
@@ -160,21 +160,18 @@ int write_excel(void)
   sprintf(name, "foaie_parcurs_B-151-VGT_%s_%d_Alex_Bora.xlsx", luna,
           current_year);
   sprintf(worksheet_name, "%s %d", luna, current_year);
+
   lxw_workbook_options options = {.constant_memory = LXW_FALSE,
                                   /* .tmpdir = getcwd(NULL, 0), */
                                   .use_zip64 = LXW_TRUE};
 
   /* set properties */
   lxw_doc_properties properties = {
-      .title    = name,
-      .subject  = "foaie",
-      .author   = "Alex Bora",
-      .manager  = "tot el",
-      .company  = "Volvo",
-      .category = "foaie parcurs",
-      .keywords = "foaie parcurs",
-      .comments = "VERSION 2.0",
-      .status   = "Done",
+      /* .title    = name, */
+      .subject = "foaie",          .author = "Alex Bora",
+      .manager = "tot el",         .company = "Volvo",
+      .category = "foaie parcurs", .keywords = "foaie parcurs",
+      .comments = "VERSION 2.0",   .status = "Done",
   };
 
   lxw_data_validation *data_validation =
@@ -205,6 +202,7 @@ int write_excel(void)
   worksheet_set_column(worksheet, 1, 1, strlen("km parcursi"), NULL);
   worksheet_set_column(worksheet, 2, 10, 20, NULL);
   worksheet_set_default_row(worksheet, 20, 1);
+
   /* insert logo */
   worksheet_insert_image(worksheet, row + 1, COL4, "logo.png");
 
@@ -214,6 +212,7 @@ int write_excel(void)
   lxw_format *format_header     = workbook_add_format(workbook);
   lxw_format *format            = workbook_add_format(workbook);
   lxw_format *format_footer     = workbook_add_format(workbook);
+
   format_set_bold(format_bold);
   format_set_border(format_bold, LXW_BORDER_NONE);
   format_set_align(format_bold_right, LXW_ALIGN_RIGHT);
@@ -275,15 +274,15 @@ int write_excel(void)
                          format_header);
 
   row += 13;
-  unsigned dayz = dayz_in_mon;
 
+  unsigned dayz = dayz_in_mon;
   for (unsigned i = 1; i <= dayz; ++i) {
     worksheet_write_number(worksheet, i + offset - 1, COL1, i, format);
   }
 
-  const struct Work *w = prepare_work();
+  const struct Work *restrict const w = prepare_work();
   {
-    int ro = row;
+    unsigned ro = row;
     for (unsigned i = 1; i <= dayz; ++i) {
       w[i].we(&w[i].r, worksheet, ro, format);
       /* parcursi += w[i].r.km; */
@@ -291,6 +290,7 @@ int write_excel(void)
       ro++;
     }
   }
+
   row += dayz;
   *&km = total = km + parcursi;
   /* *&km  = total; */
