@@ -57,8 +57,7 @@ extern unsigned      km;
 extern char         *luna, longdate[128];
 extern int           current_year;
 extern unsigned char arr[32];
-
-static unsigned parcurs;
+unsigned             parcursi;
 
 static void wkend(const struct Route *r, lxw_worksheet *s, uint32_t row,
                   lxw_format *f)
@@ -122,26 +121,29 @@ static void wday(const struct Route *r, lxw_worksheet *s, uint32_t row,
 /*   memcpy(&w1.r, &route_, 32); */
 /* } */
 
-static inline struct Work *prepare_work(void)
+static inline const struct Work *prepare_work(void)
 {
   static struct Work wa[32] = {0};
+  memset(wa, 0, 32 * sizeof(struct Work));
 
   for (unsigned i = 1; i <= dayz_in_mon; i++) {
     if (arr[i])
       wa[i] = (struct Work){.r = route_[i], .we = wday};
     else
-      wa[i] = (struct Work){.r = {0}, .we = wkend};
+      wa[i] = (struct Work){.r = {"", 0, ""}, .we = wkend};
   }
 
   /* for (unsigned i = 0; i < dayz; i++) */
   /* wa[i].f(&wa[i].r); */
-  int total = 0;
-  for (unsigned i = 1; i <= dayz_in_mon; i++) {
-    total += wa[i].r.km;
+  {
+    unsigned total = 0;
+    for (unsigned i = 1; i <= dayz_in_mon; i++)
+      total += wa[i].r.km;
+
+    parcursi = total;
+    printf("TOTAL: %d %d\n", total, parcursi);
   }
-  parcurs = total;
-  printf("TOTAL: %d\n", total);
-  return &wa[0];
+  return (const struct Work *)&wa[0];
 }
 
 /* char *get_longdate(void); */
@@ -153,8 +155,6 @@ int write_excel(void)
   /* set data */
   uint32_t row   = 0;
   unsigned total = 0, offset = 13;
-  unsigned parcursi = parcurs;
-  *&km = total = km + parcursi;
 
   char name[128], worksheet_name[128];
   sprintf(name, "foaie_parcurs_B-151-VGT_%s_%d_Alex_Bora.xlsx", luna,
@@ -292,8 +292,9 @@ int write_excel(void)
     }
   }
   row += dayz;
-  /* *&km = total = km + parcursi; */
+  *&km = total = km + parcursi;
   /* *&km  = total; */
+  printf("parcursi: %u\n", parcursi);
 
   worksheet_write_string(worksheet, dayz + offset, COL1,
                          "Km parcursi:", format_header);
