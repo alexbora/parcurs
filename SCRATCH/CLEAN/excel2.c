@@ -58,6 +58,8 @@ extern char         *luna, longdate[128];
 extern int           current_year;
 extern unsigned char arr[32];
 
+static unsigned parcurs;
+
 static void wkend(const struct Route *r, lxw_worksheet *s, uint32_t row,
                   lxw_format *f)
 {
@@ -137,6 +139,7 @@ static inline struct Work *prepare_work(void)
   for (unsigned i = 1; i <= dayz_in_mon; i++) {
     total += wa[i].r.km;
   }
+  parcurs = total;
   printf("TOTAL: %d\n", total);
   return &wa[0];
 }
@@ -150,7 +153,8 @@ int write_excel(void)
   /* set data */
   uint32_t row   = 0;
   unsigned total = 0, offset = 13;
-  unsigned parcursi = 0;
+  unsigned parcursi = parcurs;
+  *&km = total = km + parcursi;
 
   char name[128], worksheet_name[128];
   sprintf(name, "foaie_parcurs_B-151-VGT_%s_%d_Alex_Bora.xlsx", luna,
@@ -282,13 +286,13 @@ int write_excel(void)
     int ro = row;
     for (unsigned i = 1; i <= dayz; ++i) {
       w[i].we(&w[i].r, worksheet, ro, format);
-      parcursi += w[i].r.km;
+      /* parcursi += w[i].r.km; */
       /* row++; */
       ro++;
     }
   }
   row += dayz;
-  *&km = total = km + parcursi;
+  /* *&km = total = km + parcursi; */
   /* *&km  = total; */
 
   worksheet_write_string(worksheet, dayz + offset, COL1,
