@@ -152,13 +152,10 @@ int write_excel(void)
   unsigned total = 0, offset = 13;
   unsigned parcursi = 0;
 
-  char name[128], worksheet_name[128], data_predarii[128];
+  char name[128], worksheet_name[128];
   sprintf(name, "foaie_parcurs_B-151-VGT_%s_%d_Alex_Bora.xlsx", luna,
           current_year);
   sprintf(worksheet_name, "%s %d", luna, current_year);
-  sprintf(data_predarii, "Semnătură utilizator:\t\t\t  Data predarii: %s",
-          longdate);
-
   lxw_workbook_options options = {.constant_memory = LXW_FALSE,
                                   /* .tmpdir = getcwd(NULL, 0), */
                                   .use_zip64 = LXW_TRUE};
@@ -281,16 +278,18 @@ int write_excel(void)
   }
 
   const struct Work *w = prepare_work();
-
-  for (unsigned i = 1; i <= dayz; ++i) {
-    w[i].we(&w[i].r, worksheet, row, format);
-    parcursi += w[i].r.km;
-    row++;
+  {
+    int ro = row;
+    for (unsigned i = 1; i <= dayz; ++i) {
+      w[i].we(&w[i].r, worksheet, ro, format);
+      parcursi += w[i].r.km;
+      /* row++; */
+      ro++;
+    }
   }
-  printf("parcursi: %u %u\n", parcursi, row - dayz);
-
-  total = km + parcursi;
-  *&km  = total;
+  row += dayz;
+  *&km = total = km + parcursi;
+  /* *&km  = total; */
 
   worksheet_write_string(worksheet, dayz + offset, COL1,
                          "Km parcursi:", format_header);
@@ -317,8 +316,13 @@ int write_excel(void)
                          "Total km Personal Ratio		 0,0%",
                          format_footer);
 
-  worksheet_write_string(worksheet, r + 7, COL1, data_predarii, format_footer);
-
+  {
+    char data_predarii[128];
+    sprintf(data_predarii, "Semnătură utilizator:\t\t\t  Data predarii: %s",
+            longdate);
+    worksheet_write_string(worksheet, r + 7, COL1, data_predarii,
+                           format_footer);
+  }
   /* reset border */
   format_set_border(format_footer, LXW_BORDER_NONE);
 
