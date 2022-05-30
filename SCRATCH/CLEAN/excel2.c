@@ -16,7 +16,7 @@ typedef void (*fx)(const struct Route *, lxw_worksheet *, uint32_t,
 
 struct Work {
   struct Route r;
-  fx we;
+  fx           we;
 };
 
 #if 0
@@ -47,19 +47,20 @@ route_t route = {"a", 1, "b", fn};
 extern struct Route route_[128];
 
 #define LXW_COLOR_YELLOW_PALE (0xFFFFCA)
-#define COL1 (uint16_t)(0)
-#define COL2 (uint16_t)(1)
-#define COL3 (uint16_t)(2)
-#define COL4 (uint16_t)(3)
+#define COL1                  (uint16_t)(0)
+#define COL2                  (uint16_t)(1)
+#define COL3                  (uint16_t)(2)
+#define COL4                  (uint16_t)(3)
 /* extern uint32_t row; */
-extern int dayz_in_mon;
-extern unsigned km;
-extern char *luna, longdate[128];
-extern int current_year;
+extern int           dayz_in_mon;
+extern unsigned      km;
+extern char         *luna, longdate[128];
+extern int           current_year;
 extern unsigned char arr[32];
 
 static void wkend(const struct Route *r, lxw_worksheet *s, uint32_t row,
-                  lxw_format *f) {
+                  lxw_format *f)
+{
   (void)r;
   /* (void)parcursi; */
   /* uint32_t tmp_row = *row; */
@@ -72,7 +73,8 @@ static void wkend(const struct Route *r, lxw_worksheet *s, uint32_t row,
 }
 
 static void wday(const struct Route *r, lxw_worksheet *s, uint32_t row,
-                 lxw_format *f) {
+                 lxw_format *f)
+{
   worksheet_write_number(s, row, 1, (double)r->km, f);
   worksheet_write_string(s, row, 2, r->route, f);
   worksheet_write_string(s, row, 3, r->obs, f);
@@ -118,7 +120,8 @@ static void wday(const struct Route *r, lxw_worksheet *s, uint32_t row,
 /*   memcpy(&w1.r, &route_, 32); */
 /* } */
 
-static inline struct Work *prepare_work(void) {
+static inline struct Work *prepare_work(void)
+{
   static struct Work wa[32] = {0};
 
   for (unsigned i = 1; i <= dayz_in_mon; i++) {
@@ -139,12 +142,13 @@ static inline struct Work *prepare_work(void) {
 }
 
 /* char *get_longdate(void); */
-int write_excel(void) {
+int write_excel(void)
+{
 
   /* puts(get_longdate()); */
   /* prepare array */
   /* set data */
-  uint32_t row = 0;
+  uint32_t row   = 0;
   unsigned total = 0, offset = 13;
   unsigned parcursi = 0;
 
@@ -161,22 +165,22 @@ int write_excel(void) {
 
   /* set properties */
   lxw_doc_properties properties = {
-      .title = name,
-      .subject = "foaie",
-      .author = "Alex Bora",
-      .manager = "tot el",
-      .company = "Volvo",
+      .title    = name,
+      .subject  = "foaie",
+      .author   = "Alex Bora",
+      .manager  = "tot el",
+      .company  = "Volvo",
       .category = "foaie parcurs",
       .keywords = "foaie parcurs",
       .comments = "VERSION 2.0",
-      .status = "Done",
+      .status   = "Done",
   };
 
   lxw_data_validation *data_validation =
-      &(lxw_data_validation){.validate = LXW_VALIDATION_TYPE_ANY,
-                             .criteria = LXW_VALIDATION_TYPE_ANY,
+      &(lxw_data_validation){.validate     = LXW_VALIDATION_TYPE_ANY,
+                             .criteria     = LXW_VALIDATION_TYPE_ANY,
                              .ignore_blank = LXW_VALIDATION_OFF,
-                             .show_input = LXW_VALIDATION_OFF};
+                             .show_input   = LXW_VALIDATION_OFF};
   /* open workbook */
   lxw_workbook *workbook = workbook_new_opt(name, &options);
   workbook_set_properties(workbook, &properties);
@@ -204,11 +208,11 @@ int write_excel(void) {
   worksheet_insert_image(worksheet, row + 1, COL4, "logo.png");
 
   /* add formats */
-  lxw_format *format_bold = workbook_add_format(workbook);
+  lxw_format *format_bold       = workbook_add_format(workbook);
   lxw_format *format_bold_right = workbook_add_format(workbook);
-  lxw_format *format_header = workbook_add_format(workbook);
-  lxw_format *format = workbook_add_format(workbook);
-  lxw_format *format_footer = workbook_add_format(workbook);
+  lxw_format *format_header     = workbook_add_format(workbook);
+  lxw_format *format            = workbook_add_format(workbook);
+  lxw_format *format_footer     = workbook_add_format(workbook);
   format_set_bold(format_bold);
   format_set_border(format_bold, LXW_BORDER_NONE);
   format_set_align(format_bold_right, LXW_ALIGN_RIGHT);
@@ -283,10 +287,10 @@ int write_excel(void) {
     parcursi += w[i].r.km;
     row++;
   }
-  printf("parcursi: %u\n", parcursi);
+  printf("parcursi: %u %u\n", parcursi, row - dayz);
 
   total = km + parcursi;
-  *&km = total;
+  *&km  = total;
 
   worksheet_write_string(worksheet, dayz + offset, COL1,
                          "Km parcursi:", format_header);
