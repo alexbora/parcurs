@@ -142,6 +142,7 @@ static inline const struct Work *prepare_work(void)
 
     parcursi = total;
     printf("TOTAL: %d %d\n", total, parcursi);
+    log_debug("log_file", "%d\n", total);
   }
   return (const struct Work *)&wa[0];
 }
