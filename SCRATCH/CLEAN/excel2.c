@@ -135,15 +135,13 @@ static inline const struct Work *prepare_work(void)
 
   /* for (unsigned i = 0; i < dayz; i++) */
   /* wa[i].f(&wa[i].r); */
-  {
-    unsigned total = 0;
-    for (unsigned i = 1; i <= dayz_in_mon; i++)
-      total += wa[i].r.km;
+  BLOCK_BEGIN
+  unsigned total = 0;
+  for (unsigned i = 1; i <= dayz_in_mon; i++)
+    total += wa[i].r.km;
+  parcursi = total;
+  BLOCK_END
 
-    parcursi = total;
-    printf("TOTAL: %d %d\n", total, parcursi);
-    log_debug("log_file", "%d\n", total);
-  }
   return (const struct Work *)&wa[0];
 }
 
@@ -274,28 +272,28 @@ lxw_error write_excel(void)
   worksheet_write_string(worksheet, row + 12, COL4, "Observatii utilizator",
                          format_header);
 
-  row += 13;
-
   unsigned dayz = dayz_in_mon;
-  for (unsigned i = 1; i <= dayz; ++i) {
-    worksheet_write_number(worksheet, i + offset - 1, COL1, i, format);
-  }
-
-  const struct Work *restrict const w = prepare_work();
   {
-    unsigned ro = row;
-    for (unsigned i = 1; i <= dayz; ++i) {
-      w[i].we(&w[i].r, worksheet, ro, format);
-      /* parcursi += w[i].r.km; */
-      /* row++; */
-      ro++;
-    }
-  }
+    row += 13; // offset
+    for (unsigned i = 1; i <= dayz; ++i)
+      worksheet_write_number(worksheet, i + offset - 1, COL1, i, format);
 
-  row += dayz;
-  *&km = total = km + parcursi;
-  /* *&km  = total; */
-  printf("parcursi: %u\n", parcursi);
+    const struct Work *restrict const w = prepare_work();
+    {
+      unsigned ro = row;
+      for (unsigned i = 1; i <= dayz; ++i) {
+        w[i].we(&w[i].r, worksheet, ro, format);
+        /* parcursi += w[i].r.km; */
+        /* row++; */
+        ro++;
+      }
+    }
+
+    /* row += dayz; */
+    *&km = total = km + parcursi;
+    /* *&km  = total; */
+    printf("parcursi: %u\n", parcursi);
+  }
 
   worksheet_write_string(worksheet, dayz + offset, COL1,
                          "Km parcursi:", format_header);

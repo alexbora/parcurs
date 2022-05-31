@@ -21,6 +21,9 @@
 #define log_error(message)                                                     \
   fprintf(STDERR, "[ERROR][%s:%d]: " message "\n", __FILE__, __LINE__)
 
+#define BLOCK_BEGIN {
+#define BLOCK_END   }
+
 static inline void log_debug(char *file, char *fmt, ...)
 {
   va_list     argptr     = {0};
