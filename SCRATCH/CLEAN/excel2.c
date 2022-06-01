@@ -145,6 +145,14 @@ static inline const struct Work *prepare_work(void)
   return (const struct Work *)&wa[0];
 }
 
+/******************************************************************************
+ * Function: write_excel
+ * Description: generate excel
+ * Where: excel2.c
+ * Return: lxw_error
+ * Error: !0
+ *****************************************************************************/
+
 /* char *get_longdate(void); */
 lxw_error write_excel(void)
 {
