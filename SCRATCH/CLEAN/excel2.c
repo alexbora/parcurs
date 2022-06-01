@@ -130,6 +130,16 @@ static inline const struct Work *prepare_work(void)
   /*                                       {.r = route_[0], .we = wday}}; */
   /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 
+  /* struct Route r1       = {"", 0, ""}; */
+  /* struct Route r2       = route_[0]; */
+  struct Route r_arr[2] = {{"", 0u, ""}, {}};
+  struct Route arrr[32];
+  for (unsigned i = 1; i <= dayz_in_mon; i++)
+    arrr[i] = r_arr[arr[i]];
+
+  /* ugly, but efficient when holidays in mon, else branch prediction will
+   * work */
+
   for (unsigned i = 1; i <= dayz_in_mon; i++) {
     if (arr[i])
       wa[i] = (struct Work){.r = route_[i], .we = wday};
