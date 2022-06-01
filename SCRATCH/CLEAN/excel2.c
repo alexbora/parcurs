@@ -126,6 +126,10 @@ static inline const struct Work *prepare_work(void)
   static struct Work wa[32] = {0};
   memset(wa, 0, 32 * sizeof(struct Work));
 
+  /* struct Work tmp[2] = (struct Work[2]){{.r = {"", 0, ""}, .we = wday}, */
+  /*                                       {.r = route_[0], .we = wday}}; */
+  /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+
   for (unsigned i = 1; i <= dayz_in_mon; i++) {
     if (arr[i])
       wa[i] = (struct Work){.r = route_[i], .we = wday};
@@ -156,12 +160,11 @@ static inline const struct Work *prepare_work(void)
 /* char *get_longdate(void); */
 lxw_error write_excel(void)
 {
-
   /* puts(get_longdate()); */
   /* prepare array */
   /* set data */
-  uint32_t row   = 0;
-  unsigned total = 0, offset = 13;
+  const uint32_t row   = 0;
+  unsigned       total = 0, offset = 13;
 
   char name[128], worksheet_name[128];
   sprintf(name, "foaie_parcurs_B-151-VGT_%s_%d_Alex_Bora.xlsx", luna,
@@ -193,11 +196,13 @@ lxw_error write_excel(void)
 
   workbook_set_properties(workbook, &properties);
 
-  /* workbook->optimize       = 1u; */
-  /* workbook->has_png        = 1u; */
-  /* workbook->num_sheets     = 1u; */
-  /* workbook->num_worksheets = 1u; */
-  /* workbook->has_comments   = 0u; */
+  workbook->optimize       = 1u;
+  workbook->has_png        = 1u;
+  workbook->num_worksheets = 1u;
+  workbook->has_comments   = 0u;
+  workbook->has_gif        = 0u;
+  workbook->has_jpeg       = 0u;
+  workbook->has_bmp        = 0u;
 
   /* open worksheet and set properties */
   lxw_worksheet *worksheet = workbook_add_worksheet(workbook, worksheet_name);
@@ -212,8 +217,14 @@ lxw_error write_excel(void)
                           "A1:XFD1048576");
   worksheet_ignore_errors(worksheet, LXW_IGNORE_LIST_DATA_VALIDATION,
                           "A1:XFD1048576");
-  worksheet_data_validation_range(worksheet, RANGE("A1:XFD1048576"),
-                                  data_validation);
+
+  worksheet_data_validation_range(
+      worksheet, RANGE("A1:XFD1048576"),
+      &(lxw_data_validation){.validate     = LXW_VALIDATION_TYPE_ANY,
+                             .criteria     = LXW_VALIDATION_TYPE_ANY,
+                             .ignore_blank = LXW_VALIDATION_OFF,
+                             .show_input   = LXW_VALIDATION_OFF});
+
   worksheet_set_column(worksheet, 0, 0, strlen("parcursi: "), NULL);
   worksheet_set_column(worksheet, 1, 1, strlen("km parcursi"), NULL);
   worksheet_set_column(worksheet, 2, 10, 20, NULL);
@@ -290,21 +301,21 @@ lxw_error write_excel(void)
                          format_header);
 
   unsigned dayz = dayz_in_mon;
-  {
-    row += 13; // offset
-    for (unsigned i = 1; i <= dayz; ++i)
-      worksheet_write_number(worksheet, i + offset - 1, COL1, i, format);
+  BLOCK_BEGIN
+  unsigned ro = row + 13;
+  /* row += 13; // offset */
+  for (unsigned i = 1; i <= dayz; ++i)
+    worksheet_write_number(worksheet, i + offset - 1, COL1, i, format);
 
-    const struct Work *restrict const w = prepare_work();
-    {
-      unsigned ro = row;
-      for (unsigned i = 1; i <= dayz; ++i) {
-        w[i].we(&w[i].r, worksheet, ro, format);
-        /* parcursi += w[i].r.km; */
-        /* row++; */
-        ro++;
-      }
+  const struct Work *restrict const w = prepare_work();
+  {
+    for (unsigned i = 1; i <= dayz; ++i) {
+      w[i].we(&w[i].r, worksheet, ro, format);
+      /* parcursi += w[i].r.km; */
+      /* row++; */
+      ro++;
     }
+    BLOCK_END
 
     /* row += dayz; */
     *&km = total = km + parcursi;
@@ -338,7 +349,7 @@ lxw_error write_excel(void)
                          format_footer);
 
   {
-    char data_predarii[128];
+    char data_predarii[64] = {'\0'};
     sprintf(data_predarii, "Semnătură utilizator:\t\t\t  Data predarii: %s",
             longdate);
     worksheet_write_string(worksheet, r + 7, COL1, data_predarii,
