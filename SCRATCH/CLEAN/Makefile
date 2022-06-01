@@ -7,7 +7,7 @@ CC= #:=gcc-10.1
 CFLAGS:=-O3 -ggdb3 -lgcc #-v#-static
 CFLAGS+=-std=c11 -fstrict-aliasing -fopenmp -m64 -mavx -ffunction-sections -fsanitize=address -fno-omit-frame-pointer -static-libstdc++ -static-libgcc #/home/linuxbrew/.linuxbrew/Cellar/gcc@12/12.1.0/lib/gcc/12/gcc/x86_64-pc-linux-gnu/12/libgcc.a
 CFLAGS+=-D_POSIX_C_SOURCE=200112L
-LDLIBS:= `pkg-config --cflags --libs xlsxwriter` 
+#LDLIBS:= `pkg-config --cflags --libs xlsxwriter` 
 LDLIBS+= `pkg-config --cflags --libs openssl` 
 LDFLAGS:=-lgcc -lxlsxwriter -lasan
 # LDFLAGS+=-fno-strict-aliasing

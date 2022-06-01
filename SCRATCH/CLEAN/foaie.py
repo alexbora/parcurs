@@ -44,7 +44,7 @@ def mail():
     
     excel="foaie_parcurs_B-151-VGT_" + month.lower() + "_2022_Alex_Bora.xlsx"
     #exe = dir + "/foaie_2"
-    exe="./foaie_2"
+    exe="LD_LIBRARY_PATH=/usr/local/lib/:$LD_LIBRARY_PATH ./foaie_2"
     subprocess.call(exe)
     # subprocess.call("/Users/alex/dev/PARCURS/foaie_2")
     #subprocess.call("/mnt/t400.linux/home/alex/Documente/parcurs/foaie_2")    
