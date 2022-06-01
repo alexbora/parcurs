@@ -17,9 +17,9 @@
 #include <time.h>
 #include <unistd.h>
 
-#define STDERR stderr
+#define STDERR stderr,
 #define log_error(message)                                                     \
-  fprintf(STDERR, "[ERROR][%s:%d]: " message "\n", __FILE__, __LINE__)
+  fprintf(STDERR "[ERROR][%s:%d]: " message "\n", __FILE__, __LINE__)
 
 #define BLOCK_BEGIN {
 #define BLOCK_END   }

@@ -179,8 +179,17 @@ lxw_error write_excel(void)
                              .ignore_blank = LXW_VALIDATION_OFF,
                              .show_input   = LXW_VALIDATION_OFF};
   /* open workbook */
-  lxw_workbook *workbook = workbook_new_opt(name, &options);
+  lxw_workbook *workbook = workbook_new_opt(
+      name, &(lxw_workbook_options){.constant_memory = LXW_FALSE,
+                                    .use_zip64       = LXW_TRUE});
+
   workbook_set_properties(workbook, &properties);
+
+  /* workbook->optimize       = 1u; */
+  /* workbook->has_png        = 1u; */
+  /* workbook->num_sheets     = 1u; */
+  /* workbook->num_worksheets = 1u; */
+  /* workbook->has_comments   = 0u; */
 
   /* open worksheet and set properties */
   lxw_worksheet *worksheet = workbook_add_worksheet(workbook, worksheet_name);
