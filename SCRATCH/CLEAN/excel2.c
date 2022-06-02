@@ -132,7 +132,7 @@ static inline const struct Work *prepare_work(void)
 
   /* struct Route r1       = {"", 0, ""}; */
   /* struct Route r2       = route_[0]; */
-  struct Route r_arr[2] = {{"", 0u, ""}, {}};
+  struct Route r_arr[2] = {{"", 0u, ""}, *route_};
   struct Route arrr[32];
   for (unsigned i = 1; i <= dayz_in_mon; i++)
     arrr[i] = r_arr[arr[i]];
