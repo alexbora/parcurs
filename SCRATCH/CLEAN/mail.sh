@@ -11,6 +11,8 @@
 
 #!/bin/bash
 
+./foaie_2
+
 sesAccess='t400.linux@gmail.com'
 sesSecret='Cragger2011'   
 sesFromName="alex"
@@ -24,7 +26,7 @@ sesMessage=$''
 sesFile="$1"
 sesMIMEType=`file --mime-type "$sesFile" | sed 's/.*: //'`
 
-./test.sh
+#./test.sh
 
 curl -v --url smtps://$sesSMTP:$sesPort --ssl-reqd  --mail-from $sesFromAddress --mail-rcpt $sesToAddress  --user $sesAccess:$sesSecret -F '=(;type=multipart/mixed' -F "=$sesMessage;type=text/plain" -F "file=@$sesFile;type=$sesMIMEType;encoder=base64" -F '=)' -H "Subject: $sesSubject" -H "From: $sesFromName <$sesFromAddress>" -H "To: $sesToName <$sesToAddress>"
 
