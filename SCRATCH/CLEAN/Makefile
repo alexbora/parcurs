@@ -10,6 +10,7 @@ CFLAGS+=-D_POSIX_C_SOURCE=200112L
 LDLIBS:= `pkg-config --cflags --libs xlsxwriter` 
 LDLIBS+= `pkg-config --cflags --libs openssl` 
 LDFLAGS:=-lgcc -lxlsxwriter -lasan
+STATIC:=
 # LDFLAGS+=-fno-strict-aliasing
 # LDFLAGS+=-mavx
 # LDFLAGS+=-ffunction-sections
@@ -20,8 +21,7 @@ LDFLAGS:=-lgcc -lxlsxwriter -lasan
 
 .DELETE_ON_ERROR:
 $(TARGET): date2.o excel2.o 
-	 $(CC) $(CFLAGS) $(LDLIBS) $(LDFLAGS) date2.o excel2.o -o $(TARGET) /usr/local/Cellar/libxlsxwriter/1.1.4/lib/libxlsxwriter.a
- 
+	 $(CC) $(CFLAGS) $(LDLIBS) $(LDFLAGS) date2.o excel2.o -o $(TARGET) 
 	 @# gcc-11 $(CFLAGS) $(LDLIBS) date2.o excel2.o -o date2 `pkg-config --cflags --libs xlsxwriter` 
 
 # date2.o: date2.c 
@@ -31,6 +31,7 @@ $(TARGET): date2.o excel2.o
 
 ifeq ($(HOST),  mac.local)
 CC:=/usr/local/Cellar/gcc@12/12*/bin/gcc-12
+STATIC:=/usr/local/Cellar/libxlsxwriter/1.1.4/lib/libxlsxwriter.a
 endif
 ifeq ($(HOST), T460)
 CC:=gcc-12
