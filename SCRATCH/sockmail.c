@@ -21,271 +21,133 @@
 #include <sys/socket.h> /* socket, connect */
 #include <unistd.h>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
 
-  int    sock;
-  char  *host, *cmd, *ip;
-  char  *enc_cmd;
-  char   recvbuf[4096];
-  int    iResult;
+  int sock;
+  char *host, *cmd, *ip;
+  char *enc_cmd;
+  char recvbuf[4096];
+  int iResult;
   size_t out_len;
 
-  struct hostent    *hent = gethostbyname(host);
+  host = "smtp.gmail.com";
+  struct hostent *hent = gethostbyname(host);
   struct sockaddr_in sin;
 
-  host = "smtp.gmail.com";
-
-  printf("Attempting to connect to %s...\n", host);
-  //
-  if (hent == NULL) {
-    printf("gethostbyname failed: %d\n", errno);
-    return -1;
-  }
-  printf("gethostbyname succeeded!\n");
   ip = inet_ntoa(*(struct in_addr *)hent->h_addr_list[0]);
-  printf("Host IP: %s\n", ip);
-  //
+
   sock = socket(AF_INET, SOCK_STREAM, 0);
-  if (sock == -1) {
-    printf("socket failed: %d\n", errno);
-    return -1;
-  }
-  printf("socket succeeded!\n");
-  //
+
   bzero(&sin, sizeof(sin));
-  sin.sin_family      = AF_INET;
-  sin.sin_port        = htons(465);
+  sin.sin_family = AF_INET;
+  sin.sin_port = htons(465);
   sin.sin_addr.s_addr = inet_addr(ip);
-  //
+
   iResult = connect(sock, (struct sockaddr *)&sin, sizeof(sin));
-  if (iResult < 0) {
-    printf("connect failed: %d\n", errno);
-    return -1;
-  }
-  printf("connect succeeded\n");
-  //
+
   bzero(recvbuf, 4096);
   iResult = recv(sock, recvbuf, 4096 - 1, 0);
-  if (iResult <= 0) {
-    printf("recv failed: %d\n", errno);
-    return -1;
-  }
-  printf("Byte(s) received: %d\n", iResult);
-  printf("%s\n", recvbuf);
-  //
-  cmd     = "EHLO smtp.gmail.com\r\n";
+
+  cmd = "EHLO smtp.gmail.com\r\n";
   iResult = send(sock, cmd, strlen(cmd), 0);
-  if (iResult <= 0) {
-    printf("send failed: %d\n", errno);
-    return -1;
-  }
-  printf("Byte(s) sent: %d\n", iResult);
-  //
+
   bzero(recvbuf, 4096);
   iResult = recv(sock, recvbuf, 4096 - 1, 0);
-  if (iResult <= 0) {
-    printf("recv failed: %d\n", errno);
-    return -1;
-  }
-  printf("Byte(s) received: %d\n", iResult);
-  printf("%s\n", recvbuf);
-  //
-  cmd     = "STARTTLS\r\n";
+
+  cmd = "STARTTLS\r\n";
   iResult = send(sock, cmd, strlen(cmd), 0);
-  if (iResult <= 0) {
-    printf("send failed: %d\n", errno);
-    return -1;
-  }
-  printf("Byte(s) sent: %d\n", iResult);
-  //
+
   bzero(recvbuf, 4096);
   iResult = recv(sock, recvbuf, 4096 - 1, 0);
-  if (iResult <= 0) {
-    printf("recv failed: %d\n", errno);
-    return -1;
-  }
-  printf("Byte(s) received: %d\n", iResult);
-  printf("%s\n", recvbuf);
-  //
-  // OpenSLL region
-  /* OpenSSL_add_all_algorithms(); */
-  /* ERR_load_BIO_strings(); */
-  /* ERR_load_crypto_strings(); */
-  /* SSL_load_error_strings(); */
-  if (SSL_library_init() < 0) {
-    printf("Could not initialise SSL library!\n");
-    /* ERR_print_errors_fp(stderr); */
-    return -1;
-  }
-  printf("SSL Library initialised\n");
+
   SSL_CTX *ctx = SSL_CTX_new(SSLv23_client_method());
-  if (ctx == NULL) {
-    printf("ctx failed: %d\n", errno);
-    /* ERR_print_errors_fp(stderr); */
-    return -1;
-  }
-  printf("ctx done!\n");
+
   SSL *ssl = SSL_new(ctx);
-  if (ssl == NULL) {
-    printf("ssl failed: %d\n", errno);
-    /* ERR_print_errors_fp(stderr); */
-    return -1;
-  }
-  printf("ssl done!\n");
   SSL_set_fd(ssl, sock);
   iResult = SSL_connect(ssl);
-  if (iResult < 0) {
-    printf("SSL connect failed!\n");
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  printf("SSL connect succeeded!\n");
-  cmd     = "EHLO smtp.gmail.com\r\n";
+
+  cmd = "EHLO smtp.gmail.com\r\n";
   iResult = SSL_write(ssl, cmd, strlen(cmd));
-  if (iResult <= 0) {
-    printf("SSL_write failed: %d\n", errno);
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  printf("Byte(s) sent: %d\n", iResult);
-  //
+
   bzero(recvbuf, 4096);
-  iResult = SSL_read(ssl, recvbuf, 4096 - 1);
-  if (iResult <= 0) {
-    printf("SSL_read failed: %d\n", errno);
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  printf("Byte(s) received: %d\n", iResult);
-  printf("%s\n", recvbuf);
-  //
-  cmd     = "AUTH LOGIN\r\n";
-  iResult = SSL_write(ssl, cmd, strlen(cmd));
-  if (iResult <= 0) {
-    printf("SSL_write faile\n");
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  printf("Byte(s) sent: %d\n", iResult);
+  SSL_read(ssl, recvbuf, 4096 - 1);
+
+  cmd = "AUTH LOGIN\r\n";
+  SSL_write(ssl, cmd, strlen(cmd));
+
   bzero(recvbuf, 4096);
-  iResult = SSL_read(ssl, recvbuf, 4096 - 1);
-  if (iResult <= 0) {
-    printf("SSL_read failed: %d\n", errno);
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  printf("Byte(s) received: %d\n", iResult);
-  printf("%s\n", recvbuf);
-  //
-  cmd     = "t400.linux@gmail.com";
-  enc_cmd = EVP_EncodeBlock(enc_cmd, cmd, strlen(cmd));
+  SSL_read(ssl, recvbuf, 4096 - 1);
+
+  cmd = "t400.linux@gmail.com";
+  EVP_EncodeBlock((unsigned char *)enc_cmd, (const unsigned char *)cmd,
+                  strlen(cmd));
   iResult = SSL_write(ssl, enc_cmd, out_len);
-  if (iResult <= 0) {
-    printf("SSL_write failed\n");
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  printf("Byte(s) sent: %d\n", iResult);
+
   cmd = "\r\n";
   SSL_write(ssl, cmd, strlen(cmd));
-  if (iResult <= 0) {
-    printf("SSL_write failed\n");
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  printf("Byte(s) sent: %d\n", iResult);
+
   bzero(recvbuf, 4096);
   iResult = SSL_read(ssl, recvbuf, 4096 - 1);
-  if (iResult <= 0) {
-    printf("SSL_read failed: %d\n", errno);
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  printf("Byte(s) received: %d\n", iResult);
-  printf("%s\n", recvbuf);
-  //
-  cmd     = "Cragger2011";
+
+  cmd = "Cragger2011";
   out_len = strlen(cmd);
-  EVP_EncodeBlock(enc_cmd, cmd, out_len);
+  EVP_EncodeBlock((unsigned char *)enc_cmd, (const unsigned char *)cmd,
+                  out_len);
   iResult = SSL_write(ssl, enc_cmd, out_len);
-  if (iResult <= 0) {
-    printf("SSL_write failed\n");
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  printf("Byte(s) sent: %d\n", iResult);
-  cmd     = "\r\n";
+
+  cmd = "\r\n";
   iResult = SSL_write(ssl, cmd, strlen(cmd));
-  if (iResult <= 0) {
-    printf("SSL_write failed\n");
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  printf("Byte(s) sent: %d\n", iResult);
+
   bzero(recvbuf, 4096);
   iResult = SSL_read(ssl, recvbuf, 4096 - 1);
-  if (iResult <= 0) {
-    printf("SSL_read failed: %d\n", errno);
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  printf("Byte(s) received: %d\n", iResult);
-  printf("%s\n", recvbuf);
-  //
-  cmd     = "MAIL FROM: t400.linux@gmail.com\r\n";
+
+  cmd = "MAIL FROM: t400.linux@gmail.com\r\n";
   iResult = SSL_write(ssl, cmd, strlen(cmd));
-  if (iResult <= 0) {
-    printf("SSL_write failed\n");
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  printf("Byte(s) sent: %d\n", iResult);
+
   bzero(recvbuf, 4096);
   iResult = SSL_read(ssl, recvbuf, 4096 - 1);
-  if (iResult <= 0) {
-    printf("SSL_read failed: %d\n", errno);
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  printf("Byte(s) received: %d\n", iResult);
-  printf("%s\n", recvbuf);
-  //
-  cmd     = "RCPT TO: t400.linux@gmail.com\r\n";
+
+  cmd = "RCPT TO: t400.linux@gmail.com\r\n";
   iResult = SSL_write(ssl, cmd, strlen(cmd));
-  if (iResult <= 0) {
-    printf("SSL_write failed\n");
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
+
   bzero(recvbuf, 4096);
   iResult = SSL_read(ssl, recvbuf, 4096 - 1);
-  if (iResult <= 0) {
-    printf("SSL_read failed: %d\n", errno);
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  printf("Byte(s) received: %d\n", iResult);
-  printf("%s\n", recvbuf);
-  //
-  cmd     = "DATA\r\n";
+
+  cmd = "DATA\r\n";
   iResult = SSL_write(ssl, cmd, strlen(cmd));
-  if (iResult <= 0) {
-    printf("SSL_write failed\n");
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
+
   bzero(recvbuf, 4096);
   iResult = SSL_read(ssl, recvbuf, 4096 - 1);
-  if (iResult <= 0) {
-    printf("SSL_read failed: %d\n", errno);
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  printf("Byte(s) received: %d\n", iResult);
-  printf("%s\n", recvbuf);
+
+  cmd = "MIME-Version: 1.0\r\n";
+  iResult = SSL_write(ssl, cmd, strlen(cmd));
+
+  cmd = "Content-Type:multipart/"
+        "mixed;boundary=\"977d81ff9d852ab2a0cad646f8058349\"\r\n";
+  iResult = SSL_write(ssl, cmd, strlen(cmd));
+
+  cmd = "Subject: Test Mail\r\n";
+
+  cmd = "--977d81ff9d852ab2a0cad646f8058349\r\n";
+  cmd = "Content-Type: text/plain; charset=\"utf-8\"\r\n";
+  iResult = SSL_write(ssl, cmd, strlen(cmd));
+
+  cmd = "Content-Transfer-Encoding: quoted-printable\r\n";
+  iResult = SSL_write(ssl, cmd, strlen(cmd));
+
+  cmd = "Hi Me,=0A=0AThis is an empty file.=0A=0ARegards,=0A<ME>=0A=0A---- "
+        "=0ASent using Guerrillamail.com =0ABlock or report abuse : "
+        "https://www.guerrillamail.com//abuse/"
+        "?a=3DUVJzDA8SW6Q1mwa14nUTcwfCX9ne0dhd=0A\r\n";
+  iResult = SSL_write(ssl, cmd, strlen(cmd));
   //
-  cmd     = "MIME-Version: 1.0\r\n";
+  cmd = "--977d81ff9d852ab2a0cad646f8058349\r\n";
+  iResult = SSL_write(ssl, cmd, strlen(cmd));
+
+  cmd = "Content-Type: text/plain\r\n";
+  iResult = SSL_write(ssl, cmd, strlen(cmd));
+  //
+  cmd = "Content-Transfer-Encoding: base64\r\n";
   iResult = SSL_write(ssl, cmd, strlen(cmd));
   if (iResult <= 0) {
     printf("SSL_write failed\n");
@@ -293,8 +155,7 @@ int main(int argc, char *argv[])
     return -1;
   }
   //
-  cmd     = "Content-Type:multipart/"
-            "mixed;boundary=\"977d81ff9d852ab2a0cad646f8058349\"\r\n";
+  cmd = "Content-Disposition: attachment; filename=\"km\"\r\n";
   iResult = SSL_write(ssl, cmd, strlen(cmd));
   if (iResult <= 0) {
     printf("SSL_write failed\n");
@@ -302,7 +163,7 @@ int main(int argc, char *argv[])
     return -1;
   }
   //
-  cmd     = "Subject: Test Mail\r\n";
+  cmd = "U2FtcGxlIFRleHQu\r\n";
   iResult = SSL_write(ssl, cmd, strlen(cmd));
   if (iResult <= 0) {
     printf("SSL_write failed\n");
@@ -310,7 +171,7 @@ int main(int argc, char *argv[])
     return -1;
   }
   //
-  cmd     = "--977d81ff9d852ab2a0cad646f8058349\r\n";
+  cmd = "\r\n--977d81ff9d852ab2a0cad646f8058349--\r\n";
   iResult = SSL_write(ssl, cmd, strlen(cmd));
   if (iResult <= 0) {
     printf("SSL_write failed\n");
@@ -318,82 +179,7 @@ int main(int argc, char *argv[])
     return -1;
   }
   //
-  cmd     = "Content-Type: text/plain; charset=\"utf-8\"\r\n";
-  iResult = SSL_write(ssl, cmd, strlen(cmd));
-  if (iResult <= 0) {
-    printf("SSL_write failed\n");
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  //
-  cmd     = "Content-Transfer-Encoding: quoted-printable\r\n";
-  iResult = SSL_write(ssl, cmd, strlen(cmd));
-  if (iResult <= 0) {
-    printf("SSL_write failed\n");
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  //
-  cmd     = "Hi Me,=0A=0AThis is an empty file.=0A=0ARegards,=0A<ME>=0A=0A---- "
-            "=0ASent using Guerrillamail.com =0ABlock or report abuse : "
-            "https://www.guerrillamail.com//abuse/"
-            "?a=3DUVJzDA8SW6Q1mwa14nUTcwfCX9ne0dhd=0A\r\n";
-  iResult = SSL_write(ssl, cmd, strlen(cmd));
-  if (iResult <= 0) {
-    printf("SSL_write failed\n");
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  //
-  cmd     = "--977d81ff9d852ab2a0cad646f8058349\r\n";
-  iResult = SSL_write(ssl, cmd, strlen(cmd));
-  if (iResult <= 0) {
-    printf("SSL_write failed\n");
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  //
-  cmd     = "Content-Type: text/plain\r\n";
-  iResult = SSL_write(ssl, cmd, strlen(cmd));
-  if (iResult <= 0) {
-    printf("SSL_write failed\n");
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  //
-  cmd     = "Content-Transfer-Encoding: base64\r\n";
-  iResult = SSL_write(ssl, cmd, strlen(cmd));
-  if (iResult <= 0) {
-    printf("SSL_write failed\n");
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  //
-  cmd     = "Content-Disposition: attachment; filename=\"km\"\r\n";
-  iResult = SSL_write(ssl, cmd, strlen(cmd));
-  if (iResult <= 0) {
-    printf("SSL_write failed\n");
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  //
-  cmd     = "U2FtcGxlIFRleHQu\r\n";
-  iResult = SSL_write(ssl, cmd, strlen(cmd));
-  if (iResult <= 0) {
-    printf("SSL_write failed\n");
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  //
-  cmd     = "\r\n--977d81ff9d852ab2a0cad646f8058349--\r\n";
-  iResult = SSL_write(ssl, cmd, strlen(cmd));
-  if (iResult <= 0) {
-    printf("SSL_write failed\n");
-    ERR_print_errors_fp(stderr);
-    return -1;
-  }
-  //
-  cmd     = "\r\n.\r\n";
+  cmd = "\r\n.\r\n";
   iResult = SSL_write(ssl, cmd, strlen(cmd));
   if (iResult <= 0) {
     printf("SSL_write failed\n");
@@ -410,7 +196,7 @@ int main(int argc, char *argv[])
   printf("Byte(s) received: %d\n", iResult);
   printf("%s\n", recvbuf);
   //
-  cmd     = "QUIT\r\n";
+  cmd = "QUIT\r\n";
   iResult = SSL_write(ssl, cmd, strlen(cmd));
   if (iResult <= 0) {
     printf("SSL_write failed\n");

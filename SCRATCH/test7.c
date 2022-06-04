@@ -34,7 +34,7 @@ struct Process {
 };
 
 int main(int argc, char *argv[]) {
-
+#if 0
   struct Method *m = &(struct Method){0};
   struct Work w1 = {"test", f1, m};
   w1.fn(w1.data);
@@ -53,6 +53,10 @@ int main(int argc, char *argv[]) {
     f2(w1.data);
   }
   return 0;
+
+  uint8_t k = 3243243243243243243;
+#endif
+  printf("%ld\n", sizeof(UINT32_MAX));
 
   /* printf("%s\n", getcwd(NULL, 0)); */
 }
