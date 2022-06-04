@@ -11,6 +11,6 @@
 
 #!/bin/bash
 
-/bin/sh ./foaie_3
+./foaie_3
 #make clean
 
