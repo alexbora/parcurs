@@ -72,7 +72,11 @@ def mail3():
     month_lower = month.lower() 
     excel="/home/alex/tmp/parcurs/SCRATCH/CLEAN/foaie_parcurs_B-151-VGT_" + month_lower + "_2022_Alex_Bora.xlsx"
     #excel="foaie_parcurs_B-151-VGT_" + month.lower() + "_2022_Alex_Bora.xlsx"
-    exe="/home/alex/tmp/parcurs/SCRATCH/CLEAN/./foaie_2"
+    
+    #exe="/home/alex/tmp/parcurs/SCRATCH/CLEAN/./foaie_2"
+    #exe="LD_LIBRARY_PATH=/usr/local/lib/:$LD_LIBRARY_PATH /home/alex/tmp/parcurs/SCRATCH/CLEAN/./foaie_3"
+    exe="/home/alex/tmp/parcurs/SCRATCH/CLEAN/./foaie_3"
+    
     subprocess.call(exe)
     sender_email = "t400.linux@gmail.com"
     receiver_email = "t400.linux@gmail.com", 'alexandru.bora@renault-trucks.com'

@@ -10,7 +10,7 @@ CFLAGS+=-D_POSIX_C_SOURCE=200112L
 LDLIBS:= `pkg-config --cflags --libs xlsxwriter` 
 LDLIBS+= `pkg-config --cflags --libs openssl` 
 # LDLIBS+= `pkg-config --cflags --libs -libwebsockets_static` 
-LDFLAGS:=-lz -lgcc -lxlsxwriter -lasan
+LDFLAGS:=-lz -lgcc -lxlsxwriter -lasan -liconv
 # STATIC:=
 # LDFLAGS+=-fno-strict-aliasing
 # LDFLAGS+=-mavx
