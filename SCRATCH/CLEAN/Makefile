@@ -7,7 +7,7 @@ CC= #:=gcc-10.1
 CFLAGS:=-O3 -ggdb3 -lgcc #-v#-static
 CFLAGS+=-std=c11 -fstrict-aliasing -fopenmp -m64 -mavx -ffunction-sections -fsanitize=address -fno-omit-frame-pointer -static-libstdc++ -static-libgcc #/home/linuxbrew/.linuxbrew/Cellar/gcc@12/12.1.0/lib/gcc/12/gcc/x86_64-pc-linux-gnu/12/libgcc.a
 CFLAGS+=-D_POSIX_C_SOURCE=200112L
-#LDLIBS:= `pkg-config --cflags --libs xlsxwriter` 
+LDLIBS:= `pkg-config --cflags --libs xlsxwriter` 
 LDLIBS+= `pkg-config --cflags --libs openssl` 
 LDFLAGS:=-lgcc -lxlsxwriter -lasan
 # LDFLAGS+=-fno-strict-aliasing
@@ -20,7 +20,8 @@ LDFLAGS:=-lgcc -lxlsxwriter -lasan
 
 .DELETE_ON_ERROR:
 $(TARGET): date2.o excel2.o 
-	 $(CC) $(CFLAGS) $(LDLIBS) $(LDFLAGS) date2.o excel2.o -o $(TARGET) 
+	 $(CC) $(CFLAGS) $(LDLIBS) $(LDFLAGS) date2.o excel2.o -o $(TARGET) /usr/local/Cellar/libxlsxwriter/1.1.4/lib/libxlsxwriter.a
+ 
 	 @# gcc-11 $(CFLAGS) $(LDLIBS) date2.o excel2.o -o date2 `pkg-config --cflags --libs xlsxwriter` 
 
 # date2.o: date2.c 
