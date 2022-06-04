@@ -4,13 +4,14 @@
 HOST=$(shell hostname)
 TARGET:=final_program
 CC= #:=gcc-10.1
-CFLAGS:=-O3 -ggdb3 -lgcc #-v#-static
+CFLAGS:=-O3 -ggdb3 #-v#-static
 CFLAGS+=-std=c11 -fstrict-aliasing -fopenmp -m64 -mavx -ffunction-sections -fsanitize=address -fno-omit-frame-pointer -static-libstdc++ -static-libgcc #/home/linuxbrew/.linuxbrew/Cellar/gcc@12/12.1.0/lib/gcc/12/gcc/x86_64-pc-linux-gnu/12/libgcc.a
 CFLAGS+=-D_POSIX_C_SOURCE=200112L
 LDLIBS:= `pkg-config --cflags --libs xlsxwriter` 
 LDLIBS+= `pkg-config --cflags --libs openssl` 
-LDFLAGS:=-lgcc -lxlsxwriter -lasan
-STATIC:=
+# LDLIBS+= `pkg-config --cflags --libs -libwebsockets_static` 
+LDFLAGS:=-lz -lgcc -lxlsxwriter -lasan
+# STATIC:=
 # LDFLAGS+=-fno-strict-aliasing
 # LDFLAGS+=-mavx
 # LDFLAGS+=-ffunction-sections
@@ -31,7 +32,7 @@ $(TARGET): date2.o excel2.o
 
 ifeq ($(HOST),  mac.local)
 CC:=/usr/local/Cellar/gcc@12/12*/bin/gcc-12
-STATIC:=/usr/local/Cellar/libxlsxwriter/1.1.4/lib/libxlsxwriter.a
+# STATIC:=/usr/local/Cellar/libxlsxwriter/1.1.4/lib/libxlsxwriter.a
 endif
 ifeq ($(HOST), T460)
 CC:=gcc-12
