@@ -1,8 +1,8 @@
 /**
-* @author      : alex (alexbora@gmail.com)
-* @file        : main
-* @created     : Luni Mai 23, 2022 19:35:52 EEST
-*/
+ * @author      : alex (alexbora@gmail.com)
+ * @file        : main
+ * @created     : Luni Mai 23, 2022 19:35:52 EEST
+ */
 
 #ifndef MAIN_H
 #define MAIN_H
@@ -38,11 +38,15 @@ static inline void log_debug(char *file, char *fmt, ...)
 }
 #endif
 struct Route {
-   char    *route;
-   unsigned km;
-   char    *obs;
+  char *route;
+  unsigned km;
+  char *obs;
 };
 
 #define BLOCK_BEGIN {
-#define BLOCK_END   }
+#define BLOCK_END }
 #endif /* end of include guard MAIN_H */
+
+/* gcc-12 libxlsxwriter.so
+ * -Wl,-rpath=/home/linuxbrew/.linuxbrew/Cellar/libxlsxwriter/1.1.4/lib excel2.c
+ * date2.c -o foaie_4 */
