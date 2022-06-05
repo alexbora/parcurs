@@ -213,7 +213,8 @@ int main(int argc, char *argv[]) {
     ;
   out_len = EVP_EncodeBlock(enc_cmd, buf, n);
   SSL_write(s, enc_cmd, out_len);
-
+  cmd = "\r\n";
+  SSL_write(s, cmd, strlen(cmd));
 #if 0
   while (fgets(FileBuffer, sizeof(FileBuffer), MailFilePtr)) {
     sprintf(buf, "%s", FileBuffer);
