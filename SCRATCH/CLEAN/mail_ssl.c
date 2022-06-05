@@ -12,7 +12,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/mman.h>
 #include <sys/socket.h> /* socket, connect */
+#include <sys/stat.h>
 #include <unistd.h>
 
 #define h_addr h_addr_list[0] /* for backward compatibility */
@@ -160,16 +162,76 @@ int main(int argc, char *argv[]) {
 
   /* ------------------------------------------------------- */
 
+  cmd = "Content-Type:multipart/"
+        "mixed;boundary=\"977d81ff9d852ab2a0cad646f8058349\"\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+  cmd = "Subject: Test Mail\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+  cmd = "\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+  cmd = "--977d81ff9d852ab2a0cad646f8058349\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+  cmd = "Content-Type: text/plain; charset=\"utf-8\"\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+
+  cmd = "Content-Transfer-Encoding: quoted-printable\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+  cmd = "Hi Me,=0A=0AThis is an empty file.\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+  cmd = "--977d81ff9d852ab2a0cad646f8058349\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+  cmd = "Content-Type: text/plain\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+  /* ----------------------------------------------- */
+
   cmd = "Content-Transfer-Encoding: base64\r\n";
   SSL_write(s, cmd, strlen(cmd));
-
-  cmd = "Content-Disposition: attachment; "
-        "filename=\"foaie_parcurs_B-151-VGT_mai_2022_Alex_Bora.xlsx\"\r\n";
+#if 0
+  cmd = "Content-Disposition: "
+        "attachment;filename=\"foaie_parcurs_B-151-VGT_mai_2022_Alex_Bora."
+        "xlsx\"\r\n";
   SSL_write(s, cmd, strlen(cmd));
-
   cmd = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
   SSL_write(s, cmd, strlen(cmd));
+#endif
+  /* ----------------------------------------------------------- */
+#if 0
+  struct stat filestat;
+  FILE *f = fopen("foaie_parcurs_B-151-VGT_mai_2022_Alex_Bora.xlsx", "r");
+  int fd = open("km", O_RDONLY);
+  fstat(fd, &filestat);
+  char *data = mmap(NULL, filestat.st_size, PROT_READ, MAP_SHARED, fd, 0);
+  out_len = EVP_EncodeBlock(enc_cmd, data, filestat.st_size);
+  SSL_write(s, enc_cmd, out_len);
+#endif
+  cmd = "Content-Disposition:attachment;filename=\"km\"\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+  FILE *f = fopen("km", "r");
+  char buf[4096];
+  int n = 0;
+  while (4096 == (n = fread(&buf, sizeof(*buf), 6, f)))
+    ;
+  out_len = EVP_EncodeBlock(enc_cmd, buf, n);
+  SSL_write(s, enc_cmd, out_len);
 
+#if 0
+  while (fgets(FileBuffer, sizeof(FileBuffer), MailFilePtr)) {
+    sprintf(buf, "%s", FileBuffer);
+    buf[strlen(buf) - 1] = 0;
+    SSL_write(s, buf, strlen(buf));
+    memset(FileBuffer, 0, sizeof(FileBuffer));
+    memset(buf, 0, sizeof(buf));
+  }
+
+  sprintf(buf, "\r\n");
+  SSL_write(s, buf, strlen(buf));
+#endif
+  /* --------------------------------------------------------------- */
+  cmd = "U2FtcGxlIFRleHQu\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+  cmd = "\r\n--977d81ff9d852ab2a0cad646f8058349--\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+  /* ------------------------------------------------------------------- */
   cmd = "\r\n.\r\n";
   SSL_write(s, cmd, strlen(cmd));
   cmd = "QUIT\r\n";
