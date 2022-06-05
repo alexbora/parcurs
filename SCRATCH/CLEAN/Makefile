@@ -41,6 +41,8 @@ ifeq ($(HOST),  T400)
 CC:=gcc-10.1
 endif
 
+x:
+	gcc-10.1 libxlsxwriter.so date2.c excel2.c -o foaie_5
 
 .PHONY: clean
 clean:
