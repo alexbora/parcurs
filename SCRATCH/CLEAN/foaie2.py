@@ -75,7 +75,7 @@ def mail3():
     
     #exe="/home/alex/tmp/parcurs/SCRATCH/CLEAN/./foaie_2"
     #exe="LD_LIBRARY_PATH=/usr/local/lib/:$LD_LIBRARY_PATH /home/alex/tmp/parcurs/SCRATCH/CLEAN/./foaie_3"
-    exe="/home/alex/tmp/parcurs/SCRATCH/CLEAN/./foaie_3"
+    exe="/home/alex/tmp/parcurs/SCRATCH/CLEAN/./foaie_4"
     
     subprocess.call(exe)
     sender_email = "t400.linux@gmail.com"
