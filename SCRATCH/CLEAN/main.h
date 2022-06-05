@@ -46,7 +46,3 @@ struct Route {
 #define BLOCK_BEGIN {
 #define BLOCK_END }
 #endif /* end of include guard MAIN_H */
-
-/* gcc-12 libxlsxwriter.so
- * -Wl,-rpath=/home/linuxbrew/.linuxbrew/Cellar/libxlsxwriter/1.1.4/lib excel2.c
- * date2.c -o foaie_4 */

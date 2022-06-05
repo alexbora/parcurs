@@ -1,0 +1,25 @@
+
+/* gcc-12 libxlsxwriter.so
+ * -Wl,-rpath=/home/linuxbrew/.linuxbrew/Cellar/libxlsxwriter/1.1.4/lib excel2.c
+ * date2.c -o foaie_4 */
+MAILTO=t400.linux@gmail.com
+35 10 * * * /home/alex/tmp/parcurs/SCRATCH/CLEAN/./foaie_5
+Description=MFBot_Konsole
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/alex/tmp/parcurs/SCRATCH/CLEAN
+ExecStart=/home/alex/tmp/parcurs/SCRATCH/CLEAN/./foaie_4
+ExecReload=/bin/kill -HUP $MAINPID
+; Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=MFBot_Konsole
+User=root
+Group=root
+Environment=PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin:/home/alex
+
+
+[Install]
+WantedBy=multi-user.target
