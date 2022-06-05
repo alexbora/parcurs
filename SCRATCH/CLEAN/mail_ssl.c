@@ -134,10 +134,56 @@ int main(int argc, char *argv[]) {
   puts(recvbuf);
   /* ----------------------------------------------------- */
 
-  /* SSL_shutdown(s); */
+  cmd = "MAIL FROM:<t400.linux@gmail.com>\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+
+  bzero(recvbuf, 4096);
+  SSL_read(s, recvbuf, 4096 - 1);
+  puts(recvbuf);
+  /* ----------------------------------------------- */
+  cmd = "RCPT TO:<t400.linux@gmail.com>\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+  bzero(recvbuf, 4096);
+  SSL_read(s, recvbuf, 4096 - 1);
+  puts(recvbuf);
+  /* ----------------------------------------------------------- */
+
+  cmd = "DATA\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+  bzero(recvbuf, 4096);
+  SSL_read(s, recvbuf, 4096 - 1);
+  puts(recvbuf);
+  /* ------------------------------------------------ */
+
+  cmd = "MIME-Version: 1.0\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+
+  /* ------------------------------------------------------- */
+
+  cmd = "Content-Transfer-Encoding: base64\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+
+  cmd = "Content-Disposition: attachment; "
+        "filename=\"foaie_parcurs_B-151-VGT_mai_2022_Alex_Bora.xlsx\"\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+
+  cmd = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+  SSL_write(s, cmd, strlen(cmd));
+
+  cmd = "\r\n.\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+  cmd = "QUIT\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+
+  bzero(recvbuf, 4096);
+  SSL_read(s, recvbuf, 4096 - 1);
+  puts(recvbuf);
 
   /* ------------------------------------- */
 
+  /* SSL_CTX_free(ctx); */
+  /* shutdown(fd, SHUT_RDWR); */
+  /* SSL_shutdown(s); */
   return 0;
 }
 
