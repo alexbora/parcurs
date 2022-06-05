@@ -1,0 +1,2 @@
+export LD_LIBRARY_PATH=/home/linuxbrew/.linuxbrew/Cellar/libxlsxwriter/1.1.4/lib
+
