@@ -23,14 +23,18 @@ int main()
   long size = ftell(fp);
   rewind(fp);
 
-  unsigned char *buffer  = malloc(sizeof(char) * size);
-  unsigned char *content = calloc(size + 1, sizeof(char));
+  unsigned char *buffer = malloc(sizeof(char) * size);
+  /* unsigned char *content = calloc(size + 1, sizeof(char)); */
 
-  fread(content, sizeof(char), size, fp);
+  /* fread(content, sizeof(char), size, fp); */
   fread(buffer, 1, size, fp);
 
   printf("%ld = %s\n", size, buffer);
-  printf("%ld = %s\n", size, content);
+  /* printf("%ld = %s\n", size, content); */
+
+  int fd2 = open("x", O_RDWR | O_CREAT);
+  write(fd2, buffer, size);
+  close(fd2);
 
   fclose(fp);
   free(buffer);
