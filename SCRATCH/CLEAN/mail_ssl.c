@@ -284,6 +284,7 @@ int main(int argc, char *argv[])
   out_len = EVP_EncodeBlock(enc_cmd, data, filestat.st_size);
   SSL_write(s, enc_cmd, out_len);
 #endif
+
   cmd = "Content-Disposition:attachment;filename=\"logo.png\"\r\n";
   SSL_write(s, cmd, strlen(cmd));
   upload(s, "logo.png");
