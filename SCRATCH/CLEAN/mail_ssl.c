@@ -262,6 +262,8 @@ int main(int argc, char *argv[])
 #endif
   /* ------------------------------------------------------- */
 
+  cmd = "Content-Type: image/png\r\n";
+  SSL_write(s, cmd, strlen(cmd));
   cmd = "Content-Transfer-Encoding: base64\r\n";
   SSL_write(s, cmd, strlen(cmd));
 #if 0
@@ -282,9 +284,9 @@ int main(int argc, char *argv[])
   out_len = EVP_EncodeBlock(enc_cmd, data, filestat.st_size);
   SSL_write(s, enc_cmd, out_len);
 #endif
-  cmd = "Content-Disposition:attachment;filename=\"km.txt\"\r\n";
+  cmd = "Content-Disposition:attachment;filename=\"logo.png\"\r\n";
   SSL_write(s, cmd, strlen(cmd));
-  upload(s, "km.txt");
+  upload(s, "logo.png");
   /* FILE *f = fopen("km", "r"); */
   /* char  buf[4096]; */
   /* int   n = 0; */
