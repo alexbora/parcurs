@@ -18,8 +18,9 @@
 #include <unistd.h>
 
 #define h_addr h_addr_list[0] /* for backward compatibility */
+#define BUF    4096u
 
-void upload(SSL *s)
+static inline void upload(SSL *s)
 {
   FILE *fp = fopen("km.txt", "rb");
   fseek(fp, 0, SEEK_END);
@@ -37,8 +38,27 @@ void upload(SSL *s)
   SSL_write(s, cmd, strlen(cmd));
 
   fclose(fp);
+  fp = NULL;
   free(buffer);
+  buffer = NULL;
   free(out_buffer);
+  out_buffer = NULL;
+}
+
+static inline void write_ssl(SSL *s, const char *txt)
+{
+  const void *buf = (const void *)txt;
+  int         n   = (int)strlen(txt);
+  SSL_write(s, buf, n);
+}
+
+static inline void read_ssl(SSL *s, char *buf)
+{
+  bzero(buf, 4096);
+  /* *buf = '\0'; */
+  /* memset(buf, '\0', 4096); */
+  SSL_read(s, buf, 4096 - 1);
+  puts(buf);
 }
 
 static inline int socket_setopt(int sockfd, int level, int optname, int optval)
@@ -116,8 +136,10 @@ int main(int argc, char *argv[])
 {
   SSL *s = init_sock("smtp.gmail.com", 465);
 
-  char  recvbuf[4096] = {'\0'};
-  char *cmd           = "EHLO smtp.gmail.com\r\n";
+  char recvbuf[4096] = {'\0'};
+  char enc_cmd[4096] = {'\0'};
+
+  char *cmd = "EHLO smtp.gmail.com\r\n";
   SSL_write(s, cmd, strlen(cmd));
   SSL_read(s, recvbuf, 4096 - 1);
   puts(recvbuf);
@@ -131,10 +153,9 @@ int main(int argc, char *argv[])
 
   /* -------------------------------- */
   bzero(recvbuf, 4096);
-  char enc_cmd[4096] = {'\0'};
-  cmd                = "t400.linux@gmail.com";
-  int out_len        = EVP_EncodeBlock((unsigned char *)enc_cmd,
-                                       (const unsigned char *)cmd, strlen(cmd));
+  cmd         = "t400.linux@gmail.com";
+  int out_len = EVP_EncodeBlock((unsigned char *)enc_cmd,
+                                (const unsigned char *)cmd, strlen(cmd));
   SSL_write(s, enc_cmd, out_len);
   SSL_read(s, recvbuf, 4096 - 1);
   puts(recvbuf);
@@ -195,7 +216,6 @@ int main(int argc, char *argv[])
   SSL_write(s, cmd, strlen(cmd));
   cmd = "Content-Type: text/plain; charset=\"utf-8\"\r\n";
   SSL_write(s, cmd, strlen(cmd));
-
   cmd = "Content-Transfer-Encoding: quoted-printable\r\n";
   SSL_write(s, cmd, strlen(cmd));
   cmd = "Hi Me,=0A=0AThis is an empty file.\r\n";
@@ -205,6 +225,17 @@ int main(int argc, char *argv[])
   cmd = "Content-Type: text/plain\r\n";
   SSL_write(s, cmd, strlen(cmd));
   /* ----------------------------------------------- */
+
+  cmd = "Content-Type:multipart/form-data, boundary=xxxxxxxxx";
+  SSL_write(s, cmd, strlen(cmd));
+  cmd = "--xxxxxxxxx";
+  SSL_write(s, cmd, strlen(cmd));
+  cmd = "Content-Disposition: form-data; name=\"uploadfile\"; "
+        "filename=\"km.txt\"\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+  cmd = "Content-Type: text/plain";
+  SSL_write(s, cmd, strlen(cmd));
+  /* ------------------------------------------------------- */
 
   cmd = "Content-Transfer-Encoding: base64\r\n";
   SSL_write(s, cmd, strlen(cmd));
@@ -228,7 +259,7 @@ int main(int argc, char *argv[])
 #endif
   cmd = "Content-Disposition:attachment;filename=\"km.txt\"\r\n";
   SSL_write(s, cmd, strlen(cmd));
-  upload(s);
+  /* upload(s); */
   /* FILE *f = fopen("km", "r"); */
   /* char  buf[4096]; */
   /* int   n = 0; */

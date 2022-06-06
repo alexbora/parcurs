@@ -1,1 +1,1 @@
-disallowSpacesInsideTemplateStringPlaceholders
+12345
