@@ -30,7 +30,7 @@ static inline void upload(SSL *s, const char *filename)
   unsigned char *buffer = malloc(sizeof(unsigned char) * size);
   fread(buffer, 1, size, fp);
 
-  unsigned char *out_buffer = malloc(sizeof(unsigned char) * size);
+  unsigned char *out_buffer = malloc(1.33 * (sizeof(unsigned char) * size));
   int            out_len    = EVP_EncodeBlock(out_buffer, buffer, size);
 
   SSL_write(s, out_buffer, out_len);
@@ -76,9 +76,8 @@ static inline int socket_setopt(int sockfd, int level, int optname, int optval)
 static SSL *init_sock(const char *host, const int port)
 {
   struct hostent *he = NULL;
-  /* char          **ap = NULL; */
-  /* *ap                = NULL; */
-  he = gethostbyname(host);
+  char          **ap = NULL;
+  he                 = gethostbyname(host);
   if (he == NULL) {
     fprintf(stderr, "no host\n");
     goto fail;
@@ -100,18 +99,17 @@ static SSL *init_sock(const char *host, const int port)
     fprintf(stderr, "no connection\n");
     goto fail;
   }
-  socket_setopt(sockfd, IPPROTO_TCP, SO_SNDLOWAT | SO_DONTROUTE | SO_DONTTRUNC,
-                1);
+  socket_setopt(sockfd, IPPROTO_TCP, SO_SNDLOWAT, 1);
 
   /* fd = sockfd; */
-  int n = 0; //#if OPENSSL_VERSION_NUMBER < 0x10100000L
-             // SSL_library_init( */
+  /* int n = 0; //#if OPENSSL_VERSION_NUMBER < 0x10100000L */
+  // SSL_library_init( */
   /* * ); *1/ */
-  n = OPENSSL_init_ssl(OPENSSL_INIT_NO_LOAD_SSL_STRINGS |
-                           OPENSSL_INIT_ADD_ALL_DIGESTS |
-                           OPENSSL_INIT_NO_LOAD_CONFIG | OPENSSL_INIT_ASYNC |
-                           OPENSSL_INIT_NO_ATEXIT,
-                       NULL);
+  int n = OPENSSL_init_ssl(OPENSSL_INIT_NO_LOAD_SSL_STRINGS |
+                               OPENSSL_INIT_ADD_ALL_DIGESTS |
+                               OPENSSL_INIT_NO_LOAD_CONFIG |
+                               OPENSSL_INIT_ASYNC | OPENSSL_INIT_NO_ATEXIT,
+                           NULL);
   if (n == 0) {
     fprintf(stderr, "ssl init fail\n");
     goto fail;
@@ -128,16 +126,12 @@ static SSL *init_sock(const char *host, const int port)
     goto fail;
 
   /* { */
-  /*   sockfd,  host
-   *   SSL *s = SSL_new(SSL_CTX_new(TLS_client_method())); */
+  /*   SSL *s = SSL_new(SSL_CTX_new(TLS_client_method())); */
   /*   SSL_set_read_ahead(s, 1); */
   /*   SSL_set_mode(s, SSL_MODE_AUTO_RETRY); */
   /*   SSL_set_fd(s, sockfd); */
   /*   SSL_set_tlsext_host_name(s, host); */
   /*   SSL_connect(s); */
-  /* printf("Connected to %s with %s encryption\n", host, SSL_get_cipher(s));
-   */
-  /* return s; */
   /* } */
 
   SSL_set_read_ahead(ssl, 1);
@@ -246,8 +240,10 @@ int main(int argc, char *argv[])
   SSL_write(s, cmd, strlen(cmd));
   cmd = "--977d81ff9d852ab2a0cad646f8058349\r\n";
   SSL_write(s, cmd, strlen(cmd));
-  cmd = "Content-Type: text/plain\r\n";
-  SSL_write(s, cmd, strlen(cmd));
+  /* cmd = "Content-Type: image/png\r\n"; */
+  /* SSL_write(s, cmd, strlen(cmd)); */
+  /* if uncommented,  image will be embedded. */
+
   /* ----------------------------------------------- */
 #if 0
   cmd = "Content-Type:multipart/form-data, boundary=xxxxxxxxx";
@@ -262,8 +258,6 @@ int main(int argc, char *argv[])
 #endif
   /* ------------------------------------------------------- */
 
-  cmd = "Content-Type: image/png\r\n";
-  SSL_write(s, cmd, strlen(cmd));
   cmd = "Content-Transfer-Encoding: base64\r\n";
   SSL_write(s, cmd, strlen(cmd));
 #if 0
@@ -284,8 +278,7 @@ int main(int argc, char *argv[])
   out_len = EVP_EncodeBlock(enc_cmd, data, filestat.st_size);
   SSL_write(s, enc_cmd, out_len);
 #endif
-
-  cmd = "Content-Disposition:attachment;filename=\"logo.png\"\r\n";
+  cmd = "Content-Disposition: attachment; filename=\"logo.png\"\r\n\r\n";
   SSL_write(s, cmd, strlen(cmd));
   upload(s, "logo.png");
   /* FILE *f = fopen("km", "r"); */
