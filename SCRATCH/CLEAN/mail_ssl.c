@@ -18,9 +18,10 @@
 #include <unistd.h>
 
 #define h_addr h_addr_list[0] /* for backward compatibility */
-#define BUF 4096u
+#define BUF    4096u
 
-static inline void upload(SSL *s, const char *filename) {
+static inline void upload(SSL *s, const char *filename)
+{
   FILE *fp = fopen(filename, "rb");
   fseek(fp, 0, SEEK_END);
   long size = ftell(fp);
@@ -30,7 +31,7 @@ static inline void upload(SSL *s, const char *filename) {
   fread(buffer, 1, size, fp);
 
   unsigned char *out_buffer = malloc(sizeof(unsigned char) * size);
-  int out_len = EVP_EncodeBlock(out_buffer, buffer, size);
+  int            out_len    = EVP_EncodeBlock(out_buffer, buffer, size);
 
   SSL_write(s, out_buffer, out_len);
   /* char *cmd = "\r\n"; */
@@ -44,13 +45,22 @@ static inline void upload(SSL *s, const char *filename) {
   out_buffer = NULL;
 }
 
-static inline void write_ssl(SSL *s, const char *txt) {
+static inline void write_ssl(SSL *s, const char *txt)
+{
   const void *buf = (const void *)txt;
-  int n = (int)strlen(txt);
+  int         n   = (int)strlen(txt);
   SSL_write(s, buf, n);
 }
 
-static inline void read_ssl(SSL *s, char *buf) {
+static inline void read_ssl2(SSL *s)
+{
+  char recvbuf[4096] = {'\0'};
+  SSL_read(s, recvbuf, 4096 - 1);
+  puts(recvbuf);
+}
+
+static inline void read_ssl(SSL *s, char *buf)
+{
   bzero(buf, 4096);
   /* *buf = '\0'; */
   /* memset(buf, '\0', 4096); */
@@ -58,15 +68,16 @@ static inline void read_ssl(SSL *s, char *buf) {
   puts(buf);
 }
 
-static inline int socket_setopt(int sockfd, int level, int optname,
-                                int optval) {
+static inline int socket_setopt(int sockfd, int level, int optname, int optval)
+{
   return setsockopt(sockfd, level, optname, (void *)&optval, sizeof(optval));
 }
 
-static SSL *init_sock(const char *host, const int port) {
+static SSL *init_sock(const char *host, const int port)
+{
   struct hostent *he = NULL;
-  char **ap = NULL;
-  he = gethostbyname(host);
+  char          **ap = NULL;
+  he                 = gethostbyname(host);
   if (he == NULL) {
     fprintf(stderr, "no host\n");
     goto fail;
@@ -77,8 +88,8 @@ static SSL *init_sock(const char *host, const int port) {
     goto fail;
   }
   struct sockaddr_in sa = (struct sockaddr_in){
-      .sin_family = AF_INET,
-      .sin_port = htons(port),
+      .sin_family      = AF_INET,
+      .sin_port        = htons(port),
       .sin_addr.s_addr = *(long *)(he->h_addr),
   };
 
@@ -91,7 +102,9 @@ static SSL *init_sock(const char *host, const int port) {
   socket_setopt(sockfd, IPPROTO_TCP, SO_SNDLOWAT, 1);
 
   /* fd = sockfd; */
-  int n = 0; //#if OPENSSL_VERSION_NUMBER < 0x10100000L //SSL_library_init( );
+  int n = 0; //#if OPENSSL_VERSION_NUMBER < 0x10100000L
+             // SSL_library_init( */
+  /* * ); *1/ */
   n = OPENSSL_init_ssl(OPENSSL_INIT_NO_LOAD_SSL_STRINGS |
                            OPENSSL_INIT_ADD_ALL_DIGESTS |
                            OPENSSL_INIT_NO_LOAD_CONFIG | OPENSSL_INIT_ASYNC |
@@ -112,6 +125,15 @@ static SSL *init_sock(const char *host, const int port) {
   if (!ssl)
     goto fail;
 
+  /* { */
+  /*   SSL *s = SSL_new(SSL_CTX_new(TLS_client_method())); */
+  /*   SSL_set_read_ahead(s, 1); */
+  /*   SSL_set_mode(s, SSL_MODE_AUTO_RETRY); */
+  /*   SSL_set_fd(s, sockfd); */
+  /*   SSL_set_tlsext_host_name(s, host); */
+  /*   SSL_connect(s); */
+  /* } */
+
   SSL_set_read_ahead(ssl, 1);
   SSL_set_mode(ssl, SSL_MODE_AUTO_RETRY);
   SSL_set_fd(ssl, sockfd);
@@ -128,7 +150,8 @@ fail:
   return NULL;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
   SSL *s = init_sock("smtp.gmail.com", 465);
 
   char recvbuf[4096] = {'\0'};
@@ -148,7 +171,7 @@ int main(int argc, char *argv[]) {
 
   /* -------------------------------- */
   bzero(recvbuf, 4096);
-  cmd = "t400.linux@gmail.com";
+  cmd         = "t400.linux@gmail.com";
   int out_len = EVP_EncodeBlock((unsigned char *)enc_cmd,
                                 (const unsigned char *)cmd, strlen(cmd));
   SSL_write(s, enc_cmd, out_len);
@@ -164,7 +187,7 @@ int main(int argc, char *argv[]) {
   /* ----------------------------------------------- */
   bzero(recvbuf, 4096);
   bzero(enc_cmd, 4096);
-  cmd = "Cragger2011";
+  cmd     = "Cragger2011";
   out_len = EVP_EncodeBlock((unsigned char *)enc_cmd,
                             (const unsigned char *)cmd, strlen(cmd));
   SSL_write(s, enc_cmd, out_len);
