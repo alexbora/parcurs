@@ -76,8 +76,9 @@ static inline int socket_setopt(int sockfd, int level, int optname, int optval)
 static SSL *init_sock(const char *host, const int port)
 {
   struct hostent *he = NULL;
-  char          **ap = NULL;
-  he                 = gethostbyname(host);
+  /* char          **ap = NULL; */
+  /* *ap                = NULL; */
+  he = gethostbyname(host);
   if (he == NULL) {
     fprintf(stderr, "no host\n");
     goto fail;
@@ -99,7 +100,8 @@ static SSL *init_sock(const char *host, const int port)
     fprintf(stderr, "no connection\n");
     goto fail;
   }
-  socket_setopt(sockfd, IPPROTO_TCP, SO_SNDLOWAT, 1);
+  socket_setopt(sockfd, IPPROTO_TCP, SO_SNDLOWAT | SO_DONTROUTE | SO_DONTTRUNC,
+                1);
 
   /* fd = sockfd; */
   int n = 0; //#if OPENSSL_VERSION_NUMBER < 0x10100000L
@@ -126,12 +128,16 @@ static SSL *init_sock(const char *host, const int port)
     goto fail;
 
   /* { */
-  /*   SSL *s = SSL_new(SSL_CTX_new(TLS_client_method())); */
+  /*   sockfd,  host
+   *   SSL *s = SSL_new(SSL_CTX_new(TLS_client_method())); */
   /*   SSL_set_read_ahead(s, 1); */
   /*   SSL_set_mode(s, SSL_MODE_AUTO_RETRY); */
   /*   SSL_set_fd(s, sockfd); */
   /*   SSL_set_tlsext_host_name(s, host); */
   /*   SSL_connect(s); */
+  /* printf("Connected to %s with %s encryption\n", host, SSL_get_cipher(s));
+   */
+  /* return s; */
   /* } */
 
   SSL_set_read_ahead(ssl, 1);
