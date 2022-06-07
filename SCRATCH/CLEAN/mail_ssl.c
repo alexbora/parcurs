@@ -240,8 +240,8 @@ int main(int argc, char *argv[])
   SSL_write(s, cmd, strlen(cmd));
   cmd = "--977d81ff9d852ab2a0cad646f8058349\r\n";
   SSL_write(s, cmd, strlen(cmd));
-  /* cmd = "Content-Type: image/png\r\n"; */
-  /* SSL_write(s, cmd, strlen(cmd)); */
+  cmd = "Content-Type: image/png\r\n";
+  SSL_write(s, cmd, strlen(cmd));
   /* if uncommented,  image will be embedded. */
 
   /* ----------------------------------------------- */
