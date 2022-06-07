@@ -22,14 +22,16 @@
 static inline void upload(SSL *s, const char *filename)
 {
   FILE *fp = fopen(filename, "rb");
+  if (!fp)
+    return;
   fseek(fp, 0, SEEK_END);
   long size = ftell(fp);
   rewind(fp);
 
-  unsigned char buffer[sizeof(unsigned char) * size];
+  unsigned char *buffer = malloc(sizeof(unsigned char) * size);
   fread(buffer, 1, size, fp);
 
-  unsigned char *out_buffer = malloc(1.33 * (sizeof(unsigned char) * size));
+  unsigned char *out_buffer = malloc((sizeof(unsigned char) * size) * 1.33);
   int            out_len    = EVP_EncodeBlock(out_buffer, buffer, size);
 
   SSL_write(s, out_buffer, out_len);
@@ -38,8 +40,8 @@ static inline void upload(SSL *s, const char *filename)
 
   fclose(fp);
   fp = NULL;
-  /* free(buffer); */
-  /* buffer = NULL; */
+  free(buffer);
+  buffer = NULL;
   free(out_buffer);
   out_buffer = NULL;
 }
@@ -51,29 +53,36 @@ static inline void write_ssl(SSL *s, const char *txt)
   SSL_write(s, buf, n);
 }
 
+static inline void write_base64(SSL *s, const void *txt)
+{
+  unsigned char enc_cmd[128] = {'\0'};
+  int out_len = EVP_EncodeBlock((unsigned char *)enc_cmd, txt, strlen(txt));
+  SSL_write(s, enc_cmd, out_len);
+}
+
 static inline void read_ssl2(SSL *s)
 {
-  char recvbuf[4096] = {'\0'};
-  SSL_read(s, recvbuf, 4096 - 1);
+  char recvbuf[64] = {'\0'};
+  SSL_read(s, recvbuf, 64 - 1);
   puts(recvbuf);
 }
 
-static inline void read_ssl(SSL *s, char *buf)
+static inline int read_ssl(SSL *s, char *buf)
 {
-  bzero(buf, 4096);
-  /* *buf = '\0'; */
+  /* bzero(buf, BUF); */
+  *buf = '\0';
   /* memset(buf, '\0', 4096); */
-  SSL_read(s, buf, 4096 - 1);
-  puts(buf);
+  return SSL_read(s, buf, BUF - 1);
+  /* puts(buf); */
 }
 
 static SSL *init_sock(const char *host, const int port)
 {
 
-  struct sockaddr_in sa = (struct sockaddr_in){
+  struct sockaddr_in sa = {
       .sin_family = AF_INET,
       .sin_port   = htons(port),
-#define h_addr h_addr_list[0] /* for backward compatibility */
+#define h_addr h_addr_list[0]
       .sin_addr.s_addr = *(long *)((gethostbyname(host))->h_addr),
 #undef h_addr
   };
@@ -85,12 +94,6 @@ static SSL *init_sock(const char *host, const int port)
 
   /* Openssl */
   /* ------------------------ */
-
-  OPENSSL_init_ssl(OPENSSL_INIT_NO_LOAD_SSL_STRINGS |
-                       OPENSSL_INIT_ADD_ALL_DIGESTS |
-                       OPENSSL_INIT_NO_LOAD_CONFIG | OPENSSL_INIT_ASYNC |
-                       OPENSSL_INIT_NO_ATEXIT,
-                   NULL);
 
   SSL *s = SSL_new(SSL_CTX_new(TLS_client_method()));
   SSL_set_fd(s, sockfd);
@@ -122,7 +125,8 @@ int main(int argc, char *argv[])
   /* puts(recvbuf); */
 
   write_ssl(s, "AUTH LOGIN\r\n");
-  read_ssl(s, recvbuf);
+  /* read_ssl(s, recvbuf); */
+  read_ssl2(s);
 
   /* -------------------------------- */
   bzero(recvbuf, 4096);
