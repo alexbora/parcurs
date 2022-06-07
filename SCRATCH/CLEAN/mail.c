@@ -129,13 +129,15 @@ int main(int argc, char *argv[])
   read_ssl2(s);
 
   /* -------------------------------- */
-  bzero(recvbuf, 4096);
-  cmd         = "t400.linux@gmail.com";
-  int out_len = EVP_EncodeBlock((unsigned char *)enc_cmd,
-                                (const unsigned char *)cmd, strlen(cmd));
-  SSL_write(s, enc_cmd, out_len);
-  SSL_read(s, recvbuf, 4096 - 1);
-  puts(recvbuf);
+  /* bzero(recvbuf, 4096); */
+  /* cmd         = "t400.linux@gmail.com"; */
+  /* int out_len = EVP_EncodeBlock((unsigned char *)enc_cmd, */
+  /*                               (const unsigned char *)cmd, strlen(cmd)); */
+  /* SSL_write(s, enc_cmd, out_len); */
+  /* SSL_read(s, recvbuf, 4096 - 1); */
+  /* puts(recvbuf); */
+
+  write_base64(s, "t400.linux@gmail.com");
 
   /* ---------------------------------------- */
   bzero(recvbuf, 4096);
@@ -143,12 +145,13 @@ int main(int argc, char *argv[])
   SSL_write(s, cmd, strlen(cmd));
   SSL_read(s, recvbuf, 4096 - 1);
   puts(recvbuf);
+
   /* ----------------------------------------------- */
   bzero(recvbuf, 4096);
   bzero(enc_cmd, 4096);
-  cmd     = "Cragger2011";
-  out_len = EVP_EncodeBlock((unsigned char *)enc_cmd,
-                            (const unsigned char *)cmd, strlen(cmd));
+  cmd         = "Cragger2011";
+  int out_len = EVP_EncodeBlock((unsigned char *)enc_cmd,
+                                (const unsigned char *)cmd, strlen(cmd));
   SSL_write(s, enc_cmd, out_len);
   cmd = "\r\n";
   SSL_write(s, cmd, strlen(cmd));
