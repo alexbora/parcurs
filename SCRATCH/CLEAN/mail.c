@@ -19,8 +19,7 @@
 
 #define BUF 4096u
 
-static inline void upload(SSL *s, const char *filename)
-{
+static inline void upload(SSL *s, const char *filename) {
   FILE *fp = fopen(filename, "rb");
   if (!fp)
     return;
@@ -32,7 +31,7 @@ static inline void upload(SSL *s, const char *filename)
   fread(buffer, 1, size, fp);
 
   unsigned char *out_buffer = malloc((sizeof(unsigned char) * size) * 1.33);
-  int            out_len    = EVP_EncodeBlock(out_buffer, buffer, size);
+  int out_len = EVP_EncodeBlock(out_buffer, buffer, size);
 
   SSL_write(s, out_buffer, out_len);
   /* char *cmd = "\r\n"; */
@@ -40,35 +39,31 @@ static inline void upload(SSL *s, const char *filename)
 
   fclose(fp);
   fp = NULL;
-  free(buffer);
+  /* free(buffer); */
   buffer = NULL;
-  free(out_buffer);
+  /* free(out_buffer); */
   out_buffer = NULL;
 }
 
-static inline void write_ssl(SSL *s, const char *txt)
-{
+static inline void write_ssl(SSL *s, const char *txt) {
   const void *buf = (const void *)txt;
-  int         n   = (int)strlen(txt);
+  int n = (int)strlen(txt);
   SSL_write(s, buf, n);
 }
 
-static inline void write_base64(SSL *s, const void *txt)
-{
+static inline void write_base64(SSL *s, const void *txt) {
   unsigned char enc_cmd[128] = {'\0'};
   int out_len = EVP_EncodeBlock((unsigned char *)enc_cmd, txt, strlen(txt));
   SSL_write(s, enc_cmd, out_len);
 }
 
-static inline void read_ssl2(SSL *s)
-{
+static inline void read_ssl2(SSL *s) {
   char recvbuf[64] = {'\0'};
   SSL_read(s, recvbuf, 64 - 1);
   puts(recvbuf);
 }
 
-static inline int read_ssl(SSL *s, char *buf)
-{
+static inline int read_ssl(SSL *s, char *buf) {
   /* bzero(buf, BUF); */
   *buf = '\0';
   /* memset(buf, '\0', 4096); */
@@ -76,12 +71,11 @@ static inline int read_ssl(SSL *s, char *buf)
   /* puts(buf); */
 }
 
-static SSL *init_sock(const char *host, const int port)
-{
+static SSL *init_sock(const char *host, const int port) {
 
   struct sockaddr_in sa = {
       .sin_family = AF_INET,
-      .sin_port   = htons(port),
+      .sin_port = htons(port),
 #define h_addr h_addr_list[0]
       .sin_addr.s_addr = *(long *)((gethostbyname(host))->h_addr),
 #undef h_addr
@@ -102,8 +96,7 @@ static SSL *init_sock(const char *host, const int port)
   return s;
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   SSL *s = init_sock("smtp.gmail.com", 465);
 
   char recvbuf[4096] = {'\0'};
@@ -149,7 +142,7 @@ int main(int argc, char *argv[])
   /* ----------------------------------------------- */
   bzero(recvbuf, 4096);
   bzero(enc_cmd, 4096);
-  cmd         = "Cragger2011";
+  cmd = "Cragger2011";
   int out_len = EVP_EncodeBlock((unsigned char *)enc_cmd,
                                 (const unsigned char *)cmd, strlen(cmd));
   SSL_write(s, enc_cmd, out_len);
