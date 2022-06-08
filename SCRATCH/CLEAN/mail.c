@@ -50,6 +50,8 @@ static inline void write_ssl(SSL *s, const char *txt)
   SSL_write(s, buf, n);
 }
 
+#define WRITE(b) write_ssl(s, b);
+
 static inline void write_base64(SSL *s, const void *txt)
 {
   unsigned char enc_cmd[128] = {'\0'};
@@ -145,10 +147,12 @@ int main(int argc, char *argv[])
   read_ssl2(s);
   /* ----------------------------------------------- */
   cmd = "RCPT TO:<t400.linux@gmail.com>\r\n";
-  SSL_write(s, cmd, strlen(cmd));
-  bzero(recvbuf, 4096);
-  SSL_read(s, recvbuf, 4096 - 1);
+  /* SSL_write(s, cmd, strlen(cmd)); */
+  /* bzero(recvbuf, 4096); */
+  /* SSL_read(s, recvbuf, 4096 - 1); */
   /* puts(recvbuf); */
+  write_ssl(s, cmd);
+
   /* ----------------------------------------------------------- */
   cmd = "DATA\r\n";
   /* SSL_write(s, cmd, strlen(cmd)); */
@@ -160,37 +164,55 @@ int main(int argc, char *argv[])
   /* aici nu modifica */
   /* ------------------------------------------------ */
   cmd = "MIME-Version: 1.0\r\n";
-  SSL_write(s, cmd, strlen(cmd));
+  /* SSL_write(s, cmd, strlen(cmd)); */
+  WRITE(cmd);
+
   /* ------------------------------------------------------- */
   cmd = "Content-Type:multipart/"
         "mixed;boundary=\"977d81ff9d852ab2a0cad646f8058349\"\r\n";
-  SSL_write(s, cmd, strlen(cmd));
+  /* SSL_write(s, cmd, strlen(cmd)); */
+  write_ssl(s, cmd);
 
   char subject[128];
   sprintf(subject, "Subject: %s", attachment);
   /* cmd = "Subject: Test Mail\r\n"; */
-  SSL_write(s, subject, strlen(subject));
+  /* SSL_write(s, subject, strlen(subject)); */
+  write_ssl(s, subject);
 
   cmd = "\r\n";
-  SSL_write(s, cmd, strlen(cmd));
-  cmd = "--977d81ff9d852ab2a0cad646f8058349\r\n";
-  SSL_write(s, cmd, strlen(cmd));
-
+  write_ssl(s, cmd);
+  /* SSL_write(s, cmd, strlen(cmd)); */
   /* cmd = "--977d81ff9d852ab2a0cad646f8058349\r\n"; */
   /* SSL_write(s, cmd, strlen(cmd)); */
+  write_ssl(s, "--977d81ff9d852ab2a0cad646f8058349\r\n");
+  /* cmd = "--977d81ff9d852ab2a0cad646f8058349\r\n"; */
+  /* SSL_write(s, cmd, strlen(cmd)); */
+
   cmd = "Content-Type: "
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\r\n";
-  SSL_write(s, cmd, strlen(cmd));
-  cmd = "Content-Transfer-Encoding: base64\r\n";
-  SSL_write(s, cmd, strlen(cmd));
 
-  cmd = "Content-Disposition: attachment; "
-        "filename=\"foaie_parcurs_B-151-VGT_mai_2022_Alex_Bora.xlsx\"\r\n\r\n";
-  SSL_write(s, cmd, strlen(cmd));
+  write_ssl(s, cmd);
+  /* SSL_write(s, cmd, strlen(cmd)); */
+
+  cmd = "Content-Transfer-Encoding: base64\r\n";
+  /* SSL_write(s, cmd, strlen(cmd)); */
+  write_ssl(s, cmd);
+
+  char attach[128];
+  sprintf(attach,
+          "Content-Disposition: attachment; "
+          "filename=\"%s\"\r\n\r\n",
+          attachment);
+
+  /* SSL_write(s, cmd, strlen(cmd)); */
+  /* write_ssl(s, attach); */
+  WRITE(attach);
+
   upload(s, "foaie_parcurs_B-151-VGT_mai_2022_Alex_Bora.xlsx");
 
   cmd = "\r\n";
-  SSL_write(s, cmd, strlen(cmd));
+  /* SSL_write(s, cmd, strlen(cmd)); */
+  write_ssl(s, cmd);
   /* --------------------------------------------------------------- */
   cmd = "U2FtcGxlIFRleHQu\r\n";
   SSL_write(s, cmd, strlen(cmd));
@@ -202,9 +224,9 @@ int main(int argc, char *argv[])
   cmd = "QUIT\r\n";
   SSL_write(s, cmd, strlen(cmd));
 
-  bzero(recvbuf, 4096);
-  SSL_read(s, recvbuf, 4096 - 1);
-  puts(recvbuf);
+  /* bzero(recvbuf, 4096); */
+  /* SSL_read(s, recvbuf, 4096 - 1); */
+  /* puts(recvbuf); */
 
   SSL_shutdown(s);
   return 0;
