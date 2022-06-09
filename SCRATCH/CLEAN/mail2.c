@@ -135,7 +135,9 @@ int main(int argc, char *argv[]) {
         "mixed;boundary=\"977d81ff9d852ab2a0cad646f8058349\"\r\n");
 
   char subject[128];
-  sprintf(subject, "Subject: %s", attachment);
+  /* sprintf(subject, "Subject: %s", attachment); */
+  memcpy(subject, "Subject:", 8u);
+  memcpy(subject + 8, attachment, strlen(attachment));
 
   WRITE(subject);
 

@@ -1,5 +1,5 @@
 all:
-	gcc-12 date2.c excel2.c -o final_program -O3 -std=c11 -w `pkg-config --cflags --libs xlsxwriter`
+	gcc-11 date2.c excel2.c -o final_program -O3 -std=c11 -w -lxlsxwriter
 
 mail:
 	gcc-11 mail2.c -o mail -O3 -std=c11 -w -lcrypto -lssl -ldl -pthread
