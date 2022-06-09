@@ -48,9 +48,10 @@ static inline void write_ssl(SSL *s, const char *txt) {
   SSL_write(s, buf, n);
 }
 
-#define WRITE(b) write_ssl(s, b);
-#define WRITE_ENC(b) write_base64(s, b);
+#define WRITE(b) write_ssl(s, b)
+#define WRITE_ENC(b) write_base64(s, b)
 #define UPLOAD(b) upload(s, b);
+#define READ read_ssl2(s)
 #define NEW_LINE "\r\n"
 
 static inline void write_base64(SSL *s, const void *txt) {
@@ -93,14 +94,13 @@ static SSL *init_sock(const char *host, const int port) {
   return s;
 }
 
-int main(int argc, char *argv[]) {
-  char *attachment = "foaie_parcurs_B-151-VGT_mai_2022_Alex_Bora.xlsx";
+int mail_me(const char *attachment) {
   SSL *s = init_sock("smtp.gmail.com", 465);
 
   char *cmd;
 
   WRITE("EHLO smtp.gmail.com\r\n");
-  read_ssl2(s);
+  READ;
 
   /* ---------------------------- */
   WRITE("AUTH LOGIN\r\n");
@@ -161,7 +161,7 @@ int main(int argc, char *argv[]) {
 
   UPLOAD(attachment);
 
-  WRITE(NEW_LINE)
+  WRITE(NEW_LINE);
   /* --------------------------------------------------------------- */
   WRITE("U2FtcGxlIFRleHQu\r\n");
   WRITE("\r\n--977d81ff9d852ab2a0cad646f8058349--\r\n");
@@ -172,3 +172,11 @@ int main(int argc, char *argv[]) {
   SSL_shutdown(s);
   return 0;
 }
+#if 0
+int main(int argc, char *argv[]) {
+
+  char *attachment = "foaie_parcurs_B-151-VGT_mai_2022_Alex_Bora.xlsx";
+  mail_me(attachment);
+  return 0;
+}
+#endif

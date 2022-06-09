@@ -43,6 +43,13 @@ struct Route {
   char *obs;
 };
 
+int init_time(int argc, char **argv);
+void mix(void);
+void get_km(char *argv);
+int write_excel(void);
+void write_km(void);
+int mail_me(const char *attachment);
+
 #define BLOCK_BEGIN {
 #define BLOCK_END }
 #endif /* end of include guard MAIN_H */

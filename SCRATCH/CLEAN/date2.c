@@ -61,6 +61,7 @@ char longdate[128], *luna;
 int dayz_in_mon;
 int current_year;
 unsigned km;
+char attachment[128];
 
 static int days_past;
 static time_t global_time;
@@ -222,7 +223,7 @@ __attribute__((noreturn)) static void usage() {
   exit(0);
 }
 
-static int init_time(int argc, char **argv) {
+int init_time(int argc, char **argv) {
   if (argc > 1 && (*argv[1] == 'h' || strcmp(argv[1], "-h") == 0 ||
                    strcmp(argv[1], "--h") == 0))
     usage();
@@ -323,14 +324,13 @@ void get_km(char *argv) {
   printf("KM: %u\n", km);
 }
 
-void write_km() {
+void write_km(void) {
   FILE *f = fopen("km", "w++");
   fprintf(f, "%u", km);
   fclose(f);
 }
 
-void gen(void);
-int write_excel(void);
+/* void gen(void); */
 
 const char *get_longdate(void) { return (const char *)longdate; }
 
@@ -355,6 +355,7 @@ int main(int argc, char *argv[]) {
   write_excel();
 
   write_km();
+  mail_me(attachment);
 #if 0
   int *h1 = hol[0];
   int arrr[32] = {0};
