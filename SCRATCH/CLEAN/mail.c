@@ -50,7 +50,9 @@ static inline void write_ssl(SSL *s, const char *txt)
   SSL_write(s, buf, n);
 }
 
-#define WRITE(b) write_ssl(s, b);
+#define WRITE(b)  write_ssl(s, b);
+#define UPLOAD(b) upload(s, b);
+#define NEW_LINE  "'\r\n'"
 
 static inline void write_base64(SSL *s, const void *txt)
 {
@@ -147,44 +149,53 @@ int main(int argc, char *argv[])
   read_ssl2(s);
   /* ----------------------------------------------- */
   cmd = "RCPT TO:<t400.linux@gmail.com>\r\n";
-  /* SSL_write(s, cmd, strlen(cmd)); */
-  /* bzero(recvbuf, 4096); */
-  /* SSL_read(s, recvbuf, 4096 - 1); */
-  /* puts(recvbuf); */
-  write_ssl(s, cmd);
+  SSL_write(s, cmd, strlen(cmd));
+  bzero(recvbuf, 4096);
+  SSL_read(s, recvbuf, 4096 - 1);
+  puts(recvbuf);
+  /* write_ssl(s, cmd); */
 
   /* ----------------------------------------------------------- */
-  cmd = "DATA\r\n";
+  /* cmd = "DATA\r\n"; */
   /* SSL_write(s, cmd, strlen(cmd)); */
   /* bzero(recvbuf, 4096); */
   /* SSL_read(s, recvbuf, 4096 - 1); */
   /* puts(recvbuf); */
-  write_ssl(s, cmd);
-  read_ssl2(s);
+  /* write_ssl(s, cmd); */
+  /* read_ssl2(s); */
   /* aici nu modifica */
+  WRITE("DATA\r\n");
+  read_ssl2(s);
   /* ------------------------------------------------ */
-  cmd = "MIME-Version: 1.0\r\n";
+  /* cmd = "MIME-Version: 1.0\r\n"; */
   /* SSL_write(s, cmd, strlen(cmd)); */
-  WRITE(cmd);
+  WRITE("MIME-Version: 1.0\r\n");
 
   /* ------------------------------------------------------- */
-  cmd = "Content-Type:multipart/"
-        "mixed;boundary=\"977d81ff9d852ab2a0cad646f8058349\"\r\n";
+  /* cmd = "Content-Type:multipart/" */
+  /* "mixed;boundary=\"977d81ff9d852ab2a0cad646f8058349\"\r\n"; */
   /* SSL_write(s, cmd, strlen(cmd)); */
-  write_ssl(s, cmd);
+  /* write_ssl(s, cmd); */
+
+  WRITE("Content-Type:multipart/"
+        "mixed;boundary=\"977d81ff9d852ab2a0cad646f8058349\"\r\n");
 
   char subject[128];
   sprintf(subject, "Subject: %s", attachment);
   /* cmd = "Subject: Test Mail\r\n"; */
   /* SSL_write(s, subject, strlen(subject)); */
-  write_ssl(s, subject);
+  /* write_ssl(s, subject); */
+  WRITE(subject);
 
-  cmd = "\r\n";
-  write_ssl(s, cmd);
+  /* cmd = "\r\n"; */
+  /* write_ssl(s, cmd); */
+  WRITE("\r\n");
+
   /* SSL_write(s, cmd, strlen(cmd)); */
   /* cmd = "--977d81ff9d852ab2a0cad646f8058349\r\n"; */
   /* SSL_write(s, cmd, strlen(cmd)); */
-  write_ssl(s, "--977d81ff9d852ab2a0cad646f8058349\r\n");
+  /* write_ssl(s, "--977d81ff9d852ab2a0cad646f8058349\r\n"); */
+  WRITE("--977d81ff9d852ab2a0cad646f8058349\r\n");
   /* cmd = "--977d81ff9d852ab2a0cad646f8058349\r\n"; */
   /* SSL_write(s, cmd, strlen(cmd)); */
 
@@ -208,11 +219,12 @@ int main(int argc, char *argv[])
   /* write_ssl(s, attach); */
   WRITE(attach);
 
-  upload(s, "foaie_parcurs_B-151-VGT_mai_2022_Alex_Bora.xlsx");
+  UPLOAD(attachment);
 
-  cmd = "\r\n";
+  /* cmd = "\r\n"; */
   /* SSL_write(s, cmd, strlen(cmd)); */
-  write_ssl(s, cmd);
+  /* write_ssl(s, cmd); */
+  WRITE(NEW_LINE)
   /* --------------------------------------------------------------- */
   cmd = "U2FtcGxlIFRleHQu\r\n";
   SSL_write(s, cmd, strlen(cmd));

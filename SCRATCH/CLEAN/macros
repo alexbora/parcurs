@@ -1,0 +1,5 @@
+#define WRITE(b)        write_ssl(s, b);
+#define NEW_LINE        "'\r\n'"
+#define STRINGIFY_(x)   #x
+#define INSERT_NEW_LINE STRINGIFY_('\r\n');
+
