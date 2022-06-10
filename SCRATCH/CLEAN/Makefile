@@ -5,7 +5,7 @@ mail:
 	gcc-11 mail2.c -o mail -O3 -std=c11 -w -lcrypto -lssl -ldl -pthread
 
 x: date2.c excel2.c mail2.c main.c main.h
-	gcc-11 mail2.c date2.c excel2.c main.c -DSkipmain -o final_program -w -std=c11 -O3 -lcrypto -lssl -lxlsxwriter -ldl -pthread
+	gcc-11 mail2.c date2.c excel2.c main.c -DSkipmain -o final_program -w -std=c11 -O3  `pkg-config --cflags --libs openssl` -lxlsxwriter -ldl -pthread
 
 clean:
 	@echo Done.

@@ -19,7 +19,8 @@
 
 #define BUF 4096u
 
-static inline void upload(SSL *s, const char *filename) {
+static inline void upload(SSL *s, const char *filename)
+{
   FILE *fp = fopen(filename, "rb");
   if (!fp)
     return;
@@ -32,7 +33,7 @@ static inline void upload(SSL *s, const char *filename) {
   fread(buffer, 1, size, fp);
 
   unsigned char out_buffer[(sizeof(unsigned char) * size) * 2];
-  int out_len = EVP_EncodeBlock(out_buffer, buffer, size);
+  int           out_len = EVP_EncodeBlock(out_buffer, buffer, size);
 
   SSL_write(s, out_buffer, out_len);
 
@@ -42,39 +43,44 @@ static inline void upload(SSL *s, const char *filename) {
   memset(out_buffer, '\0', sizeof(buffer));
 }
 
-static inline void write_ssl(SSL *s, const char *txt) {
+static inline void write_ssl(SSL *s, const char *txt)
+{
   const void *buf = (const void *)txt;
-  int n = (int)strlen(txt);
+  int         n   = (int)strlen(txt);
   SSL_write(s, buf, n);
 }
 
-#define WRITE(b) write_ssl(s, b)
+#define WRITE(b)     write_ssl(s, b)
 #define WRITE_ENC(b) write_base64(s, b)
-#define UPLOAD(b) upload(s, b);
-#define READ read_ssl2(s)
-#define NEW_LINE "\r\n"
+#define UPLOAD(b)    upload(s, b);
+#define READ         read_ssl2(s)
+#define NEW_LINE     "\r\n"
 
-static inline void write_base64(SSL *s, const void *txt) {
+static inline void write_base64(SSL *s, const void *txt)
+{
   unsigned char enc_cmd[128] = {'\0'};
   int out_len = EVP_EncodeBlock((unsigned char *)enc_cmd, txt, strlen(txt));
   SSL_write(s, enc_cmd, out_len);
 }
 
-static inline void read_ssl2(SSL *s) {
+static inline void read_ssl2(SSL *s)
+{
   char recvbuf[BUF] = {'\0'};
   SSL_read(s, recvbuf, BUF - 1);
   puts(recvbuf);
 }
 
-static inline int read_ssl(SSL *s, char *buf) {
+static inline int read_ssl(SSL *s, char *buf)
+{
   *buf = '\0';
   return SSL_read(s, buf, BUF - 1);
 }
 
-static SSL *init_sock(const char *host, const int port) {
+static SSL *init_sock(const char *host, const int port)
+{
   struct sockaddr_in sa = {
       .sin_family = AF_INET,
-      .sin_port = htons(port),
+      .sin_port   = htons(port),
 #define h_addr h_addr_list[0]
       .sin_addr.s_addr = *(long *)((gethostbyname(host))->h_addr),
 #undef h_addr
@@ -88,16 +94,20 @@ static SSL *init_sock(const char *host, const int port) {
   /* Openssl */
   /* ------------------------ */
   SSL *s = SSL_new(SSL_CTX_new(TLS_client_method()));
+  if (!s)
+    puts("s");
   SSL_set_fd(s, sockfd);
+
   SSL_connect(s);
 
   return s;
 }
 
-int mail_me(const char *attachment) {
+int mail_me(const char *attachment)
+{
   SSL *s = init_sock("smtp.gmail.com", 465);
 
-  char *cmd;
+  /* char *cmd; */
 
   WRITE("EHLO smtp.gmail.com\r\n");
   READ;
