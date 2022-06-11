@@ -320,9 +320,8 @@ void mix(void)
   do {
     random_shuffle();
   } while (repeating(route_));
-  for (unsigned i = 0; i < 32; i++) {
-    puts(route_[i].route);
-  }
+  /* for (unsigned i = 0; i < 32; i++) */
+  /* puts(route_[i].route); */
 }
 
 void get_km(char *argv)
@@ -338,7 +337,7 @@ void get_km(char *argv)
   } else {
     km = (unsigned)(atoi(argv));
   }
-  printf("KM: %u\n", km);
+  /* printf("KM: %u\n", km); */
 }
 
 void write_km(void)

