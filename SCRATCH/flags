@@ -3,3 +3,20 @@
     build/genmatch.o ../build-x86_64-pc-linux-gnu/libcpp/libcpp.a build/errors.o build/vec.o build/hash-table.o build/sort.o ../build-x86_
 
 -lrt -lpthread -L/usr/gcc-trunk/lib/../lib64 -lstdc++ -L/usr/local/lib -liconv -lm
+
+
+
+absc
+
+
+apsd
+absc
+absc
+
+apsd
+absc
+
+
+
+
+
