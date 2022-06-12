@@ -7,6 +7,7 @@
 #include "main.h"
 #include "xlsxwriter.h"
 
+#include <fcntl.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -200,6 +201,12 @@ int write_excel(void) {
                              .ignore_blank = LXW_VALIDATION_OFF,
                              .show_input = LXW_VALIDATION_OFF};
   /* open workbook */
+  /* check if workbook exists and delete it, otherwise you get permission error
+   * for overwriting */
+  int fd = open(name, O_RDONLY);
+  if (fd)
+    remove(name);
+
   lxw_workbook *workbook = workbook_new_opt(
       name, &(lxw_workbook_options){.constant_memory = LXW_FALSE,
                                     .use_zip64 = LXW_TRUE});
