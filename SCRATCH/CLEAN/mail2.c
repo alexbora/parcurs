@@ -99,7 +99,9 @@ static SSL *init_sock(const char *host, const int port)
   SSL_set_fd(s, sockfd);
 
   SSL_connect(s);
-
+  printf("Connected with %s\n%s%s\n", SSL_get_cipher(s), SSL_get_cipher_name(s),
+         SSL_get_cipher_version(s));
+  ;
   return s;
 }
 
