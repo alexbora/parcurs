@@ -53,7 +53,5 @@ int main(int argc, char *argv[]) {
 
   NO_LATENCY
 
-  char *a;
-
   return 0;
 }
