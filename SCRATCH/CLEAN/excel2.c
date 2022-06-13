@@ -207,8 +207,7 @@ int write_excel(void)
   /* check if workbook exists and delete it, otherwise you get permission error
    * for overwriting */
   if (open(name, O_RDONLY))
-    ;
-  remove(name);
+    remove(name);
 
   lxw_workbook *workbook = workbook_new_opt(
       name, &(lxw_workbook_options){.constant_memory = LXW_FALSE,
