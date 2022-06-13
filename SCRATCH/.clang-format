@@ -10,7 +10,7 @@ AlignAfterOpenBracket: Align
 # Don't align consecutive assignments
 # int aaaa = 12;
 # int b = 14;
-AlignConsecutiveAssignments: false
+AlignConsecutiveAssignments: true
 
 # Align escaped newlines as far left as possible
 # #define A   \
@@ -27,7 +27,7 @@ AlignOperands: true
 # Don't align trailing comments
 # int a; // Comment a
 # int b = 2; // Comment b
-AlignTrailingComments: false
+AlignTrailingComments: true
 
 AllowShortBlocksOnASingleLine: true
 AllowShortCaseLabelsOnASingleLine: true
@@ -37,13 +37,13 @@ AllowShortLoopsOnASingleLine: true
 
 BreakBeforeBraces: Linux
 
-PointerAlignment: Right
+PointerAlignment: Left
 SpaceAfterCStyleCast: true
 SpacesBeforeTrailingComments: 1
-AlignConsecutiveDeclarations: false
+AlignConsecutiveDeclarations: true
 
-AlwaysBreakAfterReturnType: None #All
-BreakBeforeTernaryOperators: True
+AlwaysBreakAfterReturnType: All #None #All
+BreakBeforeTernaryOperators: true
 AlignConsecutiveMacros: true
 SortIncludes: true
 AlignArrayOfStructures: Right
@@ -51,11 +51,11 @@ AttributeMacros: ['__capability', '__unused',  '__output']
 ForEachMacros:   [ foreach, Q_FOREACH, BOOST_FOREACH ]
 AlignEscapedNewlines: Right
 AlignTrailingComments: true
-Standard: gnu18 #Auto #c++20 #Latest
+Standard: Auto #c++20 #Latest
 AlignOperands:   Align
 
 
-#QualifierOrder: ['static',  'inline', 'const', 'restrict', 'type', 'volatile' ]
+# QualifierOrder: ['static',  'inline', 'const', 'restrict', 'type', 'volatile' ]
 
 #IncludeBlocksStyle: IBS_Regroup
 #QualifierOrder: ['static',  'inline', 'const', 'restrict', 'type', 'volatile' ]

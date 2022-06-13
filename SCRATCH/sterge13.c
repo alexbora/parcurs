@@ -155,5 +155,7 @@ int main(int argc, char **argv) {
   int mx = ((mm ^ (mm >> 3)));
   printf("mx %d\n", mx);
 
+  char *x;
+
   return 0;
 }
