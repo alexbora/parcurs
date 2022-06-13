@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-#ifdef __linux
+#ifdef __linux__
 #include <fcntl.h>
 #include <stdint.h>
 #include <unistd.h>
@@ -10,7 +10,7 @@
 static int pm_qos_fd = -1;
 
 void start_low_latency(void) {
-  uint32_t target = 0;
+  int target = 0;
   if (pm_qos_fd >= 0)
     return;
   pm_qos_fd = open("/dev/cpu_dma_latency", O_RDWR);
