@@ -297,7 +297,7 @@ static void random_shuffle(void) {
 /* #pragma GCC target("avx,avx2,fma") */
 /* #pragma optimize "align-loops=32" */
 __attribute__((const)) static inline unsigned
-repeating(const struct Route *const in) {
+repeating(const struct Route *restrict const in) {
   /* #pragma omp parallel for */
   for (unsigned i = 0; i < 32; i++) {
     if (in[i + 1].km == in[i].km && in[i].km > 30)
@@ -331,10 +331,6 @@ void get_km(char *argv) {
 }
 
 void write_km(void) {
-  /* int fd = open("km", O_WRONLY | O_CREAT | O_TRUNC, */
-  /* 0644 | S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH); */
-  /* write(fd, &km, 4); */
-  /* close(fd); */
   FILE *f = fopen("km", "w++");
   fprintf(f, "%u", km);
   fclose(f);
