@@ -380,5 +380,8 @@ int write_excel(void)
 
   worksheet_write_string(worksheet, r + 9, COL1, "……………………………………………………",
                          format_footer);
+
+  /* write(2, "Excel written.\n", 16); */
+  WRITE(2, "Excel written.\n");
   return workbook_close(workbook);
 }

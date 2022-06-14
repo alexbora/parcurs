@@ -38,18 +38,25 @@ static inline void log_debug(char *file, char *fmt, ...)
 }
 #endif
 struct Route {
-  char *route;
+  char    *route;
   unsigned km;
-  char *obs;
+  char    *obs;
 };
 
-int init_time(int argc, char **argv);
+int  init_time(int argc, char **argv);
 void mix(void);
 void get_km(char *argv);
-int write_excel(void);
+int  write_excel(void);
 void write_km(void);
-int mail_me(const char *attachment);
+int  mail_me(const char *attachment);
 
 #define BLOCK_BEGIN {
-#define BLOCK_END }
+#define BLOCK_END   }
+
+#ifdef LOG
+#define WRITE(a, b) write(a, b, strlen(b))
+#else
+#define WRITE(a, b)
+#endif
+
 #endif /* end of include guard MAIN_H */

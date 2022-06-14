@@ -24,6 +24,7 @@
 /* INPUT WORKS ONLY FOR YEARS AFTER 2000 */
 /* NO ERROR CHECKING, WATCH THE INPUT */
 
+#include <sys/fcntl.h>
 #ifndef __linux__
 #include <sys/_types/_u_int32_t.h>
 #endif
@@ -253,6 +254,7 @@ int init_time(int argc, char **argv)
   cmdl(argc, argv);
 
   globals();
+  write(2, "Time inited.\n", 13);
 
   return 0;
 }
@@ -327,6 +329,7 @@ void mix(void)
   } while (repeating(route_));
   /* for (unsigned i = 0; i < 32; i++) */
   /* puts(route_[i].route); */
+  write(2, "Randomly shuffled successfully.\n", 33);
 }
 
 void get_km(char *argv)
@@ -343,6 +346,7 @@ void get_km(char *argv)
     km = (unsigned)(atoi(argv));
   }
   /* printf("KM: %u\n", km); */
+  write(2, "Km read successfully.\n", 22);
 }
 
 void write_km(void)
@@ -350,6 +354,7 @@ void write_km(void)
   FILE *f = fopen("km", "w++");
   fprintf(f, "%u", km);
   fclose(f);
+  write(2, "Km written successfully.\n", 25);
 }
 /* void gen(void); */
 
