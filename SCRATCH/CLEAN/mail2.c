@@ -164,7 +164,7 @@ int mail_me(const char *attachment) {
 
   WRITE("Content-Transfer-Encoding: base64\r\n");
 
-  char attach[128];
+  char attach[128] = {[0 ... 127] = '\0'};
   sprintf(attach,
           "Content-Disposition: attachment; "
           "filename=\"%s\"\r\n\r\n",
