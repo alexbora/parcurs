@@ -8,9 +8,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void f1(void *p) { printf("1: %s\n", (char *)p); }
+void f1(void *p)
+{
+  printf("1: %s\n", (char *)p);
+}
 
-void f2(void *p) { printf("2: %s\n", (char *)p); }
+void f2(void *p)
+{
+  printf("2: %s\n", (char *)p);
+}
 
 struct Method {
   union {
@@ -29,11 +35,12 @@ struct Process {
   /* lxw_worksheet *ws; */
   uint32_t row;
   uint16_t col;
-  double parcursi;
+  double   parcursi;
   /* lxw_format    *format; */
 };
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 #if 0
   struct Method *m = &(struct Method){0};
   struct Work w1 = {"test", f1, m};
