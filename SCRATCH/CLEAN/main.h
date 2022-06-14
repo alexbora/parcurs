@@ -59,4 +59,8 @@ int  mail_me(const char *attachment);
 #define WRITE(a, b)
 #endif
 
+#if defined LOG && NO_PRINT
+#define stderr fd
+#endif
+
 #endif /* end of include guard MAIN_H */
