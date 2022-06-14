@@ -141,14 +141,16 @@ int mail_me(const char *attachment) {
   char subject[128] = {[0 ... 127] = '\0'};
   memcpy(subject, "Subject:", 8u);
 
-  char *p = attachment;
-  while (*p++)
-    ;
-  p -= 5;
-  *p = '\0';
+  // char *p = attachment;
+  // while (*p++)
+  //;
+  // p -= 5;
+  //*p = '\0';
 
-  attachment[strlen(attachment) - 5] = '\0';
-  memcpy(subject + 8, attachment, strlen(attachment));
+  // attachment[strlen(attachment) - 5] = '\0';
+  // attachment -= 5;
+
+  memcpy(subject + 8, attachment, strlen(attachment) - 5);
 
   WRITE(subject);
 
