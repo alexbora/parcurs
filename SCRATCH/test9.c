@@ -40,7 +40,8 @@ int main()
   INIT_FD
   write(fd, "a\n", 2);
   write(fd, "b\n", 2);
-  PRINT_("c")
+  PRINT_("c\n")
+  PRINT_("d\n")
   CLOSE_FD
 
   return 0;
