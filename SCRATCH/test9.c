@@ -7,6 +7,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/fcntl.h>
 #include <unistd.h>
 
@@ -17,7 +18,7 @@ static int fd;
 
 static void init_fd(void)
 {
-  fd = open("log", O_CREAT | O_APPEND | O_RDWR | O_TRUNC, 0666);
+  fd = open("log", O_CREAT | O_APPEND | O_RDWR | O_TRUNC | O_EXLOCK, 0664);
 }
 
 static void close_fd(void)
@@ -31,12 +32,15 @@ static void close_fd(void)
 #define fd 2
 #endif
 
+#define PRINT_(a) write(fd, a, strlen(a));
+
 int main()
 {
   /* fd = open("log", O_CREAT | O_APPEND | O_RDWR | O_TRUNC, 0666); */
   INIT_FD
   write(fd, "a\n", 2);
   write(fd, "b\n", 2);
+  PRINT_("c")
   CLOSE_FD
 
   return 0;
