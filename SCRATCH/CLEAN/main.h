@@ -53,11 +53,27 @@ int  mail_me(const char *attachment);
 #define BLOCK_BEGIN {
 #define BLOCK_END   }
 
-#ifdef PRINT_STDERR
-#define OUTPUT   2
-#define PRINT(b) write(OUTPUT, b, strlen(b))
+#ifdef LOG
+static int fd_;
+#define INIT_FD  init_fd();
+#define CLOSE_FD close_fd();
+
+static void init_fd(void)
+{
+  fd_ = open("log", O_CREAT | O_APPEND | O_RDWR | O_TRUNC | O_EXLOCK, 0664);
+}
+
+static void close_fd(void)
+{
+  close(fd_);
+}
+
 #else
-#define PRINT(b)
+#define INIT_FD
+#define CLOSE_FD
+#define fd_ 2
 #endif
+
+#define PRINT_(a) write(fd_, a, strlen(a));
 
 #endif /* end of include guard MAIN_H */
