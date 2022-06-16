@@ -139,8 +139,8 @@ int mail_me(const char *attachment)
 
   WRITE("RCPT TO:<t400.linux@gmail.com>\r\n");
   READ;
-  WRITE("RCPT TO:<alexandru.bora@renault-trucks.com>\r\n");
-  READ;
+  /* WRITE("RCPT TO:<alexandru.bora@renault-trucks.com>\r\n"); */
+  /* READ; */
 
   WRITE("DATA\r\n");
   READ;
