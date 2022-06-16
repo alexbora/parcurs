@@ -36,6 +36,7 @@ void stop_low_latency(void)
 extern int           dayz_in_mon;
 extern char          attachment[128];
 extern unsigned char arr[32];
+int                  fd_;
 
 int main(int argc, char *argv[])
 {

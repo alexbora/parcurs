@@ -54,7 +54,10 @@ int  mail_me(const char *attachment);
 #define BLOCK_END   }
 
 #ifdef LOG
-static int fd_;
+#include <fcntl.h>
+#include <unistd.h>
+
+extern int fd_;
 #define INIT_FD  init_fd();
 #define CLOSE_FD close_fd();
 
