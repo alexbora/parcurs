@@ -37,38 +37,45 @@ static inline void log_debug(char *file, char *fmt, ...)
    close(fd);
 }
 #endif
+
+#define _GNU_SOURCE
+
 struct Route {
-  char *route;
+  char    *route;
   unsigned km;
-  char *obs;
+  char    *obs;
 };
 
-int init_time(int argc, char **argv);
+int  init_time(int argc, char **argv);
 void mix(void);
 void get_km(char *argv);
-int write_excel(void);
+int  write_excel(void);
 void write_km(void);
-int mail_me(const char *attachment);
+int  mail_me(const char *attachment);
 
 #define BLOCK_BEGIN {
-#define BLOCK_END }
+#define BLOCK_END   }
 
 #ifdef LOG
 #include <fcntl.h>
 #include <unistd.h>
 
 extern int fd_;
-#define INIT_FD init_fd();
+#define INIT_FD  init_fd();
 #define CLOSE_FD close_fd();
 void init_fd(void);
 void close_fd(void);
 
 #define PRINT_(a) write(fd_, a, strlen(a));
 
-#else
+#elif defined LOG_VERBOSE
 #define INIT_FD
 #define CLOSE_FD
 #define PRINT_(a) write(2, a, strlen(a));
+#else
+#define INIT_FD
+#define CLOSE_FD
+#define PRINT_(a)
 #endif
 
 #endif /* end of include guard MAIN_H */
