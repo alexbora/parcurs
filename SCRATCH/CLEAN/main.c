@@ -9,8 +9,7 @@
 
 static int pm_qos_fd = -1;
 
-void start_low_latency(void)
-{
+void start_low_latency(void) {
   int target = 0;
   if (pm_qos_fd >= 0)
     return;
@@ -18,8 +17,7 @@ void start_low_latency(void)
   write(pm_qos_fd, &target, sizeof(target));
 }
 
-void stop_low_latency(void)
-{
+void stop_low_latency(void) {
   if (pm_qos_fd >= 0)
     close(pm_qos_fd);
 }
@@ -27,18 +25,27 @@ void stop_low_latency(void)
 
 #ifdef __linux__
 #define LOW_LATENCY start_low_latency();
-#define NO_LATENCY  stop_low_latency();
+#define NO_LATENCY stop_low_latency();
 #else
 #define LOW_LATENCY
 #define NO_LATENCY
 #endif
 
-extern int           dayz_in_mon;
-extern char          attachment[128];
+extern int dayz_in_mon;
+extern char attachment[128];
 extern unsigned char arr[32];
 
-int main(int argc, char *argv[])
-{
+#ifdef LOG
+int fd_;
+void init_fd(void) {
+  fd_ = open("log", O_CREAT | O_APPEND | O_RDWR | O_TRUNC, 0664);
+}
+
+void close_fd(void) { close(fd_); }
+#endif
+
+int main(int argc, char *argv[]) {
+  INIT_FD
   LOW_LATENCY
 
   init_time(argc, argv);
@@ -54,6 +61,7 @@ int main(int argc, char *argv[])
   mail_me(attachment);
 
   NO_LATENCY
+  CLOSE_FD
 
   return 0;
 }
