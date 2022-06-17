@@ -29,7 +29,7 @@
 #include <sys/_types/_u_int32_t.h>
 #endif
 #ifndef _POSIX_C_SOURCE
-#define _POSIX_C_SOURCE 200112L // for setenv on gcc
+#define _POSIX_C_SOURCE 200112L  // for setenv on gcc
 #endif
 /* #include "xlsxwriter.h" */
 #include <fcntl.h>
@@ -64,22 +64,21 @@
  */
 
 #include "main.h"
-char     longdate[128], *luna;
-int      dayz_in_mon;
-int      current_year;
+char longdate[128], *luna;
+int dayz_in_mon;
+int current_year;
 unsigned km;
-char     attachment[128];
+char attachment[128];
 
-static int       days_past;
-static time_t    global_time;
+static int days_past;
+static time_t global_time;
 static struct tm TM;
 
 extern struct Route r_[32];
-unsigned char       arr[32];
-struct Route        route_[128];
+unsigned char arr[32];
+struct Route route_[128];
 
-static inline char *literal_mon(const int month)
-{
+static inline char *literal_mon(const int month) {
   return &"ianuarie\0\0\0\0\0\0\0\0februari"
           "e\0\0\0"
           "\0\0\0\0martie\0\0\0\0\0\0\0\0\0\0aprilie\0\0\0\0\0\0\0\0\0mai\0"
@@ -103,53 +102,46 @@ static inline char *literal_mon(const int month)
 /*   return 31; */
 /* } */
 
-static inline unsigned long is_multiple_of_100(unsigned n)
-{
+static inline unsigned long is_multiple_of_100(unsigned n) {
   const unsigned long multiplier   = 42949673;
   const unsigned long bound        = 42949669;
   const unsigned long max_dividend = 1073741799;
-  const unsigned long offset       = max_dividend / 2 / 100 * 100; //  536870800
+  const unsigned long offset = max_dividend / 2 / 100 * 100;  //  536870800
   return multiplier * (n + offset) < bound;
 }
 
-static inline int is_leap(int y)
-{
+static inline int is_leap(int y) {
   // Originally, the ternary expression was similar to
   //   is_multiple_of_100(y) ? y % 16 == 0 : y % 4 == 0;
   // and Ulrich Drepper suggested the following twist.
   return (y & (is_multiple_of_100(y) ? 15 : 3)) == 0;
 }
 
-static inline int is_leap3(const int year)
-{
+static inline int is_leap3(const int year) {
   int y = year + 16000;
   return (y % 100) ? !(y % 4) : !(y % 16);
   /* return (is_multiple_of_100((unsigned)y)) ? !(y >> 2) : !(y >> 4); */
 }
 
-static inline int last_day_of_mon(int year, int mon)
-{
+static inline int last_day_of_mon(int year, int mon) {
   /* return mon != 2 ? ((mon ^ (mon >> 3))) | 30 : is_leap3(year) ? 29 : 28; */
   return mon != 2 ? ((mon ^ (mon >> 3))) | 30 : is_leap(year) ? 29 : 28;
 }
 
-static inline int days_from_civil(int y, const int m, const int d)
-{
+static inline int days_from_civil(int y, const int m, const int d) {
   y -= m <= 2;
   const int era = (y >= 0 ? y : y - 399) / 400;
-  const int yoe = (y - era * 400);                                 // [0, 399]
-  const int doy = (153 * (m > 2 ? m - 3 : m + 9) + 2) / 5 + d - 1; // [0, 365]
-  const int doe = yoe * 365 + yoe / 4 - yoe / 100 + doy; // [0, 146096]
+  const int yoe = (y - era * 400);                                  // [0, 399]
+  const int doy = (153 * (m > 2 ? m - 3 : m + 9) + 2) / 5 + d - 1;  // [0, 365]
+  const int doe = yoe * 365 + yoe / 4 - yoe / 100 + doy;  // [0, 146096]
   return era * 146097 + doe - 719468;
 }
 
-__attribute__((pure)) static inline int weekday_from_days(const int z)
-{
+__attribute__((pure)) static inline int weekday_from_days(const int z) {
   return (z + 4) % 7;
 }
 
-static int now()
-{
+static int now( ) {
   /* normal time */
   /* struct tm tm = *localtime(&(time_t){time(NULL)}); */
   struct tm tm = *localtime(&global_time);
@@ -164,19 +156,18 @@ static int now()
   /* adjust year to jump to previous if december */
   tm.tm_year = tm.tm_mon != 11 ? tm.tm_year : tm.tm_year - 1;
   /* make time again, referencing the previous month */
-  mktime(&tm); // tm_isdst is not set to -1; today's DST status is used
+  mktime(&tm);  // tm_isdst is not set to -1; today's DST status is used
 
   TM = tm;
   return 1;
 }
 
-static int then(char **argv)
-{
+static int then(char **argv) {
   /* shorten year to two digits, in case you enter 2022 instead of 22 */
   char *p = argv[2];
-  while (*p++ != '\0') // forward to the end
+  while (*p++ != '\0')  // forward to the end
     ;
-  p -= 3; // rewind back two characters, +1 for the '\0'
+  p -= 3;  // rewind back two characters, +1 for the '\0'
   argv[2] = p;
 
   /* shorten the month name to three charachters, case is entered ianuarie
@@ -185,32 +176,32 @@ static int then(char **argv)
   static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi dec ";
   /* char *m = strstr("ian feb mar apr mai iun iul aug sep oct noi dec",
      argv[1]); */
-  char     *m    = strstr(mths, argv[1]);
-  int       mon  = (int)((m - mths) / 4);
-  int       year = atoi(argv[2]); // atoi(p) ?
-  struct tm tm2  = {.tm_sec  = 50,
-                    .tm_min  = 50,
-                    .tm_hour = 12,
-                    .tm_mday = 1,
-                    .tm_mon  = mon,
-                    .tm_year = year + 100};
+  char *m       = strstr(mths, argv[1]);
+  int mon       = ( int ) ((m - mths) / 4);
+  int year      = atoi(argv[2]);  // atoi(p) ?
+  struct tm tm2 = {.tm_sec  = 50,
+                   .tm_min  = 50,
+                   .tm_hour = 12,
+                   .tm_mday = 1,
+                   .tm_mon  = mon,
+                   .tm_year = year + 100};
   mktime(&tm2);
-  sprintf(longdate, "%02d.%02d.%d", tm2.tm_mday, tm2.tm_mon + 1,
+  sprintf(longdate,
+          "%02d.%02d.%d",
+          tm2.tm_mday,
+          tm2.tm_mon + 1,
           tm2.tm_year + 1900);
 
   TM = tm2;
   return 1;
 }
 
-static int cmdl(int argc, char *argv[static argc + 1])
-{
-  if (argc > 2)
-    return then(argv);
-  return now();
+static int cmdl(int argc, char *argv[static argc + 1]) {
+  if (argc > 2) return then(argv);
+  return now( );
 }
 
-static void globals()
-{
+static void globals( ) {
   luna = literal_mon(TM.tm_mon);
 
   days_past    = days_from_civil(TM.tm_year + 1900, TM.tm_mon + 1, 1);
@@ -221,49 +212,48 @@ static void globals()
   /* const int dayzm = dayz_in_mon; */
 #pragma omp parallel for
   for (unsigned i = 1; i < 32 /*<=daysm */; i++)
-    /* arr[i] = ((weekday_from_days(dayz + i - 1)) % 6) != 0; */
+    /* arr[i] = (((dayz + i - 1)) % 6) != 0; */
     arr[i] = ((weekday_from_days(dayz + i - 1)) != 0 &&
               (weekday_from_days(dayz + i - 1) != 6));
 
   enum months { ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, noi, dec };
-  static const int hol[12][4] = {
-      [ian] = {1, 2, 24},  [apr] = {22, 24, 25}, [mai] = {1, 8},
-      [iun] = {1, 12, 13}, [aug] = {15},         [noi] = {30},
-      [dec] = {25, 26}};
+  static const int hol[12][4] = {[ian] = {1, 2, 24},
+                                 [apr] = {22, 24, 25},
+                                 [mai] = {1, 8},
+                                 [iun] = {1, 12, 13},
+                                 [aug] = {15},
+                                 [noi] = {30},
+                                 [dec] = {25, 26}};
 
 #pragma omp parallel for
-  for (unsigned i = 0; i < 4; ++i)
-    arr[hol[TM.tm_mon][i]] = 0;
+  for (unsigned i = 0; i < 4; ++i) arr[hol[TM.tm_mon][i]] = 0;
 }
 
-__attribute__((noreturn)) static void usage()
-{
+__attribute__((noreturn)) static void usage( ) {
   puts("Usage: <mon> <year> <km>\ne.g. iun 22 80000\n");
   /* puts("No error checking whatsoever, you're on your own\n"); */
   exit(0);
 }
 
-int init_time(int argc, char **argv)
-{
+int init_time(int argc, char **argv) {
   if (argc > 1 && (*argv[1] == 'h' || strcmp(argv[1], "-h") == 0 ||
                    strcmp(argv[1], "--h") == 0))
-    usage();
+    usage( );
 
-  setenv("TZ", "/usr/share/zoneinfo/Europe/Bucharest", 1); // POSIX-specific
+  setenv("TZ", "/usr/share/zoneinfo/Europe/Bucharest", 1);  // POSIX-specific
 
   global_time = time(0);
 
   cmdl(argc, argv);
 
-  globals();
+  globals( );
   /* write(2, "Time inited.\n", 13); */
 
   PRINT_("Time inited... OK\n");
   return 0;
 }
 
-static void random_shuffle(void)
-{
+static void random_shuffle(void) {
   static const struct Route parcurs[16] = {
       {"Cluj-Oradea", 321, "Interes Serviciu"},
       {"Cluj-Turda", 121, "Interes Serviciu"},
@@ -288,7 +278,7 @@ static void random_shuffle(void)
 
   for (size_t i = 0; i < m; i++) {
     for (size_t j = 0; j < n; j++) {
-      route_[i] = parcurs[(unsigned long)rand() % n];
+      route_[i] = parcurs[( unsigned long ) rand( ) % n];
     }
   }
 
@@ -297,11 +287,10 @@ static void random_shuffle(void)
 
   for (; cycle < m; cycle++) {
     do {
-      play  = (unsigned long)rand() % n;
+      play  = ( unsigned long ) rand( ) % n;
       found = 0;
       for (k = 0; k < n; k++)
-        if (recent[k] == play)
-          found = 1;
+        if (recent[k] == play) found = 1;
     } while (found);
 
     route_[cycle] = parcurs[play];
@@ -313,49 +302,42 @@ static void random_shuffle(void)
 /* #pragma GCC optimize("Ofast") */
 /* #pragma GCC target("avx,avx2,fma") */
 /* #pragma optimize "align-loops=32" */
-__attribute__((const)) static inline unsigned
-repeating(const struct Route *restrict const in)
-{
+__attribute__((const)) static inline unsigned repeating(
+    const struct Route *restrict const in) {
   /* #pragma omp parallel for */
   for (unsigned i = 0; i < 32; i++) {
-    if (in[i + 1].km == in[i].km && in[i].km > 30)
-      return 1;
+    if (in[i + 1].km == in[i].km && in[i].km > 30) return 1;
   }
   return 0;
 }
 
-void mix(void)
-{
-  srand((unsigned)global_time);
-  do {
-    random_shuffle();
-  } while (repeating(route_));
+void mix(void) {
+  srand(( unsigned ) global_time);
+  do { random_shuffle( ); } while (repeating(route_));
   /* for (unsigned i = 0; i < 32; i++) */
   /* puts(route_[i].route); */
   /* write(2, "Randomly shuffled successfully.\n", 33); */
   PRINT_("Randomize... OK\n");
 }
 
-void get_km(char *argv)
-{
+void get_km(char *argv) {
   /* printf("%d\n", atoi(argv)); */
   if (argv == NULL) {
-    int  fd = open("km", O_RDONLY | O_CREAT, 0666);
+    int fd = open("km", O_RDONLY | O_CREAT, 0666);
     char x[16];
     memset(x, 'x', 16);
     read(fd, x, 8);
-    km = (unsigned)(atoi(x));
+    km = ( unsigned ) (atoi(x));
     close(fd);
   } else {
-    km = (unsigned)(atoi(argv));
+    km = ( unsigned ) (atoi(argv));
   }
   /* printf("KM: %u\n", km); */
   /* write(2, "Km read successfully.\n", 22); */
   PRINT_("Km read... OK\n");
 }
 
-void write_km(void)
-{
+void write_km(void) {
   FILE *f = fopen("km", "w++");
   fprintf(f, "%u", km);
   fclose(f);
@@ -366,15 +348,11 @@ void write_km(void)
 /* const char *get_longdate(void) { return (const char *)longdate; } */
 
 #ifndef Skipmain
-int main(int argc, char *argv[])
-{
-
+int main(int argc, char *argv[]) {
   init_time(argc, argv);
-  mix();
+  mix( );
   /* yap, works */
-  for (unsigned i = 1; i <= dayz_in_mon; ++i) {
-    printf("%d %d\n", i, arr[i]);
-  }
+  for (unsigned i = 1; i <= dayz_in_mon; ++i) { printf("%d %d\n", i, arr[i]); }
 
   /* if (argc > 3) */
   /* get_km(argv[argc - 1]); */
@@ -384,9 +362,9 @@ int main(int argc, char *argv[])
   /* printf("%f\n", km); */
   /* gen(); */
 
-  write_excel();
+  write_excel( );
 
-  write_km();
+  write_km( );
   mail_me(attachment);
 #if 0
   int *h1 = hol[0];

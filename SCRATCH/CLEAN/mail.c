@@ -19,11 +19,9 @@
 
 #define BUF 4096u
 
-static inline void upload(SSL *s, const char *filename)
-{
+static inline void upload(SSL *s, const char *filename) {
   FILE *fp = fopen(filename, "rb");
-  if (!fp)
-    return;
+  if (!fp) return;
   fseek(fp, 0, SEEK_END);
   long size = ftell(fp);
   rewind(fp);
@@ -33,7 +31,7 @@ static inline void upload(SSL *s, const char *filename)
   fread(buffer, 1, size, fp);
 
   unsigned char out_buffer[(sizeof(unsigned char) * size) * 2];
-  int           out_len = EVP_EncodeBlock(out_buffer, buffer, size);
+  int out_len = EVP_EncodeBlock(out_buffer, buffer, size);
 
   SSL_write(s, out_buffer, out_len);
 
@@ -43,66 +41,60 @@ static inline void upload(SSL *s, const char *filename)
   memset(out_buffer, '\0', sizeof(buffer));
 }
 
-static inline void write_ssl(SSL *s, const char *txt)
-{
-  const void *buf = (const void *)txt;
-  int         n   = (int)strlen(txt);
+static inline void write_ssl(SSL *s, const char *txt) {
+  const void *buf = ( const void * ) txt;
+  int n           = ( int ) strlen(txt);
   SSL_write(s, buf, n);
 }
 
-#define WRITE(b)  write_ssl(s, b);
+#define WRITE(b) write_ssl(s, b);
 #define UPLOAD(b) upload(s, b);
-#define NEW_LINE  "'\r\n'"
+#define NEW_LINE "'\r\n'"
 
-static inline void write_base64(SSL *s, const void *txt)
-{
+static inline void write_base64(SSL *s, const void *txt) {
   unsigned char enc_cmd[128] = {'\0'};
-  int out_len = EVP_EncodeBlock((unsigned char *)enc_cmd, txt, strlen(txt));
+  int out_len = EVP_EncodeBlock(( unsigned char * ) enc_cmd, txt, strlen(txt));
   SSL_write(s, enc_cmd, out_len);
 }
 
-static inline void read_ssl2(SSL *s)
-{
+static inline void read_ssl2(SSL *s) {
   char recvbuf[BUF] = {'\0'};
   SSL_read(s, recvbuf, BUF - 1);
   puts(recvbuf);
 }
 
-static inline int read_ssl(SSL *s, char *buf)
-{
+static inline int read_ssl(SSL *s, char *buf) {
   *buf = '\0';
   return SSL_read(s, buf, BUF - 1);
 }
 
-static SSL *init_sock(const char *host, const int port)
-{
-
+static SSL *init_sock(const char *host, const int port) {
   struct sockaddr_in sa = {
       .sin_family = AF_INET,
       .sin_port   = htons(port),
 #define h_addr h_addr_list[0]
-      .sin_addr.s_addr = *(long *)((gethostbyname(host))->h_addr),
+      .sin_addr.s_addr = *( long * ) ((gethostbyname(host))->h_addr),
 #undef h_addr
   };
 
   int sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-  if (0 >
-      connect(sockfd, (const struct sockaddr *)&sa, sizeof(struct sockaddr_in)))
+  if (0 > connect(sockfd,
+                  ( const struct sockaddr * ) &sa,
+                  sizeof(struct sockaddr_in)))
     return NULL;
 
   /* Openssl */
   /* ------------------------ */
-  SSL *s = SSL_new(SSL_CTX_new(TLS_client_method()));
+  SSL *s = SSL_new(SSL_CTX_new(TLS_client_method( )));
   SSL_set_fd(s, sockfd);
   SSL_connect(s);
 
   return s;
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   char *attachment = "foaie_parcurs_B-151-VGT_mai_2022_Alex_Bora.xlsx";
-  SSL  *s          = init_sock("smtp.gmail.com", 465);
+  SSL *s           = init_sock("smtp.gmail.com", 465);
 
   char recvbuf[BUF] = {'\0'};
   char enc_cmd[BUF] = {'\0'};
@@ -177,8 +169,9 @@ int main(int argc, char *argv[])
   /* SSL_write(s, cmd, strlen(cmd)); */
   /* write_ssl(s, cmd); */
 
-  WRITE("Content-Type:multipart/"
-        "mixed;boundary=\"977d81ff9d852ab2a0cad646f8058349\"\r\n");
+  WRITE(
+      "Content-Type:multipart/"
+      "mixed;boundary=\"977d81ff9d852ab2a0cad646f8058349\"\r\n");
 
   char subject[128];
   sprintf(subject, "Subject: %s", attachment);
@@ -199,8 +192,9 @@ int main(int argc, char *argv[])
   /* cmd = "--977d81ff9d852ab2a0cad646f8058349\r\n"; */
   /* SSL_write(s, cmd, strlen(cmd)); */
 
-  cmd = "Content-Type: "
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\r\n";
+  cmd =
+      "Content-Type: "
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\r\n";
 
   write_ssl(s, cmd);
   /* SSL_write(s, cmd, strlen(cmd)); */
