@@ -1,5 +1,5 @@
 all: mail2.c date2.c excel2.c main.c main.h
-	gcc-11 mail2.c date2.c excel2.c main.c -DSkipmain -o final_program -w -std=c11 -O3  `pkg-config --cflags --libs openssl` -lxlsxwriter -ldl -pthread -fstrict-aliasing -DLOG
+	gcc mail2.c date2.c excel2.c main.c -DSkipmain -o final_program -w -std=c11 -O3  `pkg-config --cflags --libs openssl` -lxlsxwriter -ldl -pthread -fstrict-aliasing
 	@echo	# gcc-11 date2.c excel2.c -o final_program -O3 -std=c11 -w -lxlsxwriter
 
 
