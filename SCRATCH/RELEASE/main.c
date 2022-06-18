@@ -39,6 +39,17 @@ void close_fd(void) { close(fd_); }
 #endif
 /*--------------------------------------------------------------*/
 
+#ifdef CACHE
+#include <string.h>
+#define FLUSH_CACHE flush_cache();
+static void flush_cache() {
+  char input[1 << 26], output[1 << 26];
+  memcpy(output, input, 1 << 26);
+}
+#else
+#define FLUSH_CACHE
+#endif
+
 extern int dayz_in_mon;
 extern char attachment[128];
 extern unsigned char arr[32];
@@ -57,6 +68,8 @@ int main(int argc, char *argv[]) {
   write_excel();
 
   write_km();
+
+  FLUSH_CACHE
 
   mail_me(attachment);
 
