@@ -1,22 +1,23 @@
 #include "main.h"
 
 #include <arpa/inet.h>
-#include <assert.h>
-#include <errno.h>
+/* #include <assert.h> */
+/* #include <errno.h> */
 #include <fcntl.h>
 #include <netdb.h>
 #include <netinet/in.h> /* struct sockaddr_in, struct sockaddr */
-#include <openssl/err.h>
+/* #include <openssl/err.h> */
 #include <openssl/evp.h>
-#include <openssl/ssl.h>
+/* #include <openssl/ssl.h> */
+#include <openssl/ssl3.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/mman.h>
+/* #include <sys/mman.h> */
 #include <sys/socket.h> /* socket, connect */
-#include <sys/stat.h>
+/* #include <sys/stat.h> */
 #include <unistd.h>
 
 #define BUF 4096u
@@ -191,7 +192,7 @@ mail_me(const char* attachment)
 
   WRITE(attach);
 
-  UPLOAD(attachment);
+  UPLOAD(attachment)
 
   WRITE(NEW_LINE);
 
