@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 
+/*------------------------------------------------------------*/
 #ifdef __linux__
 #include <fcntl.h>
 #include <stdint.h>
@@ -19,28 +20,26 @@ void start_low_latency(void) {
 void stop_low_latency(void) {
   if (pm_qos_fd >= 0) close(pm_qos_fd);
 }
-#endif
 
-#ifdef __linux__
 #define LOW_LATENCY start_low_latency( );
 #define NO_LATENCY stop_low_latency( );
 #else
 #define LOW_LATENCY
 #define NO_LATENCY
 #endif
-
-extern int dayz_in_mon;
-extern char attachment[128];
-extern unsigned char arr[32];
-
+/*-------------------------------------------------------------*/
 #ifdef LOG
 int fd_;
 void init_fd(void) {
   fd_ = open("log", O_CREAT | O_APPEND | O_RDWR | O_TRUNC, 0664);
 }
-
 void close_fd(void) { close(fd_); }
 #endif
+/*--------------------------------------------------------------*/
+
+extern int dayz_in_mon;
+extern char attachment[128];
+extern unsigned char arr[32];
 
 int main(int argc, char *argv[]) {
   INIT_FD
@@ -65,6 +64,3 @@ int main(int argc, char *argv[]) {
 
   return 0;
 }
-
-
-int func1(int x) { return x * x; }

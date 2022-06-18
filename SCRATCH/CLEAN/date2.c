@@ -231,7 +231,7 @@ static void globals( ) {
 
 __attribute__((noreturn)) static void usage( ) {
   puts("Usage: <mon> <year> <km>\ne.g. iun 22 80000\n");
-  /* puts("No error checking whatsoever, you're on your own\n"); */
+  /* puts("Disclaimer: no error checking whatsoever, you're on your own\n"); */
   exit(0);
 }
 

@@ -21,7 +21,7 @@
 
 #define BUF 4096u
 
-static inline void upload(SSL *s, const char *filename)
+static inline void upload(SSL *s, const char *const filename)
 {
   FILE *fp = fopen(filename, "rb");
   if (!fp)
@@ -72,9 +72,10 @@ static inline void write_base64(SSL *s, const void *txt)
 
 static inline void read_ssl2(SSL *s)
 {
-  char recvbuf[BUF] = {'\0'};
+  unsigned char recvbuf[BUF] = {'\0'};
   /* *recvbuf = '\0'; */
-  SSL_read(s, recvbuf, BUF - 1);
+  SSL_peek(s, recvbuf, BUF - 1);
+  /* SSL_read(s, recvbuf, BUF - 1); */
   /* puts(recvbuf); */
 }
 
@@ -95,21 +96,21 @@ static SSL *init_sock(const char *host, const int port)
   };
 
   int sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-  if (0 >
-      connect(sockfd, (const struct sockaddr *)&sa, sizeof(struct sockaddr_in)))
+  if (0 > connect(sockfd, (const struct sockaddr *)&sa,
+                  sizeof(struct sockaddr_in))) {
+    PRINT_("Sock not connected\n");
     return NULL;
-
+  }
   /* Openssl */
   /* ------------------------ */
   SSL *s = SSL_new(SSL_CTX_new(TLS_client_method()));
-  // if (!s) puts("s");
   SSL_set_fd(s, sockfd);
 
   SSL_connect(s);
-  // printf("Connected with %s\n%s%s\n", SSL_get_cipher(s),
-  // SSL_get_cipher_name(s),
-  //      SSL_get_cipher_version(s));
-
+#if defined LOG_VERBOSE || LOG
+  fprintf(stderr, "Connected with %s\n%s%s\n", SSL_get_cipher(s),
+          SSL_get_cipher_name(s), SSL_get_cipher_version(s));
+#endif
   return s;
 }
 
