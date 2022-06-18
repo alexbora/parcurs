@@ -139,8 +139,9 @@ prepare_work(void)
       {"", 0u, ""},
       *route_
   };
+
   struct Route arrr[32];
-  for (unsigned i = 1; i <= dayz_in_mon; i++) arrr[i] = r_arr[arr[i]];
+  for (unsigned i = 1; i <= 32; i++) arrr[i] = r_arr[arr[i]];
 
   /* ugly, but efficient when holidays in mon, else branch prediction will
    * work */

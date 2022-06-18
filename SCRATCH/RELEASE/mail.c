@@ -20,7 +20,12 @@
 /* #include <sys/stat.h> */
 #include <unistd.h>
 
-#define BUF 4096u
+#define BUF          4096u
+#define WRITE(b)     write_ssl(s, b)
+#define WRITE_ENC(b) write_base64(s, b)
+#define UPLOAD(b)    upload(s, b)
+#define READ         read_ssl2(s)
+#define NEW_LINE     "\r\n"
 
 static inline void
 upload(SSL* s, const char* const filename)
@@ -58,12 +63,6 @@ write_ssl(SSL* s, const char* txt)
   int         n   = (int) strlen(txt);
   SSL_write(s, buf, n);
 }
-
-#define WRITE(b)     write_ssl(s, b)
-#define WRITE_ENC(b) write_base64(s, b)
-#define UPLOAD(b)    upload(s, b);
-#define READ         read_ssl2(s)
-#define NEW_LINE     "\r\n"
 
 static inline void
 write_base64(SSL* s, const void* txt)
@@ -192,7 +191,7 @@ mail_me(const char* attachment)
 
   WRITE(attach);
 
-  UPLOAD(attachment)
+  UPLOAD(attachment);
 
   WRITE(NEW_LINE);
 
