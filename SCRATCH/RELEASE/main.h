@@ -41,17 +41,23 @@ static inline void log_debug(char *file, char *fmt, ...)
 #define _GNU_SOURCE
 
 struct Route {
-  char    *route;
+  char*    route;
   unsigned km;
-  char    *obs;
+  char*    obs;
 };
 
-int  init_time(int argc, char **argv);
-void mix(void);
-void get_km(char *argv);
-int  write_excel(void);
-void write_km(void);
-int  mail_me(const char *attachment);
+int
+init_time(int argc, char** argv);
+void
+mix(void);
+void
+get_km(char* argv);
+int
+write_excel(void);
+void
+write_km(void);
+int
+mail_me(const char* attachment);
 
 #define BLOCK_BEGIN {
 #define BLOCK_END   }
@@ -63,8 +69,10 @@ int  mail_me(const char *attachment);
 extern int fd_;
 #define INIT_FD  init_fd();
 #define CLOSE_FD close_fd();
-void init_fd(void);
-void close_fd(void);
+void
+init_fd(void);
+void
+close_fd(void);
 
 #define PRINT_(a) write(fd_, a, strlen(a));
 

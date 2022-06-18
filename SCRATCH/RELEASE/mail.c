@@ -21,11 +21,11 @@
 
 #define BUF 4096u
 
-static inline void upload(SSL *s, const char *const filename)
+static inline void
+upload(SSL* s, const char* const filename)
 {
-  FILE *fp = fopen(filename, "rb");
-  if (!fp)
-    return;
+  FILE* fp = fopen(filename, "rb");
+  if (!fp) return;
   fseek(fp, 0, SEEK_END);
   long size = ftell(fp);
   rewind(fp);
@@ -50,10 +50,11 @@ static inline void upload(SSL *s, const char *const filename)
   /* memset(out_buffer, '\0', sizeof(buffer)); */
 }
 
-static inline void write_ssl(SSL *s, const char *txt)
+static inline void
+write_ssl(SSL* s, const char* txt)
 {
-  const void *buf = (const void *)txt;
-  int         n   = (int)strlen(txt);
+  const void* buf = (const void*) txt;
+  int         n   = (int) strlen(txt);
   SSL_write(s, buf, n);
 }
 
@@ -63,14 +64,16 @@ static inline void write_ssl(SSL *s, const char *txt)
 #define READ         read_ssl2(s)
 #define NEW_LINE     "\r\n"
 
-static inline void write_base64(SSL *s, const void *txt)
+static inline void
+write_base64(SSL* s, const void* txt)
 {
   unsigned char enc_cmd[128] = {'\0'};
-  int out_len = EVP_EncodeBlock((unsigned char *)enc_cmd, txt, strlen(txt));
+  int out_len = EVP_EncodeBlock((unsigned char*) enc_cmd, txt, strlen(txt));
   SSL_write(s, enc_cmd, out_len);
 }
 
-static inline void read_ssl2(SSL *s)
+static inline void
+read_ssl2(SSL* s)
 {
   unsigned char recvbuf[BUF] = {'\0'};
   /* *recvbuf = '\0'; */
@@ -79,31 +82,33 @@ static inline void read_ssl2(SSL *s)
   /* puts(recvbuf); */
 }
 
-static inline int read_ssl(SSL *s, char *buf)
+static inline int
+read_ssl(SSL* s, char* buf)
 {
   *buf = '\0';
   return SSL_read(s, buf, BUF - 1);
 }
 
-static SSL *init_sock(const char *host, const int port)
+static SSL*
+init_sock(const char* host, const int port)
 {
   struct sockaddr_in sa = {
       .sin_family = AF_INET,
       .sin_port   = htons(port),
 #define h_addr h_addr_list[0]
-      .sin_addr.s_addr = *(long *)((gethostbyname(host))->h_addr),
+      .sin_addr.s_addr = *(long*) ((gethostbyname(host))->h_addr),
 #undef h_addr
   };
 
   int sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-  if (0 > connect(sockfd, (const struct sockaddr *)&sa,
+  if (0 > connect(sockfd, (const struct sockaddr*) &sa,
                   sizeof(struct sockaddr_in))) {
     PRINT_("Sock not connected\n");
     return NULL;
   }
   /* Openssl */
   /* ------------------------ */
-  SSL *s = SSL_new(SSL_CTX_new(TLS_client_method()));
+  SSL* s = SSL_new(SSL_CTX_new(TLS_client_method()));
   SSL_set_fd(s, sockfd);
 
   SSL_connect(s);
@@ -114,9 +119,10 @@ static SSL *init_sock(const char *host, const int port)
   return s;
 }
 
-int mail_me(const char *attachment)
+int
+mail_me(const char* attachment)
 {
-  SSL *s = init_sock("smtp.gmail.com", 465);
+  SSL* s = init_sock("smtp.gmail.com", 465);
 
   WRITE("EHLO smtp.gmail.com\r\n");
   READ;
