@@ -1,0 +1,21 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+BUF	mail.c	/^#define BUF /;"	macro	file:
+NEW_LINE	mail.c	/^#define NEW_LINE /;"	macro	file:
+READ	mail.c	/^#define READ /;"	macro	file:
+UPLOAD	mail.c	/^#define UPLOAD(/;"	macro	file:
+WRITE	mail.c	/^#define WRITE(/;"	macro	file:
+WRITE_ENC	mail.c	/^#define WRITE_ENC(/;"	macro	file:
+h_addr	mail.c	/^#define h_addr /;"	macro	file:
+h_addr	mail.c	/^#undef h_addr$/;"	macro	file:
+init_sock	mail.c	/^init_sock(const char* host, const int port)$/;"	function	file:	signature:(const char* host, const int port)
+mail_me	mail.c	/^mail_me(const char* attachment)$/;"	function	signature:(const char* attachment)
+read_ssl	mail.c	/^read_ssl(SSL* s, char* buf)$/;"	function	file:	signature:(SSL* s, char* buf)
+read_ssl2	mail.c	/^read_ssl2(SSL* s)$/;"	function	file:	signature:(SSL* s)
+upload	mail.c	/^upload(SSL* s, const char* const filename)$/;"	function	file:	signature:(SSL* s, const char* const filename)
+write_base64	mail.c	/^write_base64(SSL* s, const void* txt)$/;"	function	file:	signature:(SSL* s, const void* txt)
+write_ssl	mail.c	/^write_ssl(SSL* s, const char* txt)$/;"	function	file:	signature:(SSL* s, const char* txt)
