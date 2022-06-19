@@ -4,18 +4,91 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-BUF	mail.c	/^#define BUF /;"	macro	file:
-NEW_LINE	mail.c	/^#define NEW_LINE /;"	macro	file:
-READ	mail.c	/^#define READ /;"	macro	file:
-UPLOAD	mail.c	/^#define UPLOAD(/;"	macro	file:
-WRITE	mail.c	/^#define WRITE(/;"	macro	file:
-WRITE_ENC	mail.c	/^#define WRITE_ENC(/;"	macro	file:
-h_addr	mail.c	/^#define h_addr /;"	macro	file:
-h_addr	mail.c	/^#undef h_addr$/;"	macro	file:
-init_sock	mail.c	/^init_sock(const char* host, const int port)$/;"	function	file:	signature:(const char* host, const int port)
-mail_me	mail.c	/^mail_me(const char* attachment)$/;"	function	signature:(const char* attachment)
-read_ssl	mail.c	/^read_ssl(SSL* s, char* buf)$/;"	function	file:	signature:(SSL* s, char* buf)
-read_ssl2	mail.c	/^read_ssl2(SSL* s)$/;"	function	file:	signature:(SSL* s)
-upload	mail.c	/^upload(SSL* s, const char* const filename)$/;"	function	file:	signature:(SSL* s, const char* const filename)
-write_base64	mail.c	/^write_base64(SSL* s, const void* txt)$/;"	function	file:	signature:(SSL* s, const void* txt)
-write_ssl	mail.c	/^write_ssl(SSL* s, const char* txt)$/;"	function	file:	signature:(SSL* s, const char* txt)
+ARRAY_SIZE	date.c	/^#define ARRAY_SIZE(/;"	d	file:
+BLOCK_BEGIN	main.h	/^#define BLOCK_BEGIN /;"	d
+BLOCK_END	main.h	/^#define BLOCK_END /;"	d
+BUF	mail.c	/^#define BUF /;"	d	file:
+CLOSE_FD	main.h	/^#define CLOSE_FD /;"	d
+CLOSE_FD	main.h	/^#define CLOSE_FD$/;"	d
+COL1	excel.c	/^#define COL1 /;"	d	file:
+COL2	excel.c	/^#define COL2 /;"	d	file:
+COL3	excel.c	/^#define COL3 /;"	d	file:
+COL4	excel.c	/^#define COL4 /;"	d	file:
+FLUSH_CACHE	main.c	/^#define FLUSH_CACHE /;"	d	file:
+FLUSH_CACHE	main.c	/^#define FLUSH_CACHE$/;"	d	file:
+INIT_FD	main.h	/^#define INIT_FD /;"	d
+INIT_FD	main.h	/^#define INIT_FD$/;"	d
+LOW_LATENCY	main.c	/^#define LOW_LATENCY /;"	d	file:
+LOW_LATENCY	main.c	/^#define LOW_LATENCY$/;"	d	file:
+LXW_COLOR_YELLOW_PALE	excel.c	/^#define LXW_COLOR_YELLOW_PALE /;"	d	file:
+MAIN_H	main.h	/^#define MAIN_H$/;"	d
+NEW_LINE	mail.c	/^#define NEW_LINE /;"	d	file:
+NO_LATENCY	main.c	/^#define NO_LATENCY /;"	d	file:
+NO_LATENCY	main.c	/^#define NO_LATENCY$/;"	d	file:
+PRINT_	main.h	/^#define PRINT_(/;"	d
+READ	mail.c	/^#define READ /;"	d	file:
+Route	main.h	/^struct Route {$/;"	s
+TM	date.c	/^static struct tm TM;$/;"	v	typeref:struct:tm	file:
+UPLOAD	mail.c	/^#define UPLOAD(/;"	d	file:
+WRITE	mail.c	/^#define WRITE(/;"	d	file:
+WRITE_ENC	mail.c	/^#define WRITE_ENC(/;"	d	file:
+Work	excel.c	/^struct Work {$/;"	s	file:
+_GNU_SOURCE	main.h	/^#define _GNU_SOURCE$/;"	d
+_POSIX_C_SOURCE	date.c	/^#define _POSIX_C_SOURCE /;"	d	file:
+arr	date.c	/^unsigned char arr[32];$/;"	v
+attachment	date.c	/^char attachment[128];$/;"	v
+close_fd	main.c	/^close_fd(void)$/;"	f
+cmdl	date.c	/^static int cmdl(int argc, char *argv[static argc + 1]) {$/;"	f	file:
+current_year	date.c	/^int current_year;$/;"	v
+days_from_civil	date.c	/^static inline int days_from_civil(int y, const int m, const int d) {$/;"	f	file:
+days_past	date.c	/^static int days_past;$/;"	v	file:
+dayz_in_mon	date.c	/^int dayz_in_mon;$/;"	v
+fd_	main.c	/^int fd_;$/;"	v
+flush_cache	main.c	/^flush_cache()$/;"	f	file:
+fx	excel.c	/^typedef void (*fx)(const struct Route*, lxw_worksheet*, uint32_t, lxw_format*);$/;"	t	file:
+get_km	date.c	/^void get_km(char *argv) {$/;"	f
+global_time	date.c	/^static time_t global_time;$/;"	v	file:
+globals	date.c	/^static void globals() {$/;"	f	file:
+h_addr	mail.c	/^#define h_addr /;"	d	file:
+h_addr	mail.c	/^#undef h_addr$/;"	d	file:
+init_fd	main.c	/^init_fd(void)$/;"	f
+init_sock	mail.c	/^static SSL *init_sock(const char *host, const int port) {$/;"	f	file:
+init_time	date.c	/^int init_time(int argc, char **argv) {$/;"	f
+is_leap	date.c	/^static inline int is_leap(int y) {$/;"	f	file:
+is_leap3	date.c	/^static inline int is_leap3(const int year) {$/;"	f	file:
+is_multiple_of_100	date.c	/^static inline unsigned long is_multiple_of_100(unsigned n) {$/;"	f	file:
+km	date.c	/^unsigned km;$/;"	v
+km	main.h	/^  unsigned km;$/;"	m	struct:Route
+last_day_of_mon	date.c	/^static inline int last_day_of_mon(int year, int mon) {$/;"	f	file:
+literal_mon	date.c	/^static inline char *literal_mon(const int month) {$/;"	f	file:
+longdate	date.c	/^char longdate[128], *luna;$/;"	v
+luna	date.c	/^char longdate[128], *luna;$/;"	v
+mail_me	mail.c	/^int mail_me(const char *attachment) {$/;"	f
+main	date.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	main.c	/^main(int argc, char* argv[])$/;"	f
+mix	date.c	/^void mix(void) {$/;"	f
+now	date.c	/^static int now() {$/;"	f	file:
+obs	main.h	/^  char*    obs;$/;"	m	struct:Route
+parcursi	excel.c	/^unsigned             parcursi;$/;"	v
+pm_qos_fd	main.c	/^static int pm_qos_fd = -1;$/;"	v	file:
+prepare_work	excel.c	/^prepare_work(void)$/;"	f	file:
+r	excel.c	/^  struct Route r;$/;"	m	struct:Work	typeref:struct:Work::Route	file:
+random_shuffle	date.c	/^static void random_shuffle(void) {$/;"	f	file:
+read_ssl	mail.c	/^static inline int read_ssl(SSL *s, char *buf) {$/;"	f	file:
+read_ssl2	mail.c	/^static inline void read_ssl2(SSL *s) {$/;"	f	file:
+repeating	date.c	/^repeating(const struct Route *restrict const in) {$/;"	f	file:
+route	main.h	/^  char*    route;$/;"	m	struct:Route
+route_	date.c	/^struct Route route_[128];$/;"	v	typeref:struct:Route
+start_low_latency	main.c	/^start_low_latency(void)$/;"	f
+std	Makefile	/^	gcc-11 mail.c date.c excel.c main.c -DSkipmain -o final_program -w -std=c11 -O3  `pkg-config --cflags --libs openssl` -lxlsxwriter -ldl -pthread$/;"	m
+stop_low_latency	main.c	/^stop_low_latency(void)$/;"	f
+then	date.c	/^static int then(char **argv) {$/;"	f	file:
+upload	mail.c	/^static inline void upload(SSL *s, const char *const filename) {$/;"	f	file:
+usage	date.c	/^__attribute__((noreturn)) static void usage() {$/;"	f	file:
+wday	excel.c	/^wday(const struct Route* r, lxw_worksheet* s, uint32_t row, lxw_format* f)$/;"	f	file:
+we	excel.c	/^  fx           we;$/;"	m	struct:Work	file:
+weekday_from_days	date.c	/^__attribute__((pure)) static inline int weekday_from_days(const int z) {$/;"	f	file:
+write_base64	mail.c	/^static inline void write_base64(SSL *s, const void *txt) {$/;"	f	file:
+write_excel	excel.c	/^write_excel(void)$/;"	f
+write_km	date.c	/^void write_km(void) {$/;"	f
+write_ssl	mail.c	/^static inline void write_ssl(SSL *s, const char *txt) {$/;"	f	file:
