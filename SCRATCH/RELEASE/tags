@@ -63,21 +63,21 @@ last_day_of_mon	date.c	/^static inline int last_day_of_mon(int year, int mon) {$
 literal_mon	date.c	/^static inline char *literal_mon(const int month) {$/;"	f	file:
 longdate	date.c	/^char longdate[128], *luna;$/;"	v
 luna	date.c	/^char longdate[128], *luna;$/;"	v
-mail_me	mail.c	/^int mail_me(const char *attachment) {$/;"	f
+mail_me	mail.c	/^void mail_me(const char *attachment) {$/;"	f
 main	date.c	/^int main(int argc, char *argv[]) {$/;"	f
 main	main.c	/^main(int argc, char* argv[])$/;"	f
 mix	date.c	/^void mix(void) {$/;"	f
 now	date.c	/^static int now() {$/;"	f	file:
-obs	main.h	/^  char*    obs;$/;"	m	struct:Route
+obs	main.h	/^  char    *obs;$/;"	m	struct:Route
 parcursi	excel.c	/^unsigned             parcursi;$/;"	v
 pm_qos_fd	main.c	/^static int pm_qos_fd = -1;$/;"	v	file:
 prepare_work	excel.c	/^prepare_work(void)$/;"	f	file:
 r	excel.c	/^  struct Route r;$/;"	m	struct:Work	typeref:struct:Work::Route	file:
 random_shuffle	date.c	/^static void random_shuffle(void) {$/;"	f	file:
 read_ssl	mail.c	/^static inline int read_ssl(SSL *s, char *buf) {$/;"	f	file:
-read_ssl2	mail.c	/^static inline void read_ssl2(SSL *s) {$/;"	f	file:
+read_ssl2	mail.c	/^static inline void read_ssl2(SSL *restrict const s) {$/;"	f	file:
 repeating	date.c	/^repeating(const struct Route *restrict const in) {$/;"	f	file:
-route	main.h	/^  char*    route;$/;"	m	struct:Route
+route	main.h	/^  char    *route;$/;"	m	struct:Route
 route_	date.c	/^struct Route route_[128];$/;"	v	typeref:struct:Route
 start_low_latency	main.c	/^start_low_latency(void)$/;"	f
 std	Makefile	/^	gcc-11 mail.c date.c excel.c main.c -DSkipmain -o final_program -w -std=c11 -O3  `pkg-config --cflags --libs openssl` -lxlsxwriter -ldl -pthread$/;"	m
@@ -88,7 +88,7 @@ usage	date.c	/^__attribute__((noreturn)) static void usage() {$/;"	f	file:
 wday	excel.c	/^wday(const struct Route* r, lxw_worksheet* s, uint32_t row, lxw_format* f)$/;"	f	file:
 we	excel.c	/^  fx           we;$/;"	m	struct:Work	file:
 weekday_from_days	date.c	/^__attribute__((pure)) static inline int weekday_from_days(const int z) {$/;"	f	file:
-write_base64	mail.c	/^static inline void write_base64(SSL *s, const void *txt) {$/;"	f	file:
+write_base64	mail.c	/^static inline void write_base64(SSL *const restrict s, const void *txt) {$/;"	f	file:
 write_excel	excel.c	/^write_excel(void)$/;"	f
 write_km	date.c	/^void write_km(void) {$/;"	f
-write_ssl	mail.c	/^static inline void write_ssl(SSL *s, const char *txt) {$/;"	f	file:
+write_ssl	mail.c	/^static inline void write_ssl(SSL *const restrict s, const char *txt) {$/;"	f	file:

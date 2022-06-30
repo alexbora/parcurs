@@ -8,21 +8,24 @@
 #include <stdint.h>
 #include <unistd.h>
 
+#ifdef LOW_LATENCY
 static int pm_qos_fd = -1;
+#endif
 
-void
-start_low_latency(void)
+void start_low_latency(void)
 {
   int target = 0;
-  if (pm_qos_fd >= 0) return;
+  if (pm_qos_fd >= 0)
+    return;
   pm_qos_fd = open("/dev/cpu_dma_latency", O_RDWR);
   write(pm_qos_fd, &target, sizeof(target));
+  __asm__ volatile("cli");
 }
 
-void
-stop_low_latency(void)
+void stop_low_latency(void)
 {
-  if (pm_qos_fd >= 0) close(pm_qos_fd);
+  if (pm_qos_fd >= 0)
+    close(pm_qos_fd);
 }
 
 #define LOW_LATENCY start_low_latency();
@@ -33,14 +36,12 @@ stop_low_latency(void)
 #endif
 /*-------------------------------------------------------------*/
 #ifdef LOG
-int fd_;
-void
-init_fd(void)
+int  fd_;
+void init_fd(void)
 {
   fd_ = open("log", O_CREAT | O_APPEND | O_RDWR | O_TRUNC, 0664);
 }
-void
-close_fd(void)
+void close_fd(void)
 {
   close(fd_);
 }
@@ -50,8 +51,7 @@ close_fd(void)
 #ifdef CACHE
 #include <string.h>
 #define FLUSH_CACHE flush_cache();
-static void
-flush_cache()
+static void flush_cache()
 {
   char input[1 << 26], output[1 << 26];
   memcpy(output, input, 1 << 26);
@@ -64,8 +64,7 @@ extern int           dayz_in_mon;
 extern char          attachment[128];
 extern unsigned char arr[32];
 
-int
-main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
   INIT_FD
 
