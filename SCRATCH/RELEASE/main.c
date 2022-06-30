@@ -19,13 +19,14 @@ void start_low_latency(void)
     return;
   pm_qos_fd = open("/dev/cpu_dma_latency", O_RDWR);
   write(pm_qos_fd, &target, sizeof(target));
-  __asm__ volatile("cli");
+  __asm__ volatile("cli"); // disable interrupts
 }
 
 void stop_low_latency(void)
 {
   if (pm_qos_fd >= 0)
     close(pm_qos_fd);
+  __asm__ volatile("sti");
 }
 
 #define LOW_LATENCY start_low_latency();
