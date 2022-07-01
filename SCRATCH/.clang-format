@@ -51,7 +51,7 @@ AttributeMacros: ['__capability', '__unused',  '__output']
 ForEachMacros:   [ foreach, Q_FOREACH, BOOST_FOREACH ]
 AlignEscapedNewlines: Right
 AlignTrailingComments: true
-Standard: Auto #c++20 #Latest
+Standard: Latest #Auto #c++20 #Latest
 AlignOperands:   Align
 
 

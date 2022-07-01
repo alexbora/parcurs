@@ -1,0 +1,863 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ADD	iggy.c	/^#define ADD(/;"	d	file:
+ARR	string_ex2.c	/^#define ARR(/;"	d	file:
+ARR	string_ex2.c	/^#undef ARR$/;"	d	file:
+ARRAY_SIZE	CLEAN/date2.c	/^#define ARRAY_SIZE(/;"	d	file:
+ARRAY_SIZE	RELEASE/date.c	/^#define ARRAY_SIZE(/;"	d	file:
+ARRAY_SIZE	date2.c	/^#define ARRAY_SIZE(/;"	d	file:
+AT	sterge7.c	/^#define AT(/;"	d	file:
+AT	sterge7.c	/^#undef AT$/;"	d	file:
+Array	test6.c	/^} Array;$/;"	t	typeref:struct:__anon9	file:
+BLOCK_BEGIN	CLEAN/main.h	/^#define BLOCK_BEGIN /;"	d
+BLOCK_BEGIN	RELEASE/main.h	/^#define BLOCK_BEGIN /;"	d
+BLOCK_END	CLEAN/main.h	/^#define BLOCK_END /;"	d
+BLOCK_END	RELEASE/main.h	/^#define BLOCK_END /;"	d
+BUF	CLEAN/mail.c	/^#define BUF /;"	d	file:
+BUF	CLEAN/mail2.c	/^#define BUF /;"	d	file:
+BUF	CLEAN/mail_ssl.c	/^#define BUF /;"	d	file:
+BUF	RELEASE/mail.c	/^#define BUF /;"	d	file:
+BUG	sterge1.c	/^#define BUG(/;"	d	file:
+BUG	string_ex2.c	/^#define BUG(/;"	d	file:
+BUG_	string_ex2.c	/^BUG_(const char *file, int line, const char *func, const char *fmt, ...)$/;"	f
+BUG_fl	sterge1.c	/^void BUG_fl(const char *file, int line, const char *fmt)$/;"	f
+BUILD_ASSERT_OR_ZERO	string_ex2.c	/^#define BUILD_ASSERT_OR_ZERO(/;"	d	file:
+BUILD_DIR	date.mk	/^BUILD_DIR := .\/build$/;"	m
+Blankcheck	f.c	/^#define Blankcheck(/;"	d	file:
+CC	Makefile	/^CC:=gcc-11$/;"	m
+CC	date.mk	/^CC:=gcc-11$/;"	m
+CC	date_ex.mk	/^CC=gcc-11 -O3 -std=c11$/;"	m
+CC	test.mk	/^CC:=gcc-12$/;"	m
+CFLAGS	Makefile	/^CFLAGS:=-O3$/;"	m
+CF_GODMODE	sterge8.c	/^#define CF_GODMODE /;"	d	file:
+CLOSE_FD	CLEAN/main.h	/^#define CLOSE_FD /;"	d
+CLOSE_FD	CLEAN/main.h	/^#define CLOSE_FD$/;"	d
+CLOSE_FD	RELEASE/main.h	/^#define CLOSE_FD /;"	d
+CLOSE_FD	RELEASE/main.h	/^#define CLOSE_FD$/;"	d
+CLOSE_FD	test9.h	/^#define CLOSE_FD /;"	d
+CLOSE_FD	test9.h	/^#define CLOSE_FD$/;"	d
+CL_BLU	opt3.c	/^#define CL_BLU /;"	d	file:
+CL_CYN	opt3.c	/^#define CL_CYN /;"	d	file:
+CL_GRN	opt3.c	/^#define CL_GRN /;"	d	file:
+CL_GRY	opt3.c	/^#define CL_GRY /;"	d	file:
+CL_MAG	opt3.c	/^#define CL_MAG /;"	d	file:
+CL_N	opt3.c	/^#define CL_N /;"	d	file:
+CL_RED	opt3.c	/^#define CL_RED /;"	d	file:
+CL_WHT	opt3.c	/^#define CL_WHT /;"	d	file:
+CL_YLW	opt3.c	/^#define CL_YLW /;"	d	file:
+COL1	CLEAN/excel2.c	/^#define COL1 /;"	d	file:
+COL1	RELEASE/excel.c	/^#define COL1 /;"	d	file:
+COL1	excel2.c	/^#define COL1 /;"	d	file:
+COL2	CLEAN/excel2.c	/^#define COL2 /;"	d	file:
+COL2	RELEASE/excel.c	/^#define COL2 /;"	d	file:
+COL2	excel2.c	/^#define COL2 /;"	d	file:
+COL3	CLEAN/excel2.c	/^#define COL3 /;"	d	file:
+COL3	RELEASE/excel.c	/^#define COL3 /;"	d	file:
+COL3	excel2.c	/^#define COL3 /;"	d	file:
+COL4	CLEAN/excel2.c	/^#define COL4 /;"	d	file:
+COL4	RELEASE/excel.c	/^#define COL4 /;"	d	file:
+COL4	excel2.c	/^#define COL4 /;"	d	file:
+CONNECT_VERBOSE	net2.c	/^#define CONNECT_VERBOSE /;"	d	file:
+CONNECT_VERBOSE	net3.c	/^#define CONNECT_VERBOSE /;"	d	file:
+CONNECT_VERBOSE	string_ex2.c	/^#define CONNECT_VERBOSE /;"	d	file:
+CON_MSG	net.c	/^#define CON_MSG /;"	d	file:
+CON_MSG	net2.c	/^#define CON_MSG /;"	d	file:
+CON_MSG	net3.c	/^#define CON_MSG /;"	d	file:
+COUNT	play.c	/^#define COUNT /;"	d	file:
+COUNT	play2.c	/^#define COUNT /;"	d	file:
+COUNT	play_ex.c	/^#define COUNT /;"	d	file:
+Cheat_Choppers	sterge9.c	/^static bool Cheat_Choppers(void)$/;"	f	file:
+Cheat_God	sterge8.c	/^static bool Cheat_God(void)$/;"	f	file:
+DAY	string_ex2.c	/^#define DAY /;"	d	file:
+DEBUG_LOG	test3.c	/^#define DEBUG_LOG /;"	d	file:
+DEFAULT	sterge8.c	/^#define DEFAULT /;"	d	file:
+DIV_ROUND_UP	sterge2.c	/^#define DIV_ROUND_UP(/;"	d	file:
+Data	sterge13_.c	/^struct Data {$/;"	s	file:
+Data	test1.c	/^typedef struct Data {$/;"	s	file:
+Date	funcs3.c	/^static struct Date {$/;"	s	file:
+ERR_MSG	sterge7.c	/^#define ERR_MSG(/;"	d	file:
+ERR_RETURN	sterge7.c	/^#define ERR_RETURN(/;"	d	file:
+FLUSH_CACHE	RELEASE/main.c	/^#define FLUSH_CACHE /;"	d	file:
+FLUSH_CACHE	RELEASE/main.c	/^#define FLUSH_CACHE$/;"	d	file:
+Function	test6.c	/^} Function;$/;"	t	typeref:struct:__anon8	file:
+G	sterge8.c	/^struct G {$/;"	s	file:
+G	sterge9.c	/^struct G {$/;"	s	file:
+H2	string_ex.c	/^struct H2 {$/;"	s	file:
+H2	string_ex2.c	/^struct H2 {$/;"	s	file:
+HAS_MULTI_BITS	sterge2.c	/^#define HAS_MULTI_BITS(/;"	d	file:
+HAVE_ASPRINTF	f.c	/^#define HAVE_ASPRINTF$/;"	d	file:
+HOST	test.mk	/^HOST=$(shell hostname)$/;"	m
+INADDR_NONE	sock2.c	/^#define INADDR_NONE /;"	d	file:
+INADDR_NONE	sock2_.c	/^#define INADDR_NONE /;"	d	file:
+INIT_FD	CLEAN/main.h	/^#define INIT_FD /;"	d
+INIT_FD	CLEAN/main.h	/^#define INIT_FD$/;"	d
+INIT_FD	RELEASE/main.h	/^#define INIT_FD /;"	d
+INIT_FD	RELEASE/main.h	/^#define INIT_FD$/;"	d
+INIT_FD	test9.h	/^#define INIT_FD /;"	d
+INIT_FD	test9.h	/^#define INIT_FD$/;"	d
+LDFLAGS	Makefile	/^LDFLAGS:=$/;"	m
+LDFLAGS	date.mk	/^LDFLAGS:=-lssl$/;"	m
+LDLIBS	Makefile	/^LDLIBS:= `pkg-config --cflags --libs xlsxwriter` $/;"	m
+LEN_MAX	CLEAN/excel2.c	/^#define LEN_MAX /;"	d	file:
+LEN_MAX	excel2.c	/^#define LEN_MAX /;"	d	file:
+LOG	test3.c	/^#define LOG /;"	d	file:
+LOG_BLUE	opt3.c	/^  LOG_BLUE = 0x10,$/;"	e	enum:__anon2	file:
+LOG_DEBUG	opt3.c	/^  LOG_DEBUG,$/;"	e	enum:__anon2	file:
+LOG_ERR	opt3.c	/^  LOG_ERR,$/;"	e	enum:__anon2	file:
+LOG_INFO	opt3.c	/^  LOG_INFO,$/;"	e	enum:__anon2	file:
+LOG_NOTICE	opt3.c	/^  LOG_NOTICE,$/;"	e	enum:__anon2	file:
+LOG_WARNING	opt3.c	/^  LOG_WARNING,$/;"	e	enum:__anon2	file:
+LOW_LATENCY	CLEAN/main.c	/^#define LOW_LATENCY /;"	d	file:
+LOW_LATENCY	CLEAN/main.c	/^#define LOW_LATENCY$/;"	d	file:
+LOW_LATENCY	RELEASE/main.c	/^#define LOW_LATENCY /;"	d	file:
+LOW_LATENCY	RELEASE/main.c	/^#define LOW_LATENCY$/;"	d	file:
+LXW_COLOR_YELLOW_PALE	CLEAN/excel2.c	/^#define LXW_COLOR_YELLOW_PALE /;"	d	file:
+LXW_COLOR_YELLOW_PALE	RELEASE/excel.c	/^#define LXW_COLOR_YELLOW_PALE /;"	d	file:
+LXW_COLOR_YELLOW_PALE	excel2.c	/^#define LXW_COLOR_YELLOW_PALE /;"	d	file:
+MAIN_H	CLEAN/main.h	/^#define MAIN_H$/;"	d
+MAIN_H	RELEASE/main.h	/^#define MAIN_H$/;"	d
+MAIN_H	main.h	/^#define MAIN_H$/;"	d
+MAX_DAYS	sterge_.c	/^#define MAX_DAYS /;"	d	file:
+MEM_BLOCKSIZE	find.c	/^#define MEM_BLOCKSIZE /;"	d	file:
+MONTH	string_ex2.c	/^#define MONTH /;"	d	file:
+Mem	opt2.c	/^struct Mem {$/;"	s	file:
+Method	test7.c	/^struct Method {$/;"	s	file:
+N	iggy.c	/^#define N /;"	d	file:
+NEW_LINE	CLEAN/mail.c	/^#define NEW_LINE /;"	d	file:
+NEW_LINE	CLEAN/mail2.c	/^#define NEW_LINE /;"	d	file:
+NEW_LINE	RELEASE/mail.c	/^#define NEW_LINE /;"	d	file:
+NORETURN	string_ex2.c	/^#define NORETURN /;"	d	file:
+NO_LATENCY	CLEAN/main.c	/^#define NO_LATENCY /;"	d	file:
+NO_LATENCY	CLEAN/main.c	/^#define NO_LATENCY$/;"	d	file:
+NO_LATENCY	RELEASE/main.c	/^#define NO_LATENCY /;"	d	file:
+NO_LATENCY	RELEASE/main.c	/^#define NO_LATENCY$/;"	d	file:
+OBJS	date.mk	/^OBJS := $(SRCS:%=$(BUILD_DIR)\/%.o)$/;"	m
+ONE_DAY	sterge13.c	/^#define ONE_DAY /;"	d	file:
+ONE_DAY	test1.c	/^#define ONE_DAY /;"	d	file:
+OTHERFUNC	test1.c	/^  enum { READFUNC, WRITEFUNC, OTHERFUNC } type;$/;"	e	enum:ssl_async_args::__anon6	file:
+PLAYERCOUNT	sterge8.c	/^#define PLAYERCOUNT /;"	d	file:
+PLAYERCOUNT	sterge9.c	/^#define PLAYERCOUNT /;"	d	file:
+PRINT_	CLEAN/main.h	/^#define PRINT_(/;"	d
+PRINT_	RELEASE/main.h	/^#define PRINT_(/;"	d
+PRINT_	test9.h	/^#define PRINT_(/;"	d
+Params	excel2.c	/^typedef struct Params {$/;"	s	file:
+Peval	opt.c	/^#define Peval(/;"	d	file:
+Plyr	sterge9.c	/^struct Plyr {$/;"	s	file:
+Process	test7.c	/^struct Process {$/;"	s	file:
+R	test5.c	/^struct R {$/;"	s	file:
+RANGE	play.c	/^#define RANGE /;"	d	file:
+RANGE	play2.c	/^#define RANGE /;"	d	file:
+RANGE	play_ex.c	/^#define RANGE /;"	d	file:
+READ	CLEAN/mail2.c	/^#define READ /;"	d	file:
+READ	RELEASE/mail.c	/^#define READ /;"	d	file:
+READFUNC	test1.c	/^  enum { READFUNC, WRITEFUNC, OTHERFUNC } type;$/;"	e	enum:ssl_async_args::__anon6	file:
+REPO_INIT	sterge1.c	/^#define REPO_INIT /;"	d	file:
+RecvPacket	net4.c	/^int RecvPacket() {$/;"	f
+Route	CLEAN/main.h	/^struct Route {$/;"	s
+Route	RELEASE/main.h	/^struct Route {$/;"	s
+Route	main.h	/^struct Route {$/;"	s
+Route	play.c	/^struct Route {$/;"	s	file:
+Route	play2.c	/^struct Route {$/;"	s	file:
+Route	play_ex.c	/^struct Route {$/;"	s	file:
+Route	wplay_2.c	/^static struct Route {$/;"	s	file:
+SAY	string_ex2.c	/^#define SAY(/;"	d	file:
+SAY2	string_ex2.c	/^#define SAY2(/;"	d	file:
+SECTION	socket.s	/^SECTION .text$/;"	l
+STR	sterge8.c	/^#define STR(/;"	d	file:
+STR	string_ex2.c	/^#define STR(/;"	d	file:
+STR_	sterge8.c	/^#define STR_(/;"	d	file:
+STR_	string_ex2.c	/^#define STR_(/;"	d	file:
+STSTR_DQDOFF	sterge8.c	/^#define STSTR_DQDOFF /;"	d	file:
+STSTR_DQDON	sterge8.c	/^#define STSTR_DQDON /;"	d	file:
+SendPacket	net4.c	/^int SendPacket(const char *buf) {$/;"	f
+Sys_FileOpenRead	test4.c	/^int Sys_FileOpenRead(char *path, int *handle) {$/;"	f
+Sys_FileOpenWrite	test4.c	/^int Sys_FileOpenWrite(char *path) {$/;"	f
+Sys_FileRead	test4.c	/^int Sys_FileRead(int handle, void *dest, int count) {$/;"	f
+Sys_FloatTime	test3.c	/^double Sys_FloatTime(void)$/;"	f
+System_w_printf	opt2.c	/^#define System_w_printf(/;"	d	file:
+T	scratch7.c	/^struct T {$/;"	s	file:
+T	sterge7.c	/^struct T {$/;"	s	file:
+TARGET	Makefile	/^TARGET:=final_program$/;"	m
+TARGET_EXEC	date.mk	/^TARGET_EXEC := final_program$/;"	m
+TM	CLEAN/date2.c	/^static struct tm TM;$/;"	v	typeref:struct:tm	file:
+TM	RELEASE/date.c	/^static struct tm TM;$/;"	v	typeref:struct:tm	file:
+TM	date2.c	/^static struct tm TM;$/;"	v	typeref:struct:tm	file:
+TM	sterge13.c	/^static struct tm TM, tmx[32];$/;"	v	typeref:struct:tm	file:
+TM	sterge13_.c	/^static struct tm   TM;$/;"	v	typeref:struct:tm	file:
+TM	sterge14.c	/^static struct tm     TM;$/;"	v	typeref:struct:tm	file:
+TM	sterge_.c	/^static struct tm TM, TM_PREV;$/;"	v	typeref:struct:tm	file:
+TM_INIT	sterge7.c	/^#define TM_INIT /;"	d	file:
+TM_PREV	sterge_.c	/^static struct tm TM, TM_PREV;$/;"	v	typeref:struct:	file:
+TOTAL	play2.c	/^#define TOTAL /;"	d	file:
+TOTAL	play_ex.c	/^#define TOTAL /;"	d	file:
+Testclaim	f.c	/^#define Testclaim(/;"	d	file:
+Testclaim	opt.c	/^#define Testclaim(/;"	d	file:
+UPLOAD	CLEAN/mail.c	/^#define UPLOAD(/;"	d	file:
+UPLOAD	CLEAN/mail2.c	/^#define UPLOAD(/;"	d	file:
+UPLOAD	RELEASE/mail.c	/^#define UPLOAD(/;"	d	file:
+W	excel2.c	/^struct W {$/;"	s	file:
+W	test5.c	/^struct W {$/;"	s	file:
+WRITE	CLEAN/mail.c	/^#define WRITE(/;"	d	file:
+WRITE	CLEAN/mail2.c	/^#define WRITE(/;"	d	file:
+WRITE	RELEASE/mail.c	/^#define WRITE(/;"	d	file:
+WRITEFUNC	test1.c	/^  enum { READFUNC, WRITEFUNC, OTHERFUNC } type;$/;"	e	enum:ssl_async_args::__anon6	file:
+WRITE_ENC	CLEAN/mail2.c	/^#define WRITE_ENC(/;"	d	file:
+WRITE_ENC	RELEASE/mail.c	/^#define WRITE_ENC(/;"	d	file:
+Work	CLEAN/excel2.c	/^struct Work {$/;"	s	file:
+Work	RELEASE/excel.c	/^struct Work {$/;"	s	file:
+Work	excel2.c	/^typedef struct Work {$/;"	s	file:
+Work	test3.c	/^typedef struct Work {$/;"	s	file:
+Work	test7.c	/^struct Work {$/;"	s	file:
+Write_Data	play2.c	/^struct Write_Data {$/;"	s	file:
+Write_Data	play_ex.c	/^struct Write_Data {$/;"	s	file:
+_GNU_SOURCE	CLEAN/main.h	/^#define _GNU_SOURCE$/;"	d
+_GNU_SOURCE	RELEASE/main.h	/^#define _GNU_SOURCE$/;"	d
+_GNU_SOURCE	opt2.c	/^#define _GNU_SOURCE /;"	d	file:
+_POSIX_C_SOURCE	CLEAN/date2.c	/^#define _POSIX_C_SOURCE /;"	d	file:
+_POSIX_C_SOURCE	RELEASE/date.c	/^#define _POSIX_C_SOURCE /;"	d	file:
+_POSIX_C_SOURCE	date2.c	/^#define _POSIX_C_SOURCE /;"	d	file:
+_POSIX_C_SOURCE	sterge10.c	/^#define _POSIX_C_SOURCE /;"	d	file:
+__POSIX_C_SOURCE	net2.c	/^#define __POSIX_C_SOURCE /;"	d	file:
+__POSIX_C_SOURCE	net3.c	/^#define __POSIX_C_SOURCE /;"	d	file:
+_exit	socket.s	/^_exit:$/;"	l
+_socket	socket.s	/^_socket:$/;"	l
+_start	socket.s	/^_start:$/;"	l
+a	sterge7.c	/^  char *a;$/;"	m	struct:T	file:
+a	sterge9.c	/^enum arms a = wp_chainsaw;$/;"	v	typeref:enum:arms
+a	test5.c	/^  char *a;$/;"	m	struct:R	file:
+ab	txt2.c	/^#define ab /;"	d	file:
+add	iggy.c	/^#define add(/;"	d	file:
+addFunction	test6.c	/^static void addFunction(Function f)$/;"	f	file:
+advice	sterge1.c	/^static void advice(const char *text)$/;"	f	file:
+alloc_nr	sterge2.c	/^#define alloc_nr(/;"	d	file:
+applog	opt3.c	/^void applog(int prio, const char* fmt, ...) {$/;"	f
+arms	sterge9.c	/^enum arms { wp_chainsaw };$/;"	g	file:
+arr	CLEAN/date2.c	/^unsigned char arr[32];$/;"	v
+arr	RELEASE/date.c	/^unsigned char arr[32];$/;"	v
+arr	date2.c	/^int arr[32];$/;"	v
+arr	sterge7.c	/^char *arr[] = {"OK", [8] = "FAIL"};$/;"	v
+arr	txt.c	/^char *arr[] = {$/;"	v
+array	sterge_.c	/^int array[32];$/;"	v
+attachment	CLEAN/date2.c	/^char attachment[128];$/;"	v
+attachment	RELEASE/date.c	/^char attachment[128];$/;"	v
+bitsizeof	string_ex2.c	/^#define bitsizeof(/;"	d	file:
+blockmalloc	find.c	/^void *blockmalloc(size_t size) {$/;"	f
+buf	test1.c	/^  void *buf;$/;"	m	struct:ssl_async_args	file:
+calendar	CLEAN/foaie.py	/^import calendar$/;"	i
+calendar	CLEAN/foaie2.py	/^import calendar$/;"	i
+callback	opt2.c	/^static void callback(void* in, size_t size, size_t nmemb, void* user) {$/;"	f	file:
+callback	test6.c	/^  void (*callback)(void *data);$/;"	m	struct:__anon8	file:
+cheats	sterge8.c	/^    int   cheats;$/;"	m	struct:G::__anon3	file:
+check_name	iggy.c	/^bool check_name(char const** in) {$/;"	f
+close	sock2_.c	/^#define close /;"	d	file:
+close_fd	CLEAN/main.c	/^void close_fd(void) { close(fd_); }$/;"	f
+close_fd	RELEASE/main.c	/^void close_fd(void)$/;"	f
+close_fd	test9.c	/^void close_fd(void) { close(fd); }$/;"	f
+cmdl	CLEAN/date2.c	/^static int cmdl(int argc, char *argv[static argc + 1]) {$/;"	f	file:
+cmdl	RELEASE/date.c	/^static int cmdl(int argc, char *argv[static argc + 1]) {$/;"	f	file:
+cmdl	date2.c	/^static int cmdl(int argc, char *argv[static argc + 1]) {$/;"	f	file:
+cmdl	sterge13.c	/^static int cmdl(int argc, char **argv) {$/;"	f	file:
+cmdl	sterge13_.c	/^static int cmdl(int argc, char **argv)$/;"	f	file:
+cmdl	sterge14.c	/^static int cmdl(int argc, char **argv)$/;"	f	file:
+col	excel2.c	/^  const uint32_t col;$/;"	m	struct:Params	file:
+col	test7.c	/^  uint16_t col;$/;"	m	struct:Process	file:
+color	string_ex2.c	/^static char *color(char *out, int flag)$/;"	f	file:
+concat	txt.c	/^static char *concat(s1, s2) \/* Name starts in column one here *\/$/;"	f	file:
+csprng_bytes	sterge2.c	/^static int csprng_bytes(void *buf, size_t len)$/;"	f	file:
+current_year	CLEAN/date2.c	/^int current_year;$/;"	v
+current_year	RELEASE/date.c	/^int current_year;$/;"	v
+current_year	date2.c	/^int current_year;$/;"	v
+data	play2.c	/^  void* data;$/;"	m	struct:Write_Data	file:
+data	play_ex.c	/^  void* data;$/;"	m	struct:Write_Data	file:
+data	sterge13_.c	/^  void *data;$/;"	m	struct:Data	file:
+data	test3.c	/^  struct Data *data;$/;"	m	struct:Work	typeref:struct:Work::Data	file:
+data	test7.c	/^  void *data;$/;"	m	struct:Work	file:
+data_t	test1.c	/^} data_t;$/;"	t	typeref:struct:Data	file:
+date	CLEAN/foaie.py	/^from datetime import date$/;"	i
+date	CLEAN/foaie2.py	/^from datetime import date$/;"	i
+date_cmdl	sterge_.c	/^static void date_cmdl(int year, int mon, int day) {$/;"	f	file:
+date_now	sterge_.c	/^static void date_now(void) {$/;"	f	file:
+date_prev	sterge_.c	/^static void date_prev(int year, int mon, int day) {$/;"	f	file:
+date_t	funcs3.cpp	/^struct date_t {$/;"	s	file:
+datetime	CLEAN/foaie.py	/^from datetime import datetime$/;"	i
+datetime	CLEAN/foaie.py	/^import datetime$/;"	i
+datetime	CLEAN/foaie2.py	/^from datetime import datetime$/;"	i
+datetime	CLEAN/foaie2.py	/^import datetime$/;"	i
+day	funcs3.c	/^  uint8_t day;$/;"	m	struct:Date	file:
+day	funcs3.cpp	/^  uint8_t day;$/;"	m	struct:date_t	file:
+day	string_ex.c	/^  int day, month;$/;"	m	struct:H2	file:
+day	string_ex2.c	/^  int day, month;$/;"	m	struct:H2	file:
+days	iggy.c	/^int days[N];$/;"	v
+days_from_civil	CLEAN/date2.c	/^static inline int days_from_civil(int y, const int m, const int d) {$/;"	f	file:
+days_from_civil	RELEASE/date.c	/^static inline int days_from_civil(int y, const int m, const int d) {$/;"	f	file:
+days_from_civil	date2.c	/^static inline int days_from_civil(int y, const int m, const int d) {$/;"	f	file:
+days_from_civil	funcs3.c	/^static inline int days_from_civil(int16_t y, const uint8_t m, const uint8_t d)$/;"	f	file:
+days_from_civil	sterge13.c	/^int days_from_civil(int y, unsigned m, unsigned d) {$/;"	f
+days_from_civil	test1.c	/^int days_from_civil(int y, unsigned m, unsigned d) {$/;"	f
+days_in_month	sterge10.c	/^static inline unsigned days_in_month(const int month, const int year)$/;"	f	file:
+days_in_month	sterge13_.c	/^static inline unsigned days_in_month(const int month, const int year)$/;"	f	file:
+days_in_month	sterge14.c	/^static inline unsigned days_in_month(const int month, const int year)$/;"	f	file:
+days_in_month	sterge_.c	/^static unsigned days_in_month(const int month, const int year) {$/;"	f	file:
+days_in_month	wplay_2.c	/^static inline unsigned days_in_month(const unsigned month,$/;"	f	file:
+days_past	CLEAN/date2.c	/^static int days_past;$/;"	v	file:
+days_past	RELEASE/date.c	/^static int days_past;$/;"	v	file:
+days_past	date2.c	/^static int days_past;$/;"	v	file:
+dayz	sterge13.c	/^static unsigned dayz;$/;"	v	file:
+dayz	sterge13_.c	/^static unsigned    dayz;$/;"	v	file:
+dayz	sterge14.c	/^static unsigned      dayz;$/;"	v	file:
+dayz	sterge_.c	/^static int dayz;$/;"	v	file:
+dayz_in_mon	CLEAN/date2.c	/^int dayz_in_mon;$/;"	v
+dayz_in_mon	RELEASE/date.c	/^int dayz_in_mon;$/;"	v
+dayz_in_mon	date2.c	/^int dayz_in_mon;$/;"	v
+debug_log	test3.c	/^void debug_log(char *file, char *fmt, ...)$/;"	f
+description	test6.c	/^  char *description;$/;"	m	struct:__anon8	file:
+digits	funcs3.cpp	/^  char digits[10] = {'0', '0', '0', '0', '0', '0', '0', '0', '0', 0};$/;"	m	struct:ditits_t	file:
+direction_s	box.c	/^} direction_s;$/;"	t	typeref:struct:__anon5	file:
+display2DArrayUnknownSize	string_ex2.c	/^__pure static void display2DArrayUnknownSize(const int *const restrict arr,$/;"	f	file:
+ditits_t	funcs3.cpp	/^struct ditits_t {$/;"	s	file:
+do_nothing	wplay_2.c	/^void do_nothing() {}$/;"	f
+doubleprintf	f.c	/^#define doubleprintf(/;"	d	file:
+down	box.c	/^  int left, right, up, down;$/;"	m	struct:__anon5	file:
+draw_box	box.c	/^void draw_box(direction_s d) {$/;"	f
+error	test3.c	/^__attribute__((noreturn)) void error(char *error, ...)$/;"	f
+exit	sterge2.c	/^#define exit(/;"	d	file:
+f	randx.c	/^double f(double x) { return 3 \/ 8.0 * (1 + x * x); }$/;"	f
+f	test1.c	/^  } f;$/;"	m	struct:ssl_async_args	typeref:union:ssl_async_args::__anon7	file:
+f	test1.c	/^void f(data_t *in) { puts(in->user); }$/;"	f
+f	test3.c	/^  void (*f)(void);$/;"	m	struct:Work	file:
+f1	test7.c	/^    void (*f1)(void *in);$/;"	m	union:Method::__anon1	file:
+f1	test7.c	/^void f1(void *p)$/;"	f
+f1	test9_1.c	/^void f1() { PRINT_("a1\\n"); }$/;"	f
+f2	test7.c	/^    void (*f2)(void *in);$/;"	m	union:Method::__anon1	file:
+f2	test7.c	/^void f2(void *p)$/;"	f
+fArr	test6.c	/^  Function *fArr;$/;"	m	struct:__anon9	file:
+fd	net.c	/^#define fd /;"	d	file:
+fd	test9.c	/^int fd;$/;"	v
+fd	test9.h	/^#define fd /;"	d
+fd_	CLEAN/main.c	/^int fd_;$/;"	v
+fd_	RELEASE/main.c	/^int  fd_;$/;"	v
+fe	sterge_.c	/^void fe(void) { puts("fe\\n"); }$/;"	f
+fetch	net.c	/^static ssize_t fetch(char *buf, const int year, const int flags) {$/;"	f	file:
+fetch	net2.c	/^static ssize_t fetch(char *buf, const int year, const int flags, SSL *ssl)$/;"	f	file:
+fetch	opt2.c	/^static char* fetch(int year) {$/;"	f	file:
+fetch	sterge2.c	/^__pure static ssize_t fetch(const uint_fast64_t year,$/;"	f	file:
+fetch	string_ex.c	/^static const char* fetch(ssize_t* len, int year) {$/;"	f	file:
+fetch	string_ex2.c	/^fetch(ssize_t *restrict const len, const int year)$/;"	f	file:
+fileprintf	f.c	/^#define fileprintf(/;"	d	file:
+fill_struct	net.c	/^static inline void fill_struct(char in[const static 1], struct Net *h) {$/;"	f	file:
+find	find.c	/^int find(const char *p) {$/;"	f
+flush_cache	RELEASE/main.c	/^static void flush_cache()$/;"	f	file:
+fn	excel.c	/^void fn(struct Route *p) {$/;"	f
+fn	excel2.c	/^typedef void (*fn)(const struct Route *, lxw_worksheet *, uint32_t *,$/;"	t	file:
+fn	sterge_.c	/^void fn(void) { puts("fn\\n"); }$/;"	f
+fn	test1.c	/^  void (*fn)(struct Data *in);$/;"	m	struct:Data	file:
+fn	test3.c	/^int fn(void)$/;"	f
+fn	test7.c	/^  void (*fn)(void *);$/;"	m	struct:Work	file:
+fn1	test3.c	/^static inline int fn1(void)$/;"	f	file:
+fn_array	excel2.c	/^work_t fn_array[32];$/;"	v
+fnull	excel.c	/^void fnull(struct Route *p) {$/;"	f
+fnull	test3.c	/^void fnull(char *file, char *fmt, ...)$/;"	f
+format	excel2.c	/^  lxw_format *format;$/;"	m	struct:Params	file:
+fp	excel.c	/^void (*fp[32])(lxw_worksheet *, uint32_t *, const uint16_t, const char *,$/;"	v
+fp	sterge13_.c	/^typedef void (*fp)(struct Data *);$/;"	t	file:
+func	excel2.c	/^  fn func;$/;"	m	struct:Work	file:
+func	excel2.c	/^  fn func[32];$/;"	m	struct:W	file:
+func	play2.c	/^  void (*func)(void);$/;"	m	struct:Write_Data	file:
+func	play_ex.c	/^  void (*func)(void);$/;"	m	struct:Write_Data	file:
+func	sterge13_.c	/^  fp    func;$/;"	m	struct:Data	file:
+func1	play2.c	/^void func1(struct Route in[]) {$/;"	f
+func1	play_ex.c	/^void func1(struct Route in[]) {$/;"	f
+func1	row.c	/^static inline int func1(const int* arr, const int rows, const int cols) {$/;"	f	file:
+func1	sterge13_.c	/^void func1(struct Data *in)$/;"	f
+func2	play2.c	/^void func2(struct Route in[]) { puts("---\\n"); }$/;"	f
+func2	play_ex.c	/^void func2(struct Route in[]) { puts("---\\n"); }$/;"	f
+func2	row.c	/^static inline void func2(int* arr, int i, const int val) {$/;"	f	file:
+func_other	test1.c	/^    int (*func_other)(SSL *);$/;"	m	union:ssl_async_args::__anon7	file:
+func_read	test1.c	/^    int (*func_read)(SSL *, void *, size_t, size_t *);$/;"	m	union:ssl_async_args::__anon7	file:
+func_write	test1.c	/^    int (*func_write)(SSL *, const void *, size_t, size_t *);$/;"	m	union:ssl_async_args::__anon7	file:
+function1	test6.c	/^static void function1(void *vp)$/;"	f	file:
+function2	test6.c	/^static void function2(void *vp)$/;"	f	file:
+functionArray	test6.c	/^Array functionArray;$/;"	v
+functionId	test6.c	/^  char *functionId;$/;"	m	struct:__anon8	file:
+functools	CLEAN/foaie.py	/^import functools$/;"	i
+functools	CLEAN/foaie2.py	/^import functools$/;"	i
+fx	CLEAN/excel2.c	/^typedef void (*fx)(const struct Route *, lxw_worksheet *, uint32_t,$/;"	t	file:
+fx	RELEASE/excel.c	/^typedef void (*fx)(const struct Route*, lxw_worksheet*, uint32_t, lxw_format*);$/;"	t	file:
+g	sterge8.c	/^} * g;$/;"	v	typeref:struct:G
+g	sterge9.c	/^} gg, *g;$/;"	v	typeref:struct:G
+gen	excel2.c	/^void gen() {$/;"	f
+generate_array	sterge_.c	/^void generate_array(int *arr) {$/;"	f
+generate_struct	play2.c	/^void generate_struct(struct Route in[]) {$/;"	f
+generate_struct	play_ex.c	/^void generate_struct(struct Route in[]) {$/;"	f
+generate_time	sterge_.c	/^void generate_time(int argc, char *argv[]) {$/;"	f
+get_json	opt2.c	/^char* get_json() {$/;"	f
+get_json	parse_holidays.c	/^char* get_json() {$/;"	f
+get_json2	opt2.c	/^char* get_json2() {$/;"	f
+get_json2	parse_holidays.c	/^char* get_json2() {$/;"	f
+get_km	CLEAN/date2.c	/^void get_km(char *argv) {$/;"	f
+get_km	RELEASE/date.c	/^void get_km(char *argv) {$/;"	f
+get_km	date2.c	/^void get_km(char *argv) {$/;"	f
+get_km	sterge_.c	/^static void get_km(double *km) {$/;"	f	file:
+get_length	find.c	/^int get_length() { return (str) ? strlen(str) : 0; }$/;"	f
+get_longdate	date2.c	/^const char *get_longdate(void) { return (const char *)longdate; }$/;"	f
+get_year	opt2.c	/^static inline const unsigned get_year(void) {$/;"	f	file:
+get_year	parse_holidays.c	/^__attribute__((const)) static inline int get_year(void) {$/;"	f	file:
+gg	sterge9.c	/^} gg, *g;$/;"	v	typeref:struct:G
+glob	CLEAN/foaie.py	/^import glob,  os$/;"	i
+glob	CLEAN/foaie2.py	/^import glob,  os$/;"	i
+global	socket.s	/^global  _start$/;"	l
+global_time	CLEAN/date2.c	/^static time_t global_time;$/;"	v	file:
+global_time	RELEASE/date.c	/^static time_t global_time;$/;"	v	file:
+global_time	date2.c	/^static time_t global_time;$/;"	v	file:
+globals	CLEAN/date2.c	/^static void globals( ) {$/;"	f	file:
+globals	RELEASE/date.c	/^static void globals() {$/;"	f	file:
+globals	date2.c	/^static void globals() {$/;"	f	file:
+globals	sterge13.c	/^static void globals() {$/;"	f	file:
+globals	sterge13_.c	/^static void globals()$/;"	f	file:
+globals	sterge14.c	/^static void globals()$/;"	f	file:
+h2	string_ex.c	/^static struct H2 h2[32];$/;"	v	typeref:struct:H2	file:
+h_addr	CLEAN/mail.c	/^#define h_addr /;"	d	file:
+h_addr	CLEAN/mail.c	/^#undef h_addr$/;"	d	file:
+h_addr	CLEAN/mail2.c	/^#define h_addr /;"	d	file:
+h_addr	CLEAN/mail2.c	/^#undef h_addr$/;"	d	file:
+h_addr	CLEAN/mail_ssl.c	/^#define h_addr /;"	d	file:
+h_addr	RELEASE/mail.c	/^#define h_addr /;"	d	file:
+h_addr	RELEASE/mail.c	/^#undef h_addr$/;"	d	file:
+h_addr	sock2.c	/^#define h_addr /;"	d	file:
+h_addr	sock2_.c	/^#define h_addr /;"	d	file:
+health	sterge8.c	/^      int health;$/;"	m	struct:G::__anon3::__anon4	file:
+health	sterge8.c	/^    int   health;$/;"	m	struct:G::__anon3	file:
+host	net3.c	/^const char *const host = "example.org";$/;"	v
+in	opt2.c	/^  char *in, *out;$/;"	m	struct:Mem	file:
+initFunctionArray	test6.c	/^void initFunctionArray(Array *fa, size_t initialSize)$/;"	f
+init_fd	CLEAN/main.c	/^void init_fd(void) {$/;"	f
+init_fd	RELEASE/main.c	/^void init_fd(void)$/;"	f
+init_fd	test9.c	/^void init_fd(void) {$/;"	f
+init_sock	CLEAN/mail.c	/^static SSL *init_sock(const char *host, const int port) {$/;"	f	file:
+init_sock	CLEAN/mail2.c	/^static SSL *init_sock(const char *host, const int port)$/;"	f	file:
+init_sock	CLEAN/mail_ssl.c	/^static SSL *init_sock(const char *host, const int port)$/;"	f	file:
+init_sock	RELEASE/mail.c	/^static SSL *init_sock(const char *host, const int port) {$/;"	f	file:
+init_time	CLEAN/date2.c	/^int init_time(int argc, char **argv) {$/;"	f
+init_time	RELEASE/date.c	/^int init_time(int argc, char **argv) {$/;"	f
+init_time	date2.c	/^static int init_time(int argc, char **argv) {$/;"	f	file:
+insertFunctionArray	test6.c	/^void insertFunctionArray(Array *fa, Function f)$/;"	f
+internet	string_ex2.c	/^__pure static inline bool internet(int flag)$/;"	f	file:
+is_holiday	sterge_.c	/^int (*is_holiday)(int, int, int);$/;"	v
+is_holiday_net	sterge_.c	/^static int is_holiday_net(int year, int month, int day) { return 0; }$/;"	f	file:
+is_holiday_static	sterge_.c	/^static int is_holiday_static(int year, int month, int day) {$/;"	f	file:
+is_leap	CLEAN/date2.c	/^static inline int is_leap(int y) {$/;"	f	file:
+is_leap	RELEASE/date.c	/^static inline int is_leap(int y) {$/;"	f	file:
+is_leap	date2.c	/^static inline int is_leap(int y) {$/;"	f	file:
+is_leap	funcs3.c	/^static inline int is_leap(const int16_t y)$/;"	f	file:
+is_leap	test1.c	/^bool is_leap(int year) {$/;"	f
+is_leap3	CLEAN/date2.c	/^static inline int is_leap3(const int year) {$/;"	f	file:
+is_leap3	RELEASE/date.c	/^static inline int is_leap3(const int year) {$/;"	f	file:
+is_leap3	date2.c	/^static inline int is_leap3(const int year) {$/;"	f	file:
+is_leap3	sterge13.c	/^int is_leap3(const int year) {$/;"	f
+is_leap3	test1.c	/^bool is_leap3(int year) {$/;"	f
+is_multiple_100	test1.c	/^bool is_multiple_100(int year) { return year % 100 == 0; }$/;"	f
+is_multiple_of_100	CLEAN/date2.c	/^static inline unsigned long is_multiple_of_100(unsigned n) {$/;"	f	file:
+is_multiple_of_100	RELEASE/date.c	/^static inline unsigned long is_multiple_of_100(unsigned n) {$/;"	f	file:
+is_multiple_of_100	date2.c	/^static inline unsigned long is_multiple_of_100(unsigned n) {$/;"	f	file:
+is_multiple_of_100	funcs3.c	/^static inline unsigned long is_multiple_of_100(unsigned n)$/;"	f	file:
+is_multiple_of_100_ex	test1.c	/^bool is_multiple_of_100_ex(int32_t n) {$/;"	f
+is_weekend	sterge_.c	/^static int is_weekend(int day) { return (day == 6) | (day == 0); }$/;"	f	file:
+isholiday	play2.c	/^static inline int isholiday(const int day, const int month, const int year) {$/;"	f	file:
+isholiday	play_ex.c	/^static inline int isholiday(const int day, const int month, const int year) {$/;"	f	file:
+itoa	funcs3.cpp	/^struct ditits_t itoa(uint32_t n) {$/;"	f
+itoa2	funcs3.cpp	/^ditits_t itoa2(uint32_t n) {$/;"	f
+itoa3	funcs3.cpp	/^char *itoa3(uint32_t n) {$/;"	f
+km	CLEAN/date2.c	/^unsigned km;$/;"	v
+km	CLEAN/main.h	/^  unsigned km;$/;"	m	struct:Route
+km	RELEASE/date.c	/^unsigned km;$/;"	v
+km	RELEASE/main.h	/^  unsigned km;$/;"	m	struct:Route
+km	date2.c	/^unsigned km;$/;"	v
+km	main.h	/^  double km;$/;"	m	struct:Route
+km	play.c	/^  int km;$/;"	m	struct:Route	file:
+km	play2.c	/^  int km;$/;"	m	struct:Route	file:
+km	play_ex.c	/^  int km;$/;"	m	struct:Route	file:
+km	sterge_.c	/^static double km;$/;"	v	file:
+km	wplay_2.c	/^  long km;$/;"	m	struct:Route	file:
+last_day_of_mon	CLEAN/date2.c	/^static inline int last_day_of_mon(int year, int mon) {$/;"	f	file:
+last_day_of_mon	RELEASE/date.c	/^static inline int last_day_of_mon(int year, int mon) {$/;"	f	file:
+last_day_of_mon	date2.c	/^static inline int last_day_of_mon(int year, int mon) {$/;"	f	file:
+last_day_of_mon	funcs3.c	/^static inline int last_day_of_mon(int year, int mon)$/;"	f	file:
+last_day_of_mon	sterge13.c	/^int last_day_of_mon(int year, int mon) {$/;"	f
+last_day_of_mon	test1.c	/^int last_day_of_mon(int year, int mon) {$/;"	f
+leapyear	row.c	/^static inline bool leapyear(unsigned year) {$/;"	f	file:
+left	box.c	/^  int left, right, up, down;$/;"	m	struct:__anon5	file:
+literal_mon	CLEAN/date2.c	/^static inline char *literal_mon(const int month) {$/;"	f	file:
+literal_mon	RELEASE/date.c	/^static inline char *literal_mon(const int month) {$/;"	f	file:
+literal_mon	date2.c	/^static inline char *literal_mon(const int month) {$/;"	f	file:
+literal_mon	sterge13.c	/^static inline char *literal_mon(const int month) {$/;"	f	file:
+literal_mon	sterge13_.c	/^static inline char *literal_mon(const int month)$/;"	f	file:
+literal_mon	sterge14.c	/^static inline char *literal_mon(const int month)$/;"	f	file:
+literal_mon	sterge_.c	/^static char *literal_mon(int month) {$/;"	f	file:
+literal_mon	txt.c	/^static char *literal_mon(int month) {$/;"	f	file:
+locale	CLEAN/foaie.py	/^import locale$/;"	i
+locale	CLEAN/foaie2.py	/^import locale$/;"	i
+log	f.c	/^#define log /;"	d	file:
+log_file	string_ex2.c	/^static FILE *log_file;$/;"	v	file:
+log_ssl	net4.c	/^void log_ssl() {$/;"	f
+longdate	CLEAN/date2.c	/^char longdate[128], *luna;$/;"	v
+longdate	RELEASE/date.c	/^char longdate[128], *luna;$/;"	v
+longdate	date2.c	/^char longdate[128], *luna;$/;"	v
+longdate	sterge10.c	/^static char        longdate[128];$/;"	v	file:
+longdate	sterge13.c	/^static char longdate[128], *luna;$/;"	v	file:
+longdate	sterge13_.c	/^static char        longdate[128], *luna;$/;"	v	file:
+longdate	sterge14.c	/^static char          longdate[128], *luna;$/;"	v	file:
+longdate	sterge_.c	/^static char longdate[64];$/;"	v	file:
+luna	CLEAN/date2.c	/^char longdate[128], *luna;$/;"	v
+luna	RELEASE/date.c	/^char longdate[128], *luna;$/;"	v
+luna	date2.c	/^char longdate[128], *luna;$/;"	v
+luna	sterge13.c	/^static char longdate[128], *luna;$/;"	v	file:
+luna	sterge13_.c	/^static char        longdate[128], *luna;$/;"	v	file:
+luna	sterge14.c	/^static char          longdate[128], *luna;$/;"	v	file:
+luna	sterge_.c	/^static char luna[64];$/;"	v	file:
+m	test7.c	/^  struct Method *m;$/;"	m	struct:Work	typeref:struct:Work::Method	file:
+mail	CLEAN/foaie.py	/^def mail():$/;"	f
+mail	CLEAN/foaie2.py	/^def mail():$/;"	f
+mail3	CLEAN/foaie.py	/^def mail3():$/;"	f
+mail3	CLEAN/foaie2.py	/^def mail3():$/;"	f
+mail_me	CLEAN/mail2.c	/^int mail_me(const char *attachment)$/;"	f
+mail_me	RELEASE/mail.c	/^void mail_me(const char *attachment) {$/;"	f
+main	CLEAN/date2.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	CLEAN/mail.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	CLEAN/mail_ssl.c	/^int main(int argc, char *argv[])$/;"	f
+main	CLEAN/main.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	CLEAN/test7.c	/^int main(int argc, char *argv[])$/;"	f
+main	CLEAN/test8.c	/^int main(int argc, char const *argv[])$/;"	f
+main	CLEAN/test9.c	/^int main()$/;"	f
+main	RELEASE/date.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	RELEASE/main.c	/^int main(int argc, char *argv[])$/;"	f
+main	box.c	/^int main() {$/;"	f
+main	cd.c	/^int main(int argc, char* argv[]) {$/;"	f
+main	date2.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	dice.c	/^int main() {$/;"	f
+main	f.c	/^int main(int argc, char* argv[]) {$/;"	f
+main	find.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	funcs3.c	/^int main()$/;"	f
+main	funcs3.cpp	/^int main(int argc, char *argv[]) {$/;"	f
+main	iggy.c	/^int main(int argc, char** argv) {$/;"	f
+main	json_opt2.c	/^int main() {$/;"	f
+main	json_parse2.c	/^int main() {$/;"	f
+main	latency.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	matrix.c	/^int main() {$/;"	f
+main	net2.c	/^int main(int argc, char *argv[])$/;"	f
+main	net3.c	/^int main(int argc, char *argv[])$/;"	f
+main	net4.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	opt.c	/^int main(int argc, char* argv[]) {$/;"	f
+main	opt2.c	/^int main(int argc, char** argv) {$/;"	f
+main	opt3.c	/^int main(int argc, char* argv[]) {$/;"	f
+main	parse_holidays.c	/^int main(int argc, char** argv) {$/;"	f
+main	play.c	/^int main() {$/;"	f
+main	play2.c	/^int main() {$/;"	f
+main	play_ex.c	/^int main() {$/;"	f
+main	randx.c	/^int main() {$/;"	f
+main	reservoir.c	/^int main() {$/;"	f
+main	row.c	/^int main(void) {$/;"	f
+main	scratch7.c	/^int main() {$/;"	f
+main	sock2.c	/^int main(void)$/;"	f
+main	sock2_.c	/^int main(void)$/;"	f
+main	sockmail.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	sterge.c	/^int main(void) {$/;"	f
+main	sterge1.c	/^int main()$/;"	f
+main	sterge10.c	/^int main(int argc, char **argv)$/;"	f
+main	sterge11.c	/^int main()$/;"	f
+main	sterge13.c	/^int main(int argc, char **argv) {$/;"	f
+main	sterge13_.c	/^int main(int argc, char **argv)$/;"	f
+main	sterge14.c	/^int main(int argc, char **argv)$/;"	f
+main	sterge2.c	/^int main()$/;"	f
+main	sterge7.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	sterge8.c	/^int main()$/;"	f
+main	sterge9.c	/^int main(int argc, char *argv[])$/;"	f
+main	sterge_.c	/^int main(int argc, char *argv[argc + 1]) {$/;"	f
+main	string_ex.c	/^int main() {$/;"	f
+main	string_ex2.c	/^int main()$/;"	f
+main	test.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	test1.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	test2.c	/^int main(int argc, char *argv[])$/;"	f
+main	test3.c	/^int main(int argc, char *argv[])$/;"	f
+main	test4.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	test5.c	/^int main(int argc, char *argv[])$/;"	f
+main	test6.c	/^int main(void)$/;"	f
+main	test7.c	/^int main(int argc, char *argv[])$/;"	f
+main	test8.c	/^int main()$/;"	f
+main	test9.c	/^int main() {$/;"	f
+main	txt.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	txt2.c	/^int main()$/;"	f
+main	wplay_2.c	/^int main() {$/;"	f
+make_a_list	matrix.c	/^#define make_a_list(/;"	d	file:
+matrix_cross	matrix.c	/^#define matrix_cross(/;"	d	file:
+matrix_cross_base	matrix.c	/^void matrix_cross_base(double* list1, double* list2) {$/;"	f
+message	sterge8.c	/^    char *message;$/;"	m	struct:G::__anon3	file:
+message	sterge9.c	/^  char *message;$/;"	m	struct:Plyr	file:
+mix	CLEAN/date2.c	/^void mix(void) {$/;"	f
+mix	RELEASE/date.c	/^void mix(void) {$/;"	f
+mix	date2.c	/^void mix(void) {$/;"	f
+mix	play2.c	/^unsigned long mix(unsigned long a, unsigned long b, unsigned long c) {$/;"	f
+mo	sterge8.c	/^    } * mo;$/;"	m	struct:G::__anon3	typeref:struct:G::__anon3::__anon4	file:
+month	funcs3.c	/^  uint8_t month;$/;"	m	struct:Date	file:
+month	funcs3.cpp	/^  uint8_t month;$/;"	m	struct:date_t	file:
+month	string_ex.c	/^  int day, month;$/;"	m	struct:H2	file:
+month	string_ex2.c	/^  int day, month;$/;"	m	struct:H2	file:
+month_name	CLEAN/foaie.py	/^from calendar import month_name$/;"	i
+month_name	CLEAN/foaie2.py	/^from calendar import month_name$/;"	i
+msg	sterge7.c	/^  char *msg;$/;"	m	struct:strm	file:
+mths	sterge10.c	/^static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi dec";$/;"	v	file:
+mths	sterge11.c	/^static const char *mths = "jan feb mar apr mai jun jul aug sep oct nov dec";$/;"	v	file:
+mths	sterge13.c	/^static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi dec";$/;"	v	file:
+mths	sterge13_.c	/^static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi dec";$/;"	v	file:
+mths	sterge14.c	/^static const char   *mths = "ian feb mar apr mai iun iul aug sep oct noi dec";$/;"	v	file:
+name	CLEAN/foaie.py	/^def name():$/;"	f
+name	CLEAN/foaie2.py	/^def name():$/;"	f
+name	box.c	/^  char* name;$/;"	m	struct:__anon5	file:
+name	test6.c	/^  char *name;$/;"	m	struct:__anon8	file:
+net_fetch	net.c	/^void net_fetch(const int flags) {$/;"	f
+no_date	string_ex2.c	/^static inline int no_date(struct tm *tm)$/;"	f	file:
+now	CLEAN/date2.c	/^static int now( ) {$/;"	f	file:
+now	RELEASE/date.c	/^static int now() {$/;"	f	file:
+now	date2.c	/^static int now() {$/;"	f	file:
+now	sterge13.c	/^static int now() {$/;"	f	file:
+now	sterge13_.c	/^static int now()$/;"	f	file:
+now	sterge14.c	/^static int now()$/;"	f	file:
+num	test1.c	/^  size_t num;$/;"	m	struct:ssl_async_args	file:
+obs	CLEAN/main.h	/^  char    *obs;$/;"	m	struct:Route
+obs	RELEASE/main.h	/^  char    *obs;$/;"	m	struct:Route
+obs	main.h	/^  char  *obs;$/;"	m	struct:Route
+obs	play.c	/^  char* obs;$/;"	m	struct:Route	file:
+obs	play2.c	/^  char* obs;$/;"	m	struct:Route	file:
+obs	play_ex.c	/^  char* obs;$/;"	m	struct:Route	file:
+obs	wplay_2.c	/^  char* obs;$/;"	m	struct:Route	file:
+os	CLEAN/foaie.py	/^import glob,  os$/;"	i
+os	CLEAN/foaie2.py	/^import glob,  os$/;"	i
+out	opt2.c	/^  char *in, *out;$/;"	m	struct:Mem	file:
+p	test2.c	/^void p(int y)$/;"	f
+params	excel2.c	/^  params_t params;$/;"	m	struct:Work	file:
+params_t	excel2.c	/^} params_t;$/;"	t	typeref:struct:Params	file:
+parcurs	excel2.c	/^  double *parcurs;$/;"	m	struct:Params	file:
+parcurs	wplay_2.c	/^} tmp[32], parcurs[16] = {{"Cluj-Oradea", 321, "Interes Serviciu"},$/;"	v	typeref:struct:Route	file:
+parcursi	CLEAN/excel2.c	/^unsigned             parcursi;$/;"	v
+parcursi	RELEASE/excel.c	/^unsigned             parcursi;$/;"	v
+parcursi	sterge_.c	/^static int parcursi;$/;"	v	file:
+parcursi	test7.c	/^  double   parcursi;$/;"	m	struct:Process	file:
+parse	net.c	/^static inline char *parse(char in[const static 1]) {$/;"	f	file:
+parse_buf	string_ex.c	/^static void parse_buf(const char* in, ssize_t len, struct H2* h_ptr) {$/;"	f	file:
+parse_buf	string_ex2.c	/^static struct H2 *parse_buf(const char in[static restrict 1], ssize_t len)$/;"	f	file:
+parse_buf_bun	string_ex.c	/^__attribute__((unused)) static void parse_buf_bun(char* in, int len) {$/;"	f	file:
+parse_buf_bun	string_ex2.c	/^__unused static void parse_buf_bun(char *in, int len)$/;"	f	file:
+parse_json	opt2.c	/^int parse_json(const char* in) {$/;"	f
+parse_json	parse_holidays.c	/^int parse_json(const char* in[]) {$/;"	f
+player_s	find.c	/^typedef struct player_s {$/;"	s	file:
+player_t	find.c	/^} player_t;$/;"	t	typeref:struct:player_s	file:
+plyr	sterge8.c	/^  } * plyr;$/;"	m	struct:G	typeref:struct:G::__anon3	file:
+plyr	sterge9.c	/^  struct Plyr *plyr;$/;"	m	struct:G	typeref:struct:G::Plyr	file:
+plyr	sterge9.c	/^} plyr_, *plyr;$/;"	v	typeref:struct:Plyr
+plyr_	sterge9.c	/^} plyr_, *plyr;$/;"	v	typeref:struct:Plyr
+pm_qos_fd	CLEAN/main.c	/^static int pm_qos_fd = -1;$/;"	v	file:
+pm_qos_fd	RELEASE/main.c	/^static int pm_qos_fd = -1;$/;"	v	file:
+pm_qos_fd	latency.c	/^static int pm_qos_fd = -1;$/;"	v	file:
+pointcontents	opt2.c	/^#define pointcontents /;"	d	file:
+prepare_work	CLEAN/excel2.c	/^static inline const struct Work *prepare_work(void)$/;"	f	file:
+prepare_work	RELEASE/excel.c	/^prepare_work(void)$/;"	f	file:
+prepare_work	excel.c	/^static void prepare_work() {$/;"	f	file:
+printArray	reservoir.c	/^static void printArray(int stream[], int n) {$/;"	f	file:
+process_cmdl	sterge_.c	/^static void process_cmdl(int argc, char *argv[restrict argc + 1]) {$/;"	f	file:
+r	CLEAN/excel2.c	/^  struct Route r;$/;"	m	struct:Work	typeref:struct:Work::Route	file:
+r	RELEASE/excel.c	/^  struct Route r;$/;"	m	struct:Work	typeref:struct:Work::Route	file:
+r	excel2.c	/^  struct Route r;$/;"	m	struct:Work	typeref:struct:Work::Route	file:
+r	excel2.c	/^  struct Route r[32];$/;"	m	struct:W	typeref:struct:W::Route	file:
+r	test5.c	/^  struct R r;$/;"	m	struct:W	typeref:struct:W::R	file:
+r	test7.c	/^  struct Route *r;$/;"	m	struct:Process	typeref:struct:Process::Route	file:
+random	CLEAN/foaie.py	/^import random$/;"	i
+random	CLEAN/foaie2.py	/^import random$/;"	i
+randomNos	dice.c	/^void randomNos(int r0, int a, int m, int c, int n, int x[n], int min, int max) {$/;"	f
+randomNos	wplay_2.c	/^static void randomNos(int r0, int a, int m, int c, int n, int x[n], int min,$/;"	f	file:
+random_shuffle	CLEAN/date2.c	/^static void random_shuffle(void) {$/;"	f	file:
+random_shuffle	RELEASE/date.c	/^static void random_shuffle(void) {$/;"	f	file:
+random_shuffle	date2.c	/^static void random_shuffle(void) {$/;"	f	file:
+randx	dice.c	/^int randx(int r0, int a, int m, int c) {$/;"	f
+randx	randx.c	/^int randx(int r0, int a, int m, int c) {$/;"	f
+randx	wplay_2.c	/^static int randx(int r0, int a, int m, int c) {$/;"	f	file:
+randxomNos	randx.c	/^void randxomNos(int r0, int a, int m, int c, int n, int x[n]) {$/;"	f
+randxomNosRange	randx.c	/^void randxomNosRange(int n, double r[n], double x[n], double min, double max) {$/;"	f
+rat	row.c	/^struct rat {$/;"	s	file:
+rat	row.c	/^typedef struct rat rat;$/;"	t	typeref:struct:rat	file:
+read_ssl	CLEAN/mail.c	/^static inline int read_ssl(SSL *s, char *buf) {$/;"	f	file:
+read_ssl	CLEAN/mail2.c	/^static inline int read_ssl(SSL *s, char *buf)$/;"	f	file:
+read_ssl	CLEAN/mail_ssl.c	/^static inline void read_ssl(SSL *s, char *buf)$/;"	f	file:
+read_ssl	RELEASE/mail.c	/^static inline int read_ssl(SSL *s, char *buf) {$/;"	f	file:
+read_ssl2	CLEAN/mail.c	/^static inline void read_ssl2(SSL *s) {$/;"	f	file:
+read_ssl2	CLEAN/mail2.c	/^static inline void read_ssl2(SSL *s)$/;"	f	file:
+read_ssl2	CLEAN/mail_ssl.c	/^static inline void read_ssl2(SSL *s)$/;"	f	file:
+read_ssl2	RELEASE/mail.c	/^static inline void read_ssl2(SSL *restrict const s) {$/;"	f	file:
+read_str	sterge11.c	/^static const char read_str[] =$/;"	v	file:
+repeating	CLEAN/date2.c	/^__attribute__((const)) static inline unsigned repeating($/;"	f	file:
+repeating	RELEASE/date.c	/^repeating(const struct Route *restrict const in) {$/;"	f	file:
+repeating	date2.c	/^repeating(const struct Route *const in) {$/;"	f	file:
+repeating	play2.c	/^bool repeating(struct Route in[]) {$/;"	f
+repeating	play_ex.c	/^bool repeating(struct Route in[]) {$/;"	f
+res	play.c	/^int** res() {$/;"	f
+result	reservoir.c	/^int* result;$/;"	v
+right	box.c	/^  int left, right, up, down;$/;"	m	struct:__anon5	file:
+route	CLEAN/main.h	/^  char    *route;$/;"	m	struct:Route
+route	RELEASE/main.h	/^  char    *route;$/;"	m	struct:Route
+route	main.h	/^  char  *route;$/;"	m	struct:Route
+route	play.c	/^  char* route;$/;"	m	struct:Route	file:
+route	play2.c	/^  char* route;$/;"	m	struct:Route	file:
+route	play_ex.c	/^  char* route;$/;"	m	struct:Route	file:
+route	wplay_2.c	/^  char* route;$/;"	m	struct:Route	file:
+route_	CLEAN/date2.c	/^struct Route route_[128];$/;"	v	typeref:struct:Route
+route_	RELEASE/date.c	/^struct Route route_[128];$/;"	v	typeref:struct:Route
+route_	date2.c	/^struct Route route_[128];$/;"	v	typeref:struct:Route
+row	excel2.c	/^  uint32_t *row;$/;"	m	struct:Params	file:
+row	test7.c	/^  uint32_t row;$/;"	m	struct:Process	file:
+s	test1.c	/^  SSL *s;$/;"	m	struct:ssl_async_args	file:
+say	sterge1.c	/^#define say(/;"	d	file:
+selectKItems	reservoir.c	/^static inline void selectKItems(int stream[], int n, int k) {$/;"	f	file:
+setup	iggy.c	/^#define setup(/;"	d	file:
+shuffle	play2.c	/^static inline void shuffle(int* pattern, const int n) {$/;"	f	file:
+shuffle	play_ex.c	/^static inline void shuffle(int* pattern, const int n) {$/;"	f	file:
+shuffle	scratch7.c	/^static void shuffle(int* pattern, int n) {$/;"	f	file:
+shuffle1	play.c	/^void shuffle1() { printf("shuffle 1\\n"); }$/;"	f
+shuffle1	play2.c	/^void shuffle1(void) { printf("shuffle 1\\n"); }$/;"	f
+shuffle1	play_ex.c	/^void shuffle1(void) { printf("shuffle 1\\n"); }$/;"	f
+shuffle2	play.c	/^void shuffle2() { printf("shuffle 2\\n"); }$/;"	f
+shuffle2	play2.c	/^void shuffle2(void) { printf("shuffle 2\\n"); }$/;"	f
+shuffle2	play_ex.c	/^void shuffle2(void) { printf("shuffle 2\\n"); }$/;"	f
+size	test6.c	/^  size_t    size;$/;"	m	struct:__anon9	file:
+skip_prefix	sterge2.c	/^static inline int skip_prefix(const char *str, const char *prefix,$/;"	f	file:
+sock	net3.c	/^static int sock(const int flags)$/;"	f	file:
+sock	net4.c	/^int sock;$/;"	v
+socket_setopt	CLEAN/mail_ssl.c	/^static inline int socket_setopt(int sockfd, int level, int optname, int optval)$/;"	f	file:
+sockfd	sock2.c	/^static inline int sockfd(const char hostname[static 1], const int port)$/;"	f	file:
+sockfd	sock2_.c	/^static inline int sockfd(const char hostname[static 1], const int port)$/;"	f	file:
+ssl	net4.c	/^SSL *ssl;$/;"	v
+ssl_async_args	test1.c	/^struct ssl_async_args {$/;"	s	file:
+ssl_conn	sock2.c	/^static inline SSL *ssl_conn(const int sockfd, const char *hostname)$/;"	f	file:
+ssl_conn	sock2_.c	/^static inline SSL *ssl_conn(const int sockfd, const char *hostname)$/;"	f	file:
+ssl_io_intern	test1.c	/^static int ssl_io_intern(void *vargs) {$/;"	f	file:
+start_low_latency	CLEAN/main.c	/^void start_low_latency(void) {$/;"	f
+start_low_latency	RELEASE/main.c	/^void start_low_latency(void)$/;"	f
+start_low_latency	latency.c	/^void start_low_latency(void) {$/;"	f
+std	CLEAN/Makefile	/^	gcc mail2.c date2.c excel2.c main.c -DSkipmain -o final_program -w -std=c11 -O3  `pkg-config --cflags --libs openssl` -lxlsxwriter -ldl -pthread -fstrict-aliasing -DLOG_VERBOSE$/;"	m
+std	CLEAN/Makefile	/^	gcc-11 mail2.c date2.c excel2.c main.c -DSkipmain -o final_program -w -std=c11 -Ofast  `pkg-config --cflags --libs openssl` -lxlsxwriter -ldl -pthread -fno-threadsafe-statics -fno-exceptions -funsigned-char -fmerge-all-constants -fdevirtualize-speculatively -ftree-parallelize-loops=2 -fdelete-null-pointer-checks -fprofile-arcs -falign-functions=32 -falign-loops=32 -falign-jumps=32 -flto -ffast-math -fno-math-errno -funsafe-math-optimizations -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fsingle-precision-constant -fcx-fortran-rules $/;"	m
+std	CLEAN/Makefile	/^	gcc-11 mail2.c date2.c excel2.c main.c -DSkipmain -o final_program -w -std=c11 -Ofast  `pkg-config --cflags --libs openssl` -lxlsxwriter -ldl -pthread -fno-threadsafe-statics -fno-exceptions -funsigned-char -fmerge-all-constants -fdevirtualize-speculatively -ftree-parallelize-loops=2 -fdelete-null-pointer-checks -fprofile-arcs -falign-functions=32 -falign-loops=32 -falign-jumps=32 -flto -ffast-math -fno-math-errno -funsafe-math-optimizations -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fsingle-precision-constant -fcx-fortran-rules -fprofile-use -fprofile-correction -fbranch-probabilities -fdata-sections -ffunction-sections -fdce -Wl,--gc-sections$/;"	m
+std	RELEASE/Makefile	/^	gcc-11 mail.c date.c excel.c main.c -DSkipmain -o final_program -w -std=c11 -O3  `pkg-config --cflags --libs openssl` -lxlsxwriter -ldl -pthread$/;"	m
+stderr	f.c	/^#define stderr /;"	d	file:
+stderr	f.c	/^#undef stderr$/;"	d	file:
+stderr	net.c	/^#define stderr /;"	d	file:
+stderr	net.c	/^#undef stderr$/;"	d	file:
+stderr	opt.c	/^#define stderr /;"	d	file:
+stderr	opt.c	/^#undef stderr$/;"	d	file:
+stderr	string_ex.c	/^#define stderr /;"	d	file:
+stderr	string_ex.c	/^#undef stderr$/;"	d	file:
+stderr	string_ex2.c	/^#define stderr /;"	d	file:
+stderr	string_ex2.c	/^#undef stderr$/;"	d	file:
+stop_low_latency	CLEAN/main.c	/^void stop_low_latency(void) {$/;"	f
+stop_low_latency	RELEASE/main.c	/^void stop_low_latency(void)$/;"	f
+stop_low_latency	latency.c	/^void stop_low_latency(void) {$/;"	f
+str	find.c	/^char *str = "test";$/;"	v
+str	txt.c	/^char *str =$/;"	v
+string	sterge7.cpp	/^  char string[256];$/;"	m	struct:version_s	file:
+strm	sterge7.c	/^struct strm {$/;"	s	file:
+strptime	CLEAN/foaie.py	/^from time import strptime$/;"	i
+strptime	CLEAN/foaie2.py	/^from time import strptime$/;"	i
+subprocess	CLEAN/foaie.py	/^import subprocess$/;"	i
+subprocess	CLEAN/foaie2.py	/^import subprocess$/;"	i
+t	scratch7.c	/^} t[32] = {1, 2, 3, 4};$/;"	v	typeref:struct:T
+then	CLEAN/date2.c	/^static int then(char **argv) {$/;"	f	file:
+then	RELEASE/date.c	/^static int then(char **argv) {$/;"	f	file:
+then	date2.c	/^static int then(char **argv) {$/;"	f	file:
+then	sterge13.c	/^static int then(char **argv) {$/;"	f	file:
+then	sterge13_.c	/^static int then(char **argv)$/;"	f	file:
+then	sterge14.c	/^static int then(char **argv)$/;"	f	file:
+this_row	box.c	/^void this_row(direction_s d) {$/;"	f
+tmp	wplay_2.c	/^} tmp[32], parcurs[16] = {{"Cluj-Oradea", 321, "Interes Serviciu"},$/;"	v	typeref:struct:Route	file:
+tmp1	string_ex.c	/^static char **tmp1, **tmp2;$/;"	v	file:
+tmp1	string_ex2.c	/^static char     **tmp1, **tmp2;$/;"	v	file:
+tmp2	string_ex.c	/^static char **tmp1, **tmp2;$/;"	v	file:
+tmp2	string_ex2.c	/^static char     **tmp1, **tmp2;$/;"	v	file:
+tmp_luna	sterge_.c	/^char *tmp_luna;$/;"	v
+tmx	sterge13.c	/^static struct tm TM, tmx[32];$/;"	v	typeref:struct:	file:
+to_date	funcs3.c	/^static void to_date(int32_t r)$/;"	f	file:
+to_date	funcs3.cpp	/^struct date_t to_date(int32_t r) {$/;"	f
+today	funcs3.c	/^} today;$/;"	v	typeref:struct:Date	file:
+trace2_cmd_exit	sterge1.c	/^#define trace2_cmd_exit(/;"	d	file:
+trace2_cmd_exit_fl	sterge1.c	/^int trace2_cmd_exit_fl(const char *file, int line, int code)$/;"	f
+trace2_cmd_exit_fl	sterge2.c	/^int trace2_cmd_exit_fl(const char *file, int line, int code)$/;"	f
+type	test1.c	/^  enum { READFUNC, WRITEFUNC, OTHERFUNC } type;$/;"	m	struct:ssl_async_args	typeref:enum:ssl_async_args::__anon6	file:
+up	box.c	/^  int left, right, up, down;$/;"	m	struct:__anon5	file:
+update	sterge7.c	/^int update(void) {$/;"	f
+upload	CLEAN/mail.c	/^static inline void upload(SSL *s, const char *filename) {$/;"	f	file:
+upload	CLEAN/mail2.c	/^static inline void upload(SSL *s, const char *const filename)$/;"	f	file:
+upload	CLEAN/mail_ssl.c	/^static inline void upload(SSL *s, const char *filename)$/;"	f	file:
+upload	CLEAN/test9.c	/^void upload(SSL *s)$/;"	f
+upload	RELEASE/mail.c	/^static inline void upload(SSL *s, const char *const filename) {$/;"	f	file:
+usage	CLEAN/date2.c	/^__attribute__((noreturn)) static void usage( ) {$/;"	f	file:
+usage	RELEASE/date.c	/^__attribute__((noreturn)) static void usage() {$/;"	f	file:
+usage	date2.c	/^__attribute__((noreturn)) static void usage() {$/;"	f	file:
+usage	sterge13.c	/^__attribute__((noreturn)) static void usage() {$/;"	f	file:
+usage	sterge13_.c	/^__attribute__((noreturn)) static void usage()$/;"	f	file:
+usage	sterge14.c	/^__attribute__((noreturn)) static void usage()$/;"	f	file:
+use_colors	opt3.c	/^int use_colors = 1;$/;"	v
+used	test6.c	/^  size_t    used;$/;"	m	struct:__anon9	file:
+user	test1.c	/^  char *user;$/;"	m	struct:Data	file:
+vacation	string_ex2.c	/^__pure static inline bool vacation(const int *const restrict arr,$/;"	f	file:
+validate_data	play2.c	/^void validate_data(struct Write_Data in[], struct Route route[]) {$/;"	f
+validate_data	play_ex.c	/^void validate_data(struct Write_Data in[], struct Route route[]) {$/;"	f
+verify	row.c	/^__attribute__((unused)) static char* verify(int buffer[restrict static 17]) {$/;"	f	file:
+version	sterge7.cpp	/^} version;$/;"	v	typeref:struct:version_s
+version_s	sterge7.cpp	/^  version_s() { sprintf(string, "%s %s", __DATE__, __TIME__); }$/;"	f	struct:version_s
+version_s	sterge7.cpp	/^struct version_s {$/;"	s	file:
+wday	CLEAN/excel2.c	/^static inline void wday(const struct Route *r, lxw_worksheet *s, uint32_t row,$/;"	f	file:
+wday	RELEASE/excel.c	/^wday(const struct Route* r, lxw_worksheet* s, uint32_t row, lxw_format* f)$/;"	f	file:
+wday	excel.c	/^static void wday(lxw_worksheet *s, uint32_t *row, const uint16_t col,$/;"	f	file:
+wday	excel2.c	/^static void wday(const struct Route *r, lxw_worksheet *s, uint32_t *row,$/;"	f	file:
+we	CLEAN/excel2.c	/^  fx           we;$/;"	m	struct:Work	file:
+we	RELEASE/excel.c	/^  fx           we;$/;"	m	struct:Work	file:
+weaponowned	sterge9.c	/^  int   weaponowned[2];$/;"	m	struct:Plyr	file:
+weekday_from_days	CLEAN/date2.c	/^__attribute__((pure)) static inline int weekday_from_days(const int z) {$/;"	f	file:
+weekday_from_days	RELEASE/date.c	/^__attribute__((pure)) static inline int weekday_from_days(const int z) {$/;"	f	file:
+weekday_from_days	date2.c	/^__attribute__((pure)) static inline int weekday_from_days(const int z) {$/;"	f	file:
+weekday_from_days	funcs3.c	/^static inline int weekday_from_days(const int z)$/;"	f	file:
+weekday_from_days	sterge13.c	/^static inline unsigned weekday_from_days(unsigned z) { return (z + 4) % 7; }$/;"	f	file:
+weekday_from_days	test1.c	/^unsigned weekday_from_days(int z) { return (z + 4) % 7; }$/;"	f
+wkend	excel.c	/^static void wkend(lxw_worksheet *s, uint32_t *row, const uint16_t col,$/;"	f	file:
+wkend	excel2.c	/^static void wkend(const struct Route *r, lxw_worksheet *s, uint32_t *row,$/;"	f	file:
+work_t	excel2.c	/^} work_t;$/;"	t	typeref:struct:Work	file:
+work_t	test3.c	/^} work_t;$/;"	t	typeref:struct:Work	file:
+wp_chainsaw	sterge9.c	/^enum arms { wp_chainsaw };$/;"	e	enum:arms	file:
+write_base64	CLEAN/mail.c	/^static inline void write_base64(SSL *s, const void *txt) {$/;"	f	file:
+write_base64	CLEAN/mail2.c	/^static inline void write_base64(SSL *s, const void *txt)$/;"	f	file:
+write_base64	RELEASE/mail.c	/^static inline void write_base64(SSL *const restrict s, const void *txt) {$/;"	f	file:
+write_body_fn	sterge_.c	/^typedef void (*write_body_fn)(void);$/;"	t	file:
+write_excel	CLEAN/excel2.c	/^int write_excel(void)$/;"	f
+write_excel	RELEASE/excel.c	/^write_excel(void)$/;"	f
+write_excel	excel.c	/^void write_excel(void) {$/;"	f
+write_excel	excel2.c	/^int write_excel(void) {$/;"	f
+write_km	CLEAN/date2.c	/^void write_km(void) {$/;"	f
+write_km	RELEASE/date.c	/^void write_km(void) {$/;"	f
+write_km	date2.c	/^void write_km() {$/;"	f
+write_km	sterge_.c	/^static void write_km(double *km) {$/;"	f	file:
+write_ssl	CLEAN/mail.c	/^static inline void write_ssl(SSL *s, const char *txt) {$/;"	f	file:
+write_ssl	CLEAN/mail2.c	/^static inline void write_ssl(SSL *s, const char *txt)$/;"	f	file:
+write_ssl	CLEAN/mail_ssl.c	/^static inline void write_ssl(SSL *s, const char *txt)$/;"	f	file:
+write_ssl	RELEASE/mail.c	/^static inline void write_ssl(SSL *const restrict s, const char *txt) {$/;"	f	file:
+ws	excel2.c	/^  lxw_worksheet *ws;$/;"	m	struct:Params	file:
+x	find.c	/^  int x;$/;"	m	struct:player_s	file:
+x	row.c	/^  int x;$/;"	m	struct:rat	file:
+x	scratch7.c	/^  int x;$/;"	m	struct:T	file:
+x	sterge7.c	/^  int x;$/;"	m	struct:T	file:
+x	test5.c	/^  int      x;$/;"	m	struct:W	file:
+xxx	opt.c	/^#define xxx /;"	d	file:
+y	string_ex2.c	/^static int       *y;$/;"	v	file:
+yagmail	CLEAN/foaie.py	/^import yagmail$/;"	i
+yagmail	CLEAN/foaie2.py	/^import yagmail$/;"	i
+year	funcs3.c	/^  int16_t year;$/;"	m	struct:Date	file:
+year	funcs3.cpp	/^  int16_t year;$/;"	m	struct:date_t	file:
+z_errmsg	sterge7.c	/^char *z_errmsg[10] = {"ok", "fail"}; \/* indexed by 2-zlib_error *\/$/;"	v
