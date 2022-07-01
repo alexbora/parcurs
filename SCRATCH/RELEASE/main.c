@@ -19,7 +19,7 @@ start_low_latency(void)
   if (pm_qos_fd >= 0) return;
   pm_qos_fd = open("/dev/cpu_dma_latency", O_RDWR);
   write(pm_qos_fd, &target, sizeof(target));
-  __asm__ volatile("cli"); // disable interrupts
+  /* __asm__ volatile("cli"); // disable interrupts */
 }
 
 void
