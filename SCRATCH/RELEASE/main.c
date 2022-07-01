@@ -73,7 +73,7 @@ main(int argc, char* argv[])
 {
   INIT_FD
 
-  LOW_LATENCY
+  /* LOW_LATENCY */
 
   init_time(argc, argv);
 
@@ -89,7 +89,7 @@ main(int argc, char* argv[])
 
   mail_me(attachment);
 
-  NO_LATENCY
+  /* NO_LATENCY */
 
   CLOSE_FD
 
