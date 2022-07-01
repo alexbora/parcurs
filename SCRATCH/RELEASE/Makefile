@@ -1,5 +1,5 @@
 all: mail.c date.c excel.c main.c main.h
-	gcc-11 mail.c date.c excel.c main.c -DSkipmain -o final_program -w -std=c11 -O3  `pkg-config --cflags --libs openssl` -lxlsxwriter -ldl -pthread
+	gcc-11 mail.c date.c excel.c main.c -DSkipmain -o final_program -w -std=c11 -O3  `pkg-config --cflags --libs openssl` `pkg-config --cflags --libs xlsxwriter` -ldl -pthread
 
 clean:
 	@echo Done.
