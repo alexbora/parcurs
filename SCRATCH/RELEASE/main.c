@@ -75,9 +75,9 @@ main(int argc, char* argv[])
 
   LOW_LATENCY
 
-  mix();
-
   init_time(argc, argv);
+
+  mix();
 
   get_km(argc > 3 ? argv[argc - 1] : NULL);
 
