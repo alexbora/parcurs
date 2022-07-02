@@ -14,7 +14,8 @@
 
 extern char attachment[128];
 
-typedef void (*fx)(const struct Route*, lxw_worksheet*, uint32_t, lxw_format*);
+typedef void (*fx)(const struct Route *, lxw_worksheet *, uint32_t,
+                   lxw_format *);
 
 struct Work {
   struct Route r;
@@ -56,7 +57,7 @@ extern struct Route route_[128];
 /* extern uint32_t row; */
 extern int           dayz_in_mon;
 extern unsigned      km;
-extern char *        luna, longdate[128];
+extern char         *luna, longdate[128];
 extern int           current_year;
 extern unsigned char arr[32];
 unsigned             parcursi;
@@ -75,10 +76,10 @@ unsigned             parcursi;
 /*   /1* (*row)++; *1/ */
 /* } */
 
-static inline void
-wday(const struct Route* r, lxw_worksheet* s, uint32_t row, lxw_format* f)
+static inline void wday(const struct Route *r, lxw_worksheet *s, uint32_t row,
+                        lxw_format *f)
 {
-  worksheet_write_number(s, row, 1, (double) r->km, f);
+  worksheet_write_number(s, row, 1, (double)r->km, f);
   worksheet_write_string(s, row, 2, r->route, f);
   worksheet_write_string(s, row, 3, r->obs, f);
   /* (*parcursi) += (unsigned)r->km; */
@@ -123,11 +124,9 @@ wday(const struct Route* r, lxw_worksheet* s, uint32_t row, lxw_format* f)
 /*   memcpy(&w1.r, &route_, 32); */
 /* } */
 
-__attribute__((target("avx"))) static inline const struct Work*
+__attribute__((target("avx"))) static inline const struct Work *
 prepare_work(void)
 {
-  static struct Work wa[32] = {0};
-  memset(wa, 0, 32 * sizeof(struct Work));
 
   /* struct Work tmp[2] = (struct Work[2]){{.r = {"", 0, ""}, .we = wday}, */
   /*                                       {.r = route_[0], .we = wday}}; */
@@ -135,36 +134,34 @@ prepare_work(void)
 
   /* struct Route r1       = {"", 0, ""}; */
   /* struct Route r2       = route_[0]; */
-  const struct Route r_arr[2] = {
-      {"", 0u, ""},
-      *route_
-  };
+  /* const struct Route r_arr[2] = {{"", 0u, ""}, *route_}; */
 
-  struct Route arrr[32];
-  for (unsigned i = 1; i <= 32; i++) arrr[i] = r_arr[arr[i]];
+  /* struct Route arrr[32]; */
+  /* for (unsigned i = 1; i <= 32; i++) */
+  /* arrr[i] = r_arr[arr[i]]; */
 
   /* ugly, but efficient when holidays in mon, else branch prediction will
    * work */
 
+  static struct Work wa[32] = {0};
+  memset(wa, 0, 32 * sizeof(struct Work));
   for (unsigned i = 1; i <= dayz_in_mon; i++) {
     if (arr[i])
       wa[i] = (struct Work){.r = route_[i], .we = wday};
     else
-      wa[i] = (struct Work){
-          .r = {"", 0, ""},
-            .we = wday
-      };
+      wa[i] = (struct Work){.r = {"", 0, ""}, .we = wday};
   }
 
   /* for (unsigned i = 0; i < dayz; i++) */
   /* wa[i].f(&wa[i].r); */
   BLOCK_BEGIN
   unsigned total = 0;
-  for (unsigned i = 1; i <= dayz_in_mon; i++) total += wa[i].r.km;
+  for (unsigned i = 1; i <= dayz_in_mon; i++)
+    total += wa[i].r.km;
   parcursi = total;
   BLOCK_END
 
-  return (const struct Work*) &wa[0];
+  return (const struct Work *)&wa[0];
 }
 
 /******************************************************************************
@@ -176,8 +173,7 @@ prepare_work(void)
  *****************************************************************************/
 
 /* char *get_longdate(void); */
-int
-write_excel(void)
+int write_excel(void)
 {
   /* puts(get_longdate()); */
   /* prepare array */
@@ -204,7 +200,7 @@ write_excel(void)
       .comments = "VERSION 2.0",   .status = "Done",
   };
 
-  lxw_data_validation* data_validation =
+  lxw_data_validation *data_validation =
       &(lxw_data_validation){.validate     = LXW_VALIDATION_TYPE_ANY,
                              .criteria     = LXW_VALIDATION_TYPE_ANY,
                              .ignore_blank = LXW_VALIDATION_OFF,
@@ -212,9 +208,10 @@ write_excel(void)
   /* open workbook */
   /* check if workbook exists and delete it, otherwise you get permission error
    * for overwriting */
-  if (open(name, O_RDONLY)) remove(name);
+  if (open(name, O_RDONLY))
+    remove(name);
 
-  lxw_workbook* workbook = workbook_new_opt(
+  lxw_workbook *workbook = workbook_new_opt(
       name, &(lxw_workbook_options){.constant_memory = LXW_FALSE,
                                     .use_zip64       = LXW_TRUE});
 
@@ -229,7 +226,7 @@ write_excel(void)
   workbook->has_bmp        = 0u;
 
   /* open worksheet and set properties */
-  lxw_worksheet* worksheet = workbook_add_worksheet(workbook, worksheet_name);
+  lxw_worksheet *worksheet = workbook_add_worksheet(workbook, worksheet_name);
   worksheet_activate(worksheet);
   worksheet_select(worksheet);
   worksheet_set_first_sheet(worksheet);
@@ -258,11 +255,11 @@ write_excel(void)
   worksheet_insert_image(worksheet, row + 1, COL4, "logo.png");
 
   /* add formats */
-  lxw_format* format_bold       = workbook_add_format(workbook);
-  lxw_format* format_bold_right = workbook_add_format(workbook);
-  lxw_format* format_header     = workbook_add_format(workbook);
-  lxw_format* format            = workbook_add_format(workbook);
-  lxw_format* format_footer     = workbook_add_format(workbook);
+  lxw_format *format_bold       = workbook_add_format(workbook);
+  lxw_format *format_bold_right = workbook_add_format(workbook);
+  lxw_format *format_header     = workbook_add_format(workbook);
+  lxw_format *format            = workbook_add_format(workbook);
+  lxw_format *format_footer     = workbook_add_format(workbook);
 
   format_set_bold(format_bold);
   format_set_border(format_bold, LXW_BORDER_NONE);
@@ -331,7 +328,7 @@ write_excel(void)
   for (unsigned i = 1; i <= dayz; ++i)
     worksheet_write_number(worksheet, i + offset - 1, COL1, i, format);
 
-  const struct Work* restrict const w = prepare_work();
+  const struct Work *restrict const w = prepare_work();
   {
     for (unsigned i = 1; i <= dayz; ++i) {
       /* w[i].we(&w[i].r, worksheet, ro, format); */

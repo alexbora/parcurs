@@ -74,9 +74,9 @@ static int       days_past;
 static time_t    global_time;
 static struct tm TM;
 
-extern struct Route r_[32];
-unsigned char       arr[32];
-struct Route        route_[128];
+/* extern struct Route r_[32]; */
+unsigned char arr[32];
+struct Route  route_[128];
 
 static inline char *literal_mon(const int month)
 {
@@ -221,7 +221,6 @@ static void globals()
   /* const int dayzm = dayz_in_mon; */
 #pragma omp parallel for
   for (unsigned i = 1; i < 32 /*<=daysm */; i++)
-    /* arr[i] = (((dayz + i - 1)) % 6) != 0; */
     arr[i] = ((weekday_from_days(dayz + i - 1)) != 0 &&
               (weekday_from_days(dayz + i - 1) != 6));
 
