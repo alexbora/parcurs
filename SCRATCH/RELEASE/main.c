@@ -10,8 +10,7 @@
 
 static int pm_qos_fd = -1;
 
-void start_low_latency(void)
-{
+void start_low_latency(void) {
   int target = 0;
   if (pm_qos_fd >= 0)
     return;
@@ -20,38 +19,32 @@ void start_low_latency(void)
   /* __asm__ volatile("cli"); // disable interrupts */
 }
 
-void stop_low_latency(void)
-{
+void stop_low_latency(void) {
   if (pm_qos_fd >= 0)
     close(pm_qos_fd);
   __asm__ volatile("sti");
 }
 
 #define LOW_LATENCY start_low_latency();
-#define NO_LATENCY  stop_low_latency();
+#define NO_LATENCY stop_low_latency();
 #else
 #define LOW_LATENCY
 #define NO_LATENCY
 #endif
 /*-------------------------------------------------------------*/
 #ifdef LOG
-int  fd_;
-void init_fd(void)
-{
+int fd_;
+void init_fd(void) {
   fd_ = open("log", O_CREAT | O_APPEND | O_RDWR | O_TRUNC, 0664);
 }
-void close_fd(void)
-{
-  close(fd_);
-}
+void close_fd(void) { close(fd_); }
 #endif
 /*--------------------------------------------------------------*/
 
 #ifdef CACHE
 #include <string.h>
 #define FLUSH_CACHE flush_cache();
-static void flush_cache()
-{
+static void flush_cache() {
   char input[1 << 26], output[1 << 26];
   memcpy(output, input, 1 << 26);
 }
@@ -59,15 +52,14 @@ static void flush_cache()
 #define FLUSH_CACHE
 #endif
 
-extern int           dayz_in_mon;
-extern char          attachment[128];
+extern int dayz_in_mon;
+extern char attachment[128];
 extern unsigned char arr[32];
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   INIT_FD
 
-  LOW_LATENCY
+  /* LOW_LATENCY */
 
   init_time(argc, argv);
 
@@ -83,7 +75,7 @@ int main(int argc, char *argv[])
 
   mail_me(attachment);
 
-  NO_LATENCY
+  /* NO_LATENCY */
 
   CLOSE_FD
 
