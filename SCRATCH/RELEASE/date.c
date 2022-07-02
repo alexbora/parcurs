@@ -78,8 +78,7 @@ extern struct Route r_[32];
 unsigned char       arr[32];
 struct Route        route_[128];
 
-static inline char*
-literal_mon(const int month)
+static inline char *literal_mon(const int month)
 {
   return &"ianuarie\0\0\0\0\0\0\0\0februari"
           "e\0\0\0"
@@ -104,8 +103,7 @@ literal_mon(const int month)
 /*   return 31; */
 /* } */
 
-static inline unsigned long
-is_multiple_of_100(unsigned n)
+static inline unsigned long is_multiple_of_100(unsigned n)
 {
   const unsigned long multiplier   = 42949673;
   const unsigned long bound        = 42949669;
@@ -114,8 +112,7 @@ is_multiple_of_100(unsigned n)
   return multiplier * (n + offset) < bound;
 }
 
-static inline int
-is_leap(int y)
+static inline int is_leap(int y)
 {
   // Originally, the ternary expression was similar to
   //   is_multiple_of_100(y) ? y % 16 == 0 : y % 4 == 0;
@@ -123,23 +120,20 @@ is_leap(int y)
   return (y & (is_multiple_of_100(y) ? 15 : 3)) == 0;
 }
 
-static inline int
-is_leap3(const int year)
+static inline int is_leap3(const int year)
 {
   int y = year + 16000;
   return (y % 100) ? !(y % 4) : !(y % 16);
   /* return (is_multiple_of_100((unsigned)y)) ? !(y >> 2) : !(y >> 4); */
 }
 
-static inline int
-last_day_of_mon(int year, int mon)
+static inline int last_day_of_mon(int year, int mon)
 {
   /* return mon != 2 ? ((mon ^ (mon >> 3))) | 30 : is_leap3(year) ? 29 : 28; */
   return mon != 2 ? ((mon ^ (mon >> 3))) | 30 : is_leap(year) ? 29 : 28;
 }
 
-static inline int
-days_from_civil(int y, const int m, const int d)
+static inline int days_from_civil(int y, const int m, const int d)
 {
   y -= m <= 2;
   const int era = (y >= 0 ? y : y - 399) / 400;
@@ -149,14 +143,12 @@ days_from_civil(int y, const int m, const int d)
   return era * 146097 + doe - 719468;
 }
 
-__attribute__((pure)) static inline int
-weekday_from_days(const int z)
+__attribute__((pure)) static inline int weekday_from_days(const int z)
 {
   return (z + 4) % 7;
 }
 
-static int
-now()
+static int now()
 {
   /* normal time */
   /* struct tm tm = *localtime(&(time_t){time(NULL)}); */
@@ -178,11 +170,10 @@ now()
   return 1;
 }
 
-static int
-then(char** argv)
+static int then(char **argv)
 {
   /* shorten year to two digits, in case you enter 2022 instead of 22 */
-  char* p = argv[2];
+  char *p = argv[2];
   while (*p++ != '\0') // forward to the end
     ;
   p -= 3; // rewind back two characters, +1 for the '\0'
@@ -191,11 +182,11 @@ then(char** argv)
   /* shorten the month name to three charachters, case is entered ianuarie
    * instead of ian */
   argv[1][3]              = '\0';
-  static const char* mths = "ian feb mar apr mai iun iul aug sep oct noi dec ";
+  static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi dec ";
   /* char *m = strstr("ian feb mar apr mai iun iul aug sep oct noi dec",
      argv[1]); */
-  char*     m    = strstr(mths, argv[1]);
-  int       mon  = (int) ((m - mths) / 4);
+  char     *m    = strstr(mths, argv[1]);
+  int       mon  = (int)((m - mths) / 4);
   int       year = atoi(argv[2]); // atoi(p) ?
   struct tm tm2  = {.tm_sec  = 50,
                     .tm_min  = 50,
@@ -211,15 +202,14 @@ then(char** argv)
   return 1;
 }
 
-static int
-cmdl(int argc, char* argv[static argc + 1])
+static int cmdl(int argc, char *argv[static argc + 1])
 {
-  if (argc > 2) return then(argv);
+  if (argc > 2)
+    return then(argv);
   return now();
 }
 
-static void
-globals()
+static void globals()
 {
   luna = literal_mon(TM.tm_mon);
 
@@ -237,29 +227,23 @@ globals()
 
   enum months { ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, noi, dec };
   static const int hol[12][4] = {
-      [ian] = { 1,  2, 24},
-        [apr] = {22, 24, 25},
-        [mai] = { 1,  8   },
-      [iun] = { 1, 12, 13},
-        [aug] = {15   },
-        [noi] = {30   },
-      [dec] = {25, 26   }
-  };
+      [ian] = {1, 2, 24},  [apr] = {22, 24, 25}, [mai] = {1, 8},
+      [iun] = {1, 12, 13}, [aug] = {15},         [noi] = {30},
+      [dec] = {25, 26}};
 
 #pragma omp parallel for
-  for (unsigned i = 0; i < 4; ++i) arr[hol[TM.tm_mon][i]] = 0;
+  for (unsigned i = 0; i < 4; ++i)
+    arr[hol[TM.tm_mon][i]] = 0;
 }
 
-__attribute__((noreturn)) static void
-usage()
+__attribute__((noreturn)) static void usage()
 {
   puts("Usage: <mon> <year> <km>\ne.g. iun 22 80000\n");
   /* puts("Disclaimer: no error checking whatsoever, you're on your own\n"); */
   exit(0);
 }
 
-int
-init_time(int argc, char** argv)
+int init_time(int argc, char **argv)
 {
   if (argc > 1 && (*argv[1] == 'h' || strcmp(argv[1], "-h") == 0 ||
                    strcmp(argv[1], "--h") == 0))
@@ -278,27 +262,25 @@ init_time(int argc, char** argv)
   return 0;
 }
 
-static void
-random_shuffle(void)
+static void random_shuffle(void)
 {
   static const struct Route parcurs[16] = {
-      {     "Cluj-Oradea", 321, "Interes Serviciu"},
-      {      "Cluj-Turda", 121, "Interes Serviciu"},
-      {      "Cluj-Zalau", 156, "Interes Serviciu"},
-      {  "Cluj-Baia-Mare", 356, "Interes Serviciu"},
-      {   "Cluj-Bistrita", 257, "Interes Serviciu"},
-      {        "Cluj-Dej", 101, "Interes Serviciu"},
-      {       "Cluj-Cluj",  47, "Interes Serviciu"},
-      {     "Acasa-Birou",  30,                " "},
-      {     "Acasa-Birou",  30,                " "},
-      {     "Acasa-Birou",  30,                " "},
-      {     "Acasa-Birou",  30,                " "},
-      {     "Acasa-Birou",  30,                " "},
+      {"Cluj-Oradea", 321, "Interes Serviciu"},
+      {"Cluj-Turda", 121, "Interes Serviciu"},
+      {"Cluj-Zalau", 156, "Interes Serviciu"},
+      {"Cluj-Baia-Mare", 356, "Interes Serviciu"},
+      {"Cluj-Bistrita", 257, "Interes Serviciu"},
+      {"Cluj-Dej", 101, "Interes Serviciu"},
+      {"Cluj-Cluj", 47, "Interes Serviciu"},
+      {"Acasa-Birou", 30, " "},
+      {"Acasa-Birou", 30, " "},
+      {"Acasa-Birou", 30, " "},
+      {"Acasa-Birou", 30, " "},
+      {"Acasa-Birou", 30, " "},
       {"Cluj-Cmp. Turzii", 152, "Interes Serviciu"},
-      {    "Cluj-Apahida",  85, "Interes Serviciu"},
-      {    "Cluj-Bontida",  92, "Interes Serviciu"},
-      {  "Cluj-Satu-Mare", 421, "Interes Serviciu"}
-  };
+      {"Cluj-Apahida", 85, "Interes Serviciu"},
+      {"Cluj-Bontida", 92, "Interes Serviciu"},
+      {"Cluj-Satu-Mare", 421, "Interes Serviciu"}};
 
   /* route_                   = (struct Route[128]){{0}}; */
   static const size_t n = ARRAY_SIZE(parcurs);
@@ -306,7 +288,7 @@ random_shuffle(void)
 
   for (size_t i = 0; i < m; i++) {
     for (size_t j = 0; j < n; j++) {
-      route_[i] = parcurs[(unsigned long) rand() % n];
+      route_[i] = parcurs[(unsigned long)rand() % n];
     }
   }
 
@@ -315,10 +297,11 @@ random_shuffle(void)
 
   for (; cycle < m; cycle++) {
     do {
-      play  = (unsigned long) rand() % n;
+      play  = (unsigned long)rand() % n;
       found = 0;
       for (k = 0; k < n; k++)
-        if (recent[k] == play) found = 1;
+        if (recent[k] == play)
+          found = 1;
     } while (found);
 
     route_[cycle] = parcurs[play];
@@ -331,19 +314,19 @@ random_shuffle(void)
 /* #pragma GCC target("avx,avx2,fma") */
 /* #pragma optimize "align-loops=32" */
 __attribute__((const)) static inline unsigned
-repeating(const struct Route* restrict const in)
+repeating(const struct Route *restrict const in)
 {
   /* #pragma omp parallel for */
   for (unsigned i = 0; i < 32; i++) {
-    if (in[i + 1].km == in[i].km && in[i].km > 30) return 1;
+    if (in[i + 1].km == in[i].km && in[i].km > 30)
+      return 1;
   }
   return 0;
 }
 
-void
-mix(void)
+void mix(void)
 {
-  srand((unsigned) global_time);
+  srand((unsigned)global_time);
   do {
     random_shuffle();
   } while (repeating(route_));
@@ -353,8 +336,7 @@ mix(void)
   PRINT_("Randomize... OK\n");
 }
 
-void
-get_km(char* argv)
+void get_km(char *argv)
 {
   /* printf("%d\n", atoi(argv)); */
   if (argv == NULL) {
@@ -362,20 +344,19 @@ get_km(char* argv)
     char x[16];
     memset(x, 'x', 16);
     read(fd, x, 8);
-    km = (unsigned) (atoi(x));
+    km = (unsigned)(atoi(x));
     close(fd);
   } else {
-    km = (unsigned) (atoi(argv));
+    km = (unsigned)(atoi(argv));
   }
   /* printf("KM: %u\n", km); */
   /* write(2, "Km read successfully.\n", 22); */
   PRINT_("Km read... OK\n");
 }
 
-void
-write_km(void)
+void write_km(void)
 {
-  FILE* f = fopen("km", "w++");
+  FILE *f = fopen("km", "w++");
   fprintf(f, "%u", km);
   fclose(f);
   PRINT_("Km written...  OK.\n");
@@ -385,13 +366,14 @@ write_km(void)
 /* const char *get_longdate(void) { return (const char *)longdate; } */
 
 #ifndef Skipmain
-int
-main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
   init_time(argc, argv);
   mix();
   /* yap, works */
-  for (unsigned i = 1; i <= dayz_in_mon; ++i) { printf("%d %d\n", i, arr[i]); }
+  for (unsigned i = 1; i <= dayz_in_mon; ++i) {
+    printf("%d %d\n", i, arr[i]);
+  }
 
   /* if (argc > 3) */
   /* get_km(argv[argc - 1]); */
