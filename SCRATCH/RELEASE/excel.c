@@ -145,7 +145,7 @@ prepare_work(void)
 
   static struct Work wa[32] = {0};
   memset(wa, 0, 32 * sizeof(struct Work));
-  for (unsigned i = 1; i <= dayz_in_mon; i++) {
+  for (int i = 1; i <= dayz_in_mon; i++) {
     if (arr[i])
       wa[i] = (struct Work){.r = route_[i], .we = wday};
     else
@@ -156,7 +156,7 @@ prepare_work(void)
   /* wa[i].f(&wa[i].r); */
   BLOCK_BEGIN
   unsigned total = 0;
-  for (unsigned i = 1; i <= dayz_in_mon; i++)
+  for (int i = 1; i <= dayz_in_mon; i++)
     total += wa[i].r.km;
   parcursi = total;
   BLOCK_END
