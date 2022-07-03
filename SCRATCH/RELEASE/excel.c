@@ -149,7 +149,8 @@ prepare_work(void)
     if (arr[i])
       wa[i] = (struct Work){.r = route_[i], .we = wday};
     else
-      wa[i] = (struct Work){.r = {"", 0, ""}, .we = wday};
+      memset(&wa[i], 0, sizeof(struct Work));
+    // wa[i] = (struct Work){.r = {"", 0, ""}, .we = wday};
   }
 
   /* for (unsigned i = 0; i < dayz; i++) */
