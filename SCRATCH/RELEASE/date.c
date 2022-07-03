@@ -217,12 +217,36 @@ static void globals()
   dayz_in_mon  = last_day_of_mon(TM.tm_year + 1900, TM.tm_mon + 1);
   current_year = TM.tm_year + 1900;
   /* fill starting with 1, so you can avoid branching in holiday loop */
-  const int dayz = days_past;
-  /* const int dayzm = dayz_in_mon; */
-#pragma omp parallel for
+  /* const int dayz = days_past; */
+  /* /1* const int dayzm = dayz_in_mon; *1/ */
+  /* #pragma omp parallel for */
+  /* for (unsigned i = 1; i < 32 /*<=daysm *1/; i++) */
+  /*   arr[i] = ((weekday_from_days(dayz + i - 1)) != 0 && */
+  /*             (weekday_from_days(dayz + i - 1) != 6)); */
+
+  /* enum months { ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, noi, dec };
+   */
+  /* static const int hol[12][4] = { */
+  /*     [ian] = {1, 2, 24},  [apr] = {22, 24, 25}, [mai] = {1, 8}, */
+  /*     [iun] = {1, 12, 13}, [aug] = {15},         [noi] = {30}, */
+  /*     [dec] = {25, 26}}; */
+
+  /* #pragma omp parallel for */
+  /* for (unsigned i = 0; i < 4; ++i) */
+  /*   arr[hol[TM.tm_mon][i]] = 0; */
+}
+
+void set_array()
+{
+  /* luna = literal_mon(TM.tm_mon); */
+
+  /* days_past    = days_from_civil(TM.tm_year + 1900, TM.tm_mon + 1, 1); */
+  /* dayz_in_mon  = last_day_of_mon(TM.tm_year + 1900, TM.tm_mon + 1); */
+  /* current_year = TM.tm_year + 1900; */
   for (unsigned i = 1; i < 32 /*<=daysm */; i++)
-    arr[i] = ((weekday_from_days(dayz + i - 1)) != 0 &&
-              (weekday_from_days(dayz + i - 1) != 6));
+    if ((weekday_from_days(days_past + i - 1)) == 0 ||
+        (weekday_from_days(days_past + i - 1) == 6))
+      memset(&route_[i], 0, sizeof(struct Route));
 
   enum months { ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, noi, dec };
   static const int hol[12][4] = {
@@ -230,15 +254,17 @@ static void globals()
       [iun] = {1, 12, 13}, [aug] = {15},         [noi] = {30},
       [dec] = {25, 26}};
 
-#pragma omp parallel for
-  for (unsigned i = 0; i < 4; ++i)
-    arr[hol[TM.tm_mon][i]] = 0;
+  for (unsigned i = 0; i < 4u; ++i)
+    memset(&route_[hol[TM.tm_mon][i]], 0, sizeof(struct Route));
+  for (unsigned i = 1; i < 32u; i++)
+    puts(route_[i].route);
 }
 
 __attribute__((noreturn)) static void usage()
 {
   puts("Usage: <mon> <year> <km>\ne.g. iun 22 80000\n");
-  /* puts("Disclaimer: no error checking whatsoever, you're on your own\n"); */
+  /* puts("Disclaimer: no error checking whatsoever, you're on your own\n");
+   */
   exit(0);
 }
 
@@ -255,6 +281,7 @@ int init_time(int argc, char **argv)
   cmdl(argc, argv);
 
   globals();
+  set_array();
   /* write(2, "Time inited.\n", 13); */
 
   PRINT_("Time inited... OK\n");
