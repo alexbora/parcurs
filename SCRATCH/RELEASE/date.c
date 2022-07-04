@@ -369,7 +369,7 @@ void get_km(char *argv)
     int  fd = open("km", O_RDONLY | O_CREAT, 0666);
     char x[16];
     memset(x, 'x', 16);
-    read(fd, x, 8);
+    read(fd, x, 8); // isdigit?
     km = (unsigned)(atoi(x));
     close(fd);
   } else {
