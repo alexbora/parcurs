@@ -69,8 +69,7 @@ static struct Route {
                            {"Cluj-Satu-Mare", 421, "Interes Serviciu"}};
 
 static struct Holidays {
-  int day, mon;
-} * h;
+  int day, mon;} * h;
 
 static int fetch_simple(const int year)
 {
