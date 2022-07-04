@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
 
   FLUSH_CACHE
 
-  /* mail_me(attachment); */
+  mail_me(attachment);
 
   /* NO_LATENCY */
 
