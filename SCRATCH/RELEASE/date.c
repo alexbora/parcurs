@@ -32,15 +32,15 @@
 #define _POSIX_C_SOURCE 200112L // for setenv on gcc
 #endif
 /* #include "xlsxwriter.h" */
-#include <fcntl.h>
-#include <fcntl.h> /* For system call open */
+/* #include <fcntl.h> /1* For system call open *1/ */
+#include "main.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>  /* For system call open */
 #include <sys/types.h> /* For system call open */
 #include <time.h>
-#include <unistd.h>
 #include <unistd.h> /* For system calls write, read e close */
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
@@ -63,7 +63,6 @@
  * dec";
  */
 
-#include "main.h"
 char     longdate[128], *luna;
 int      dayz_in_mon;
 int      current_year;
@@ -395,6 +394,7 @@ void write_km(void)
 int main(int argc, char *argv[])
 {
   init_time(argc, argv);
+
   mix();
   /* yap, works */
   for (unsigned i = 1; i <= dayz_in_mon; ++i) {
@@ -412,6 +412,7 @@ int main(int argc, char *argv[])
   write_excel();
 
   write_km();
+
   mail_me(attachment);
 #if 0
   int *h1 = hol[0];
