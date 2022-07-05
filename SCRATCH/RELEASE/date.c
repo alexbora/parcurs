@@ -208,6 +208,26 @@ static int cmdl(int argc, char *argv[static argc + 1])
   return now();
 }
 
+static void set_array()
+{
+  for (unsigned i = 1; i < 32u; i++)
+    if ((weekday_from_days(days_past + i - 1)) == 0 ||
+        (weekday_from_days(days_past + i - 1) == 6))
+      memset(&route_[i], 0, sizeof(struct Route));
+  BLOCK_BEGIN
+  enum months { ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, noi, dec };
+  static const int hol[12][4] = {
+      [ian] = {1, 2, 24},  [apr] = {22, 24, 25}, [mai] = {1, 8},
+      [iun] = {1, 12, 13}, [aug] = {15},         [noi] = {30},
+      [dec] = {25, 26}};
+
+  for (unsigned i = 0; i < 4u; ++i)
+    memset(&route_[hol[TM.tm_mon][i]], 0, sizeof(struct Route));
+  BLOCK_END
+  for (unsigned i = 1; i < 32u; i++)
+    puts(route_[i].route);
+}
+
 static void globals()
 {
   luna = literal_mon(TM.tm_mon);
@@ -233,30 +253,7 @@ static void globals()
   /* #pragma omp parallel for */
   /* for (unsigned i = 0; i < 4; ++i) */
   /*   arr[hol[TM.tm_mon][i]] = 0; */
-}
-
-void set_array()
-{
-  /* luna = literal_mon(TM.tm_mon); */
-
-  /* days_past    = days_from_civil(TM.tm_year + 1900, TM.tm_mon + 1, 1); */
-  /* dayz_in_mon  = last_day_of_mon(TM.tm_year + 1900, TM.tm_mon + 1); */
-  /* current_year = TM.tm_year + 1900; */
-  for (unsigned i = 1; i < 32 /*<=daysm */; i++)
-    if ((weekday_from_days(days_past + i - 1)) == 0 ||
-        (weekday_from_days(days_past + i - 1) == 6))
-      memset(&route_[i], 0, sizeof(struct Route));
-
-  enum months { ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, noi, dec };
-  static const int hol[12][4] = {
-      [ian] = {1, 2, 24},  [apr] = {22, 24, 25}, [mai] = {1, 8},
-      [iun] = {1, 12, 13}, [aug] = {15},         [noi] = {30},
-      [dec] = {25, 26}};
-
-  for (unsigned i = 0; i < 4u; ++i)
-    memset(&route_[hol[TM.tm_mon][i]], 0, sizeof(struct Route));
-  for (unsigned i = 1; i < 32u; i++)
-    puts(route_[i].route);
+  set_array();
 }
 
 __attribute__((noreturn)) static void usage()
