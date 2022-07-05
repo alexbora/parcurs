@@ -78,4 +78,10 @@ void close_fd(void);
 #define PRINT_(a)
 #endif
 
+#define FREE_AND_NULL(p)                                                       \
+  do {                                                                         \
+    free(p);                                                                   \
+    (p) = NULL;                                                                \
+  } while (0)
+
 #endif /* end of include guard MAIN_H */
