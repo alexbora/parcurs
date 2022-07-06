@@ -11,6 +11,5 @@
 
 int main(int argc, char *argv[])
 {
-  W(10);
   return 0;
 }
