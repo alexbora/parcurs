@@ -1,5 +1,5 @@
 all: mail.c date.c excel.c main.c main.h
-	@gcc mail.c date.c excel.c main.c -DSkipmain -o final_program -std=c11 -Oz -w -Wformat=2 -Wshadow -Wdouble-promotion -fno-common -ffunction-sections -fdata-sections -fomit-frame-pointer  `pkg-config --cflags --libs openssl` `pkg-config --cflags --libs xlsxwriter` -ldl -pthread && printf '%s\n' "Compile successful!"
+	@gcc-11 mail.c date.c excel.c main.c -DSkipmain -o final_program -std=c11 -O3 -w -Wformat=2 -Wshadow -Wdouble-promotion -fno-common -ffunction-sections -fdata-sections -fomit-frame-pointer  `pkg-config --cflags --libs openssl` `pkg-config --cflags --libs xlsxwriter` -ldl -pthread && printf '%s\n' "Compile successful!"
 
 clean:
 	@printf '%s\n' "Cleaning up ..."
