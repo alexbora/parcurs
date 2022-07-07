@@ -70,9 +70,9 @@ int main(int argc, char *argv[]) {
 
   write_km();
 
-  FLUSH_CACHE
+  /* FLUSH_CACHE */
 
-  mail_me(attachment);
+  /* mail_me(attachment); */
 
   /* NO_LATENCY */
 
