@@ -142,7 +142,8 @@ static inline int days_from_civil(int y, const int m, const int d)
   return era * 146097 + doe - 719468;
 }
 
-__attribute__((pure)) static inline int weekday_from_days(const int z)
+__attribute__((pure, always_inline)) static inline int
+weekday_from_days(const int z)
 {
   return (z + 4) % 7;
 }
@@ -180,19 +181,20 @@ static int then(char **argv)
 
   /* shorten the month name to three charachters, case is entered ianuarie
    * instead of ian */
-  argv[1][3]              = '\0';
+  argv[1][3] = '\0';
+
   static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi dec ";
   /* char *m = strstr("ian feb mar apr mai iun iul aug sep oct noi dec",
      argv[1]); */
-  char     *m    = strstr(mths, argv[1]);
-  int       mon  = (int)((m - mths) / 4);
-  int       year = atoi(argv[2]); // atoi(p) ?
-  struct tm tm2  = {.tm_sec  = 50,
-                    .tm_min  = 50,
-                    .tm_hour = 12,
-                    .tm_mday = 1,
-                    .tm_mon  = mon,
-                    .tm_year = year + 100};
+  const char *m    = strstr(mths, argv[1]);
+  const int   mon  = (int)((m - mths) / 4);
+  const int   year = atoi(argv[2]); // atoi(p) ?
+  struct tm   tm2  = {.tm_sec  = 50,
+                      .tm_min  = 50,
+                      .tm_hour = 12,
+                      .tm_mday = 1,
+                      .tm_mon  = mon,
+                      .tm_year = year + 100};
   mktime(&tm2);
   sprintf(longdate, "%02d.%02d.%d", tm2.tm_mday, tm2.tm_mon + 1,
           tm2.tm_year + 1900);
@@ -213,9 +215,10 @@ static void set_array()
   for (unsigned i = 1; i < 32u; i++)
     if ((weekday_from_days(days_past + i - 1)) % 6)
       memset(&route_[i], 0, sizeof(struct Route));
+
   BLOCK_BEGIN
   enum months { ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, noi, dec };
-  static const int hol[12][4] = {
+  static const unsigned hol[12][4] = {
       [ian] = {1, 2, 24},  [apr] = {22, 24, 25}, [mai] = {1, 8},
       [iun] = {1, 12, 13}, [aug] = {15},         [noi] = {30},
       [dec] = {25, 26}};
@@ -223,6 +226,7 @@ static void set_array()
   for (unsigned i = 0; i < 4u; ++i)
     memset(&route_[hol[TM.tm_mon][i]], 0, sizeof(struct Route));
   BLOCK_END
+
   for (unsigned i = 1; i < 32u; i++)
     puts(route_[i].route);
 }
@@ -239,8 +243,7 @@ static void globals()
 /* const int dayzm = dayz_in_mon; */
 #pragma omp parallel for
   for (unsigned i = 1; i < 32 /*<=daysm */; i++)
-    arr[i] = ((weekday_from_days(dayz + i - 1)) != 0 &&
-              (weekday_from_days(dayz + i - 1) != 6));
+    arr[i] = ((weekday_from_days(dayz + i - 1)) % 6);
 
   enum months { ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, noi, dec };
 
