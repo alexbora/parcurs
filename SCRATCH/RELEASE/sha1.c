@@ -227,7 +227,7 @@ void blk_SHA1_Update(blk_SHA_CTX *ctx, const void *data, size_t len) {
     memcpy(ctx->W, data, len);
 }
 
-void blk_SHA1_Final(unsigned char hashout[20], blk_SHA_CTX *ctx) {
+void blk_SHA1_Final(const unsigned char hashout[20], blk_SHA_CTX *ctx) {
   static const unsigned char pad[64] = {0x80};
   unsigned int padlen[2];
   int i;
@@ -252,8 +252,8 @@ extern void sha1_compress(const uint8_t block[static 64],
   blk_SHA_CTX ctx;
   /* uint8_t hashout[64]; */
   blk_SHA1_Init(&ctx);
-  uint8_t *test = (uint8_t *)"test";
-  blk_SHA1_Update(&ctx, test, 4);
+  /* uint8_t *test = (uint8_t *)"test"; */
+  blk_SHA1_Update(&ctx, block, 4);
   blk_SHA1_Final(block, &ctx);
   /* return 0; */
 }
