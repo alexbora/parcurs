@@ -56,9 +56,9 @@ bits 64
 
 section .text
 
-global daysinmonth
+global _daysinmonth
 
-daysinmonth:
+_daysinmonth:
 ;calculates the number of days in a month, february counts 28 days.
     ;phase one: figure out if we have more than 28 days
     mov     rax,rdi
