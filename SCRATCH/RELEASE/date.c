@@ -44,6 +44,10 @@
 #include <unistd.h> /* For system calls write, read e close */
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
+#ifdef USE_ASM
+int days_asm(int);
+int leapyear(int);
+#endif
 
 /* #define ONE_DAY (time_t)(60 * 60 * 24) */
 
@@ -113,6 +117,9 @@ static inline unsigned long is_multiple_of_100(unsigned n)
 
 static inline int is_leap(int y)
 {
+#ifdef USE_ASM
+  return leapyear(y);
+#endif
   // Originally, the ternary expression was similar to
   //   is_multiple_of_100(y) ? y % 16 == 0 : y % 4 == 0;
   // and Ulrich Drepper suggested the following twist.
@@ -128,8 +135,12 @@ static inline int is_leap3(const int year)
 
 static inline int last_day_of_mon(int year, int mon)
 {
+#ifdef USE_ASM
+  return days_asm(mon);
+#else
   /* return mon != 2 ? ((mon ^ (mon >> 3))) | 30 : is_leap3(year) ? 29 : 28; */
   return mon != 2 ? ((mon ^ (mon >> 3))) | 30 : is_leap(year) ? 29 : 28;
+#endif
 }
 
 static inline int days_from_civil(int y, const int m, const int d)
