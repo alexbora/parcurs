@@ -9,8 +9,7 @@
 
 int leapyear(int);
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   printf("%d\n", leapyear(2022));
   return 0;
 }

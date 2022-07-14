@@ -134,10 +134,12 @@ void mail_me(const char *attachment) {
   WRITE("MAIL FROM:<t400.linux@gmail.com>\r\n");
   READ;
 
-  WRITE("RCPT TO:<t400.linux@gmail.com>\r\n");
+  // WRITE("RCPT TO:<t400.linux@gmail.com>\r\n");
+  // READ;
+  WRITE("RCPT TO:<alexandru.bora@renault-trucks.com>\r\n");
   READ;
-  /* WRITE("RCPT TO:<alexandru.bora@renault-trucks.com>\r\n"); */
-  /* READ; */
+  // WRITE("RCPT TO:<alin.muresan@renault-trucks.com>\r\n");
+  // READ;
 
   WRITE("DATA\r\n");
   READ;
