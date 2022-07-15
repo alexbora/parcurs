@@ -126,10 +126,13 @@ void mail_me(const char *attachment) {
   WRITE(NEW_LINE);
   READ;
 
-  int f = open("pass", O_RDONLY);
-  char x[32];
-  read(f, x, 21);
-  WRITE_ENC(x);
+  /* int f = open("pass", O_RDONLY); */
+  {
+    char x[32];
+    read(open("pass", O_RDONLY), x, 21);
+    WRITE_ENC(x);
+    memset(&x, 'x', 32);
+  }
 
   /* WRITE_ENC("cvdb beak ovwl rece"); */
   READ;
