@@ -8,5 +8,11 @@
 #include <stdlib.h>
 
 int test(int);
+int len(char *);
 
-int main(int argc, char *argv[]) { return test(16); }
+int main(int argc, char *argv[]) {
+
+  //	return test(atoi(argv[1]));
+
+  return len("aaa");
+}

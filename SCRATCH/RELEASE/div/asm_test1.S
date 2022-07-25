@@ -1,10 +1,5 @@
-
-
-.globl test 
+.globl test, len, value
 .extern printf 
-
-
-
 
 test:
 xorb %al, %al
@@ -21,3 +16,17 @@ retq
 .data
     .LC1: .string "%d\n"
 
+mystring: .ascii "aa\0"
+len:
+movq $-1, %rcx
+xorb %al, %al 
+movq %rdi, %r11
+repne scasb
+subq %r11, %rdi
+dec %rdi
+movq %rdi, %rax
+ret
+
+
+value:
+retq
