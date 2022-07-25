@@ -9,10 +9,12 @@
 
 int test(int);
 int len(char *);
+int index1(void);
 
 int main(int argc, char *argv[]) {
 
   //	return test(atoi(argv[1]));
 
-  return len("aaa");
+  /* return len("aaa"); */
+  return index1();
 }

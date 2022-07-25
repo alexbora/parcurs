@@ -1,4 +1,4 @@
-.globl test, len, value
+.globl test, len, value, index1
 .extern printf 
 
 test:
@@ -27,6 +27,11 @@ dec %rdi
 movq %rdi, %rax
 ret
 
-
-value:
+index1:
+movq $0b00010, %rax
+movq $0b00010, %rdi
+repne scasq
+decq %rdi
+movq %rdi, %rax
 retq
+
