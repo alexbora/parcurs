@@ -1,4 +1,4 @@
-.globl test, len, value, index1
+.globl test, len, value, index1, index2
 .extern printf 
 
 test:
@@ -16,7 +16,11 @@ retq
 .data
     .LC1: .string "%d\n"
 
-mystring: .ascii "aa\0"
+mystring: .ascii "bxai\7\0"
+
+
+
+
 len:
 movq $-1, %rcx
 xorb %al, %al 
@@ -35,3 +39,13 @@ decq %rdi
 movq %rdi, %rax
 retq
 
+index2:
+//movq $-1, %rcx 
+movq $4, %rcx
+movq $mystring, %rdi 
+movb $'a', %al 
+repne scasb 
+subq $mystring, %rdi 
+decq %rdi 
+movq %rdi, %rax
+ret
