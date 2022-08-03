@@ -224,7 +224,9 @@ static int cmdl(int argc, char *argv[static argc + 1])
 static void set_array()
 {
   for (unsigned i = 1; i < 32u; i++)
-    if ((weekday_from_days(days_past + i - 1)) % 6)
+    /* if ((weekday_from_days(days_past + i - 1)) % 6) */
+    if ((weekday_from_days(days_past + i - 1)) == 0 ||
+        (weekday_from_days(days_past + i - 1)) == 6)
       memset(&route_[i], 0, sizeof(struct Route));
 
   BLOCK_BEGIN
