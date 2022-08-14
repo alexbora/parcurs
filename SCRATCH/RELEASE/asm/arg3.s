@@ -35,7 +35,9 @@ endpeople:
         .text
 _start:
         leaq people(%rip), %rbx
-        movq $1, %rcx
+        movq $0, %rcx
         movb 22(%rbx, %rcx, 1), %al
+        movq $1, %rcx
+        movb (%rbx, %rcx, 1), %al
         ret
 
