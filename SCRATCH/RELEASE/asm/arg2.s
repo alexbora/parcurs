@@ -31,6 +31,16 @@ _start:
         movb 13(%rbx, %rcx, 1), %al
         movb 16(%rbx, %rcx, 1), %al
 
+        movb 4(%rbx), %ah
+        rorb $16, %al
+
+        xorb %al, %al
+
+        movb $1, %al
+        rolb $1, %al
+
+        movb $4, %ah
+        rorl $1, %eax
         ret
 
 _x:
