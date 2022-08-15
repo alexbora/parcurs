@@ -1,5 +1,6 @@
         .global _start
 
+        .p2align 4
         .text
 _start:
         pushq %rbp
@@ -9,10 +10,12 @@ _start:
         movb $3, %bl
         testb $0b00000010, %bl
         jnz bitwasset
+
         leave
         ret
 
 bitwasset:
         movq $1, %rax
+
         leave
         ret
