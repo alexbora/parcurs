@@ -12,7 +12,7 @@ _start:
         jnz bitwasset
 
         movb $3, %bl
-        andb $0b0000011, %bl
+        andb $0b0000010, %bl
         movb %bl, %al
         leave
         ret
