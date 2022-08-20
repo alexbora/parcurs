@@ -7,10 +7,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char *argv[])
-{
+static int x = 3;
 
-  double f1 = 6.2;
+static double f1 = 6.2;
+
+int main()
+{
 
   fprintf(stderr, "%f\n", f1);
 
