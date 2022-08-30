@@ -3,10 +3,20 @@
 _main:
         movl $2, %eax
         movq %rax, %xmm5
-_shitft:
+_shift:
         pslldq $8, %xmm5
         movq $3, %rax
         movq %rax, %xmm5
+
+_cmp:
+        cmpq $3, %rax
+        jne _exit1
+        je _exit1
+        jg _exit
+
+_exit1:
+        incq %rax
+        ret
 
 _exit:
         lock incq (%rcx)
