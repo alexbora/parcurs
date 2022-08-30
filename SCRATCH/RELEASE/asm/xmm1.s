@@ -6,10 +6,13 @@ _main:
 _shitft:
         pslldq $8, %xmm5
         movq $3, %rax
-        movss %eax, %xmm5w
+        movq %rax, %xmm5
 
 _exit:
+        lock incq (%rcx)
         xorq %rax, %rax
+        lock incq (%rcx)
+        addq (%rcx), %rax
         movq %xmm5, %rax
         ret
 
