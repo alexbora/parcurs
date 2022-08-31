@@ -1,5 +1,7 @@
         .global _main
-
+        .data
+        .incbin "logo.png"
+        .text
 _main:
         movl $2, %eax
         movq %rax, %xmm5
