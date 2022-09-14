@@ -9,7 +9,9 @@
 
 int main(int argc, char *argv[])
 {
-  const char *x = "string";
+  /* argc          = 1; */
+  const char *x = argv[1];
+  /* const char *x = "strimg"; */
   /* while (*x) { */
   /* puts(x); */
   /* x++; */
@@ -17,7 +19,7 @@ int main(int argc, char *argv[])
 
   do {
     puts(x++);
-  } while (*x != 't');
+  } while (*x != '\0');
 
   return 0;
 }
