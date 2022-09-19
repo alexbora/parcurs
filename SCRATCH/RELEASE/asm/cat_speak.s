@@ -20,7 +20,7 @@ dog_vtable_animal:
 _cat_new:
         enter $0, $0
         movq $64, %rdi
-        call _malloc
+        call *_malloc@GOTPCREL(%rip)
         leave
         ret
 
@@ -36,7 +36,7 @@ _cat_speak:
         movq ___stderrp@GOTPCREL(%rip), %rdi
         movq (%rdi), %rdi
         leaq speak_text(%rip), %rsi
-        call _fprintf
+        call *_fprintf@GOTPCREL(%rip)
         leave
         ret
 _dog_speak:
