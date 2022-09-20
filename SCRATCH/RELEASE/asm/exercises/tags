@@ -1,0 +1,33 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+H	sha1.h	/^  unsigned int       H[5];$/;"	m	struct:__anon1
+SHA_MIX	sha1.c	/^#define SHA_MIX(/;"	d	file:
+SHA_ROL	sha1.c	/^#define SHA_ROL(/;"	d	file:
+SHA_ROR	sha1.c	/^#define SHA_ROR(/;"	d	file:
+SHA_ROT	sha1.c	/^#define SHA_ROT(/;"	d	file:
+SHA_ROUND	sha1.c	/^#define SHA_ROUND(/;"	d	file:
+SHA_SRC	sha1.c	/^#define SHA_SRC(/;"	d	file:
+T_0_15	sha1.c	/^#define T_0_15(/;"	d	file:
+T_16_19	sha1.c	/^#define T_16_19(/;"	d	file:
+T_20_39	sha1.c	/^#define T_20_39(/;"	d	file:
+T_40_59	sha1.c	/^#define T_40_59(/;"	d	file:
+T_60_79	sha1.c	/^#define T_60_79(/;"	d	file:
+W	sha1.c	/^#define W(/;"	d	file:
+W	sha1.h	/^  unsigned int       W[16];$/;"	m	struct:__anon1
+blk_SHA1_Block	sha1.c	/^static void blk_SHA1_Block(blk_SHA_CTX *ctx, const void *block)$/;"	f	file:
+blk_SHA1_Final	sha1.c	/^void blk_SHA1_Final(unsigned char hashout[20], blk_SHA_CTX *ctx)$/;"	f
+blk_SHA1_Init	sha1.c	/^void blk_SHA1_Init(blk_SHA_CTX *ctx)$/;"	f
+blk_SHA1_Update	sha1.c	/^void blk_SHA1_Update(blk_SHA_CTX *ctx, const void *data, size_t len)$/;"	f
+blk_SHA_CTX	sha1.h	/^} blk_SHA_CTX;$/;"	t	typeref:struct:__anon1
+main	main.c	/^int main(int argc, char *argv[])$/;"	f
+platform_SHA1_Final	sha1.h	/^#define platform_SHA1_Final /;"	d
+platform_SHA1_Init	sha1.h	/^#define platform_SHA1_Init /;"	d
+platform_SHA1_Update	sha1.h	/^#define platform_SHA1_Update /;"	d
+platform_SHA_CTX	sha1.h	/^#define platform_SHA_CTX /;"	d
+setW	sha1.c	/^#define setW(/;"	d	file:
+size	sha1.h	/^  unsigned long long size;$/;"	m	struct:__anon1
+x	main.c	/^#define x /;"	d	file:
