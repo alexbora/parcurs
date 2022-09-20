@@ -221,7 +221,7 @@ static int cmdl(int argc, char *argv[static argc + 1])
   return now();
 }
 
-static void set_array()
+static void set_array(void)
 {
   for (unsigned i = 1; i < 32u; i++)
     /* if ((weekday_from_days(days_past + i - 1)) % 6) */
