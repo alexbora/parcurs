@@ -9,12 +9,36 @@ LFB4:
 	andl	%edi, %eax
 	ret
 LFE4:
+	.cstring
+lC0:
+	.ascii "%d %s\12\0"
 	.section __TEXT,__text_startup,regular,pure_instructions
 	.p2align 4
 	.globl _main
 _main:
 LFB5:
+	subq	$280, %rsp
+LCFI0:
+	movl	$16, %edi
+	call	_malloc
+	movl	$16, %ecx
+	xorl	%edx, %edx
+	movl	$16, %esi
+	movq	%rax, %rdi
+	call	_memset_s
+	leaq	16(%rsp), %rdx
+	movq	_memset@GOTPCREL(%rip), %rax
+	movl	$97, %esi
+	leaq	lC0(%rip), %rdi
+	movb	$97, 18(%rsp)
+	movq	%rax, 8(%rsp)
+	movl	$24929, %eax
+	movw	%ax, 16(%rsp)
 	xorl	%eax, %eax
+	call	_printf
+	xorl	%eax, %eax
+	addq	$280, %rsp
+LCFI1:
 	ret
 LFE5:
 	.section __TEXT,__eh_frame,coalesced,no_toc+strip_static_syms+live_support
@@ -57,6 +81,16 @@ LASFDE3:
 	.set L$set$4,LFE5-LFB5
 	.quad L$set$4
 	.uleb128 0
+	.byte	0x4
+	.set L$set$5,LCFI0-LFB5
+	.long L$set$5
+	.byte	0xe
+	.uleb128 0x120
+	.byte	0x4
+	.set L$set$6,LCFI1-LCFI0
+	.long L$set$6
+	.byte	0xe
+	.uleb128 0x8
 	.align 3
 LEFDE3:
 	.ident	"GCC: (Homebrew GCC 12.2.0) 12.2.0"
