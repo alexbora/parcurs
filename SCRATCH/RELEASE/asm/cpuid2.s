@@ -2,14 +2,14 @@
 
         .text
 
-        .global main
+        .global _main
 
-main:
+_main:
         movl $1, %eax
         cpuid
         shrl $30, %ecx
         andl $1, %ecx
         movl %ecx, %eax
 
-        rdrand %rax
+        /* rdrand %rax */
         ret
