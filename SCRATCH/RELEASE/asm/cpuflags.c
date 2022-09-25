@@ -6,10 +6,10 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 
-dt_cpu_flags_t dt_detect_cpu_features()
+dt_cpu_flags_t dt_detect_cpu_features(void)
 {
-  unsigned              ax, bx, cx, dx;
-  static dt_cpu_flags_t cpuflags;
+  unsigned        ax, bx, cx, dx;
+  static unsigned cpuflags;
 
   if (__get_cpuid(0x00000000, &ax, &bx, &cx, &dx)) {
     /* Request for standard features */
