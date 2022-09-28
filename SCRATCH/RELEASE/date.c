@@ -45,8 +45,8 @@
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
 #ifdef USE_ASM
-int days_asm(int);
-int leapyear(int);
+unsigned days_asm(unsigned);
+unsigned leapyear(unsigned);
 #endif
 
 /* #define ONE_DAY (time_t)(60 * 60 * 24) */
@@ -115,7 +115,7 @@ static inline unsigned long is_multiple_of_100(unsigned n)
   return multiplier * (n + offset) < bound;
 }
 
-static inline int is_leap(int y)
+static inline unsigned is_leap(int y)
 {
 #ifdef USE_ASM
   return leapyear(y);
@@ -133,7 +133,7 @@ static inline int is_leap3(const int year)
   /* return (is_multiple_of_100((unsigned)y)) ? !(y >> 2) : !(y >> 4); */
 }
 
-static inline int last_day_of_mon(int year, int mon)
+static inline unsigned last_day_of_mon(int year, int mon)
 {
 #ifdef USE_ASM
   return days_asm(mon);
