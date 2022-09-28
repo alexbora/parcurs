@@ -67,12 +67,12 @@ static inline void write_ssl(SSL *const restrict s, const char *txt)
   SSL_write(s, buf, n);
 }
 
-static inline void write_base64(SSL *const restrict s, const void *txt)
+static inline int write_base64(SSL *const restrict s, const void *txt)
 {
   unsigned char enc_cmd[128] = {'\0'};
   const int     out_len =
       EVP_EncodeBlock((unsigned char *)enc_cmd, txt, (const int)strlen(txt));
-  SSL_write(s, enc_cmd, out_len);
+  return SSL_write(s, enc_cmd, out_len);
 }
 
 static inline void read_ssl2(SSL *restrict const s)
@@ -137,7 +137,8 @@ void mail_me(const char *attachment)
   /* int f = open("pass", O_RDONLY); */
   {
     char x[32];
-    read(open("pass", O_RDONLY), x, 21);
+    if (!read(open("pass", O_RDONLY), x, 21))
+      PRINT_("fisier parola negasit\n");
     WRITE_ENC(x);
     memset(&x, 'x', 32);
   }
