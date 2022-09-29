@@ -137,7 +137,7 @@ void mail_me(const char *attachment)
   /* int f = open("pass", O_RDONLY); */
   {
     char x[32];
-    if (!read(open("pass", O_RDONLY), x, 21))
+    if (!read(open("pass_2", O_RDONLY), x, 21))
       PRINT_("fisier parola negasit\n");
     WRITE_ENC(x);
     memset(&x, 'x', 32);
