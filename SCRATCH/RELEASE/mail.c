@@ -31,8 +31,10 @@ inline size_t next_pow2(size_t n)
 static inline void upload(SSL *s, const char *const filename)
 {
   FILE *fp = fopen(filename, "rb");
-  if (!fp)
+  if (!fp) {
+    PRINT_("no attachment"\n);
     return;
+  }
   fseek(fp, 0, SEEK_END);
   long size = ftell(fp);
   rewind(fp);
@@ -153,6 +155,7 @@ void mail_me(const char *attachment)
   READ;
 
   WRITE("RCPT TO:<t400.linux@gmail.com>\r\n");
+  READ;
   WRITE("RCPT TO:<alexbora@gmail.com>\r\n");
   READ;
   /* WRITE("RCPT TO:<alexandru.bora@renault-trucks.com>\r\n"); */

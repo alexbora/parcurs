@@ -159,7 +159,7 @@ weekday_from_days(const int z)
   return (z + 4) % 7;
 }
 
-static int now()
+static int now(void)
 {
   /* normal time */
   /* struct tm tm = *localtime(&(time_t){time(NULL)}); */
@@ -244,7 +244,7 @@ static void set_array(void)
     puts(route_[i].route);
 }
 
-static void globals()
+static void globals(void)
 {
   luna = literal_mon(TM.tm_mon);
 
@@ -271,7 +271,7 @@ static void globals()
   /* set_array(); */
 }
 
-__attribute__((noreturn)) static void usage()
+__attribute__((noreturn)) static void usage(void)
 {
   puts("Usage: <mon> <year> <km>\ne.g. iun 22 80000\n");
   /* puts("Disclaimer: no error checking whatsoever, you're on your own\n");
