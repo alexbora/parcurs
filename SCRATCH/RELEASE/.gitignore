@@ -56,4 +56,4 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-pass
+/* pass */
