@@ -62,12 +62,18 @@ static void flush_cache()
 extern int           dayz_in_mon;
 extern char          attachment[128];
 extern unsigned char arr[32];
+void                 check_alignment(void);
 
 int main(int argc, char *argv[])
 {
+  /* __asm__ volatile("pushf\n" */
+  /* "orq $0x40000, (%rsp)\n" */
+  /* "popf"); */
+  check_alignment();
+
   INIT_FD
 
-  /* LOW_LATENCY */
+  LOW_LATENCY
 
   mix();
 

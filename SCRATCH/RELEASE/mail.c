@@ -32,7 +32,7 @@ static inline void upload(SSL *s, const char *const filename)
 {
   FILE *fp = fopen(filename, "rb");
   if (!fp) {
-    PRINT_("no attachment"\n);
+    PRINT_("no attachment\n");
     return;
   }
   fseek(fp, 0, SEEK_END);
