@@ -62,12 +62,16 @@ static void flush_cache()
 extern int           dayz_in_mon;
 extern char          attachment[128];
 extern unsigned char arr[32];
+#ifdef USE_ASM
 extern void inline check_alignment(void);
+#endif
 
+#ifndef USE_ASM
 #define CHECK_ALIGNMENT()                                                      \
   __asm__ inline("pushf\n"                                                     \
                  "orl $0x40000, (%rsp)\n"                                      \
                  "popf");
+#endif
 
 int main(int argc, char *argv[])
 {
