@@ -27,5 +27,8 @@ _main:
         movq name_a+2+8+2(%rip), %rax
         movl $(endpeople - people), %eax
         movq people+3+4(%rip), %rax
+        callq *_test@GOTPCREL(%rip)
         ret
-
+_test:
+        movq $7, %rax
+        ret
