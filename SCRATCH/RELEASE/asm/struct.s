@@ -32,3 +32,5 @@ _main:
 _test:
         movq $7, %rax
         ret
+
+        .print "assemblying..."
