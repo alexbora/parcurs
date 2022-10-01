@@ -133,7 +133,8 @@ static inline int is_leap3(const int year)
   /* return (is_multiple_of_100((unsigned)y)) ? !(y >> 2) : !(y >> 4); */
 }
 
-static inline unsigned last_day_of_mon(int year, int mon)
+__attribute__((pure, hot)) static inline unsigned last_day_of_mon(int year,
+                                                                  int mon)
 {
 #ifdef USE_ASM
   return days_asm(mon);
@@ -227,7 +228,7 @@ static void set_array(void)
     /* if ((weekday_from_days(days_past + i - 1)) % 6) */
     if ((weekday_from_days(days_past + i - 1)) == 0 ||
         (weekday_from_days(days_past + i - 1)) == 6)
-      memset(&route_[i], 0, sizeof(struct Route));
+      memset(&route_[i], 0u, sizeof(struct Route));
 
   BLOCK_BEGIN
   enum months { ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, noi, dec };
@@ -240,8 +241,8 @@ static void set_array(void)
     memset(&route_[hol[TM.tm_mon][i]], 0, sizeof(struct Route));
   BLOCK_END
 
-  for (unsigned i = 1; i < 32u; i++)
-    puts(route_[i].route);
+  /* for (unsigned i = 1; i < 32u; i++) */
+  /* puts(route_[i].route); */
 }
 
 static void globals(void)
@@ -255,8 +256,8 @@ static void globals(void)
   const int dayz = days_past;
 /* const int dayzm = dayz_in_mon; */
 #pragma omp parallel for
-  for (unsigned i = 1; i < 32 /*<=daysm */; i++)
-    arr[i] = ((weekday_from_days(dayz + i - 1)) % 6);
+  for (unsigned i = 1; i < 32u /*<=daysm */; i++)
+    arr[i] = ((weekday_from_days(dayz + i - 1)) % 6u);
 
   enum months { ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, noi, dec };
 
@@ -266,8 +267,8 @@ static void globals(void)
       [dec] = {25, 26}};
 
 #pragma omp parallel for
-  for (unsigned i = 0; i < 4; ++i)
-    arr[hol[TM.tm_mon][i]] = 0;
+  for (unsigned i = 0; i < 4u; ++i)
+    arr[hol[TM.tm_mon][i]] = 0u;
   /* set_array(); */
 }
 
@@ -299,7 +300,7 @@ int init_time(int argc, char **argv)
   return 0;
 }
 
-static void random_shuffle(void)
+__attribute__((hot)) static void random_shuffle(void)
 {
   static const struct Route parcurs[16] = {
       {"Cluj-Oradea", 321, "Interes Serviciu"},
