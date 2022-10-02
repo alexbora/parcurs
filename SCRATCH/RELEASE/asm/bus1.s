@@ -12,4 +12,15 @@ _main:
         movq (%rsp), %rax
         /* movq (%rsp), %rax */
         popf
+        jmp _test
+        ret
+
+_test:
+        /* lahf */
+        pushf
+        movq $0x40000, %rax
+        orq $0x40000, (%rsp)
+        andq (%rsp), %rax
+        /* andq $1, %rax */
+        popf
         ret
