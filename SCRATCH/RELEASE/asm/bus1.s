@@ -30,9 +30,9 @@ _test2:
         pushq %rax
         lahf
         orl $0x4, %eax
-        movq %rax, %rbx
+        movl %eax, %ebx
         sahf
         popq %rax
-        movq %rbx, %rax
-        andq $1, %rax
+        movl %ebx, %eax
+        andb $1, %al
         ret
