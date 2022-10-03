@@ -116,8 +116,10 @@ static SSL *init_sock(const char *host, const int port)
   SSL_connect(s);
 
 #if defined LOG_VERBOSE || LOG
-  fprintf(stderr, "Connected with %s\n%s%s\n", SSL_get_cipher(s),
-          SSL_get_cipher_name(s), SSL_get_cipher_version(s));
+  fprintf(stderr,
+          "\tConnected using OpenSSL with %s\n\tCipher name: %s\n\tCipher "
+          "version: %s\n",
+          SSL_get_cipher(s), SSL_get_cipher_name(s), SSL_get_cipher_version(s));
 #endif
   return s;
 }
