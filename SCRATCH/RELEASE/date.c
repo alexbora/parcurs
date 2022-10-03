@@ -67,22 +67,21 @@ unsigned leapyear(unsigned);
  * dec";
  */
 
-char     longdate[128], *luna;
-int      dayz_in_mon;
-int      current_year;
+char longdate[128], *luna;
+int dayz_in_mon;
+int current_year;
 unsigned km;
-char     attachment[128];
+char attachment[128];
 
-static int       days_past;
-static time_t    global_time;
+static int days_past;
+static time_t global_time;
 static struct tm TM;
 
 /* extern struct Route r_[32]; */
 unsigned char arr[32];
-struct Route  route_[128];
+struct Route route_[128];
 
-static inline char *literal_mon(const int month)
-{
+static inline char *literal_mon(const int month) {
   return &"ianuarie\0\0\0\0\0\0\0\0februari"
           "e\0\0\0"
           "\0\0\0\0martie\0\0\0\0\0\0\0\0\0\0aprilie\0\0\0\0\0\0\0\0\0mai\0"
@@ -106,17 +105,15 @@ static inline char *literal_mon(const int month)
 /*   return 31; */
 /* } */
 
-static inline unsigned long is_multiple_of_100(unsigned n)
-{
-  const unsigned long multiplier   = 42949673;
-  const unsigned long bound        = 42949669;
+static inline unsigned long is_multiple_of_100(unsigned n) {
+  const unsigned long multiplier = 42949673;
+  const unsigned long bound = 42949669;
   const unsigned long max_dividend = 1073741799;
-  const unsigned long offset       = max_dividend / 2 / 100 * 100; //  536870800
+  const unsigned long offset = max_dividend / 2 / 100 * 100; //  536870800
   return multiplier * (n + offset) < bound;
 }
 
-static inline unsigned is_leap(int y)
-{
+static inline unsigned is_leap(int y) {
 #ifdef USE_ASM
   return leapyear(y);
 #endif
@@ -126,16 +123,14 @@ static inline unsigned is_leap(int y)
   return (y & (is_multiple_of_100(y) ? 15 : 3)) == 0;
 }
 
-static inline int is_leap3(const int year)
-{
+static inline int is_leap3(const int year) {
   int y = year + 16000;
   return (y % 100) ? !(y % 4) : !(y % 16);
   /* return (is_multiple_of_100((unsigned)y)) ? !(y >> 2) : !(y >> 4); */
 }
 
 __attribute__((pure, hot)) static inline unsigned last_day_of_mon(int year,
-                                                                  int mon)
-{
+                                                                  int mon) {
 #ifdef USE_ASM
   return days_asm(mon);
 #else
@@ -144,8 +139,7 @@ __attribute__((pure, hot)) static inline unsigned last_day_of_mon(int year,
 #endif
 }
 
-static inline int days_from_civil(int y, const int m, const int d)
-{
+static inline int days_from_civil(int y, const int m, const int d) {
   y -= m <= 2;
   const int era = (y >= 0 ? y : y - 399) / 400;
   const int yoe = (y - era * 400);                                 // [0, 399]
@@ -155,13 +149,11 @@ static inline int days_from_civil(int y, const int m, const int d)
 }
 
 __attribute__((pure, always_inline)) static inline int
-weekday_from_days(const int z)
-{
+weekday_from_days(const int z) {
   return (z + 4) % 7;
 }
 
-static int now(void)
-{
+static int now(void) {
   /* normal time */
   /* struct tm tm = *localtime(&(time_t){time(NULL)}); */
   struct tm tm = *localtime(&global_time);
@@ -182,8 +174,7 @@ static int now(void)
   return 1;
 }
 
-static int then(char **argv)
-{
+static int then(char **argv) {
   /* shorten year to two digits, in case you enter 2022 instead of 22 */
   char *p = argv[2];
   while (*p++ != '\0') // forward to the end
@@ -198,15 +189,15 @@ static int then(char **argv)
   static const char *mths = "ian feb mar apr mai iun iul aug sep oct noi dec ";
   /* char *m = strstr("ian feb mar apr mai iun iul aug sep oct noi dec",
      argv[1]); */
-  const char *m    = strstr(mths, argv[1]);
-  const int   mon  = (int)((m - mths) / 4);
-  const int   year = atoi(argv[2]); // atoi(p) ?
-  struct tm   tm2  = {.tm_sec  = 50,
-                      .tm_min  = 50,
-                      .tm_hour = 12,
-                      .tm_mday = 1,
-                      .tm_mon  = mon,
-                      .tm_year = year + 100};
+  const char *m = strstr(mths, argv[1]);
+  const int mon = (int)((m - mths) / 4);
+  const int year = atoi(argv[2]); // atoi(p) ?
+  struct tm tm2 = {.tm_sec = 50,
+                   .tm_min = 50,
+                   .tm_hour = 12,
+                   .tm_mday = 1,
+                   .tm_mon = mon,
+                   .tm_year = year + 100};
   mktime(&tm2);
   sprintf(longdate, "%02d.%02d.%d", tm2.tm_mday, tm2.tm_mon + 1,
           tm2.tm_year + 1900);
@@ -215,15 +206,13 @@ static int then(char **argv)
   return 1;
 }
 
-static int cmdl(int argc, char *argv[static argc + 1])
-{
+static int cmdl(int argc, char *argv[static argc + 1]) {
   if (argc > 2)
     return then(argv);
   return now();
 }
 
-static void set_array(void)
-{
+static void set_array(void) {
   for (unsigned i = 1; i < 32u; i++)
     /* if ((weekday_from_days(days_past + i - 1)) % 6) */
     if ((weekday_from_days(days_past + i - 1)) == 0 ||
@@ -245,12 +234,11 @@ static void set_array(void)
   /* puts(route_[i].route); */
 }
 
-static void globals(void)
-{
+static void globals(void) {
   luna = literal_mon(TM.tm_mon);
 
-  days_past    = days_from_civil(TM.tm_year + 1900, TM.tm_mon + 1, 1);
-  dayz_in_mon  = last_day_of_mon(TM.tm_year + 1900, TM.tm_mon + 1);
+  days_past = days_from_civil(TM.tm_year + 1900, TM.tm_mon + 1, 1);
+  dayz_in_mon = last_day_of_mon(TM.tm_year + 1900, TM.tm_mon + 1);
   current_year = TM.tm_year + 1900;
   /* fill starting with 1, so you can avoid branching in holiday loop */
   const int dayz = days_past;
@@ -272,16 +260,14 @@ static void globals(void)
   /* set_array(); */
 }
 
-__attribute__((noreturn)) static void usage(void)
-{
+__attribute__((noreturn)) static void usage(void) {
   puts("Usage: <mon> <year> <km>\ne.g. iun 22 80000\n");
   /* puts("Disclaimer: no error checking whatsoever, you're on your own\n");
    */
   exit(0);
 }
 
-int init_time(int argc, char **argv)
-{
+int init_time(int argc, char **argv) {
   if (argc > 1 && (*argv[1] == 'h' || strcmp(argv[1], "-h") == 0 ||
                    strcmp(argv[1], "--h") == 0))
     usage();
@@ -300,8 +286,7 @@ int init_time(int argc, char **argv)
   return 0;
 }
 
-__attribute__((hot)) static void random_shuffle(void)
-{
+__attribute__((hot)) static void random_shuffle(void) {
   static const struct Route parcurs[16] = {
       {"Cluj-Oradea", 321, "Interes Serviciu"},
       {"Cluj-Turda", 121, "Interes Serviciu"},
@@ -335,7 +320,7 @@ __attribute__((hot)) static void random_shuffle(void)
 
   for (; cycle < m; cycle++) {
     do {
-      play  = (unsigned long)rand() % n;
+      play = (unsigned long)rand() % n;
       found = 0;
       for (k = 0; k < n; k++)
         if (recent[k] == play)
@@ -352,8 +337,7 @@ __attribute__((hot)) static void random_shuffle(void)
 /* #pragma GCC target("avx,avx2,fma") */
 /* #pragma optimize "align-loops=32" */
 __attribute__((const)) static inline unsigned
-repeating(const struct Route *restrict const in)
-{
+repeating(const struct Route *restrict const in) {
   /* #pragma omp parallel for */
   for (unsigned i = 0; i < 32; i++) {
     if (in[i + 1].km == in[i].km && in[i].km > 30)
@@ -362,8 +346,7 @@ repeating(const struct Route *restrict const in)
   return 0;
 }
 
-void mix(void)
-{
+void mix(void) {
   srand((unsigned)global_time);
   do {
     random_shuffle();
@@ -374,11 +357,10 @@ void mix(void)
   PRINT_("Randomize... OK\n");
 }
 
-void get_km(char *argv)
-{
+void get_km(char *argv) {
   /* printf("%d\n", atoi(argv)); */
   if (argv == NULL) {
-    int  fd = open("km", O_RDONLY | O_CREAT, 0666);
+    int fd = open("km", O_RDONLY | O_CREAT, 0666);
     char x[16];
     memset(x, 'x', 16);
     read(fd, x, 8); // isdigit?
@@ -392,8 +374,7 @@ void get_km(char *argv)
   PRINT_("Km read... OK\n");
 }
 
-void write_km(void)
-{
+void write_km(void) {
   FILE *f = fopen("km", "w++");
   fprintf(f, "%u", km);
   fclose(f);
@@ -404,8 +385,7 @@ void write_km(void)
 /* const char *get_longdate(void) { return (const char *)longdate; } */
 
 #ifndef Skipmain
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   init_time(argc, argv);
 
   mix();

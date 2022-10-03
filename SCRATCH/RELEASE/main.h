@@ -38,30 +38,49 @@ static inline void log_debug(char *file, char *fmt, ...)
 }
 #endif
 
+#ifndef _GNU_SOURCE
 #define _GNU_SOURCE
+#endif
+
+/* The __m128i data type can hold sixteen 8-bit, eight 16-bit, four 32-bit, or
+ * two 64-bit integer values. */
+
+#ifndef __cplusplus
+#include <immintrin.h>
+#include <stdalign.h> // C11 defines _Alignas().  This header defines alignas()
+#endif
+
+#ifndef alignas
+#if defined(__linux__) || defined(__APPLE__) || defined(__unix__)
+#define alignas __attribute__((aligned(16)))
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+#define alignas __declspec(align(16))
+#endif
+#endif
+#endif
 
 struct Route {
-  char    *route;
+  char *route;
   unsigned km;
-  char    *obs;
+  char *obs;
 };
 
-int  init_time(int argc, char **argv);
+int init_time(int argc, char **argv);
 void mix(void);
 void get_km(char *argv);
-int  write_excel(void);
+int write_excel(void);
 void write_km(void);
 void mail_me(const char *attachment);
 
 #define BLOCK_BEGIN {
-#define BLOCK_END   }
+#define BLOCK_END }
 
 #ifdef LOG
 #include <fcntl.h>
 #include <unistd.h>
 
 extern int fd_;
-#define INIT_FD  init_fd();
+#define INIT_FD init_fd();
 #define CLOSE_FD close_fd();
 void init_fd(void);
 void close_fd(void);
