@@ -8,17 +8,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static void mul(const __m128i *a, __m128i *b)
+static long long volatile mul(const __m128i *a, __m128i *b)
 {
   __m128i f = _mm_load_si128(a);
   _mm_store_si128(b, f);
+  return b[0][0];
 }
 
 int main(void)
 {
 
-  __m128i a = (__m128i){1, 2};
-  __m128i b = (__m128i){0, 0};
+  __m128i a; // = (__m128i){1, 2};
+  __m128i b; //= (__m128i){0, 0};
 
   mul(&a, &b);
 
