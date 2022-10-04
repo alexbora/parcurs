@@ -23,5 +23,6 @@ int main(void)
   mul(&a, &b);
 
   fprintf(stderr, "%lld\n", b[0]);
+
   return 0;
 }
