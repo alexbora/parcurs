@@ -15,6 +15,12 @@ static long long volatile mul(const __m128i *a, __m128i *b)
   return b[0][0];
 }
 
+static void mul2(void)
+{
+  __m128i a, b;
+  a = _mm_load_si128(&(__m128i){9, 1});
+}
+
 int main(void)
 {
 
