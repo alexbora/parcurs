@@ -1,4 +1,4 @@
-        .global main
+        .global _main
 
         .p2align 4
         .data
@@ -10,7 +10,7 @@ val2:
 
         .p2align 4
         .text
-main:
+_main:
         //movq val(%rip), %xmm0
         //movq $5, %rax
         //cvtsi2sd %rax, %xmm0
@@ -18,7 +18,10 @@ main:
 
         movq val(%rip), %xmm6
         pslldq $8, %xmm6
-        movsd val(%rip), %xmm6
+        movdqa val2(%rip), %xmm5
+        movsd %xmm5, %xmm6
         psrldq $8, %xmm6
         movq %xmm6, %rax
         ret
+
+        /* working */
