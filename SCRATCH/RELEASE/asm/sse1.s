@@ -1,4 +1,8 @@
+        #iddef __APPLE__
         .global _main
+        #else
+        .global main
+        #endif
 
         .p2align 4
         .data
@@ -10,7 +14,11 @@ val2:
 
         .p2align 4
         .text
+        #ifdef __APPLE__
 _main:
+        #else
+main:
+        #endif
         //movq val(%rip), %xmm0
         //movq $5, %rax
         //cvtsi2sd %rax, %xmm0
