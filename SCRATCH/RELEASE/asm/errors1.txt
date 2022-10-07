@@ -1,1 +1,4 @@
 texttext2
+die
+errors1.c:main:38:AC
+errors1.c:main:38:AC

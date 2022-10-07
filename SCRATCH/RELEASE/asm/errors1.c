@@ -18,11 +18,23 @@ FILE *error_log;
     exit(-1);                                                                  \
   } while (0)
 
+#define AC(expr, fmt, args...)                                                 \
+  do {                                                                         \
+    if (!(expr)) {                                                             \
+      fflush(stdout);                                                          \
+      fprintf(error_log ? error_log : stderr, "%s:%s:%d:", __FILE__,           \
+              __FUNCTION__, __LINE__);                                         \
+      fprintf(error_log ? error_log : stderr, fmt, ##args);                    \
+      fflush(stderr);                                                          \
+      exit(-1);                                                                \
+    }                                                                          \
+  } while (0)
+
 int main(int argc, char *argv[])
 {
 
   error_log = fopen("errors1.txt", "a++");
-  die("%s", "text"
-            "text2");
+  /* die("%s", "die"); */
+  AC(0, "%s\n", "AC");
   return 0;
 }
