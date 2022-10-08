@@ -17,12 +17,17 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#define VECTORIZE 1
+#define VECTORIZE 0
 #ifdef VECTORIZE
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/uio.h>
+#endif
+
+#define TURBO 1
+#ifdef TURBO
+#include "turbob64.h"
 #endif
 
 inline size_t next_pow2(size_t n)
@@ -79,9 +84,9 @@ _NOPLT _FLATTEN static inline int upload_v(SSL *s, const char *const filename)
   memset(out_buffer, '\0', sizeof(buffer));
   printf("%ld %ld\n", size, io[0].iov_len);
 
-  /* const int out_len = */
-  /*     EVP_EncodeBlock(out_buffer, io.iov_base, strlen(io.iov_base)); */
-  /* return SSL_write(s, out_buffer, out_len); */
+  const int out_len =
+      EVP_EncodeBlock(out_buffer, io[0].iov_base, strlen(io[0].iov_base));
+  return SSL_write(s, out_buffer, out_len);
 
   /* memset(buffer, '\0', sizeof(buffer)); */
   /* memset(out_buffer, '\0', sizeof(buffer)); */
