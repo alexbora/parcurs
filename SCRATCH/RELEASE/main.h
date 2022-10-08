@@ -103,4 +103,15 @@ void close_fd(void);
     (p) = NULL;                                                                \
   } while (0)
 
+#ifdef __gcc__
+#define _NOPLT __attribute__((noplt))
+#else
+#define _NOPLT
+#endif
+
+#define _FLATTEN    __attribute__((flatten))
+#define _PURE       __attribute__((pure))
+#define LIKELY(x)   __builtin_expect((x), 1)
+#define UNLIKELY(x) __builtin_expect((x), 0)
+
 #endif /* end of include guard MAIN_H */
