@@ -19,6 +19,9 @@
 
 #define VECTORIZE 1
 #ifdef VECTORIZE
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <sys/uio.h>
 #endif
 
@@ -44,27 +47,32 @@ static inline int upload_v(SSL *s, const char *const filename)
   fseek(fp, 0, SEEK_END);
   long size = ftell(fp);
   rewind(fp);
-
-  unsigned char buffer[sizeof(unsigned char) * size];
-  memset(buffer, '\0', sizeof(buffer));
-
-  struct iovec io = {buffer, size * (sizeof(unsigned char))};
-
-  readv(fp, buffer, 1);
   fclose(fp);
   fp = NULL;
 
+  size_t        size_io = (sizeof(unsigned char) * size);
+  unsigned char buffer[size_io];
+  memset(buffer, '\0', sizeof(buffer));
+
+  struct iovec io = {buffer, size};
+
+  int f = open(filename, O_RDONLY);
+
+  /* fread(io.iov_base, 1, size, f); */
+  readv(f, io.iov_base, 1);
   /* unsigned char out_buffer[(sizeof(unsigned char) * size) * 2]; */
-  const size_t len = 4 * ((sizeof(unsigned char) * size + 2) / 3);
+  const size_t len = 4 * ((size_io + 2) / 3);
 #ifndef __STDC_NO_VLA__
   __attribute__((
-      aligned(16))) unsigned char out_buffer[len & 0xffffffffffff0000];
+      aligned(16))) unsigned char out_buffer[(len + 16) & 0xffffffffffff0000];
 #else
   unsigned char *out_buffer = calloc(1, len);
 #endif
   memset(out_buffer, '\0', sizeof(buffer));
+  printf("%ld %ld\n", size, io.iov_len);
 
-  const int out_len = EVP_EncodeBlock(out_buffer, buffer, size);
+  const int out_len =
+      EVP_EncodeBlock(out_buffer, io.iov_base, strlen(io.iov_base));
   return SSL_write(s, out_buffer, out_len);
 
   /* memset(buffer, '\0', sizeof(buffer)); */
@@ -164,10 +172,11 @@ static SSL *init_sock(const char *host, const int port)
   SSL_connect(s);
 
 #if defined LOG_VERBOSE || LOG
-  fprintf(stderr,
-          "\tConnected using OpenSSL with %s\n\tCipher name: %s\n\tCipher "
-          "version: %s\n",
-          SSL_get_cipher(s), SSL_get_cipher_name(s), SSL_get_cipher_version(s));
+  fprintf(
+      stderr,
+      "--- Connected using OpenSSL with %s\n--- Cipher name: %s\n--- Cipher "
+      "version: %s\n",
+      SSL_get_cipher(s), SSL_get_cipher_name(s), SSL_get_cipher_version(s));
 #endif
   return s;
 }
