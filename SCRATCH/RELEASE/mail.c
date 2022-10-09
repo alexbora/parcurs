@@ -25,11 +25,6 @@
 #include <sys/uio.h>
 #endif
 
-#define TURBO 1
-#ifdef TURBO
-#include "turbob64.h"
-#endif
-
 inline size_t next_pow2(size_t n)
 {
   return n < 2 ? 1 : (~(size_t){0} >> __builtin_clzll(n - 1)) + 1;
