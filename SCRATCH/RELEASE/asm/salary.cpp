@@ -13,6 +13,7 @@ private:
   // Private attribute
   int      salary;
   unsigned age;
+  unsigned height;
 
 public:
   // Setter
@@ -33,6 +34,14 @@ public:
   {
     return age;
   }
+  void set_height(unsigned h)
+  {
+    height = h;
+  }
+  unsigned get_height()
+  {
+    return height;
+  }
 };
 
 int main()
@@ -43,5 +52,10 @@ int main()
   myObj.set_age(11);
   cout << "\n";
   cout << myObj.get_age();
+  cout << "\n";
+  myObj.set_height(175);
+  cout << "\n";
+  cout << myObj.get_height();
+  cout << "\n";
   return 0;
 }

@@ -19,10 +19,11 @@ static int             cnd = 0;
 static void *f1(void *p)
 {
   (void)p;
-  sleep(3);
+  sleep(2);
   cnd = 1;
   pthread_mutex_unlock(&m1);
-  pthread_cond_broadcast(&c1);
+  /* pthread_cond_broadcast(&c1); */
+  pthread_cond_signal(&c1);
   puts("f1\n");
   return NULL;
 }
@@ -30,12 +31,12 @@ static void *f1(void *p)
 static void *f2(void *p)
 {
   (void)p;
-  sleep(3);
+  sleep(2);
   puts("f2 init\n");
   while (cnd == 0) {
     pthread_cond_wait(&c1, &m1);
   }
-  sleep(3);
+  sleep(2);
   puts("f2 continue\n");
   return NULL;
 }
@@ -49,6 +50,8 @@ int main(void)
   f1(NULL);
 
   pthread_join(t1, NULL);
+
+  puts("main thread\n");
 
   pthread_mutex_destroy(&m1);
   pthread_cond_destroy(&c1);
