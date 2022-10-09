@@ -1,6 +1,10 @@
 #include "main.h"
 
+#include <pthread.h>
 #include <stdlib.h>
+#include <sys/_pthread/_pthread_cond_t.h>
+#include <sys/_pthread/_pthread_mutex_t.h>
+#include <sys/wait.h>
 
 /*------------------------------------------------------------*/
 #ifdef __linux__
@@ -81,6 +85,21 @@ extern void inline check_alignment(void);
                  "popq %rax\n");
 #endif
 
+unsigned        cond = 0;
+pthread_cond_t  c1   = PTHREAD_COND_INITIALIZER;
+pthread_mutex_t m1   = PTHREAD_MUTEX_INITIALIZER;
+
+#include <stdio.h>
+void *send_mail(void *p)
+{
+  (void)p;
+  while (cond == 0)
+    pthread_cond_wait(&c1, &m1);
+  puts("sending mail\n");
+  mail_me(attachment);
+  return NULL;
+}
+
 int main(int argc, char *argv[])
 {
 
@@ -97,12 +116,16 @@ int main(int argc, char *argv[])
 #ifdef USE_ASM
   check_alignment();
 #else
-  /* CHECK_ALIGNMENT2(); */
+  CHECK_ALIGNMENT2();
 #endif
 
-  INIT_FD
+#include "pthread.h"
+  pthread_t t1;
+  pthread_create(&t1, NULL, send_mail, NULL);
 
-  LOW_LATENCY
+  /* INIT_FD */
+
+  /* LOW_LATENCY */
 
   mix();
 
@@ -114,13 +137,16 @@ int main(int argc, char *argv[])
 
   write_km();
 
-  FLUSH_CACHE
+  /* FLUSH_CACHE */
+  cond = 1;
+  pthread_cond_broadcast(&c1);
+  pthread_join(t1, NULL);
 
-  mail_me(attachment);
+  /* mail_me(attachment); */
 
-  NO_LATENCY
+  /* NO_LATENCY */
 
-  CLOSE_FD
+  /* CLOSE_FD */
 
   return 0;
 }

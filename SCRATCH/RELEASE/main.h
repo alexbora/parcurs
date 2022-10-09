@@ -1,8 +1,8 @@
 /**
-* @author      : alex (alexbora@gmail.com)
-* @file        : main
-* @created     : Luni Mai 23, 2022 19:35:52 EEST
-*/
+ * @author      : alex (alexbora@gmail.com)
+ * @file        : main
+ * @created     : Luni Mai 23, 2022 19:35:52 EEST
+ */
 
 #ifndef MAIN_H
 #define MAIN_H
@@ -43,7 +43,7 @@ static inline void log_debug(char *file, char *fmt, ...)
 #endif
 
 /* The __m128i data type can hold sixteen 8-bit, eight 16-bit, four 32-bit, or
-* two 64-bit integer values. */
+ * two 64-bit integer values. */
 
 #ifndef __cplusplus
 #include <immintrin.h>
@@ -60,9 +60,9 @@ static inline void log_debug(char *file, char *fmt, ...)
 #endif
 
 struct Route {
-   char    *route;
-   unsigned km;
-   char    *obs;
+  char    *route;
+  unsigned km;
+  char    *obs;
 };
 
 int  init_time(int argc, char **argv);
@@ -99,8 +99,8 @@ void close_fd(void);
 
 #define FREE_AND_NULL(p)                                                       \
   do {                                                                         \
-     free(p);                                                                   \
-     (p) = NULL;                                                                \
+    free(p);                                                                   \
+    (p) = NULL;                                                                \
   } while (0)
 
 #ifdef __gcc__
@@ -114,8 +114,11 @@ void close_fd(void);
 #define LIKELY(x)   __builtin_expect((x), 1)
 #define UNLIKELY(x) __builtin_expect((x), 0)
 
+#ifdef _USE_MULTITHREAD
 #include <pthread.h>
-pthread_t t1;
-unsigned cond;
+extern pthread_mutex_t m1;
+extern pthread_cond_t  c1;
+extern unsigned        cond;
+#endif
 
 #endif /* end of include guard MAIN_H */
