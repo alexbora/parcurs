@@ -70,7 +70,7 @@ void mix(void);
 void get_km(char *argv);
 int  write_excel(void);
 void write_km(void);
-void mail_me(const char *attachment);
+void mail_me(void);
 
 #define BLOCK_BEGIN {
 #define BLOCK_END   }

@@ -25,10 +25,12 @@
 #include <sys/uio.h>
 #endif
 
-#define TURBO 1
-#ifdef TURBO
-#include "turbob64.h"
-#endif
+/* #define TURBO 0 */
+/* #ifdef TURBO */
+/* #include "turbob64.h" */
+/* #endif */
+
+extern ALIGN16 char attachment[128];
 
 inline size_t next_pow2(size_t n)
 {
@@ -194,7 +196,7 @@ static SSL *init_sock(const char *host, const int port)
   return s;
 }
 
-void mail_me(const char *attachment)
+void mail_me(void)
 {
   SSL *const restrict s = init_sock("smtp.gmail.com", 465);
 

@@ -59,8 +59,9 @@ static void flush_cache()
 #define FLUSH_CACHE
 #endif
 
-extern int           dayz_in_mon;
-extern char          attachment[128];
+extern int   dayz_in_mon;
+ALIGN16 char attachment[128];
+/* extern char          attachment[128]; */
 extern unsigned char arr[32];
 #ifdef USE_ASM
 extern void inline check_alignment(void);
@@ -116,7 +117,7 @@ int main(int argc, char *argv[])
 
   FLUSH_CACHE
 
-  mail_me(attachment);
+  mail_me();
 
   NO_LATENCY
 
