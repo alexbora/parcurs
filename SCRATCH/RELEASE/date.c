@@ -69,11 +69,11 @@ unsigned leapyear(unsigned);
 
 /* globals */
 
-char         longdate[128], *luna;
-int          dayz_in_mon;
-int          current_year;
-unsigned     km;
-ALIGN16 char attachment[128];
+char     longdate[128], *luna;
+int      dayz_in_mon;
+int      current_year;
+unsigned km;
+char     attachment[128];
 
 /* statics */
 
@@ -82,8 +82,8 @@ static time_t    global_time;
 static struct tm TM;
 
 /* extern struct Route r_[32]; */
-ALIGN16 unsigned char arr[32];
-ALIGN16 struct Route  route_[128];
+unsigned char arr[32];
+struct Route  route_[128];
 
 static inline char *literal_mon(const int month)
 {
@@ -307,7 +307,7 @@ int init_time(int argc, char **argv)
 
 __attribute__((hot)) static void random_shuffle(void)
 {
-  ALIGN16 static const struct Route parcurs[16] = {
+  static const struct Route parcurs[16] = {
       {"Cluj-Oradea", 321, "Interes Serviciu"},
       {"Cluj-Turda", 121, "Interes Serviciu"},
       {"Cluj-Zalau", 156, "Interes Serviciu"},

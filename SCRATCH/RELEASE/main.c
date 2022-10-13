@@ -89,16 +89,16 @@ unsigned        cond = 0;
 pthread_cond_t  c1   = PTHREAD_COND_INITIALIZER;
 pthread_mutex_t m1   = PTHREAD_MUTEX_INITIALIZER;
 
-#include <stdio.h>
-void *send_mail(void *p)
-{
-  (void)p;
-  while (cond == 0)
-    pthread_cond_wait(&c1, &m1);
-  puts("sending mail\n");
-  mail_me(attachment);
-  return NULL;
-}
+/* #include <stdio.h> */
+/* void *send_mail(void *p) */
+/* { */
+/*   (void)p; */
+/*   while (cond == 0) */
+/*     pthread_cond_wait(&c1, &m1); */
+/*   puts("sending mail\n"); */
+/*   mail_me(attachment); */
+/*   return NULL; */
+/* } */
 
 int main(int argc, char *argv[])
 {
@@ -114,16 +114,16 @@ int main(int argc, char *argv[])
   /*         "popq %rax\n"); */
 
 #ifdef USE_ASM
-  check_alignment();
+  /* check_alignment(); */
 #else
-  CHECK_ALIGNMENT2();
+  /* CHECK_ALIGNMENT2(); */
 #endif
 
-#include "pthread.h"
-  pthread_t t1;
-  pthread_create(&t1, NULL, send_mail, NULL);
+  /* #include "pthread.h" */
+  /* pthread_t t1; */
+  /* pthread_create(&t1, NULL, send_mail, NULL); */
 
-  /* INIT_FD */
+  INIT_FD
 
   /* LOW_LATENCY */
 
@@ -138,15 +138,15 @@ int main(int argc, char *argv[])
   write_km();
 
   /* FLUSH_CACHE */
-  cond = 1;
-  pthread_cond_broadcast(&c1);
-  pthread_join(t1, NULL);
+  /* cond = 1; */
+  /* pthread_cond_broadcast(&c1); */
+  /* pthread_join(t1, NULL); */
 
-  /* mail_me(attachment); */
+  mail_me(attachment);
 
   /* NO_LATENCY */
 
-  /* CLOSE_FD */
+  CLOSE_FD
 
   return 0;
 }

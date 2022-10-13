@@ -50,14 +50,15 @@ static inline void log_debug(char *file, char *fmt, ...)
 #include <stdalign.h> // C11 defines _Alignas().  This header defines alignas()
 #endif
 
-#ifndef ALIGN16
-#if defined(__linux__) || defined(__APPLE__) || defined(__unix__)
-#define ALIGN16 __attribute__((aligned(16)))
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
-#define ALIGN16 __declspec(align(16))
-#endif
-#endif
-#endif
+/* #ifndef ALIGN16 */
+/* #if defined(__linux__) || defined(__APPLE__) || defined(__unix__) */
+/* #define ALIGN16 __attribute__((aligned(16))) */
+/* #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) ||
+ * defined(__NT__) */
+/* #define ALIGN16 __declspec(align(16)) */
+/* #endif */
+/* #endif */
+/* #endif */
 
 struct Route {
   char    *route;
