@@ -1,6 +1,8 @@
 #include "main.h"
 
+#include <pthread.h>
 #include <stdlib.h>
+#include <sys/_pthread/_pthread_types.h>
 
 /*------------------------------------------------------------*/
 #ifdef __linux__
@@ -82,8 +84,23 @@ extern void inline check_alignment(void);
                  "popq %rax\n");
 #endif
 
+void *send_mail(void *p)
+{
+  (void)p;
+  mail_me();
+  return NULL;
+}
+
+unsigned        cond;
+pthread_mutex_t m1;
+pthread_cond_t  c1;
+
 int main(int argc, char *argv[])
 {
+
+  pthread_mutex_lock(&m1);
+  pthread_t t1;
+  pthread_create(&t1, NULL, send_mail, NULL);
 
   /* __asm__("pushf\n" */
   /*         "orl $0x40000, (%rsp)\n" */
@@ -116,12 +133,13 @@ int main(int argc, char *argv[])
   write_km();
 
   FLUSH_CACHE
-
-  mail_me();
+  pthread_cond_broadcast(&c1);
+  /* mail_me(); */
 
   NO_LATENCY
 
   CLOSE_FD
 
+  pthread_join(t1, NULL);
   return 0;
 }

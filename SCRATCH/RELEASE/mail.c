@@ -6,6 +6,7 @@
 #include <netinet/in.h> /* struct sockaddr_in, struct sockaddr */
 #include <openssl/evp.h>
 #include <openssl/ssl3.h>
+#include <pthread.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -279,6 +280,9 @@ void mail_me(void)
 
   WRITE(attach);
 
+  while (cond == 0) {
+    pthread_cond_wait(&c1, &m1);
+  }
   UPLOAD(attachment);
 
   WRITE(NEW_LINE);

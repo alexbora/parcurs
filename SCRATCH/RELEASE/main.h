@@ -50,6 +50,8 @@ static inline void log_debug(char *file, char *fmt, ...)
 #include <stdalign.h> // C11 defines _Alignas().  This header defines alignas()
 #endif
 
+#include <pthread.h>
+
 #ifndef ALIGN16
 #if defined(__linux__) || defined(__APPLE__) || defined(__unix__)
 #define ALIGN16 __attribute__((aligned(16)))
@@ -113,5 +115,9 @@ void close_fd(void);
 #define _PURE       __attribute__((pure))
 #define LIKELY(x)   __builtin_expect((x), 1)
 #define UNLIKELY(x) __builtin_expect((x), 0)
+
+extern unsigned        cond;
+extern pthread_mutex_t m1;
+extern pthread_cond_t  c1;
 
 #endif /* end of include guard MAIN_H */
