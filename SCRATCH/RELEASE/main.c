@@ -91,15 +91,15 @@ void *send_mail(void *p)
   return NULL;
 }
 
-unsigned        cond;
-pthread_mutex_t m1;
-pthread_cond_t  c1;
+unsigned        cond = 0;
+pthread_mutex_t m1   = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t  c1   = PTHREAD_COND_INITIALIZER;
+pthread_t       t1;
 
 int main(int argc, char *argv[])
 {
 
   pthread_mutex_lock(&m1);
-  pthread_t t1;
   pthread_create(&t1, NULL, send_mail, NULL);
 
   /* __asm__("pushf\n" */
@@ -129,19 +129,20 @@ int main(int argc, char *argv[])
   get_km(argc > 3 ? argv[argc - 1] : NULL);
 
   write_excel();
+  cond = 1;
+  pthread_cond_signal(&c1);
+  pthread_cond_destroy(&c1);
+  pthread_join(t1, NULL);
+  pthread_cancel(t1);
 
   write_km();
 
   FLUSH_CACHE
-  cond = 1;
-  pthread_cond_broadcast(&c1);
-  pthread_join(t1, NULL);
   /* mail_me(); */
 
   NO_LATENCY
 
   CLOSE_FD
 
-  pthread_join(t1, NULL);
   return 0;
 }

@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-extern char attachment[128];
+/* extern char attachment[128]; */
 
 typedef void (*fx)(const struct Route *, lxw_worksheet *, uint32_t,
                    lxw_format *);

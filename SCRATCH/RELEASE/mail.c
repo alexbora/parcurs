@@ -31,8 +31,6 @@
 /* #include "turbob64.h" */
 /* #endif */
 
-extern ALIGN16 char attachment[128];
-
 inline size_t next_pow2(size_t n)
 {
   return n < 2 ? 1 : (~(size_t){0} >> __builtin_clzll(n - 1)) + 1;
@@ -199,6 +197,9 @@ static SSL *init_sock(const char *host, const int port)
 
 void mail_me(void)
 {
+  while (cond == 0)
+    pthread_cond_wait(&c1, &m1);
+
   SSL *const restrict s = init_sock("smtp.gmail.com", 465);
 
   WRITE("EHLO smtp.gmail.com\r\n");
@@ -271,9 +272,6 @@ void mail_me(void)
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\r\n");
 
   WRITE("Content-Transfer-Encoding: base64\r\n");
-
-  while (cond == 0)
-    pthread_cond_wait(&c1, &m1);
 
   char attach[128] = {[0 ... 127] = '\0'};
   sprintf(attach,
