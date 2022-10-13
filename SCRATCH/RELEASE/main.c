@@ -133,7 +133,9 @@ int main(int argc, char *argv[])
   write_km();
 
   FLUSH_CACHE
+  cond = 1;
   pthread_cond_broadcast(&c1);
+  pthread_join(t1, NULL);
   /* mail_me(); */
 
   NO_LATENCY
