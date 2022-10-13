@@ -4,17 +4,19 @@
  * @created     : Miercuri Oct 12, 2022 11:49:19 EEST
  */
 
+#include "xlsxwriter.h"
+
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/fcntl.h>
 #include <unistd.h>
 
-int main(int argc, char *argv[])
+int main(void)
 {
-  int *f = malloc(64 * sizeof(int)); // open(dst, O_RDWR);
-  write(*f, "test", 4);
-  /* fclose(f); */
+  char  buf[64];
+  FILE *f = fmemopen(buf, 64, "w++");
+  workbook_new(buf);
 
   return 0;
 }
