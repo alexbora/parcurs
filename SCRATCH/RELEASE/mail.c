@@ -272,6 +272,9 @@ void mail_me(void)
 
   WRITE("Content-Transfer-Encoding: base64\r\n");
 
+  while (cond == 0)
+    pthread_cond_wait(&c1, &m1);
+
   char attach[128] = {[0 ... 127] = '\0'};
   sprintf(attach,
           "Content-Disposition: attachment; "
@@ -280,9 +283,6 @@ void mail_me(void)
 
   WRITE(attach);
 
-  while (cond == 0) {
-    pthread_cond_wait(&c1, &m1);
-  }
   UPLOAD(attachment);
 
   WRITE(NEW_LINE);
