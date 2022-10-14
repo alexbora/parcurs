@@ -61,8 +61,8 @@ static void flush_cache()
 #define FLUSH_CACHE
 #endif
 
-extern int   dayz_in_mon;
-ALIGN16 char attachment[128];
+extern int dayz_in_mon;
+char       attachment[128];
 /* extern char          attachment[128]; */
 extern unsigned char arr[32];
 #ifdef USE_ASM

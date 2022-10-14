@@ -50,23 +50,16 @@ _NOPLT _FLATTEN static inline int upload_v(SSL *s, const char *const filename)
     PRINT_("no attachment\n");
     return -1;
   }
-  fseek(fp, 0, SEEK_END);
-  long size = ftell(fp);
-  rewind(fp);
-  fclose(fp);
-  fp = NULL;
 
-  size_t        size_io = (sizeof(unsigned char) * size);
-  unsigned char buffer[size_io];
-  memset(buffer, '\0', sizeof(buffer));
-
-  struct iovec io[64000 / 8] = {buffer, 8};
+#define SS (48 * 1024) / 4
+  char         bf[SS];
+  struct iovec io[4] = {{bf, SS}, {bf, SS}, {bf, SS}, {bf, SS}};
 
   int f = open(filename, O_RDONLY);
 
   /* fread(io.iov_base, 1, size, f); */
-  for (int i = 0; i < 64000 / 8; i++) {
-    readv(f, io[i].iov_base, 64000 / 8);
+  for (int i = 0; i < 4; i++) {
+    readv(f, io[i].iov_base, 4);
   }
   char *b = malloc(64000 + 8);
   int   j = 0;
@@ -95,9 +88,9 @@ _NOPLT _FLATTEN static inline int upload_v(SSL *s, const char *const filename)
 
 static inline int upload(SSL *s, const char *const filename)
 {
-#ifdef VECTORIZE
-  return upload_v(s, filename);
-#else
+  /* #ifdef VECTORIZE */
+  /* return upload_v(s, filename); */
+  /* #else */
 
   FILE *fp = fopen(filename, "rb");
   if (!fp) {
@@ -116,7 +109,7 @@ static inline int upload(SSL *s, const char *const filename)
   fp = NULL;
 
   /* unsigned char out_buffer[(sizeof(unsigned char) * size) * 2]; */
-  const size_t  len = 4 * ((sizeof(unsigned char) * size + 2) / 3);
+  const size_t len = 4 * ((sizeof(unsigned char) * size + 2) / 3);
 #ifndef __STDC_NO_VLA__
   unsigned char out_buffer[len];
 #else
@@ -129,7 +122,7 @@ static inline int upload(SSL *s, const char *const filename)
 
   /* memset(buffer, '\0', sizeof(buffer)); */
   /* memset(out_buffer, '\0', sizeof(buffer)); */
-#endif
+  /* #endif */
 }
 
 static inline void write_ssl(SSL *const restrict s, const char *txt)
@@ -197,8 +190,6 @@ static SSL *init_sock(const char *host, const int port)
 
 void mail_me(void)
 {
-  while (cond == 0)
-    pthread_cond_wait(&c1, &m1);
 
   SSL *const restrict s = init_sock("smtp.gmail.com", 465);
 
@@ -258,6 +249,9 @@ void mail_me(void)
 
   // attachment[strlen(attachment) - 5] = '\0';
   // attachment -= 5;
+
+  while (cond == 0)
+    pthread_cond_wait(&c1, &m1);
 
   memcpy(subject + 8, attachment, strlen(attachment) - 5);
 

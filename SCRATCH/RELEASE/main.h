@@ -120,6 +120,6 @@ extern unsigned        cond;
 extern pthread_mutex_t m1;
 extern pthread_cond_t  c1;
 extern pthread_t       t1;
-extern ALIGN16 char    attachment[128];
+extern char            attachment[128];
 
 #endif /* end of include guard MAIN_H */

@@ -69,11 +69,11 @@ unsigned leapyear(unsigned);
 
 /* globals */
 
-char                longdate[128], *luna;
-int                 dayz_in_mon;
-int                 current_year;
-unsigned            km;
-extern ALIGN16 char attachment[128];
+char        longdate[128], *luna;
+int         dayz_in_mon;
+int         current_year;
+unsigned    km;
+extern char attachment[128];
 
 /* statics */
 
@@ -307,7 +307,7 @@ int init_time(int argc, char **argv)
 
 __attribute__((hot)) static void random_shuffle(void)
 {
-  ALIGN16 static const struct Route parcurs[16] = {
+  static const struct Route parcurs[16] = {
       {"Cluj-Oradea", 321, "Interes Serviciu"},
       {"Cluj-Turda", 121, "Interes Serviciu"},
       {"Cluj-Zalau", 156, "Interes Serviciu"},
