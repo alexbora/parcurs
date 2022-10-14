@@ -45,22 +45,34 @@ inline size_t next_pow2(size_t n)
 
 _NOPLT _FLATTEN static inline int upload_v(SSL *s, const char *const filename)
 {
-  FILE *fp = fopen(filename, "rb");
-  if (UNLIKELY(!fp)) {
-    PRINT_("no attachment\n");
-    return -1;
-  }
 
 #define SS (48 * 1024) / 4
-  char         bf[SS];
-  struct iovec io[4] = {{bf, SS}, {bf, SS}, {bf, SS}, {bf, SS}};
 
   int f = open(filename, O_RDONLY);
 
-  /* fread(io.iov_base, 1, size, f); */
+  char         b1[SS], b2[SS], b3[SS], b4[SS];
+  struct iovec io[4] = {{b1, SS}, {b2, SS}, {b3, SS}, {b4, SS}};
+  readv(f, io, 4);
+  char b[48 * 1024];
   for (int i = 0; i < 4; i++) {
-    readv(f, io[i].iov_base, 4);
+    memcpy(b + (i * SS), io[i].iov_base, SS);
   }
+#undef SS
+
+  /* unsigned char out_buffer[(sizeof(unsigned char) * size) * 2]; */
+  const size_t len = 4 * ((size_io + 2) / 3);
+#ifndef __STDC_NO_VLA__
+  alignas(16) unsigned char out_buffer[(len + 16) & 0xffffffffffff0000];
+#else
+  unsigned char *out_buffer = calloc(1, len);
+#endif
+  memset(out_buffer, '\0', sizeof(buffer));
+  printf("%ld %ld\n", size, io[0].iov_len);
+
+  const int out_len =
+      EVP_EncodeBlock(out_buffer, io[0].iov_base, strlen(io[0].iov_base));
+  return SSL_write(s, out_buffer, out_len);
+
   char *b = malloc(64000 + 8);
   int   j = 0;
   for (int i = 0; i < (64000 / 8); i++) {
