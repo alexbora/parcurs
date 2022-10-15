@@ -1,5 +1,5 @@
 all: mail.c date.c excel.c main.c main.h days.S isleap.S  check_alignment.s
-	@gcc-12 -DLOG_VERBOSE -DUSE_ASM mail.c date.c excel.c main.c days.S isleap.S check_alignment.s -DSkipmain -o final_program -std=c11 -O3 -w -fno-plt -m64 -mpreferred-stack-boundary=4 -Wformat=2 -Wshadow -Wdouble-promotion -fno-common -ffunction-sections -fdata-sections -fomit-frame-pointer  -mtune=native -fno-PIC -fno-PIE  -freg-struct-return -fverbose-asm -falign-functions=16 -malign-double  -mno-red-zone `pkg-config --cflags --libs openssl` `pkg-config --cflags --libs xlsxwriter` `pkg-config --cflags tb64` `pkg-config --libs tb64` -ldl -pthread && printf '%s\n' "Compiled successfully!"
+	@gcc-12 -DMEMORY -DVECTORIZE -DLOG_VERBOSE -DUSE_ASM mail.c date.c excel.c main.c days.S isleap.S check_alignment.s -DSkipmain -o final_program -std=c11 -O3 -w -fno-plt -m64 -mpreferred-stack-boundary=4 -Wformat=2 -Wshadow -Wdouble-promotion -fno-common -ffunction-sections -fdata-sections -fomit-frame-pointer  -mtune=native -fno-PIC -fno-PIE  -freg-struct-return -fverbose-asm -falign-functions=16 -malign-double  -mno-red-zone `pkg-config --cflags --libs openssl` `pkg-config --cflags --libs xlsxwriter` `pkg-config --cflags tb64` `pkg-config --libs tb64` -ldl -pthread && printf '%s\n' "Compiled successfully!"
 	@# -v to see output of gcc
 
 
