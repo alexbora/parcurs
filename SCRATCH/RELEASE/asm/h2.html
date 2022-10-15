@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>HTML DOM Embed src Property</title>
+</head>
+
+<body>
+	<center>
+		<h1 style="color:green">
+		GeeksforGeeks
+	</h1>
+		<embed id="embedID"
+			src="https://ide.geeksforgeeks.org">
+		<br>
+		<button onclick="GFGfun()">
+		Try it
+	</button>
+
+		<p id="pid"></p>
+
+		<script>
+			function GFGfun() {
+				var idsrc = document.getElementById("embedID").src;
+				document.getElementById("pid").innerHTML = idsrc;
+			}
+		</script>
+	</center>
+</body>
+
+</html>
+
+

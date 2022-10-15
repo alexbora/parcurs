@@ -4,12 +4,22 @@
  * @created     : Vineri Oct 07, 2022 20:40:24 EEST
  */
 
+#include <fcntl.h>
 #include <gtk/gtk.h>
 #include <stdlib.h>
+#include <sys/fcntl.h>
+#include <unistd.h>
 
 static void print_hello(GtkWidget *widget, gpointer data)
 {
   g_print("Hello World\n");
+}
+
+static void insert(void)
+{
+  int fd = open("gtk4.txt", O_RDWR | O_CREAT);
+  write(fd, "txt\n", 4);
+  close(fd);
 }
 
 static void print_hello_2(GtkWidget *widget, gpointer data)
@@ -42,7 +52,8 @@ static void activate(GtkApplication *app, gpointer user_data)
   gtk_grid_attach(GTK_GRID(grid), button, 0, 0, 1, 1);
 
   button = gtk_button_new_with_label("Button 2");
-  g_signal_connect(button, "clicked", G_CALLBACK(print_hello_2), NULL);
+  /* g_signal_connect(button, "clicked", G_CALLBACK(print_hello_2), NULL); */
+  g_signal_connect(button, "clicked", G_CALLBACK(insert), NULL);
 
   /* Place the second button in the grid cell (1, 0), and make it fill
    * just 1 cell horizontally and vertically (ie no spanning)
