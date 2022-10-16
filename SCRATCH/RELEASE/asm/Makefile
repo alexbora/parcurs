@@ -1,3 +1,4 @@
+CC=gcc-12
 
 all: 
 	gcc-12 vector1.c -o vector `pkg-config --libs gtk+-3.0`   `pkg-config --cflags gtk+-3.0`

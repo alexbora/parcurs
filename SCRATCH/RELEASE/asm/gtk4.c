@@ -43,7 +43,7 @@ static void activate(GtkApplication *app, gpointer user_data)
   /* Pack the container in the window */
   gtk_container_add(GTK_CONTAINER(window), grid);
 
-  button = gtk_button_new_with_label("Button 1");
+  button = gtk_button_new_with_label("a");
   g_signal_connect(button, "clicked", G_CALLBACK(print_hello), NULL);
 
   /* Place the first button in the grid cell (0, 0), and make it fill
@@ -74,6 +74,11 @@ static void activate(GtkApplication *app, gpointer user_data)
    * This call recursively calls gtk_widget_show() on all widgets
    * that are contained in the window, directly or indirectly.
    */
+  GtkWidget *emailLabel, *emailEntry;
+  emailLabel = gtk_label_new("Email:");
+  emailEntry = gtk_entry_new();
+  gtk_entry_set_placeholder_text(GTK_ENTRY(emailEntry), "Email");
+
   gtk_widget_show_all(window);
 }
 
