@@ -36,7 +36,8 @@ static void activate(GtkApplication *app, gpointer user_data)
   window = gtk_application_window_new(app);
   gtk_window_set_title(GTK_WINDOW(window), "BOGDAN");
   gtk_container_set_border_width(GTK_CONTAINER(window), 10);
-
+  gtk_window_set_default_size(window, 2000, 2000);
+  /* gtk_widget_set_size_request(GTK_WIDGET(window), 1366, 768); */
   /* Here we construct the container that is going pack our buttons */
   grid = gtk_grid_new();
 
