@@ -67,7 +67,7 @@ static void activate(GtkApplication *app, gpointer user_data)
   /* Place the Quit button in the grid cell (0, 1), and make it
    * span 2 columns.
    */
-  gtk_grid_attach(GTK_GRID(grid), button, 0, 1, 2, 1);
+  /* gtk_grid_attach(GTK_GRID(grid), button, 0, 1, 2, 1); */
 
   /* Now that we are done packing our widgets, we show them all
    * in one go, by calling gtk_widget_show_all() on the window.
@@ -78,6 +78,7 @@ static void activate(GtkApplication *app, gpointer user_data)
   emailLabel = gtk_label_new("Email:");
   emailEntry = gtk_entry_new();
   gtk_entry_set_placeholder_text(GTK_ENTRY(emailEntry), "Email");
+  gtk_grid_attach(GTK_GRID(grid), button, 0, 1, 2, 1);
 
   gtk_widget_show_all(window);
 }
