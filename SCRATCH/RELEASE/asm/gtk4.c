@@ -37,6 +37,7 @@ static void activate(GtkApplication *app, gpointer user_data)
   gtk_window_set_title(GTK_WINDOW(window), "BOGDAN");
   gtk_container_set_border_width(GTK_CONTAINER(window), 10);
   gtk_window_set_default_size(window, 2000, 2000);
+  gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
   /* gtk_widget_set_size_request(GTK_WIDGET(window), 1366, 768); */
   /* Here we construct the container that is going pack our buttons */
   grid = gtk_grid_new();
@@ -75,12 +76,15 @@ static void activate(GtkApplication *app, gpointer user_data)
    * This call recursively calls gtk_widget_show() on all widgets
    * that are contained in the window, directly or indirectly.
    */
-  GtkWidget *emailLabel, *emailEntry;
-  emailLabel = gtk_label_new("Email:");
-  emailEntry = gtk_entry_new();
-  gtk_entry_set_placeholder_text(GTK_ENTRY(emailEntry), "Email");
   gtk_grid_attach(GTK_GRID(grid), button, 0, 1, 2, 1);
 
+  GtkWidget *emailLabel, *entry;
+  emailLabel = gtk_label_new("Email:");
+  entry      = gtk_entry_new();
+  /* gtk_entry_set_placeholder_text(GTK_ENTRY(entry), "Email"); */
+
+  gtk_grid_attach(GTK_GRID(grid), entry, 20, 10, 20, 1);
+  gtk_grid_attach(GTK_GRID(grid), emailLabel, 20, 20, 20, 1);
   gtk_widget_show_all(window);
 }
 
