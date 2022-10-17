@@ -10,6 +10,16 @@
 #include <sys/fcntl.h>
 #include <unistd.h>
 
+gchar *data;
+void   enter_button(GtkWidget *widget, gpointer data)
+{
+
+  (void)data;
+  GdkColor col = {0, 27000, 30000, 35000};
+  gtk_widget_modify_bg(widget, GTK_STATE_PRELIGHT, &col);
+  g_print("%s\n", data);
+}
+
 static void print_hello(GtkWidget *widget, gpointer data)
 {
   g_print("Hello World\n");
@@ -45,7 +55,7 @@ static void activate(GtkApplication *app, gpointer user_data)
   /* Pack the container in the window */
   gtk_container_add(GTK_CONTAINER(window), grid);
 
-  button = gtk_button_new_with_label("a");
+  button = gtk_button_new_with_label("Generate");
   g_signal_connect(button, "clicked", G_CALLBACK(print_hello), NULL);
 
   /* Place the first button in the grid cell (0, 0), and make it fill
@@ -53,9 +63,9 @@ static void activate(GtkApplication *app, gpointer user_data)
    */
   gtk_grid_attach(GTK_GRID(grid), button, 0, 0, 1, 1);
 
-  button = gtk_button_new_with_label("Button 2");
+  button = gtk_button_new_with_label("Mail");
   /* g_signal_connect(button, "clicked", G_CALLBACK(print_hello_2), NULL); */
-  g_signal_connect(button, "clicked", G_CALLBACK(insert), NULL);
+  g_signal_connect(button, "clicked", G_CALLBACK(enter_button), NULL);
 
   /* Place the second button in the grid cell (1, 0), and make it fill
    * just 1 cell horizontally and vertically (ie no spanning)
@@ -85,6 +95,8 @@ static void activate(GtkApplication *app, gpointer user_data)
 
   gtk_grid_attach(GTK_GRID(grid), entry, 20, 10, 20, 1);
   gtk_grid_attach(GTK_GRID(grid), emailLabel, 20, 20, 20, 1);
+  data = gtk_entry_get_text(GTK_ENTRY(entry));
+
   gtk_widget_show_all(window);
 }
 
