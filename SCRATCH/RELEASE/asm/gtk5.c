@@ -16,6 +16,7 @@ void signup_button_clicked(GtkWidget *wid, gpointer data)
   gtk_label_set_text(GTK_LABEL(data), emailData);
   gtk_entry_set_text(GTK_ENTRY(emailEntry), "");
   gtk_entry_set_text(GTK_ENTRY(passwordEntry), "");
+  puts("gtk5\n");
 }
 
 static void activate(GtkApplication *app, gpointer user_data)
