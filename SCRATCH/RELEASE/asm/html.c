@@ -4,6 +4,8 @@
  * @created     : Luni Oct 17, 2022 17:24:41 EEST
  */
 
+#include "tiffio.h"
+
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,5 +18,14 @@ int main(int argc, char *argv[])
   int fd = open("xxx__", O_CREAT | O_RDWR);
   write(fd, "a", 2);
   close(fd);
-  return 0;
+  TIFF *tif = TIFFOpen(argv[1], "r");
+  if (tif) {
+    int dircount = 0;
+    do {
+      dircount++;
+    } while (TIFFReadDirectory(tif));
+    printf("%d directories in %s\n", dircount, argv[1]);
+    TIFFClose(tif);
+    return 0;
+  }
 }

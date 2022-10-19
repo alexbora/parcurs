@@ -55,6 +55,12 @@ static void activate(GtkApplication *app, gpointer user_data)
   /* Pack the container in the window */
   gtk_container_add(GTK_CONTAINER(window), grid);
 
+  GdkColor color;
+
+  gdk_color_parse("grey", &color);
+
+  gtk_widget_modify_bg(window, GTK_STATE_NORMAL, &color);
+
   button = gtk_button_new_with_label("Generate");
   g_signal_connect(button, "clicked", G_CALLBACK(print_hello), NULL);
 
