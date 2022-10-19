@@ -33,23 +33,25 @@
 /* #include "turbob64.h" */
 /* #endif */
 
-inline size_t next_pow2(size_t n) {
+inline size_t next_pow2(size_t n)
+{
   return n < 2 ? 1 : (~(size_t){0} >> __builtin_clzll(n - 1)) + 1;
 }
 
-#define BUF 4096u
-#define WRITE(b) write_ssl(s, b)
+#define BUF          4096u
+#define WRITE(b)     write_ssl(s, b)
 #define WRITE_ENC(b) write_base64(s, b)
-#define UPLOAD(b) upload(s, b)
-#define READ read_ssl2(s)
-#define NEW_LINE "\r\n"
+#define UPLOAD(b)    upload(s, b)
+#define READ         read_ssl2(s)
+#define NEW_LINE     "\r\n"
 
-_NOPLT _FLATTEN static inline int upload_v(SSL *s, const char *const filename) {
+_NOPLT _FLATTEN static inline int upload_v(SSL *s, const char *const filename)
+{
 
 #define SS (48 * 1024) / 4
-  int f = open(filename, O_RDONLY);
+  int           f = open(filename, O_RDONLY);
   unsigned char b1[SS], b2[SS], b3[SS], b4[SS];
-  struct iovec io[4] = {{b1, SS}, {b2, SS}, {b3, SS}, {b4, SS}};
+  struct iovec  io[4] = {{b1, SS}, {b2, SS}, {b3, SS}, {b4, SS}};
   readv(f, io, 4);
   unsigned char b[48 * 1024];
   for (int i = 0; i < 4; i++)
@@ -58,7 +60,9 @@ _NOPLT _FLATTEN static inline int upload_v(SSL *s, const char *const filename) {
   struct stat st;
   fstat(f, &st);
 
-  const size_t len = 4 * ((st.st_size + 2) / 3);
+  /* const size_t len = 4 * ((st.st_size + 2) / 3); */
+  const size_t len = 4 * ((48 * 1024 + 2) / 3);
+
 #ifndef __STDC_NO_VLA__
   unsigned char out_buffer[(len + 16) & 0xffffffffffff0000];
 #else
@@ -71,7 +75,8 @@ _NOPLT _FLATTEN static inline int upload_v(SSL *s, const char *const filename) {
   return SSL_write(s, out_buffer, out_len);
 }
 
-static inline int upload(SSL *s, const char *const filename) {
+static inline int upload(SSL *s, const char *const filename)
+{
 #ifdef VECTORIZE
   return upload_v(s, filename);
 #else
@@ -93,7 +98,7 @@ static inline int upload(SSL *s, const char *const filename) {
   fp = NULL;
 
   /* unsigned char out_buffer[(sizeof(unsigned char) * size) * 2]; */
-  const size_t len = 4 * ((sizeof(unsigned char) * size + 2) / 3);
+  const size_t  len = 4 * ((sizeof(unsigned char) * size + 2) / 3);
 #ifndef __STDC_NO_VLA__
   unsigned char out_buffer[len];
 #else
@@ -109,20 +114,23 @@ static inline int upload(SSL *s, const char *const filename) {
 #endif
 }
 
-static inline void write_ssl(SSL *const restrict s, const char *txt) {
+static inline void write_ssl(SSL *const restrict s, const char *txt)
+{
   const void *buf = (const void *)txt;
-  const int n = (const int)strlen(txt);
+  const int   n   = (const int)strlen(txt);
   SSL_write(s, buf, n);
 }
 
-static inline int write_base64(SSL *const restrict s, const void *txt) {
+static inline int write_base64(SSL *const restrict s, const void *txt)
+{
   unsigned char enc_cmd[128] = {'\0'};
-  const int out_len =
+  const int     out_len =
       EVP_EncodeBlock((unsigned char *)enc_cmd, txt, (const int)strlen(txt));
   return SSL_write(s, enc_cmd, out_len);
 }
 
-static inline void read_ssl2(SSL *restrict const s) {
+static inline void read_ssl2(SSL *restrict const s)
+{
   unsigned char recvbuf[BUF] = {'\0'};
   /* *recvbuf = '\0'; */
   /* SSL_peek(s, recvbuf, BUF - 1); */
@@ -130,15 +138,17 @@ static inline void read_ssl2(SSL *restrict const s) {
   /* puts(recvbuf); */
 }
 
-static inline int read_ssl(SSL *s, char *buf) {
+static inline int read_ssl(SSL *s, char *buf)
+{
   *buf = '\0';
   return SSL_read(s, buf, BUF - 1);
 }
 
-static SSL *init_sock(const char *host, const int port) {
+static SSL *init_sock(const char *host, const int port)
+{
   struct sockaddr_in sa = {
       .sin_family = AF_INET,
-      .sin_port = htons(port),
+      .sin_port   = htons(port),
 #define h_addr h_addr_list[0]
       .sin_addr.s_addr = *(long *)((gethostbyname(host))->h_addr),
 #undef h_addr
@@ -167,7 +177,8 @@ static SSL *init_sock(const char *host, const int port) {
   return s;
 }
 
-void mail_me(void) {
+void mail_me(void)
+{
 
   SSL *const restrict s = init_sock("smtp.gmail.com", 465);
 
