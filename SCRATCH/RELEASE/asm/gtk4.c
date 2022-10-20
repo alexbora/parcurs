@@ -85,6 +85,8 @@ static void activate(GtkApplication *app, gpointer user_data)
   entry1 = gtk_entry_get_text(GTK_ENTRY(entry_text1));
   entry2 = gtk_entry_get_text(GTK_ENTRY(entry_text2));
 
+  printf("%s\n", entry1);
+
   g_signal_connect(button, "clicked", G_CALLBACK(callback), (gpointer)entry1);
 
   /* Place the second button in the grid cell (1, 0), and make it fill
