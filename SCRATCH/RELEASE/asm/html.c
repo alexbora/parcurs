@@ -15,7 +15,8 @@
 int main(int argc, char *argv[])
 {
   fprintf(stderr, "html\n");
-  int fd = open("xxx__", O_CREAT | O_RDWR);
+  int fd = open("/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/xxx__",
+                O_CREAT | O_RDWR);
   write(fd, "a", 2);
   close(fd);
   TIFF *tif = TIFFOpen(argv[1], "r");

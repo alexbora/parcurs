@@ -10,10 +10,11 @@
 #include <sys/fcntl.h>
 #include <unistd.h>
 
-gchar *data;
-void   enter_button(GtkWidget *widget, gpointer data)
-{
+gchar *entry1, *entry2;
 
+/* gchar *data; */
+void enter_button(GtkWidget *widget, gpointer data)
+{
   (void)data;
   GdkColor col = {0, 27000, 30000, 35000};
   gtk_widget_modify_bg(widget, GTK_STATE_PRELIGHT, &col);
@@ -36,6 +37,12 @@ static void print_hello_2(GtkWidget *widget, gpointer data)
 {
   g_print("Buna zius, Bogdan\n");
 }
+
+static void callback(GtkWidget *widget, gpointer data)
+{
+  g_print("Hello again - %s was pressed\n", (char *)data);
+}
+
 static void activate(GtkApplication *app, gpointer user_data)
 {
   GtkWidget *window;
@@ -50,16 +57,14 @@ static void activate(GtkApplication *app, gpointer user_data)
   gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
   /* gtk_widget_set_size_request(GTK_WIDGET(window), 1366, 768); */
   /* Here we construct the container that is going pack our buttons */
+  GdkColor color;
+  gdk_color_parse("grey", &color);
+  gtk_widget_modify_bg(window, GTK_STATE_NORMAL, &color);
+
   grid = gtk_grid_new();
 
   /* Pack the container in the window */
   gtk_container_add(GTK_CONTAINER(window), grid);
-
-  GdkColor color;
-
-  gdk_color_parse("grey", &color);
-
-  gtk_widget_modify_bg(window, GTK_STATE_NORMAL, &color);
 
   button = gtk_button_new_with_label("Generate");
   g_signal_connect(button, "clicked", G_CALLBACK(print_hello), NULL);
@@ -71,7 +76,16 @@ static void activate(GtkApplication *app, gpointer user_data)
 
   button = gtk_button_new_with_label("Mail");
   /* g_signal_connect(button, "clicked", G_CALLBACK(print_hello_2), NULL); */
-  g_signal_connect(button, "clicked", G_CALLBACK(enter_button), NULL);
+
+  GtkWidget *emailLabel, *entry_text1, *entry_text2;
+  /* emailLabel  = gtk_label_new("Email:"); */
+  entry_text1 = gtk_entry_new();
+  entry_text2 = gtk_entry_new();
+  /* gtk_entry_set_placeholder_text(GTK_ENTRY(entry), "Email"); */
+  entry1 = gtk_entry_get_text(GTK_ENTRY(entry_text1));
+  entry2 = gtk_entry_get_text(GTK_ENTRY(entry_text2));
+
+  g_signal_connect(button, "clicked", G_CALLBACK(callback), (gpointer)entry1);
 
   /* Place the second button in the grid cell (1, 0), and make it fill
    * just 1 cell horizontally and vertically (ie no spanning)
@@ -85,23 +99,19 @@ static void activate(GtkApplication *app, gpointer user_data)
   /* Place the Quit button in the grid cell (0, 1), and make it
    * span 2 columns.
    */
-  /* gtk_grid_attach(GTK_GRID(grid), button, 0, 1, 2, 1); */
+  gtk_grid_attach(GTK_GRID(grid), button, 0, 1, 2, 1);
 
   /* Now that we are done packing our widgets, we show them all
    * in one go, by calling gtk_widget_show_all() on the window.
    * This call recursively calls gtk_widget_show() on all widgets
    * that are contained in the window, directly or indirectly.
    */
-  gtk_grid_attach(GTK_GRID(grid), button, 0, 1, 2, 1);
+  /* gtk_grid_attach(GTK_GRID(grid), button, 0, 1, 2, 1); */
 
-  GtkWidget *emailLabel, *entry;
-  emailLabel = gtk_label_new("Email:");
-  entry      = gtk_entry_new();
-  /* gtk_entry_set_placeholder_text(GTK_ENTRY(entry), "Email"); */
-
-  gtk_grid_attach(GTK_GRID(grid), entry, 20, 10, 20, 1);
-  gtk_grid_attach(GTK_GRID(grid), emailLabel, 20, 20, 20, 1);
-  data = gtk_entry_get_text(GTK_ENTRY(entry));
+  gtk_grid_attach(GTK_GRID(grid), entry_text1, 20, 10, 20, 1);
+  gtk_grid_attach(GTK_GRID(grid), entry_text2, 20, 30, 20, 1);
+  /* gtk_grid_attach(GTK_GRID(grid), emailLabel, 20, 20, 20, 1); */
+  /* data = gtk_entry_get_text(GTK_ENTRY(entry)); */
 
   gtk_widget_show_all(window);
 }
