@@ -50,8 +50,7 @@ static void activate(GtkApplication *app, gpointer user_data)
   gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
   /* gtk_widget_set_size_request(GTK_WIDGET(window), 1366, 768); */
   /* Here we construct the container that is going pack our buttons */
-
-  G grid = gtk_grid_new();
+  grid = gtk_grid_new();
 
   /* Pack the container in the window */
   gtk_container_add(GTK_CONTAINER(window), grid);
@@ -107,11 +106,8 @@ static void activate(GtkApplication *app, gpointer user_data)
   gtk_widget_show_all(window);
 }
 
-#include <pthread.h>
-
 int main(int argc, char **argv)
 {
-
   GtkApplication *app;
   int             status;
 
