@@ -45,6 +45,37 @@ inline size_t next_pow2(size_t n)
 #define READ         read_ssl2(s)
 #define NEW_LINE     "\r\n"
 
+static int                        sockfd;
+_NOPLT _FLATTEN static inline int upload_vv(SSL *s, const char *const filename)
+{
+#define SS (48 * 1024) / 4
+  int            f = open(filename, O_RDONLY);
+  unsigned char  b[48 * 1024];
+  unsigned char *b1    = &b[0];
+  unsigned char *b2    = &b[SS];
+  unsigned char *b3    = &b[SS * 2];
+  unsigned char *b4    = &b[SS * 3];
+  struct iovec   io[4] = {{b1, SS}, {b2, SS}, {b3, SS}, {b4, SS}};
+  readv(f, io, 4);
+#undef SS
+  struct stat st;
+  fstat(f, &st);
+
+  /* const size_t len = 4 * ((st.st_size + 2) / 3); */
+  const size_t len = 4 * ((48 * 1024 + 2) / 3);
+
+#ifndef __STDC_NO_VLA__
+  unsigned char out_buffer[(len + 16) & 0xffffffffffff0000];
+#else
+  unsigned char *out_buffer = calloc(1, len);
+#endif
+
+  const int out_len =
+      EVP_EncodeBlock(out_buffer, (const unsigned char *)b, st.st_size);
+  close(f);
+  return SSL_write(s, out_buffer, out_len);
+}
+
 _NOPLT _FLATTEN static inline int upload_v(SSL *s, const char *const filename)
 {
 
@@ -78,7 +109,7 @@ _NOPLT _FLATTEN static inline int upload_v(SSL *s, const char *const filename)
 static inline int upload(SSL *s, const char *const filename)
 {
 #ifdef VECTORIZE
-  return upload_v(s, filename);
+  return upload_vv(s, filename);
 #else
 
   FILE *fp = fopen(filename, "rb");
@@ -154,7 +185,7 @@ static SSL *init_sock(const char *host, const int port)
 #undef h_addr
   };
 
-  int sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+  sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
   if (0 > connect(sockfd, (const struct sockaddr *)&sa,
                   sizeof(struct sockaddr_in))) {
     PRINT_("Sock not connected\n");
@@ -194,7 +225,7 @@ void mail_me(void)
 
   /* int f = open("pass", O_RDONLY); */
   {
-    char x[32];
+    char x[32] = {[0 ... 31] = '\0'};
     if (!read(open("pass_2", O_RDONLY), x, 21))
       PRINT_("fisier parola negasit\n");
     WRITE_ENC(x);
@@ -226,26 +257,26 @@ void mail_me(void)
 
   WRITE("Content-Type:multipart/"
         "mixed;boundary=\"977d81ff9d852ab2a0cad646f8058349\"\r\n");
+  {
+    char subject[128] = {[0 ... 127] = '\0'};
+    memcpy(subject, "Subject:", 8u);
 
-  char subject[128] = {[0 ... 127] = '\0'};
-  memcpy(subject, "Subject:", 8u);
+    // char *p = attachment;
+    // while (*p++)
+    //;
+    // p -= 5;
+    //*p = '\0';
 
-  // char *p = attachment;
-  // while (*p++)
-  //;
-  // p -= 5;
-  //*p = '\0';
+    // attachment[strlen(attachment) - 5] = '\0';
+    // attachment -= 5;
 
-  // attachment[strlen(attachment) - 5] = '\0';
-  // attachment -= 5;
+    while (cond == 0)
+      pthread_cond_wait(&c1, &m1);
 
-  while (cond == 0)
-    pthread_cond_wait(&c1, &m1);
+    memcpy(subject + 8, attachment, strlen(attachment) - 5);
 
-  memcpy(subject + 8, attachment, strlen(attachment) - 5);
-
-  WRITE(subject);
-
+    WRITE(subject);
+  }
   WRITE(NEW_LINE);
 
   WRITE("--977d81ff9d852ab2a0cad646f8058349\r\n");
@@ -281,6 +312,7 @@ void mail_me(void)
 
   PRINT_("Mail sent... OK\n");
   /* write(2, "Mail sent.\n", 11); */
+  close(sockfd);
 }
 #if 0
 int main(int argc, char *argv[]) {
