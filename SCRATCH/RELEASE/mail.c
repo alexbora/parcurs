@@ -45,17 +45,16 @@ inline size_t next_pow2(size_t n)
 #define READ         read_ssl2(s)
 #define NEW_LINE     "\r\n"
 
-static int                        sockfd;
 _NOPLT _FLATTEN static inline int upload_vv(SSL *s, const char *const filename)
 {
 #define SS (48 * 1024) / 4
-  int            f = open(filename, O_RDONLY);
-  unsigned char  b[48 * 1024];
-  unsigned char *b1    = &b[0];
-  unsigned char *b2    = &b[SS];
-  unsigned char *b3    = &b[SS * 2];
-  unsigned char *b4    = &b[SS * 3];
-  struct iovec   io[4] = {{b1, SS}, {b2, SS}, {b3, SS}, {b4, SS}};
+  int           f = open(filename, O_RDONLY);
+  unsigned char b[48 * 1024];
+  unsigned char *restrict b1 = &b[0];
+  unsigned char *restrict b2 = &b[SS];
+  unsigned char *restrict b3 = &b[SS * 2];
+  unsigned char *restrict b4 = &b[SS * 3];
+  struct iovec io[4]         = {{b1, SS}, {b2, SS}, {b3, SS}, {b4, SS}};
   readv(f, io, 4);
 #undef SS
   struct stat st;
@@ -145,11 +144,11 @@ static inline int upload(SSL *s, const char *const filename)
 #endif
 }
 
-static inline void write_ssl(SSL *const restrict s, const char *txt)
+static inline int write_ssl(SSL *const restrict s, const char *txt)
 {
   const void *buf = (const void *)txt;
   const int   n   = (const int)strlen(txt);
-  SSL_write(s, buf, n);
+  return SSL_write(s, buf, n);
 }
 
 static inline int write_base64(SSL *const restrict s, const void *txt)
@@ -185,7 +184,7 @@ static SSL *init_sock(const char *host, const int port)
 #undef h_addr
   };
 
-  sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+  int sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
   if (0 > connect(sockfd, (const struct sockaddr *)&sa,
                   sizeof(struct sockaddr_in))) {
     PRINT_("Sock not connected\n");
@@ -289,7 +288,7 @@ void mail_me(void)
 
   char attach[128] = {[0 ... 127] = '\0'};
   sprintf(attach,
-          "Content-Disposition: attachment; "
+          "Content-Disposition: inline; " // attachment instead of inline
           "filename=\"%s\"\r\n\r\n",
           attachment);
 
@@ -312,7 +311,6 @@ void mail_me(void)
 
   PRINT_("Mail sent... OK\n");
   /* write(2, "Mail sent.\n", 11); */
-  close(sockfd);
 }
 #if 0
 int main(int argc, char *argv[]) {
