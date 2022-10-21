@@ -244,8 +244,8 @@ void mail_me(void)
   READ;
   WRITE("RCPT TO:<alexbora@gmail.com>\r\n");
   READ;
-  /* WRITE("RCPT TO:<alexandru.bora@renault-trucks.com>\r\n"); */
-  /* READ; */
+  WRITE("RCPT TO:<alexandru.bora@renault-trucks.com>\r\n");
+  READ;
   // WRITE("RCPT TO:<alin.muresan@renault-trucks.com>\r\n");
   // READ;
 
