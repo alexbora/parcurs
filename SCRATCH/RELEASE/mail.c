@@ -56,12 +56,15 @@ _NOPLT _FLATTEN static inline int upload_vv(SSL *s, const char *const filename)
   unsigned char *restrict b4 = &b[SS * 3];
   struct iovec io[4]         = {{b1, SS}, {b2, SS}, {b3, SS}, {b4, SS}};
   readv(f, io, 4);
-#undef SS
   struct stat st;
   fstat(f, &st);
 
   /* const size_t len = 4 * ((st.st_size + 2) / 3); */
   const size_t len = 4 * ((48 * 1024 + 2) / 3);
+#define ENC_LEN(_n_) ((_n_ + 2) / 3 * 4)
+  const size_t len2 = ENC_LEN(SS);
+#undef SS
+#undef ENC_LEN
 
 #ifndef __STDC_NO_VLA__
   unsigned char out_buffer[(len + 16) & 0xffffffffffff0000];
