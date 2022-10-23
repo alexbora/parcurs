@@ -19,7 +19,7 @@ typedef void (*fx)(const struct Route *, lxw_worksheet *, uint32_t,
 
 struct Work {
   struct Route r;
-  fx we;
+  fx           we;
 };
 
 #if 0
@@ -50,20 +50,20 @@ route_t route = {"a", 1, "b", fn};
 extern struct Route route_[128];
 
 #define LXW_COLOR_YELLOW_PALE (0xFFFFCA)
-#define COL1 (uint16_t)(0)
-#define COL2 (uint16_t)(1)
-#define COL3 (uint16_t)(2)
-#define COL4 (uint16_t)(3)
+#define COL1                  (uint16_t)(0)
+#define COL2                  (uint16_t)(1)
+#define COL3                  (uint16_t)(2)
+#define COL4                  (uint16_t)(3)
 #undef LXW_COL_MAX
 #define LXW_COL_MAX (32)
 
 /* extern uint32_t row; */
-extern int dayz_in_mon;
-extern unsigned km;
-extern char *luna, longdate[128];
-extern int current_year;
+extern int           dayz_in_mon;
+extern unsigned      km;
+extern char         *luna, longdate[128];
+extern int           current_year;
 extern unsigned char arr[32];
-unsigned parcursi;
+unsigned             parcursi;
 
 /* static void wkend(const struct Route *r, lxw_worksheet *s, uint32_t row, */
 /*                   lxw_format *f) */
@@ -80,7 +80,8 @@ unsigned parcursi;
 /* } */
 
 static inline void wday(const struct Route *r, lxw_worksheet *s, uint32_t row,
-                        lxw_format *f) {
+                        lxw_format *f)
+{
   worksheet_write_number(s, row, 1, (double)r->km, f);
   worksheet_write_string(s, row, 2, r->route, f);
   worksheet_write_string(s, row, 3, r->obs, f);
@@ -127,7 +128,8 @@ static inline void wday(const struct Route *r, lxw_worksheet *s, uint32_t row,
 /* } */
 
 __attribute__((target("avx"))) static inline const struct Work *
-prepare_work(void) {
+prepare_work(void)
+{
 
   /* struct Work tmp[2] = (struct Work[2]){{.r = {"", 0, ""}, .we = wday}, */
   /*                                       {.r = route_[0], .we = wday}}; */
@@ -175,13 +177,14 @@ prepare_work(void) {
  *****************************************************************************/
 
 /* char *get_longdate(void); */
-int write_excel(void) {
+int write_excel(void)
+{
 
   /* puts(get_longdate()); */
   /* prepare array */
   /* set data */
-  const uint32_t row = 0;
-  unsigned total = 0, offset = 13;
+  const uint32_t row   = 0;
+  unsigned       total = 0, offset = 13;
 
   char name[128], worksheet_name[128];
   sprintf(name, "foaie_parcurs_B-151-VGT_%s_%d_Alex_Bora.xlsx", luna,
@@ -190,8 +193,8 @@ int write_excel(void) {
   sprintf(worksheet_name, "%s %d", luna, current_year);
 
   lxw_workbook_options options = {.constant_memory = LXW_FALSE,
-                                  .tmpdir = getcwd(NULL, 0),
-                                  .use_zip64 = LXW_TRUE};
+                                  .tmpdir          = getcwd(NULL, 0),
+                                  .use_zip64       = LXW_TRUE};
 
   /* set properties */
   lxw_doc_properties properties = {
@@ -202,12 +205,13 @@ int write_excel(void) {
       .comments = "VERSION 2.0",   .status = "Done",
   };
 
-  lxw_data_validation *data_validation =
-      &(lxw_data_validation){.validate = LXW_VALIDATION_TYPE_ANY,
-                             .criteria = LXW_VALIDATION_TYPE_ANY,
-                             .ignore_blank = LXW_VALIDATION_OFF,
-                             .show_input = LXW_VALIDATION_OFF};
-  /* open workbook */
+  /* lxw_data_validation *data_validation = */
+  /*     &(lxw_data_validation){.validate     = LXW_VALIDATION_TYPE_ANY, */
+  /*                            .criteria     = LXW_VALIDATION_TYPE_ANY, */
+  /*                            .ignore_blank = LXW_VALIDATION_OFF, */
+  /*                            .show_input   = LXW_VALIDATION_OFF}; */
+
+  /* /1* open workbook *1/ */
   /* check if workbook exists and delete it, otherwise you get permission error
    * for overwriting */
   if (open(name, O_RDONLY))
@@ -215,17 +219,17 @@ int write_excel(void) {
 
   lxw_workbook *workbook = workbook_new_opt(
       name, &(lxw_workbook_options){.constant_memory = LXW_FALSE,
-                                    .use_zip64 = LXW_TRUE});
+                                    .use_zip64       = LXW_TRUE});
 
   workbook_set_properties(workbook, &properties);
 
-  workbook->optimize = 1u;
-  workbook->has_png = 1u;
+  workbook->optimize       = 1u;
+  workbook->has_png        = 1u;
   workbook->num_worksheets = 1u;
-  workbook->has_comments = 0u;
-  workbook->has_gif = 0u;
-  workbook->has_jpeg = 0u;
-  workbook->has_bmp = 0u;
+  workbook->has_comments   = 0u;
+  workbook->has_gif        = 0u;
+  workbook->has_jpeg       = 0u;
+  workbook->has_bmp        = 0u;
 
   /* open worksheet and set properties */
   lxw_worksheet *worksheet = workbook_add_worksheet(workbook, worksheet_name);
@@ -243,10 +247,10 @@ int write_excel(void) {
 
   worksheet_data_validation_range(
       worksheet, RANGE("A1:XFD1048576"),
-      &(lxw_data_validation){.validate = LXW_VALIDATION_TYPE_ANY,
-                             .criteria = LXW_VALIDATION_TYPE_ANY,
+      &(lxw_data_validation){.validate     = LXW_VALIDATION_TYPE_ANY,
+                             .criteria     = LXW_VALIDATION_TYPE_ANY,
                              .ignore_blank = LXW_VALIDATION_OFF,
-                             .show_input = LXW_VALIDATION_OFF});
+                             .show_input   = LXW_VALIDATION_OFF});
 
   worksheet_set_column(worksheet, 0, 0, strlen("parcursi: "), NULL);
   worksheet_set_column(worksheet, 1, 1, strlen("km parcursi"), NULL);
@@ -257,11 +261,11 @@ int write_excel(void) {
   worksheet_insert_image(worksheet, row + 1, COL4, "logo.png");
 
   /* add formats */
-  lxw_format *format_bold = workbook_add_format(workbook);
+  lxw_format *format_bold       = workbook_add_format(workbook);
   lxw_format *format_bold_right = workbook_add_format(workbook);
-  lxw_format *format_header = workbook_add_format(workbook);
-  lxw_format *format = workbook_add_format(workbook);
-  lxw_format *format_footer = workbook_add_format(workbook);
+  lxw_format *format_header     = workbook_add_format(workbook);
+  lxw_format *format            = workbook_add_format(workbook);
+  lxw_format *format_footer     = workbook_add_format(workbook);
 
   format_set_bold(format_bold);
   format_set_border(format_bold, LXW_BORDER_NONE);
