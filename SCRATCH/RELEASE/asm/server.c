@@ -18,9 +18,13 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-void *foo(void *a) { return NULL; }
+void *foo(void *a)
+{
+  return NULL;
+}
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 
   pthread_t t1;
   pthread_create(&t1, NULL, foo, NULL);
