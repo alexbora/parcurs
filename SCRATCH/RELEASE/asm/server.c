@@ -4,6 +4,7 @@
  * @created     : miercuri oct 26, 2022 20:49:14 EEST
  */
 
+#include <netinet/in.h>
 #define _GNU_SOURCE
 
 #include <arpa/inet.h>
@@ -20,16 +21,21 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-void *foo(void *a)
-{
-  return NULL;
-}
+int main(int argc, char *argv[]) {
 
-int main(int argc, char *argv[])
-{
+  int sock = socket(AF_INET, SOCK_STREAM, 0);
+  const struct sockaddr_in server = {.sin_family = AF_INET,
+                                     .sin_addr.s_addr = INADDR_ANY,
+                                     .sin_port = htons(8080)};
 
-  pthread_t t1;
-  pthread_create(&t1, NULL, foo, NULL);
+  struct sockaddr_in client;
+
+  bind(sock, (const struct sockaddr *)&server, sizeof(server));
+  listen(sock, 3);
+  while (1) {
+    accept(sock, (struct sockaddr *)&client,
+           (socklen_t *)(sizeof(struct in_addr)));
+  }
 
   return EXIT_SUCCESS;
 }
