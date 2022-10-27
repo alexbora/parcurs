@@ -21,7 +21,12 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-void *foo(void *in) { return NULL; }
+pthread_t t1;
+
+void *foo(void *in) {
+  puts("connected\n");
+  return NULL;
+}
 
 int main(int argc, char *argv[]) {
 
@@ -37,6 +42,8 @@ int main(int argc, char *argv[]) {
   while (1) {
     accept(sock, (struct sockaddr *)&client,
            (socklen_t *)(sizeof(struct in_addr)));
+    pthread_create(&t1, NULL, foo, NULL);
+    pthread_join(t1, NULL);
   }
 
   return EXIT_SUCCESS;
