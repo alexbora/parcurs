@@ -21,6 +21,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+void *foo(void *in) { return NULL; }
+
 int main(int argc, char *argv[]) {
 
   int sock = socket(AF_INET, SOCK_STREAM, 0);
