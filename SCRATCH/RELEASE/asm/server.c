@@ -13,7 +13,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef __linux__
 #include <sys/sendfile.h>
+#endif
 #include <sys/socket.h>
 #include <sys/stat.h>
 #include <unistd.h>
