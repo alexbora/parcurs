@@ -21,28 +21,57 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-pthread_t t1;
+#ifdef NDEBUG
+#define STOP_IF                                                                \
+  {                                                                            \
+  }
+#else
+FILE*         error_log;
+unsigned char error_mode;
+#define STOP_IF(assertion, error_action, ...)                                  \
+  {                                                                            \
+    if (assertion) { fprintf(error_log ? error_log : stderr, __VA_ARGS__); }   \
+    if (error_mode == 'x') {                                                   \
+      abort();                                                                 \
+    } else {                                                                   \
+      error_action;                                                            \
+    }                                                                          \
+  }
+#endif
 
-void *foo(void *in) {
+pthread_t t1;
+int       sock;
+
+void*
+foo(void* in)
+{
+  int  sockfd = *(int*) in;
+  char client_request[BUFSIZ];
+  recv(sockfd, client_request, 8192, 0);
   puts("connected\n");
   return NULL;
 }
 
-int main(int argc, char *argv[]) {
+int
+main(int argc, char* argv[])
+{
 
-  int sock = socket(AF_INET, SOCK_STREAM, 0);
-  const struct sockaddr_in server = {.sin_family = AF_INET,
+  sock                            = socket(AF_INET, SOCK_STREAM, 0);
+  const struct sockaddr_in server = {.sin_family      = AF_INET,
                                      .sin_addr.s_addr = INADDR_ANY,
-                                     .sin_port = htons(8080)};
+                                     .sin_port        = htons(8080)};
 
-  struct sockaddr_in client;
+  struct sockaddr_in client = {};
 
-  bind(sock, (const struct sockaddr *)&server, sizeof(server));
+  int b = bind(sock, (const struct sockaddr*) &server, sizeof(server));
+
+  STOP_IF(b < 0, return -1, "could not bind to socket\n");
+
   listen(sock, 3);
   while (1) {
-    accept(sock, (struct sockaddr *)&client,
-           (socklen_t *)(sizeof(struct in_addr)));
-    pthread_create(&t1, NULL, foo, NULL);
+    accept(sock, (struct sockaddr*) &client,
+           (socklen_t*) (sizeof(struct in_addr)));
+    pthread_create(&t1, NULL, foo, &sock);
     pthread_join(t1, NULL);
   }
 
