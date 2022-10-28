@@ -90,5 +90,8 @@ int main(int argc, char *argv[])
     int pid = fork();
   }
 
+  shutdown(sock, 2);
+  close(sock);
+
   return EXIT_SUCCESS;
 }
