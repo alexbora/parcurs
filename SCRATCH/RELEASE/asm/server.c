@@ -45,8 +45,6 @@ static unsigned char error_mode;
 static pthread_t t1;
 static int       sock;
 
-static void __attribute__((leaf)) getip(int, int*);
-
 static void*
 foo(void* in)
 {
@@ -85,7 +83,7 @@ main(int argc, char* argv[])
 
   int b = bind(sock, (const struct sockaddr*) &server, sizeof(server));
 
-  STOP_IF(b < 0, return EXIT_FAILURE, "could not bind to socket\n");
+  //  STOP_IF(b < 0, return EXIT_FAILURE, "could not bind to socket\n");
 
   listen(sock, 3);
 
