@@ -214,7 +214,9 @@ int write_excel(void)
   /* /1* open workbook *1/ */
   /* check if workbook exists and delete it, otherwise you get permission error
    * for overwriting */
-  if (open(name, O_RDONLY))
+  /* if (open(name, O_RDONLY)) */
+  /* remove(name); */
+  if (access(name, F_OK))
     remove(name);
 
   lxw_workbook *workbook = workbook_new_opt(
