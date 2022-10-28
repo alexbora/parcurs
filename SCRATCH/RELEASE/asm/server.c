@@ -26,7 +26,7 @@
   {                                                                            \
   }
 #else
-static FILE*         error_log;
+static FILE         *error_log;
 static unsigned char error_mode;
 #define STOP_IF(assertion, error_action, ...)                                  \
   {                                                                            \
@@ -45,32 +45,29 @@ static unsigned char error_mode;
 static pthread_t t1;
 static int       sock;
 
-static void*
-foo(void* in)
+static void *foo(void *in)
 {
-  int  sockfd = *(int*) in;
+  int  sockfd = *(int *)in;
   char client_request[BUFSIZ];
   recv(sockfd, client_request, 8192, 0);
   puts("connected\n");
   return NULL;
 }
 
-static void
-getip(int s, int* ip)
+static void getip(int s, int *ip)
 {
   socklen_t          size = sizeof(struct sockaddr_in);
   struct sockaddr_in addr;
-  getsockname(s, (struct sockaddr*) &addr, &size);
+  getsockname(s, (struct sockaddr *)&addr, &size);
 
-  char* host = inet_ntoa(addr.sin_addr);
+  char *host = inet_ntoa(addr.sin_addr);
   sscanf(host, "%d.%d.%d.%d", &ip[0], &ip[1], &ip[2], &ip[3]);
 }
 
-int
-main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-  (void) argc;
-  (void) argv;
+  (void)argc;
+  (void)argv;
 
   sock = socket(AF_INET, SOCK_STREAM, 0);
   setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &(int[]){1}, sizeof(int));
@@ -81,15 +78,15 @@ main(int argc, char* argv[])
 
   struct sockaddr_in client;
 
-  int b = bind(sock, (const struct sockaddr*) &server, sizeof(server));
+  int b = bind(sock, (const struct sockaddr *)&server, sizeof(server));
 
-  //  STOP_IF(b < 0, return EXIT_FAILURE, "could not bind to socket\n");
+  STOP_IF(b < 0, return EXIT_FAILURE, "could not bind to socket\n");
 
   listen(sock, 3);
 
   while (1) {
-    int conn = accept(sock, (struct sockaddr*) &client,
-                      (socklen_t*) (sizeof(struct in_addr)));
+    int conn = accept(sock, (struct sockaddr *)&client,
+                      (socklen_t *)(sizeof(struct in_addr)));
     write(conn, "200 \n", 5);
 
     int ip[4];
