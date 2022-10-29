@@ -1,7 +1,0 @@
-/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/CMakeFiles/server.dir
-/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/CMakeFiles/edit_cache.dir
-/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/CMakeFiles/rebuild_cache.dir
-/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/CMakeFiles/list_install_components.dir
-/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/CMakeFiles/install.dir
-/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/CMakeFiles/install/local.dir
-/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/CMakeFiles/install/strip.dir

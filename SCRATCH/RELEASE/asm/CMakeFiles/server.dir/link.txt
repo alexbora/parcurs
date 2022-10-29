@@ -1,1 +1,0 @@
-/usr/local/gcc-12x/bin/gcc-12x -I/usr/local/include -I/usr/local/gcc-12x/include/c++/12.2.0 -O3 -DNDEBUG -L/usr/local/lib -L/usr/local/gcc-12x/lib -L/usr/local/gcc-12x/lib64 CMakeFiles/server.dir/server.c.o -o server  -pthread 
