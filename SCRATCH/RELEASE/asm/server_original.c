@@ -88,12 +88,6 @@ int main(int argc, char *argv[])
   while (1) {
     int conn = accept(sock, (struct sockaddr *)&client,
                       (socklen_t *)(sizeof(struct in_addr)));
-    if (conn < 0) {
-      if (errno == EINTR)
-        continue;
-      else
-        abort();
-    }
 
     write(conn, "200 \n", 5);
 
