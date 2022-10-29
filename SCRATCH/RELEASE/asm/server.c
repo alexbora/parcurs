@@ -4,6 +4,7 @@
  * @created     : miercuri oct 26, 2022 20:49:14 EEST
  */
 
+#include <bits/pthreadtypes.h>
 #include <netinet/in.h>
 /* #define _GNU_SOURCE */
 
@@ -11,6 +12,7 @@
 #include <fcntl.h>
 #include <pthread.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -26,7 +28,7 @@
   {                                                                            \
   }
 #else
-static FILE         *error_log;
+static FILE*         error_log;
 static unsigned char error_mode;
 #define STOP_IF(assertion, error_action, ...)                                  \
   {                                                                            \
@@ -42,32 +44,43 @@ static unsigned char error_mode;
   }
 #endif
 
-static pthread_t t1;
-static int       sock;
+static pthread_t       t1;
+static pthread_mutex_t m1 = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t  c1 = PTHREAD_COND_INITIALIZER;
+static uint8_t         connections;
+static int             sock;
 
-static void *foo(void *in)
+static void*
+foo(void* in)
 {
-  int  sockfd = *(int *)in;
-  char client_request[BUFSIZ];
+
+  int  sockfd                 = *(int*) in;
+  char client_request[BUFSIZ] = {[0 ... BUFSIZ - 1] = 0};
+  memset(client_request, '\0', BUFSIZ);
   recv(sockfd, client_request, 8192, 0);
+  while (!connections) { pthread_cond_wait(&c1, &m1); }
+
   puts("connected\n");
   return NULL;
 }
 
-static void getip(int s, int *ip)
+static void
+getip(int s, int* ip)
 {
   socklen_t          size = sizeof(struct sockaddr_in);
   struct sockaddr_in addr;
-  getsockname(s, (struct sockaddr *)&addr, &size);
+  getsockname(s, (struct sockaddr*) &addr, &size);
 
-  char *host = inet_ntoa(addr.sin_addr);
+  char* host = inet_ntoa(addr.sin_addr);
   sscanf(host, "%d.%d.%d.%d", &ip[0], &ip[1], &ip[2], &ip[3]);
 }
 
-int main(int argc, char *argv[])
+int
+main(int argc, char* argv[])
 {
-  (void)argc;
-  (void)argv;
+  (void) argc;
+  (void) argv;
+  pthread_create(&t1, NULL, foo, &sock);
 
   sock = socket(AF_INET, SOCK_STREAM, 0);
   setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &(int[]){1}, sizeof(int));
@@ -78,22 +91,23 @@ int main(int argc, char *argv[])
 
   struct sockaddr_in client;
 
-  int b = bind(sock, (const struct sockaddr *)&server, sizeof(server));
+  int b = bind(sock, (const struct sockaddr*) &server, sizeof(server));
 
   STOP_IF(b < 0, return EXIT_FAILURE, "could not bind to socket\n");
 
   listen(sock, 3);
 
   while (1) {
-    int conn = accept(sock, (struct sockaddr *)&client,
-                      (socklen_t *)(sizeof(struct in_addr)));
+    int conn = accept(sock, (struct sockaddr*) &client,
+                      (socklen_t*) (sizeof(struct in_addr)));
     write(conn, "200 \n", 5);
+    connections |= 1;
+    pthread_cond_broadcast(&c1);
+    /* int ip[4] = {[0 ... 3] = 0}; */
+    /* getip(sock, ip); */
+    /* printf("Connection from: [%d.%d.%d.%d]\n", ip[0], ip[1], ip[2], ip[3]);
+     */
 
-    int ip[4];
-    getip(sock, ip);
-    printf("Connection from: [%d.%d.%d.%d]\n", ip[0], ip[1], ip[2], ip[3]);
-
-    pthread_create(&t1, NULL, foo, &sock);
     pthread_join(t1, NULL);
     /* int pid = fork(); */
   }
