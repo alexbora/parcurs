@@ -1,0 +1,45 @@
+Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
+Change Dir: /home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_80e60/fast && /usr/bin/make  -f CMakeFiles/cmTC_80e60.dir/build.make CMakeFiles/cmTC_80e60.dir/build
+make[1]: Entering directory '/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_80e60.dir/src.c.o
+/usr/local/gcc-12x/bin/gcc-12x -DCMAKE_HAVE_LIBC_PTHREAD  -I/usr/local/include -I/usr/local/gcc-12x/include/c++/12.2.0  -o CMakeFiles/cmTC_80e60.dir/src.c.o -c /home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_80e60
+/home/linuxbrew/.linuxbrew/Cellar/cmake/3.24.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_80e60.dir/link.txt --verbose=1
+/usr/local/gcc-12x/bin/gcc-12x -I/usr/local/include -I/usr/local/gcc-12x/include/c++/12.2.0  -L/usr/local/lib -L/usr/local/gcc-12x/lib -L/usr/local/gcc-12x/lib64  CMakeFiles/cmTC_80e60.dir/src.c.o -o cmTC_80e60 
+/usr/bin/ld: CMakeFiles/cmTC_80e60.dir/src.c.o: in function `main':
+src.c:(.text+0x2d): undefined reference to `pthread_create'
+/usr/bin/ld: src.c:(.text+0x39): undefined reference to `pthread_detach'
+/usr/bin/ld: src.c:(.text+0x45): undefined reference to `pthread_cancel'
+/usr/bin/ld: src.c:(.text+0x56): undefined reference to `pthread_join'
+/usr/bin/ld: src.c:(.text+0x6a): undefined reference to `pthread_atfork'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_80e60.dir/build.make:98: recipe for target 'cmTC_80e60' failed
+make[1]: *** [cmTC_80e60] Error 1
+make[1]: Leaving directory '/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/CMakeFiles/CMakeTmp'
+Makefile:127: recipe for target 'cmTC_80e60/fast' failed
+make: *** [cmTC_80e60/fast] Error 2
+
+
+Source file was:
+#include <pthread.h>
+
+static void* test_func(void* data)
+{
+  return data;
+}
+
+int main(void)
+{
+  pthread_t thread;
+  pthread_create(&thread, NULL, test_func, NULL);
+  pthread_detach(thread);
+  pthread_cancel(thread);
+  pthread_join(thread, NULL);
+  pthread_atfork(NULL, NULL, NULL);
+  pthread_exit(NULL);
+
+  return 0;
+}
+
