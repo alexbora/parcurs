@@ -27,9 +27,10 @@
 
 #ifdef NDEBUG
 #define STOP_IF                                                                \
-  {}
+  {                                                                            \
+  }
 #else
-static FILE *error_log;
+static FILE         *error_log;
 static unsigned char error_mode;
 #define STOP_IF(assertion, error_action, ...)                                  \
   {                                                                            \
@@ -45,7 +46,6 @@ static unsigned char error_mode;
   }
 #endif
 
-<<<<<<< HEAD
 static pthread_t       t1;
 static pthread_mutex_t m1          = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t  c1          = PTHREAD_COND_INITIALIZER;
@@ -54,20 +54,9 @@ static int             sock;
 
 static void *foo(void *in)
 {
-  int  sockfd = *(int *)in;
-  char client_request[BUFSIZ];
-=======
-static pthread_t t1;
-static pthread_mutex_t m1 = PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t c1 = PTHREAD_COND_INITIALIZER;
-static uint8_t connections;
-static int sock;
 
-static void *foo(void *in) {
-
-  int sockfd = *(int *)in;
+  int  sockfd                 = *(int *)in;
   char client_request[BUFSIZ] = {[0 ... BUFSIZ - 1] = 0};
->>>>>>> refs/remotes/origin/mutex
   memset(client_request, '\0', BUFSIZ);
 
   while (connections == 0) {
@@ -80,8 +69,9 @@ static void *foo(void *in) {
   return NULL;
 }
 
-static void getip(int s, int *ip) {
-  socklen_t size = sizeof(struct sockaddr_in);
+static void getip(int s, int *ip)
+{
+  socklen_t          size = sizeof(struct sockaddr_in);
   struct sockaddr_in addr;
   getsockname(s, (struct sockaddr *)&addr, &size);
 
@@ -89,7 +79,8 @@ static void getip(int s, int *ip) {
   sscanf(host, "%d.%d.%d.%d", &ip[0], &ip[1], &ip[2], &ip[3]);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
   (void)argc;
   (void)argv;
   connections = 0;
@@ -99,9 +90,9 @@ int main(int argc, char *argv[]) {
   sock = socket(AF_INET, SOCK_STREAM, 0);
   setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &(int[]){1}, sizeof(int));
 
-  const struct sockaddr_in server = {.sin_family = AF_INET,
+  const struct sockaddr_in server = {.sin_family      = AF_INET,
                                      .sin_addr.s_addr = INADDR_ANY,
-                                     .sin_port = htons(8080)};
+                                     .sin_port        = htons(8080)};
 
   struct sockaddr_in client;
 
