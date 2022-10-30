@@ -38,6 +38,8 @@ void error(const char *msg) {
   exit(1);
 }
 
+#define PORT 8080
+
 int main(int argc, char *argv[]) {
   int sockfd, newsockfd, portno;
   socklen_t clilen;
@@ -46,18 +48,20 @@ int main(int argc, char *argv[]) {
   int n;
   if (argc < 2) {
     fprintf(stderr, "ERROR, no port provided\n");
-    exit(1);
+    fprintf(stderr, "defaulting to: %d\n", PORT);
+    /* exit(1); */
   }
   // create a socket
   // socket(int domain, int type, int protocol)
   sockfd = socket(AF_INET, SOCK_STREAM, 0);
+  setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &(int[]){1}, sizeof(int));
   if (sockfd < 0)
     error("ERROR opening socket");
 
   // clear address structure
   bzero((char *)&serv_addr, sizeof(serv_addr));
 
-  portno = atoi(argv[1]);
+  portno = (argc == 2) ? atoi(argv[1]) : PORT;
 
   /* setup the host_addr structure for use in bind call */
   // server byte order
@@ -110,6 +114,8 @@ int main(int argc, char *argv[]) {
     error("ERROR reading from socket");
   printf("Here is the message: %s\n", buffer);
 
+  shutdown(sockfd, 2);
+  shutdown(newsockfd, 2);
   close(newsockfd);
   close(sockfd);
   return 0;
