@@ -33,19 +33,36 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-void error(const char *msg) {
+#define STOP_IF(expression, action, error_code, ...)                           \
+  {                                                                            \
+    if (expression) {                                                          \
+      fprintf(error_log ? error_log : stderr, __VA_ARGS__);                    \
+      fprintf(error_log ? error_log : stderr, "\n");                           \
+      if (error_code == 1)                                                     \
+        abort();                                                               \
+      else {                                                                   \
+        action                                                                 \
+      };                                                                       \
+    }                                                                          \
+  }
+
+void
+error(const char* msg)
+{
   perror(msg);
   exit(1);
 }
 
 #define PORT 8080
 
-int main(int argc, char *argv[]) {
-  int sockfd, newsockfd, portno;
-  socklen_t clilen;
-  char buffer[256];
+int
+main(int argc, char* argv[])
+{
+  int                sockfd, newsockfd, portno;
+  socklen_t          clilen;
+  char               buffer[256];
   struct sockaddr_in serv_addr, cli_addr;
-  int n;
+  int                n;
   if (argc < 2) {
     fprintf(stderr, "ERROR, no port provided\n");
     fprintf(stderr, "defaulting to: %d\n", PORT);
@@ -55,11 +72,10 @@ int main(int argc, char *argv[]) {
   // socket(int domain, int type, int protocol)
   sockfd = socket(AF_INET, SOCK_STREAM, 0);
   setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &(int[]){1}, sizeof(int));
-  if (sockfd < 0)
-    error("ERROR opening socket");
+  if (sockfd < 0) error("ERROR opening socket");
 
   // clear address structure
-  bzero((char *)&serv_addr, sizeof(serv_addr));
+  bzero((char*) &serv_addr, sizeof(serv_addr));
 
   portno = (argc == 2) ? atoi(argv[1]) : PORT;
 
@@ -79,7 +95,7 @@ int main(int argc, char *argv[]) {
   // and the length of the address structure
   // This bind() call will bind  the socket to the current IP address on port,
   // portno
-  if (bind(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
+  if (bind(sockfd, (struct sockaddr*) &serv_addr, sizeof(serv_addr)) < 0)
     error("ERROR on binding");
 
   // This listen() call tells the socket to listen to the incoming connections.
@@ -97,9 +113,8 @@ int main(int argc, char *argv[]) {
   // connection. So, the original socket file descriptor can continue to be used
   // for accepting new connections while the new socker file descriptor is used
   // for communicating with the connected client.
-  newsockfd = accept(sockfd, (struct sockaddr *)&cli_addr, &clilen);
-  if (newsockfd < 0)
-    error("ERROR on accept");
+  newsockfd = accept(sockfd, (struct sockaddr*) &cli_addr, &clilen);
+  if (newsockfd < 0) error("ERROR on accept");
 
   printf("server: got connection from %s port %d\n",
          inet_ntoa(cli_addr.sin_addr), ntohs(cli_addr.sin_port));
@@ -110,8 +125,7 @@ int main(int argc, char *argv[]) {
   bzero(buffer, 256);
 
   n = read(newsockfd, buffer, 255);
-  if (n < 0)
-    error("ERROR reading from socket");
+  if (n < 0) error("ERROR reading from socket");
   printf("Here is the message: %s\n", buffer);
 
   shutdown(sockfd, 2);
