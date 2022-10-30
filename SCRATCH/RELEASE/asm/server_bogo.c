@@ -64,9 +64,15 @@ error(const char* msg)
 
 #define PORT 8080
 
+#include <locale.h>
 int
 main(int argc, char* argv[])
 {
+  setlocale(LC_TIME, "ro_RO");
+  time_t t1  = time(0);
+  char*  tim = asctime(localtime(&t1));
+
+  printf("%s\n", tim);
 #ifdef LOG
   error_log = fopen("server.log", "wb++");
 #else
