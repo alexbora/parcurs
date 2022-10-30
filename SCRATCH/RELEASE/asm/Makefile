@@ -12,5 +12,7 @@ server_original:
 
 server_bogo: 
 	gcc-12 $(LIBS) $(FLAGS) server_bogo.c -o server
+server_bogo_log: 
+	gcc-12 -DNDEBUG -DLOG $(LIBS) $(FLAGS) server_bogo.c -o server
 clean: 
 	@rm -rf server *.dSYM  && printf 'Cleaned.\n'

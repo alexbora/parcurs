@@ -33,6 +33,14 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+FILE* error_log;
+#ifdef NDEBUG
+#define STOP_IF                                                                \
+  {                                                                            \
+  }
+FILE* error_log = NULL;
+#else
+
 #define STOP_IF(expression, action, error_code, ...)                           \
   {                                                                            \
     if (expression) {                                                          \
@@ -41,12 +49,13 @@
       if (error_code == 1)                                                     \
         abort();                                                               \
       else {                                                                   \
-        action                                                                 \
-      };                                                                       \
+        action;                                                                \
+      }                                                                        \
     }                                                                          \
   }
+#endif
 
-void
+static void
 error(const char* msg)
 {
   perror(msg);
@@ -58,6 +67,11 @@ error(const char* msg)
 int
 main(int argc, char* argv[])
 {
+#ifdef LOG
+  error_log = fopen("server.log", "wb++");
+#else
+  error_log = NULL;
+#endif
   int                sockfd, newsockfd, portno;
   socklen_t          clilen;
   char               buffer[256];
@@ -115,7 +129,7 @@ main(int argc, char* argv[])
   // for communicating with the connected client.
   newsockfd = accept(sockfd, (struct sockaddr*) &cli_addr, &clilen);
   if (newsockfd < 0) error("ERROR on accept");
-
+  fprintf(error_log, "%s\n", "accepting");
   printf("server: got connection from %s port %d\n",
          inet_ntoa(cli_addr.sin_addr), ntohs(cli_addr.sin_port));
 
@@ -126,11 +140,15 @@ main(int argc, char* argv[])
 
   n = read(newsockfd, buffer, 255);
   if (n < 0) error("ERROR reading from socket");
+  STOP_IF(n < 0, error("read"), 0, "read failed");
   printf("Here is the message: %s\n", buffer);
 
   shutdown(sockfd, 2);
   shutdown(newsockfd, 2);
   close(newsockfd);
   close(sockfd);
+#ifdef LOG
+  fclose(error_log);
+#endif
   return 0;
 }
