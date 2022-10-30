@@ -47,23 +47,24 @@ static unsigned char error_mode;
 #endif
 
 static pthread_t       t1;
-static pthread_mutex_t m1 = PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t  c1 = PTHREAD_COND_INITIALIZER;
-static uint8_t         connections;
+static pthread_mutex_t m1          = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t  c1          = PTHREAD_COND_INITIALIZER;
+static uint8_t         connections = 0;
 static int             sock;
 
 static void *foo(void *in)
 {
-
-  int  sockfd                 = *(int *)in;
-  char client_request[BUFSIZ] = {[0 ... BUFSIZ - 1] = 0};
+  int  sockfd = *(int *)in;
+  char client_request[BUFSIZ];
   memset(client_request, '\0', BUFSIZ);
-  recv(sockfd, client_request, 8192, 0);
-  while (!connections) {
+
+  while (connections == 0) {
     pthread_cond_wait(&c1, &m1);
   }
 
+  recv(sockfd, client_request, 8192, 0);
   puts("connected\n");
+  puts(client_request);
   return NULL;
 }
 
@@ -103,20 +104,23 @@ int main(int argc, char *argv[])
   while (1) {
     int conn = accept(sock, (struct sockaddr *)&client,
                       (socklen_t *)(sizeof(struct in_addr)));
-    if (conn) {
-      write(conn, "200 \n", 5);
-      connections++;
-      pthread_mutex_unlock(&m1);
-      pthread_cond_broadcast(&c1);
-    } /* int ip[4] = {[0 ... 3] = 0}; */
+    STOP_IF(!conn, return EXIT_FAILURE, "could not initiate connection\n");
+
+    /* if (conn) { */
+    write(conn, "200 \n", 5);
+    connections = 1;
+    pthread_mutex_unlock(&m1);
+    pthread_cond_broadcast(&c1);
+    /* } /1* int ip[4] = {[0 ... 3] = 0}; *1/ */
     /* getip(sock, ip); */
     /* printf("Connection from: [%d.%d.%d.%d]\n", ip[0], ip[1], ip[2], ip[3]);
      */
-
     pthread_join(t1, NULL);
     /* int pid = fork(); */
   }
 
+  pthread_cond_destroy(&c1);
+  pthread_mutex_destroy(&m1);
   shutdown(sock, 2);
   close(sock);
 
