@@ -10,5 +10,7 @@ server1:
 server_original: 
 	gcc-12 $(LIBS) $(FLAGS) server_original.c -o server
 
+server_bogo: 
+	gcc-12 $(LIBS) $(FLAGS) server_bogo.c -o server
 clean: 
 	@rm -rf server *.dSYM  && printf 'Cleaned.\n'
