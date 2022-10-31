@@ -13,7 +13,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-int main(int argc, char *argv[])
+int
+main(int argc, char* argv[])
 {
 
   int fd = creat("mmap.txt", 0777);
@@ -21,7 +22,7 @@ int main(int argc, char *argv[])
   struct stat f;
   fstat(fd, &f);
 
-  int *x =
+  int* x =
       mmap(0, f.st_size, PROT_READ | PROT_WRITE, MAP_FILE | MAP_SHARED, fd, 0);
   write(*x, "1", 1);
 
