@@ -53,12 +53,15 @@ static inline int upload_m(SSL *s, const char *const filename)
 {
   size_t in_size;
   int    fd = open(filename, O_RDONLY);
+  size_t file_size;
   {
     int         pagesize = getpagesize();
     struct stat fs;
     fstat(fd, &fs);
-    in_size = fs.st_size;
+    file_size = fs.st_size;
+    in_size   = fs.st_size;
     in_size += fs.st_size & ~(pagesize - 1);
+    close(fd);
   }
   unsigned char *x = mmap(0, in_size, PROT_READ, MAP_PRIVATE, fd, 0);
 
@@ -70,6 +73,10 @@ static inline int upload_m(SSL *s, const char *const filename)
                             MAP_SHARED | MAP_PRIVATE, -1, 0);
 
 #undef ENC_LEN
+
+  char     *y       = malloc(out_size * 4);
+  const int out_len = EVP_EncodeBlock(y, x, file_size);
+  /* return SSL_write(s, out, out_len); */
   return 1;
 }
 
