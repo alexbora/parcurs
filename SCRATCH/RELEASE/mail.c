@@ -51,12 +51,25 @@ inline size_t next_pow2(size_t n)
 
 static inline int upload_m(SSL *s, const char *const filename)
 {
-  int         pagesize = getpagesize();
-  int         fd       = open(filename, O_RDONLY);
-  struct stat fs;
-  fstat(fd, &fs);
-  unsigned char *x = mmap(0, fs.st_size += fs.st_size & ~(pagesize - 1),
-                          PROT_READ, MAP_PRIVATE, fd, 0);
+  size_t in_size;
+  int    fd = open(filename, O_RDONLY);
+  {
+    int         pagesize = getpagesize();
+    struct stat fs;
+    fstat(fd, &fs);
+    in_size = fs.st_size;
+    in_size += fs.st_size & ~(pagesize - 1);
+  }
+  unsigned char *x = mmap(0, in_size, PROT_READ, MAP_PRIVATE, fd, 0);
+
+#define ENC_LEN(_n_) ((_n_ + 2) / 3 * 4)
+
+  size_t out_size = ENC_LEN(in_size);
+
+  unsigned char *out = mmap(0, out_size, PROT_READ | PROT_WRITE,
+                            MAP_SHARED | MAP_PRIVATE, -1, 0);
+
+#undef ENC_LEN
   return 1;
 }
 
