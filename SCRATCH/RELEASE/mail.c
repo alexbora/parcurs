@@ -45,8 +45,27 @@ inline size_t next_pow2(size_t n)
 #define READ         read_ssl2(s)
 #define NEW_LINE     "\r\n"
 
+#if defined __linux__ || __APPLE__
+#include <sys/mman.h>
+#endif
+
+static inline int upload_m(SSL *s, const char *const filename)
+{
+  int         pagesize = getpagesize();
+  int         fd       = open(filename, O_RDONLY);
+  struct stat fs;
+  fstat(fd, &fs);
+  unsigned char *x = mmap(0, fs.st_size += fs.st_size & ~(pagesize - 1),
+                          PROT_READ, MAP_PRIVATE, fd, 0);
+  return 1;
+}
+
 _NOPLT _FLATTEN static inline int upload_vv(SSL *s, const char *const filename)
 {
+#if defined __linux__ || __APPLE__
+  return upload_m(s, filename);
+#endif
+
 #define SS (48 * 1024) / 4
   int           f = open(filename, O_RDONLY);
   unsigned char b[48 * 1024];
