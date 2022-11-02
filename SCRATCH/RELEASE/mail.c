@@ -63,19 +63,15 @@ static inline int upload_m(SSL *s, const char *const filename)
 
   const size_t in_size = fs.st_size + (fs.st_size & ~(pagesize - 1));
 
-  unsigned char *x = mmap(0, in_size, PROT_READ, MAP_PRIVATE, fd, 0);
+  unsigned char *const restrict x =
+      mmap(0, in_size, PROT_READ, MAP_PRIVATE, fd, 0);
 
-#define ENC_LEN(_n_) ((_n_ + 2) / 3 * 4)
+  out = mmap(0, (in_size + 2) / 3 * 4, PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS,
+             -1, 0);
 
-  const size_t out_size = ENC_LEN(in_size);
-
-  out = mmap(0, out_size, PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-
-#undef ENC_LEN
   const int out_len = EVP_EncodeBlock(out, x, fs.st_size);
   close(fd);
   munmap(x, in_size);
-  x = NULL;
   return SSL_write(s, out, out_len);
 }
 
@@ -229,6 +225,7 @@ static SSL *init_sock(const char *host, const int port)
   if (0 > connect(sockfd, (const struct sockaddr *)&sa,
                   sizeof(struct sockaddr_in))) {
     PRINT_("Sock not connected\n");
+    /* aici assembly iti pun un jump, jle */
     return NULL;
   }
   /* Openssl */
