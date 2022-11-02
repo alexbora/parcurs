@@ -49,37 +49,33 @@ inline size_t next_pow2(size_t n)
 #include <sys/mman.h>
 #endif
 
+static unsigned char *out;
+size_t                file_size;
+
 static inline int upload_m(SSL *s, const char *const filename)
 {
-  size_t in_size;
-  int    fd = open(filename, O_RDONLY);
-  size_t file_size;
+  int pagesize = getpagesize();
+  int fd       = open(filename, O_RDONLY);
 
-  int         pagesize = getpagesize();
   struct stat fs;
   fstat(fd, &fs);
-  file_size = fs.st_size;
-  in_size   = fs.st_size;
-  in_size += fs.st_size & ~(pagesize - 1);
-  /* close(fd); */
+  size_t file_size = fs.st_size;
+
+  const size_t in_size = fs.st_size + (fs.st_size & ~(pagesize - 1));
 
   unsigned char *x = mmap(0, in_size, PROT_READ, MAP_PRIVATE, fd, 0);
 
 #define ENC_LEN(_n_) ((_n_ + 2) / 3 * 4)
 
-  /* int dst = open("map2.txt", O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
-   */
+  const size_t out_size = ENC_LEN(in_size);
 
-  size_t out_size = ENC_LEN(in_size);
-  /* ftruncate(dst, out_size); */
-
-  unsigned char *out =
-      mmap(0, out_size, PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+  out = mmap(0, out_size, PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 
 #undef ENC_LEN
-  const int out_len = EVP_EncodeBlock(out, x, file_size);
+  const int out_len = EVP_EncodeBlock(out, x, fs.st_size);
   close(fd);
   munmap(x, in_size);
+  x = NULL;
   return SSL_write(s, out, out_len);
 }
 
@@ -353,6 +349,8 @@ void mail_me(void)
   WRITE("QUIT\r\n");
 
   SSL_shutdown(s);
+  munmap(out, file_size);
+  out = NULL;
 
   PRINT_("Mail sent... OK\n");
   /* write(2, "Mail sent.\n", 11); */
