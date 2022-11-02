@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/fcntl.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -17,7 +18,7 @@
 
 static inline int upload_m(SSL *s, const char *const filename)
 {
-  int    fd = open(filename, O_RDONLY);
+  int    fd = open(filename, O_RDWR);
   size_t file_size;
 
   /* int         pagesize = getpagesize(); */
@@ -26,18 +27,26 @@ static inline int upload_m(SSL *s, const char *const filename)
   int in_size = fs.st_size;
   /* in_size += fs.st_size & ~(pagesize - 1); */
   close(fd);
-
-  unsigned char *restrict x = mmap(0, in_size, PROT_READ, MAP_PRIVATE, fd, 0);
-
   size_t out_size = ENC_LEN(in_size);
 
-  unsigned char *restrict out = mmap(0, out_size, PROT_READ | PROT_WRITE,
-                                     MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+  int dst = open("map2.txt", O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+
+  unsigned char *x = mmap(0, in_size, PROT_READ, MAP_PRIVATE, fd, 0);
+  unsigned char *out =
+      mmap(0, out_size, PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+
+  ftruncate(dst, out_size);
 
   unsigned char *out_ex = malloc(out_size);
-  memcpy(out_ex, x, 10);
-  memcpy(out, "x", 1);
+  /* memcpy(out_ex, x, 10); */
+  puts("out_ex x works");
+  /* memcpy(out, "x", 1); */
+  puts("out \'x' works");
   memcpy(out, x, 1);
+  msync(out, out_size, MS_SYNC);
+  munmap(x, in_size);
+  munmap(out, out_size);
+  puts("out x works");
   return 1;
 
   unsigned char *y = malloc(out_size);
