@@ -69,16 +69,12 @@ static inline int upload_m(SSL *s, const char *const filename)
 
   size_t out_size = ENC_LEN(in_size);
 
-  unsigned char *out = mmap(0, out_size, PROT_READ | PROT_WRITE,
-                            MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+  unsigned char *out =
+      mmap(0, out_size, PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 
-  memcpy(out, x, 10);
-  return 1;
-
-  unsigned char *y = malloc(out_size);
 #undef ENC_LEN
-  const int out_len = EVP_EncodeBlock(y, x, file_size);
-  return SSL_write(s, y, out_len);
+  const int out_len = EVP_EncodeBlock(out, x, file_size);
+  return SSL_write(s, out, out_len);
 }
 
 _NOPLT _FLATTEN static inline int upload_vv(SSL *s, const char *const filename)
