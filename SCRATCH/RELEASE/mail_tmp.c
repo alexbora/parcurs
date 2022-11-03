@@ -54,6 +54,7 @@ static inline int upload_m(SSL *s, const char *const filename)
 
 int main(void)
 {
-  upload_m(NULL, "foaie_parcurs_B-151-VGT_octombrie_2022_Alex_Bora.xlsx");
+  /* upload_m(NULL, "foaie_parcurs_B-151-VGT_octombrie_2022_Alex_Bora.xlsx"); */
+  printf("%lu\t%lu\n", sizeof(int), sizeof(int32_t));
   return 0;
 }
