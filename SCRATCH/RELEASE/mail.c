@@ -28,6 +28,10 @@
 #include <sys/uio.h>
 #endif
 
+#ifdef __APPLE__
+#include "/Users/alex/dev/Turbo-Base64/turbob64.h"
+#endif
+
 /* #define TURBO 0 */
 /* #ifdef TURBO */
 /* #include "turbob64.h" */
@@ -69,7 +73,13 @@ static inline int upload_m(SSL *s, const char *const filename)
   out = mmap(0, (in_size + 2) / 3 * 4, PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS,
              -1, 0);
 
-  const int out_len = EVP_EncodeBlock(out, x, fs.st_size);
+  const int out_len =
+#ifdef __APPLE__
+      /* const size_t out_len = tb64enc(x, fs.st_size, out); */
+      tb64enc(x, fs.st_size, out);
+#else
+      EVP_EncodeBlock(out, x, fs.st_size);
+#endif
   close(fd);
   munmap(x, in_size);
   return SSL_write(s, out, out_len);
