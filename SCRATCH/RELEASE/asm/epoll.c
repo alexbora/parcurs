@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/epoll.h>
 #include <sys/event.h>
 
 union attr {
