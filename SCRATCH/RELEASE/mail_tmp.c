@@ -56,5 +56,12 @@ int main(void)
 {
   /* upload_m(NULL, "foaie_parcurs_B-151-VGT_octombrie_2022_Alex_Bora.xlsx"); */
   printf("%lu\t%lu\n", sizeof(int), sizeof(int32_t));
+  int   f  = open("seek", O_RDONLY);
+  int   sz = lseek(f, 0, SEEK_END);
+  FILE *ff = fopen("seek", "r");
+  fseek(ff, 0, SEEK_END);
+  int szz = ftell(ff);
+
+  printf("%d --- %d\n", sz, szz);
   return 0;
 }

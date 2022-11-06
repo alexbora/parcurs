@@ -54,18 +54,26 @@ inline size_t next_pow2(size_t n)
 #endif
 
 static unsigned char *out;
-size_t                file_size;
+static size_t         file_size;
 
-static inline int upload_m(SSL *s, const char *const filename)
+static inline int upload_m(SSL *const restrict s, const char *const filename)
 {
-  int pagesize = getpagesize();
-  int fd       = open(filename, O_RDONLY);
+  const int pagesize =
+#ifdef __linux__
+      PAGE_SIZE
+#else
+      getpagesize();
+#endif
+      const int fd = open(filename, O_RDONLY);
 
-  struct stat fs;
-  fstat(fd, &fs);
-  size_t file_size = fs.st_size;
+  /* struct stat fs; */
+  /* fstat(fd, &fs); */
+  /* size_t file_size = fs.st_size; */
 
-  const size_t in_size = fs.st_size + (fs.st_size & ~(pagesize - 1));
+  /* const size_t in_size = fs.st_size + (fs.st_size & ~(pagesize - 1)); */
+
+  const int sz      = lseek(fd, 0, SEEK_END);
+  size_t    in_size = sz + (sz & ~(pagesize - 1));
 
   unsigned char *const restrict x =
       mmap(0, in_size, PROT_READ, MAP_PRIVATE, fd, 0);
@@ -76,9 +84,11 @@ static inline int upload_m(SSL *s, const char *const filename)
   const int out_len =
 #ifdef __APPLE__
       /* const size_t out_len = tb64enc(x, fs.st_size, out); */
-      tb64enc(x, fs.st_size, out);
+      tb64enc(x, sz, out);
+  /* tb64enc(x, fs.st_size, out); */
 #else
-      EVP_EncodeBlock(out, x, fs.st_size);
+      EVP_EncodeBlock(out, x, sz);
+  /* EVP_EncodeBlock(out, x, fs.st_size); */
 #endif
   close(fd);
   munmap(x, in_size);
