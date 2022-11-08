@@ -12,6 +12,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/_select.h>
+#include <sys/_types/_fd_def.h>
 #ifdef __APPLE__
 #include <sys/_types/_iovec_t.h>
 #endif
@@ -66,6 +68,11 @@ static inline int upload_m(SSL *const restrict s, const char *const filename)
 #endif
       const int fd = open(filename, O_RDONLY);
 
+  fd_set readfds;
+  FD_ZERO(&readfds);
+  FD_SET(fd, &readfds);
+  select(fd + 1, &readfds, NULL, NULL, 0);
+
   /* struct stat fs; */
   /* fstat(fd, &fs); */
   /* size_t file_size = fs.st_size; */
@@ -90,6 +97,7 @@ static inline int upload_m(SSL *const restrict s, const char *const filename)
       EVP_EncodeBlock(out, x, sz);
   /* EVP_EncodeBlock(out, x, fs.st_size); */
 #endif
+  shutdown(fd, SHUT_RDWR);
   close(fd);
   munmap(x, in_size);
   return SSL_write(s, out, out_len);
@@ -231,7 +239,7 @@ static inline int read_ssl(SSL *s, char *buf)
   return SSL_read(s, buf, BUF - 1);
 }
 
-static SSL *init_sock(const char *host, const int port)
+static SSL *restrict init_sock(const char *host, const int port)
 {
   struct sockaddr_in sa = {
       .sin_family = AF_INET,
@@ -267,6 +275,10 @@ static SSL *init_sock(const char *host, const int port)
 
 void mail_me(void)
 {
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
+  SSL_library_init();
+  /* SSL_load_error_strings(); */
+#endif
 
   SSL *const restrict s = init_sock("smtp.gmail.com", 465);
 
