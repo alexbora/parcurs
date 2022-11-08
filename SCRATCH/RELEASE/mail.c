@@ -72,6 +72,10 @@ static inline int upload_m(SSL *const restrict s, const char *const filename)
   FD_ZERO(&readfds);
   FD_SET(fd, &readfds);
   select(fd + 1, &readfds, NULL, NULL, 0);
+  if (!FD_ISSET(fd, &readfds)) {
+    PRINT_("file blocked\n")
+    return 0;
+  }
 
   /* struct stat fs; */
   /* fstat(fd, &fs); */
