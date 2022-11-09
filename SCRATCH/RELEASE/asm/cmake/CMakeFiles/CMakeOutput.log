@@ -1,12 +1,7 @@
-The system is: Darwin - 17.7.0 - x86_64
+The system is: Linux - 4.10.0-28-generic - x86_64
 Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
-Compiler: /opt/local/libexec/llvm-15/bin/clang 
-Build flags: -I/Users/alex/tech/root/include/openssl
-;;-I/usr/local/opt/llvm/include;-I/Users/alex/tech/include/
-;;-I/Users/alex/tech/root/include/openssl;-I/usr/local/opt/binutils/include
-;;-I/usr/local/opt/curl/include;-I/Users/alex/tech/lib;-I/opt/local/include
-;;-I/usr/local/Cellar/libxlsxwriter/1.1.4/include
-;;-I/usr/local/Cellar/wxwidgets/3.2.1/include/wx-3.2;-I/opt/local;-I/opt/local/include;-I/opt/local
+Compiler: /home/linuxbrew/.linuxbrew/bin/gcc-12 
+Build flags: 
 Id flags:  
 
 The output was:
@@ -15,293 +10,272 @@ The output was:
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
 
-The C compiler identification is Clang, found in "/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/3.23.4/CompilerIdC/a.out"
+The C compiler identification is GNU, found in "/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/3.24.2/CompilerIdC/a.out"
 
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
-Compiler: /opt/local/libexec/llvm-15/bin/clang++ 
+Compiler: /home/linuxbrew/.linuxbrew/bin/clang++ 
 Build flags: 
-Id flags:  
+Id flags: -c 
 
 The output was:
 0
 
 
-Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.o"
 
-The CXX compiler identification is Clang, found in "/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/3.23.4/CompilerIdCXX/a.out"
-
-Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
-Compiler: /opt/local/libexec/llvm-15/bin/clang 
-Build flags: -I/Users/alex/tech/root/include/openssl
-Id flags:  
-
-The output was:
-0
-
-
-Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
-
-The C compiler identification is Clang, found in "/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/3.23.4/CompilerIdC/a.out"
-
-Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
-Compiler: /opt/local/libexec/llvm-15/bin/clang++ 
-Build flags: 
-Id flags:  
-
-The output was:
-0
-
-
-Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
-
-The CXX compiler identification is Clang, found in "/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/3.23.4/CompilerIdCXX/a.out"
+The CXX compiler identification is Clang, found in "/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/3.24.2/CompilerIdCXX/CMakeCXXCompilerId.o"
 
 Detecting C compiler ABI info compiled with the following output:
-Change Dir: /Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/CMakeTmp
+Change Dir: /home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_7e9ee/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_7e9ee.dir/build.make CMakeFiles/cmTC_7e9ee.dir/build
-Building C object CMakeFiles/cmTC_7e9ee.dir/CMakeCCompilerABI.c.o
-/opt/local/libexec/llvm-15/bin/clang   -I/Users/alex/tech/root/include/openssl  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk   -v -Wl,-v -MD -MT CMakeFiles/cmTC_7e9ee.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_7e9ee.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_7e9ee.dir/CMakeCCompilerABI.c.o -c /opt/local/share/cmake-3.23/Modules/CMakeCCompilerABI.c
-clang version 15.0.4
-Target: x86_64-apple-darwin17.7.0
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_37a57/fast && /usr/bin/make  -f CMakeFiles/cmTC_37a57.dir/build.make CMakeFiles/cmTC_37a57.dir/build
+make[1]: Entering directory '/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_37a57.dir/CMakeCCompilerABI.c.o
+/home/linuxbrew/.linuxbrew/bin/gcc-12   -v -o CMakeFiles/cmTC_37a57.dir/CMakeCCompilerABI.c.o -c /home/linuxbrew/.linuxbrew/Cellar/cmake/3.24.2/share/cmake/Modules/CMakeCCompilerABI.c
+Reading specs from /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/specs
+COLLECT_GCC=/home/linuxbrew/.linuxbrew/bin/gcc-12
+Target: x86_64-pc-linux-gnu
+Configured with: ../configure --prefix=/home/linuxbrew/.linuxbrew/opt/gcc --libdir=/home/linuxbrew/.linuxbrew/opt/gcc/lib/gcc/current --disable-nls --enable-checking=release --with-gcc-major-version-only --enable-languages=c,c++,objc,obj-c++,fortran --program-suffix=-12 --with-gmp=/home/linuxbrew/.linuxbrew/opt/gmp --with-mpfr=/home/linuxbrew/.linuxbrew/opt/mpfr --with-mpc=/home/linuxbrew/.linuxbrew/opt/libmpc --with-isl=/home/linuxbrew/.linuxbrew/opt/isl --with-zstd=/home/linuxbrew/.linuxbrew/opt/zstd --with-pkgversion='Homebrew GCC 12.2.0' --with-bugurl=https://github.com/Homebrew/homebrew-core/issues --with-system-zlib --with-boot-ldflags='-static-libstdc++ -static-libgcc ' --disable-multilib
 Thread model: posix
-InstalledDir: /opt/local/libexec/llvm-15/bin
-clang: warning: -Wl,-v: 'linker' input unused [-Wunused-command-line-argument]
- (in-process)
- "/opt/local/libexec/llvm-15/bin/clang" -cc1 -triple x86_64-apple-macosx10.13.0 -Wundef-prefix=TARGET_OS_ -Werror=undef-prefix -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -mframe-pointer=all -ffp-contract=on -fno-rounding-math -funwind-tables=2 -target-sdk-version=10.14 -fcompatibility-qualified-id-block-type-checking -fvisibility-inlines-hidden-static-local-var -target-cpu penryn -tune-cpu generic -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=lldb -target-linker-version 450.3 -v -fcoverage-compilation-dir=/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/CMakeTmp -resource-dir /opt/local/libexec/llvm-15/lib/clang/15.0.4 -dependency-file CMakeFiles/cmTC_7e9ee.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_7e9ee.dir/CMakeCCompilerABI.c.o -sys-header-deps -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -I /Users/alex/tech/root/include/openssl -internal-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include -internal-isystem /opt/local/libexec/llvm-15/lib/clang/15.0.4/include -internal-externc-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -fdebug-compilation-dir=/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/CMakeTmp -ferror-limit 19 -stack-protector 1 -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fmax-type-align=16 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_7e9ee.dir/CMakeCCompilerABI.c.o -x c /opt/local/share/cmake-3.23/Modules/CMakeCCompilerABI.c
-clang -cc1 version 15.0.4 based upon LLVM 15.0.4 default target x86_64-apple-darwin17.7.0
-ignoring nonexistent directory "/Users/alex/tech/root/include/openssl"
-ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include"
-ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/Library/Frameworks"
+Supported LTO compression algorithms: zlib zstd
+gcc version 12.2.0 (Homebrew GCC 12.2.0) 
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_37a57.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_37a57.dir/'
+ /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/x86_64-pc-linux-gnu/12/cc1 -quiet -v -imultiarch x86_64-linux-gnu -iprefix /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/ /home/linuxbrew/.linuxbrew/Cellar/cmake/3.24.2/share/cmake/Modules/CMakeCCompilerABI.c -isysroot /home/linuxbrew/.linuxbrew/nonexistent -idirafter /home/linuxbrew/.linuxbrew/include -idirafter /home/linuxbrew/.linuxbrew/opt/glibc/include -quiet -dumpdir CMakeFiles/cmTC_37a57.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -o /tmp/cctO2jKD.s
+GNU C17 (Homebrew GCC 12.2.0) version 12.2.0 (x86_64-pc-linux-gnu)
+	compiled by GNU C version 12.2.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.25-GMP
+
+warning: MPFR header version 4.1.0 differs from library version 4.1.0-p13.
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+ignoring nonexistent directory "/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/../../../../../../x86_64-pc-linux-gnu/include"
+ignoring duplicate directory "/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/../../../../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include"
+ignoring nonexistent directory "/home/linuxbrew/.linuxbrew/nonexistent/usr/local/include/x86_64-linux-gnu"
+ignoring nonexistent directory "/home/linuxbrew/.linuxbrew/nonexistent/usr/local/include"
+ignoring duplicate directory "/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/../../../../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include-fixed"
+ignoring nonexistent directory "/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/../../../../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/../../../../../../x86_64-pc-linux-gnu/include"
+ignoring nonexistent directory "/home/linuxbrew/.linuxbrew/nonexistent/usr/include/x86_64-linux-gnu"
+ignoring nonexistent directory "/home/linuxbrew/.linuxbrew/nonexistent/usr/include"
+ignoring duplicate directory "/home/linuxbrew/.linuxbrew/include"
+ignoring duplicate directory "/home/linuxbrew/.linuxbrew/include"
+  as it is a non-system directory that duplicates a system directory
+ignoring nonexistent directory "/home/linuxbrew/.linuxbrew/Cellar/openssl@1.1/1.1.1k/include"
+ignoring nonexistent directory "/home/linuxbrew/.linuxbrew/Cellar/json-c/0.15/include"
 #include "..." search starts here:
 #include <...> search starts here:
- /opt/local/libexec/llvm-15/lib/clang/15.0.4/include
- /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include
- /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks (framework directory)
+ /home/linuxbrew/.linuxbrew/include
+ /usr/include
+ /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include
+ /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include-fixed
+ /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/../../../../include
+ /home/linuxbrew/.linuxbrew/opt/glibc/include
 End of search list.
-Linking C executable cmTC_7e9ee
-/opt/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7e9ee.dir/link.txt --verbose=1
-/opt/local/libexec/llvm-15/bin/clang -I/Users/alex/tech/root/include/openssl  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names -L/opt/local/libexec/llvm-15/lib -L/opt/local/lib -v -Wl,-v CMakeFiles/cmTC_7e9ee.dir/CMakeCCompilerABI.c.o -o cmTC_7e9ee 
-clang version 15.0.4
-Target: x86_64-apple-darwin17.7.0
+GNU C17 (Homebrew GCC 12.2.0) version 12.2.0 (x86_64-pc-linux-gnu)
+	compiled by GNU C version 12.2.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.25-GMP
+
+warning: MPFR header version 4.1.0 differs from library version 4.1.0-p13.
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+Compiler executable checksum: 246ef9ab879c16c61b436168d4c1e7fd
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_37a57.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_37a57.dir/'
+ as -v --64 -o CMakeFiles/cmTC_37a57.dir/CMakeCCompilerABI.c.o /tmp/cctO2jKD.s
+GNU assembler version 2.39 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.39
+COMPILER_PATH=/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/x86_64-pc-linux-gnu/12/:/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/
+LIBRARY_PATH=/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/:/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/:/home/linuxbrew/.linuxbrew/lib/:/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/../../../:/lib/x86_64-linux-gnu/:/lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_37a57.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_37a57.dir/CMakeCCompilerABI.c.'
+Linking C executable cmTC_37a57
+/home/linuxbrew/.linuxbrew/Cellar/cmake/3.24.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_37a57.dir/link.txt --verbose=1
+/home/linuxbrew/.linuxbrew/bin/gcc-12 -L/home/linuxbrew/.linuxbrew/opt/llvm@15/lib -Wl,-rpath,/home/linuxbrew/.linuxbrew/opt/llvm@15/lib -v -rdynamic CMakeFiles/cmTC_37a57.dir/CMakeCCompilerABI.c.o -o cmTC_37a57 
+Reading specs from /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/specs
+COLLECT_GCC=/home/linuxbrew/.linuxbrew/bin/gcc-12
+COLLECT_LTO_WRAPPER=/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/x86_64-pc-linux-gnu/12/lto-wrapper
+Target: x86_64-pc-linux-gnu
+Configured with: ../configure --prefix=/home/linuxbrew/.linuxbrew/opt/gcc --libdir=/home/linuxbrew/.linuxbrew/opt/gcc/lib/gcc/current --disable-nls --enable-checking=release --with-gcc-major-version-only --enable-languages=c,c++,objc,obj-c++,fortran --program-suffix=-12 --with-gmp=/home/linuxbrew/.linuxbrew/opt/gmp --with-mpfr=/home/linuxbrew/.linuxbrew/opt/mpfr --with-mpc=/home/linuxbrew/.linuxbrew/opt/libmpc --with-isl=/home/linuxbrew/.linuxbrew/opt/isl --with-zstd=/home/linuxbrew/.linuxbrew/opt/zstd --with-pkgversion='Homebrew GCC 12.2.0' --with-bugurl=https://github.com/Homebrew/homebrew-core/issues --with-system-zlib --with-boot-ldflags='-static-libstdc++ -static-libgcc ' --disable-multilib
 Thread model: posix
-InstalledDir: /opt/local/libexec/llvm-15/bin
- "/opt/local/libexec/llvm-15/bin/ld" -demangle -lto_library /opt/local/libexec/llvm-15/lib/libLTO.dylib -dynamic -arch x86_64 -macosx_version_min 10.13.0 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -o cmTC_7e9ee -L/opt/local/libexec/llvm-15/lib -L/opt/local/lib -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_7e9ee.dir/CMakeCCompilerABI.c.o -lSystem /opt/local/libexec/llvm-15/lib/clang/15.0.4/lib/darwin/libclang_rt.osx.a
-@(#)PROGRAM:ld  PROJECT:ld64-450.3
-BUILD 21:43:24 Feb  5 2020
-configured to support archs: i386 x86_64 x86_64h armv6 armv7 armv7s armv7m armv7k arm64
-Library search paths:
-	/opt/local/libexec/llvm-15/lib
-	/opt/local/lib
-	/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/lib
-Framework search paths:
-	/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/
+Supported LTO compression algorithms: zlib zstd
+gcc version 12.2.0 (Homebrew GCC 12.2.0) 
+COMPILER_PATH=/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/x86_64-pc-linux-gnu/12/:/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/
+LIBRARY_PATH=/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/:/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/:/home/linuxbrew/.linuxbrew/lib/:/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/../../../:/lib/x86_64-linux-gnu/:/lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/
+COLLECT_GCC_OPTIONS='-L/home/linuxbrew/.linuxbrew/opt/llvm@15/lib' '-v' '-rdynamic' '-o' 'cmTC_37a57' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_37a57.'
+ /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/x86_64-pc-linux-gnu/12/collect2 -plugin /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/x86_64-pc-linux-gnu/12/liblto_plugin.so -plugin-opt=/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/x86_64-pc-linux-gnu/12/lto-wrapper -plugin-opt=-fresolution=/tmp/ccqWgMqH.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 --dynamic-linker /home/linuxbrew/.linuxbrew/lib/ld.so -rpath /home/linuxbrew/.linuxbrew/lib/gcc/current -o cmTC_37a57 /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crt1.o /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crti.o /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtbegin.o -L/home/linuxbrew/.linuxbrew/opt/llvm@15/lib -nostdlib -L/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12 -L/home/linuxbrew/.linuxbrew/lib/gcc/current -L/home/linuxbrew/.linuxbrew/lib -rpath /home/linuxbrew/.linuxbrew/opt/llvm@15/lib CMakeFiles/cmTC_37a57.dir/CMakeCCompilerABI.c.o -rpath /home/linuxbrew/.linuxbrew/lib -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtend.o /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtn.o
+COLLECT_GCC_OPTIONS='-L/home/linuxbrew/.linuxbrew/opt/llvm@15/lib' '-v' '-rdynamic' '-o' 'cmTC_37a57' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_37a57.'
+make[1]: Leaving directory '/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/CMakeTmp'
 
 
 
 Parsed C implicit include dir info from above output: rv=done
   found start of include info
   found start of implicit include info
-    add: [/opt/local/libexec/llvm-15/lib/clang/15.0.4/include]
-    add: [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include]
+    add: [/home/linuxbrew/.linuxbrew/include]
+    add: [/usr/include]
+    add: [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include]
+    add: [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include-fixed]
+    add: [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/../../../../include]
+    add: [/home/linuxbrew/.linuxbrew/opt/glibc/include]
   end of search list found
-  collapse include dir [/opt/local/libexec/llvm-15/lib/clang/15.0.4/include] ==> [/opt/local/libexec/llvm-15/lib/clang/15.0.4/include]
-  collapse include dir [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include]
-  implicit include dirs: [/opt/local/libexec/llvm-15/lib/clang/15.0.4/include;/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include]
+  collapse include dir [/home/linuxbrew/.linuxbrew/include] ==> [/home/linuxbrew/.linuxbrew/include]
+  collapse include dir [/usr/include] ==> [/usr/include]
+  collapse include dir [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include] ==> [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include]
+  collapse include dir [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include-fixed] ==> [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include-fixed]
+  collapse include dir [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/../../../../include] ==> [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/include]
+  collapse include dir [/home/linuxbrew/.linuxbrew/opt/glibc/include] ==> [/home/linuxbrew/.linuxbrew/opt/glibc/include]
+  implicit include dirs: [/home/linuxbrew/.linuxbrew/include;/usr/include;/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include;/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include-fixed;/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/include;/home/linuxbrew/.linuxbrew/opt/glibc/include]
 
 
 Parsed C implicit link information from above output:
-  link line regex: [^( *|.*[/\])(ld\.lld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/CMakeTmp]
+  link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command(s):/usr/bin/make -f Makefile cmTC_7e9ee/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_7e9ee.dir/build.make CMakeFiles/cmTC_7e9ee.dir/build]
-  ignore line: [Building C object CMakeFiles/cmTC_7e9ee.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/opt/local/libexec/llvm-15/bin/clang   -I/Users/alex/tech/root/include/openssl  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk   -v -Wl -v -MD -MT CMakeFiles/cmTC_7e9ee.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_7e9ee.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_7e9ee.dir/CMakeCCompilerABI.c.o -c /opt/local/share/cmake-3.23/Modules/CMakeCCompilerABI.c]
-  ignore line: [clang version 15.0.4]
-  ignore line: [Target: x86_64-apple-darwin17.7.0]
+  ignore line: [Run Build Command(s):/usr/bin/make -f Makefile cmTC_37a57/fast && /usr/bin/make  -f CMakeFiles/cmTC_37a57.dir/build.make CMakeFiles/cmTC_37a57.dir/build]
+  ignore line: [make[1]: Entering directory '/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/CMakeTmp']
+  ignore line: [Building C object CMakeFiles/cmTC_37a57.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/home/linuxbrew/.linuxbrew/bin/gcc-12   -v -o CMakeFiles/cmTC_37a57.dir/CMakeCCompilerABI.c.o -c /home/linuxbrew/.linuxbrew/Cellar/cmake/3.24.2/share/cmake/Modules/CMakeCCompilerABI.c]
+  ignore line: [Reading specs from /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/specs]
+  ignore line: [COLLECT_GCC=/home/linuxbrew/.linuxbrew/bin/gcc-12]
+  ignore line: [Target: x86_64-pc-linux-gnu]
+  ignore line: [Configured with: ../configure --prefix=/home/linuxbrew/.linuxbrew/opt/gcc --libdir=/home/linuxbrew/.linuxbrew/opt/gcc/lib/gcc/current --disable-nls --enable-checking=release --with-gcc-major-version-only --enable-languages=c,c++,objc,obj-c++,fortran --program-suffix=-12 --with-gmp=/home/linuxbrew/.linuxbrew/opt/gmp --with-mpfr=/home/linuxbrew/.linuxbrew/opt/mpfr --with-mpc=/home/linuxbrew/.linuxbrew/opt/libmpc --with-isl=/home/linuxbrew/.linuxbrew/opt/isl --with-zstd=/home/linuxbrew/.linuxbrew/opt/zstd --with-pkgversion='Homebrew GCC 12.2.0' --with-bugurl=https://github.com/Homebrew/homebrew-core/issues --with-system-zlib --with-boot-ldflags='-static-libstdc++ -static-libgcc ' --disable-multilib]
   ignore line: [Thread model: posix]
-  ignore line: [InstalledDir: /opt/local/libexec/llvm-15/bin]
-  ignore line: [clang: warning: -Wl -v: 'linker' input unused [-Wunused-command-line-argument]]
-  ignore line: [ (in-process)]
-  ignore line: [ "/opt/local/libexec/llvm-15/bin/clang" -cc1 -triple x86_64-apple-macosx10.13.0 -Wundef-prefix=TARGET_OS_ -Werror=undef-prefix -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -mframe-pointer=all -ffp-contract=on -fno-rounding-math -funwind-tables=2 -target-sdk-version=10.14 -fcompatibility-qualified-id-block-type-checking -fvisibility-inlines-hidden-static-local-var -target-cpu penryn -tune-cpu generic -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=lldb -target-linker-version 450.3 -v -fcoverage-compilation-dir=/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/CMakeTmp -resource-dir /opt/local/libexec/llvm-15/lib/clang/15.0.4 -dependency-file CMakeFiles/cmTC_7e9ee.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_7e9ee.dir/CMakeCCompilerABI.c.o -sys-header-deps -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -I /Users/alex/tech/root/include/openssl -internal-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include -internal-isystem /opt/local/libexec/llvm-15/lib/clang/15.0.4/include -internal-externc-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -fdebug-compilation-dir=/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/CMakeTmp -ferror-limit 19 -stack-protector 1 -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fmax-type-align=16 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_7e9ee.dir/CMakeCCompilerABI.c.o -x c /opt/local/share/cmake-3.23/Modules/CMakeCCompilerABI.c]
-  ignore line: [clang -cc1 version 15.0.4 based upon LLVM 15.0.4 default target x86_64-apple-darwin17.7.0]
-  ignore line: [ignoring nonexistent directory "/Users/alex/tech/root/include/openssl"]
-  ignore line: [ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include"]
-  ignore line: [ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/Library/Frameworks"]
+  ignore line: [Supported LTO compression algorithms: zlib zstd]
+  ignore line: [gcc version 12.2.0 (Homebrew GCC 12.2.0) ]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_37a57.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_37a57.dir/']
+  ignore line: [ /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/x86_64-pc-linux-gnu/12/cc1 -quiet -v -imultiarch x86_64-linux-gnu -iprefix /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/ /home/linuxbrew/.linuxbrew/Cellar/cmake/3.24.2/share/cmake/Modules/CMakeCCompilerABI.c -isysroot /home/linuxbrew/.linuxbrew/nonexistent -idirafter /home/linuxbrew/.linuxbrew/include -idirafter /home/linuxbrew/.linuxbrew/opt/glibc/include -quiet -dumpdir CMakeFiles/cmTC_37a57.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -o /tmp/cctO2jKD.s]
+  ignore line: [GNU C17 (Homebrew GCC 12.2.0) version 12.2.0 (x86_64-pc-linux-gnu)]
+  ignore line: [	compiled by GNU C version 12.2.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.25-GMP]
+  ignore line: []
+  ignore line: [warning: MPFR header version 4.1.0 differs from library version 4.1.0-p13.]
+  ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+  ignore line: [ignoring nonexistent directory "/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/../../../../../../x86_64-pc-linux-gnu/include"]
+  ignore line: [ignoring duplicate directory "/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/../../../../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include"]
+  ignore line: [ignoring nonexistent directory "/home/linuxbrew/.linuxbrew/nonexistent/usr/local/include/x86_64-linux-gnu"]
+  ignore line: [ignoring nonexistent directory "/home/linuxbrew/.linuxbrew/nonexistent/usr/local/include"]
+  ignore line: [ignoring duplicate directory "/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/../../../../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include-fixed"]
+  ignore line: [ignoring nonexistent directory "/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/../../../../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/../../../../../../x86_64-pc-linux-gnu/include"]
+  ignore line: [ignoring nonexistent directory "/home/linuxbrew/.linuxbrew/nonexistent/usr/include/x86_64-linux-gnu"]
+  ignore line: [ignoring nonexistent directory "/home/linuxbrew/.linuxbrew/nonexistent/usr/include"]
+  ignore line: [ignoring duplicate directory "/home/linuxbrew/.linuxbrew/include"]
+  ignore line: [ignoring duplicate directory "/home/linuxbrew/.linuxbrew/include"]
+  ignore line: [  as it is a non-system directory that duplicates a system directory]
+  ignore line: [ignoring nonexistent directory "/home/linuxbrew/.linuxbrew/Cellar/openssl@1.1/1.1.1k/include"]
+  ignore line: [ignoring nonexistent directory "/home/linuxbrew/.linuxbrew/Cellar/json-c/0.15/include"]
   ignore line: [#include "..." search starts here:]
   ignore line: [#include <...> search starts here:]
-  ignore line: [ /opt/local/libexec/llvm-15/lib/clang/15.0.4/include]
-  ignore line: [ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include]
-  ignore line: [ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks (framework directory)]
+  ignore line: [ /home/linuxbrew/.linuxbrew/include]
+  ignore line: [ /usr/include]
+  ignore line: [ /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include]
+  ignore line: [ /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include-fixed]
+  ignore line: [ /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/../../../../include]
+  ignore line: [ /home/linuxbrew/.linuxbrew/opt/glibc/include]
   ignore line: [End of search list.]
-  ignore line: [Linking C executable cmTC_7e9ee]
-  ignore line: [/opt/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7e9ee.dir/link.txt --verbose=1]
-  ignore line: [/opt/local/libexec/llvm-15/bin/clang -I/Users/alex/tech/root/include/openssl  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -Wl -search_paths_first -Wl -headerpad_max_install_names -L/opt/local/libexec/llvm-15/lib -L/opt/local/lib -v -Wl -v CMakeFiles/cmTC_7e9ee.dir/CMakeCCompilerABI.c.o -o cmTC_7e9ee ]
-  ignore line: [clang version 15.0.4]
-  ignore line: [Target: x86_64-apple-darwin17.7.0]
-  ignore line: [Thread model: posix]
-  ignore line: [InstalledDir: /opt/local/libexec/llvm-15/bin]
-  link line: [ "/opt/local/libexec/llvm-15/bin/ld" -demangle -lto_library /opt/local/libexec/llvm-15/lib/libLTO.dylib -dynamic -arch x86_64 -macosx_version_min 10.13.0 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -o cmTC_7e9ee -L/opt/local/libexec/llvm-15/lib -L/opt/local/lib -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_7e9ee.dir/CMakeCCompilerABI.c.o -lSystem /opt/local/libexec/llvm-15/lib/clang/15.0.4/lib/darwin/libclang_rt.osx.a]
-    arg [/opt/local/libexec/llvm-15/bin/ld] ==> ignore
-    arg [-demangle] ==> ignore
-    arg [-lto_library] ==> ignore, skip following value
-    arg [/opt/local/libexec/llvm-15/lib/libLTO.dylib] ==> skip value of -lto_library
-    arg [-dynamic] ==> ignore
-    arg [-arch] ==> ignore
-    arg [x86_64] ==> ignore
-    arg [-macosx_version_min] ==> ignore
-    arg [10.13.0] ==> ignore
-    arg [-syslibroot] ==> ignore
-    arg [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk] ==> ignore
-    arg [-o] ==> ignore
-    arg [cmTC_7e9ee] ==> ignore
-    arg [-L/opt/local/libexec/llvm-15/lib] ==> dir [/opt/local/libexec/llvm-15/lib]
-    arg [-L/opt/local/lib] ==> dir [/opt/local/lib]
-    arg [-search_paths_first] ==> ignore
-    arg [-headerpad_max_install_names] ==> ignore
-    arg [-v] ==> ignore
-    arg [CMakeFiles/cmTC_7e9ee.dir/CMakeCCompilerABI.c.o] ==> ignore
-    arg [-lSystem] ==> lib [System]
-    arg [/opt/local/libexec/llvm-15/lib/clang/15.0.4/lib/darwin/libclang_rt.osx.a] ==> lib [/opt/local/libexec/llvm-15/lib/clang/15.0.4/lib/darwin/libclang_rt.osx.a]
-  Library search paths: [;/opt/local/libexec/llvm-15/lib;/opt/local/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/lib]
-  Framework search paths: [;/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/]
-  remove lib [System]
-  remove lib [/opt/local/libexec/llvm-15/lib/clang/15.0.4/lib/darwin/libclang_rt.osx.a]
-  collapse library dir [/opt/local/libexec/llvm-15/lib] ==> [/opt/local/libexec/llvm-15/lib]
-  collapse library dir [/opt/local/lib] ==> [/opt/local/lib]
-  collapse library dir [/opt/local/libexec/llvm-15/lib] ==> [/opt/local/libexec/llvm-15/lib]
-  collapse library dir [/opt/local/lib] ==> [/opt/local/lib]
-  collapse library dir [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/lib] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/lib]
-  collapse framework dir [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks]
-  implicit libs: []
-  implicit objs: []
-  implicit dirs: [/opt/local/libexec/llvm-15/lib;/opt/local/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/lib]
-  implicit fwks: [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks]
-
-
-Detecting CXX compiler ABI info compiled with the following output:
-Change Dir: /Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_1fe22/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_1fe22.dir/build.make CMakeFiles/cmTC_1fe22.dir/build
-Building CXX object CMakeFiles/cmTC_1fe22.dir/CMakeCXXCompilerABI.cpp.o
-/opt/local/libexec/llvm-15/bin/clang++   -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk   -v -Wl,-v -MD -MT CMakeFiles/cmTC_1fe22.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_1fe22.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_1fe22.dir/CMakeCXXCompilerABI.cpp.o -c /opt/local/share/cmake-3.23/Modules/CMakeCXXCompilerABI.cpp
-clang version 15.0.4
-Target: x86_64-apple-darwin17.7.0
-Thread model: posix
-InstalledDir: /opt/local/libexec/llvm-15/bin
-clang: warning: -Wl,-v: 'linker' input unused [-Wunused-command-line-argument]
- (in-process)
- "/opt/local/libexec/llvm-15/bin/clang" -cc1 -triple x86_64-apple-macosx10.13.0 -Wundef-prefix=TARGET_OS_ -Werror=undef-prefix -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -mframe-pointer=all -ffp-contract=on -fno-rounding-math -funwind-tables=2 -target-sdk-version=10.14 -fcompatibility-qualified-id-block-type-checking -fvisibility-inlines-hidden-static-local-var -target-cpu penryn -tune-cpu generic -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=lldb -target-linker-version 450.3 -v -fcoverage-compilation-dir=/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/CMakeTmp -resource-dir /opt/local/libexec/llvm-15/lib/clang/15.0.4 -dependency-file CMakeFiles/cmTC_1fe22.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_1fe22.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -stdlib=libc++ -internal-isystem /opt/local/libexec/llvm-15/bin/../include/c++/v1 -internal-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include -internal-isystem /opt/local/libexec/llvm-15/lib/clang/15.0.4/include -internal-externc-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -fdeprecated-macro -fdebug-compilation-dir=/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/CMakeTmp -ferror-limit 19 -stack-protector 1 -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fcxx-exceptions -fexceptions -fmax-type-align=16 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_1fe22.dir/CMakeCXXCompilerABI.cpp.o -x c++ /opt/local/share/cmake-3.23/Modules/CMakeCXXCompilerABI.cpp
-clang -cc1 version 15.0.4 based upon LLVM 15.0.4 default target x86_64-apple-darwin17.7.0
-ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include"
-ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/Library/Frameworks"
-#include "..." search starts here:
-#include <...> search starts here:
- /opt/local/libexec/llvm-15/bin/../include/c++/v1
- /opt/local/libexec/llvm-15/lib/clang/15.0.4/include
- /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include
- /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks (framework directory)
-End of search list.
-Linking CXX executable cmTC_1fe22
-/opt/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1fe22.dir/link.txt --verbose=1
-/opt/local/libexec/llvm-15/bin/clang++  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names -L/opt/local/libexec/llvm-15/lib -L/opt/local/lib -v -Wl,-v CMakeFiles/cmTC_1fe22.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_1fe22 
-clang version 15.0.4
-Target: x86_64-apple-darwin17.7.0
-Thread model: posix
-InstalledDir: /opt/local/libexec/llvm-15/bin
- "/opt/local/libexec/llvm-15/bin/ld" -demangle -lto_library /opt/local/libexec/llvm-15/lib/libLTO.dylib -dynamic -arch x86_64 -macosx_version_min 10.13.0 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -o cmTC_1fe22 -L/opt/local/libexec/llvm-15/lib -L/opt/local/lib -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_1fe22.dir/CMakeCXXCompilerABI.cpp.o -lc++ -lSystem /opt/local/libexec/llvm-15/lib/clang/15.0.4/lib/darwin/libclang_rt.osx.a
-@(#)PROGRAM:ld  PROJECT:ld64-450.3
-BUILD 21:43:24 Feb  5 2020
-configured to support archs: i386 x86_64 x86_64h armv6 armv7 armv7s armv7m armv7k arm64
-Library search paths:
-	/opt/local/libexec/llvm-15/lib
-	/opt/local/lib
-	/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/lib
-Framework search paths:
-	/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/
-
-
-
-Parsed CXX implicit include dir info from above output: rv=done
-  found start of include info
-  found start of implicit include info
-    add: [/opt/local/libexec/llvm-15/bin/../include/c++/v1]
-    add: [/opt/local/libexec/llvm-15/lib/clang/15.0.4/include]
-    add: [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include]
-  end of search list found
-  collapse include dir [/opt/local/libexec/llvm-15/bin/../include/c++/v1] ==> [/opt/local/libexec/llvm-15/include/c++/v1]
-  collapse include dir [/opt/local/libexec/llvm-15/lib/clang/15.0.4/include] ==> [/opt/local/libexec/llvm-15/lib/clang/15.0.4/include]
-  collapse include dir [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include]
-  implicit include dirs: [/opt/local/libexec/llvm-15/include/c++/v1;/opt/local/libexec/llvm-15/lib/clang/15.0.4/include;/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include]
-
-
-Parsed CXX implicit link information from above output:
-  link line regex: [^( *|.*[/\])(ld\.lld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/CMakeTmp]
+  ignore line: [GNU C17 (Homebrew GCC 12.2.0) version 12.2.0 (x86_64-pc-linux-gnu)]
+  ignore line: [	compiled by GNU C version 12.2.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.25-GMP]
   ignore line: []
-  ignore line: [Run Build Command(s):/usr/bin/make -f Makefile cmTC_1fe22/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_1fe22.dir/build.make CMakeFiles/cmTC_1fe22.dir/build]
-  ignore line: [Building CXX object CMakeFiles/cmTC_1fe22.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/opt/local/libexec/llvm-15/bin/clang++   -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk   -v -Wl -v -MD -MT CMakeFiles/cmTC_1fe22.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_1fe22.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_1fe22.dir/CMakeCXXCompilerABI.cpp.o -c /opt/local/share/cmake-3.23/Modules/CMakeCXXCompilerABI.cpp]
-  ignore line: [clang version 15.0.4]
-  ignore line: [Target: x86_64-apple-darwin17.7.0]
+  ignore line: [warning: MPFR header version 4.1.0 differs from library version 4.1.0-p13.]
+  ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+  ignore line: [Compiler executable checksum: 246ef9ab879c16c61b436168d4c1e7fd]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_37a57.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_37a57.dir/']
+  ignore line: [ as -v --64 -o CMakeFiles/cmTC_37a57.dir/CMakeCCompilerABI.c.o /tmp/cctO2jKD.s]
+  ignore line: [GNU assembler version 2.39 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.39]
+  ignore line: [COMPILER_PATH=/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/x86_64-pc-linux-gnu/12/:/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/]
+  ignore line: [LIBRARY_PATH=/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/:/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/:/home/linuxbrew/.linuxbrew/lib/:/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/../../../:/lib/x86_64-linux-gnu/:/lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_37a57.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_37a57.dir/CMakeCCompilerABI.c.']
+  ignore line: [Linking C executable cmTC_37a57]
+  ignore line: [/home/linuxbrew/.linuxbrew/Cellar/cmake/3.24.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_37a57.dir/link.txt --verbose=1]
+  ignore line: [/home/linuxbrew/.linuxbrew/bin/gcc-12 -L/home/linuxbrew/.linuxbrew/opt/llvm@15/lib -Wl -rpath /home/linuxbrew/.linuxbrew/opt/llvm@15/lib -v -rdynamic CMakeFiles/cmTC_37a57.dir/CMakeCCompilerABI.c.o -o cmTC_37a57 ]
+  ignore line: [Reading specs from /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/specs]
+  ignore line: [COLLECT_GCC=/home/linuxbrew/.linuxbrew/bin/gcc-12]
+  ignore line: [COLLECT_LTO_WRAPPER=/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/x86_64-pc-linux-gnu/12/lto-wrapper]
+  ignore line: [Target: x86_64-pc-linux-gnu]
+  ignore line: [Configured with: ../configure --prefix=/home/linuxbrew/.linuxbrew/opt/gcc --libdir=/home/linuxbrew/.linuxbrew/opt/gcc/lib/gcc/current --disable-nls --enable-checking=release --with-gcc-major-version-only --enable-languages=c,c++,objc,obj-c++,fortran --program-suffix=-12 --with-gmp=/home/linuxbrew/.linuxbrew/opt/gmp --with-mpfr=/home/linuxbrew/.linuxbrew/opt/mpfr --with-mpc=/home/linuxbrew/.linuxbrew/opt/libmpc --with-isl=/home/linuxbrew/.linuxbrew/opt/isl --with-zstd=/home/linuxbrew/.linuxbrew/opt/zstd --with-pkgversion='Homebrew GCC 12.2.0' --with-bugurl=https://github.com/Homebrew/homebrew-core/issues --with-system-zlib --with-boot-ldflags='-static-libstdc++ -static-libgcc ' --disable-multilib]
   ignore line: [Thread model: posix]
-  ignore line: [InstalledDir: /opt/local/libexec/llvm-15/bin]
-  ignore line: [clang: warning: -Wl -v: 'linker' input unused [-Wunused-command-line-argument]]
-  ignore line: [ (in-process)]
-  ignore line: [ "/opt/local/libexec/llvm-15/bin/clang" -cc1 -triple x86_64-apple-macosx10.13.0 -Wundef-prefix=TARGET_OS_ -Werror=undef-prefix -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -mframe-pointer=all -ffp-contract=on -fno-rounding-math -funwind-tables=2 -target-sdk-version=10.14 -fcompatibility-qualified-id-block-type-checking -fvisibility-inlines-hidden-static-local-var -target-cpu penryn -tune-cpu generic -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=lldb -target-linker-version 450.3 -v -fcoverage-compilation-dir=/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/CMakeTmp -resource-dir /opt/local/libexec/llvm-15/lib/clang/15.0.4 -dependency-file CMakeFiles/cmTC_1fe22.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_1fe22.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -stdlib=libc++ -internal-isystem /opt/local/libexec/llvm-15/bin/../include/c++/v1 -internal-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include -internal-isystem /opt/local/libexec/llvm-15/lib/clang/15.0.4/include -internal-externc-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -fdeprecated-macro -fdebug-compilation-dir=/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/CMakeTmp -ferror-limit 19 -stack-protector 1 -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fcxx-exceptions -fexceptions -fmax-type-align=16 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_1fe22.dir/CMakeCXXCompilerABI.cpp.o -x c++ /opt/local/share/cmake-3.23/Modules/CMakeCXXCompilerABI.cpp]
-  ignore line: [clang -cc1 version 15.0.4 based upon LLVM 15.0.4 default target x86_64-apple-darwin17.7.0]
-  ignore line: [ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include"]
-  ignore line: [ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/Library/Frameworks"]
-  ignore line: [#include "..." search starts here:]
-  ignore line: [#include <...> search starts here:]
-  ignore line: [ /opt/local/libexec/llvm-15/bin/../include/c++/v1]
-  ignore line: [ /opt/local/libexec/llvm-15/lib/clang/15.0.4/include]
-  ignore line: [ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include]
-  ignore line: [ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks (framework directory)]
-  ignore line: [End of search list.]
-  ignore line: [Linking CXX executable cmTC_1fe22]
-  ignore line: [/opt/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1fe22.dir/link.txt --verbose=1]
-  ignore line: [/opt/local/libexec/llvm-15/bin/clang++  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -Wl -search_paths_first -Wl -headerpad_max_install_names -L/opt/local/libexec/llvm-15/lib -L/opt/local/lib -v -Wl -v CMakeFiles/cmTC_1fe22.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_1fe22 ]
-  ignore line: [clang version 15.0.4]
-  ignore line: [Target: x86_64-apple-darwin17.7.0]
-  ignore line: [Thread model: posix]
-  ignore line: [InstalledDir: /opt/local/libexec/llvm-15/bin]
-  link line: [ "/opt/local/libexec/llvm-15/bin/ld" -demangle -lto_library /opt/local/libexec/llvm-15/lib/libLTO.dylib -dynamic -arch x86_64 -macosx_version_min 10.13.0 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -o cmTC_1fe22 -L/opt/local/libexec/llvm-15/lib -L/opt/local/lib -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_1fe22.dir/CMakeCXXCompilerABI.cpp.o -lc++ -lSystem /opt/local/libexec/llvm-15/lib/clang/15.0.4/lib/darwin/libclang_rt.osx.a]
-    arg [/opt/local/libexec/llvm-15/bin/ld] ==> ignore
-    arg [-demangle] ==> ignore
-    arg [-lto_library] ==> ignore, skip following value
-    arg [/opt/local/libexec/llvm-15/lib/libLTO.dylib] ==> skip value of -lto_library
-    arg [-dynamic] ==> ignore
-    arg [-arch] ==> ignore
-    arg [x86_64] ==> ignore
-    arg [-macosx_version_min] ==> ignore
-    arg [10.13.0] ==> ignore
-    arg [-syslibroot] ==> ignore
-    arg [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk] ==> ignore
+  ignore line: [Supported LTO compression algorithms: zlib zstd]
+  ignore line: [gcc version 12.2.0 (Homebrew GCC 12.2.0) ]
+  ignore line: [COMPILER_PATH=/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/x86_64-pc-linux-gnu/12/:/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/]
+  ignore line: [LIBRARY_PATH=/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/:/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/:/home/linuxbrew/.linuxbrew/lib/:/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/../../../:/lib/x86_64-linux-gnu/:/lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-L/home/linuxbrew/.linuxbrew/opt/llvm@15/lib' '-v' '-rdynamic' '-o' 'cmTC_37a57' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_37a57.']
+  link line: [ /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/x86_64-pc-linux-gnu/12/collect2 -plugin /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/x86_64-pc-linux-gnu/12/liblto_plugin.so -plugin-opt=/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/x86_64-pc-linux-gnu/12/lto-wrapper -plugin-opt=-fresolution=/tmp/ccqWgMqH.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 --dynamic-linker /home/linuxbrew/.linuxbrew/lib/ld.so -rpath /home/linuxbrew/.linuxbrew/lib/gcc/current -o cmTC_37a57 /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crt1.o /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crti.o /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtbegin.o -L/home/linuxbrew/.linuxbrew/opt/llvm@15/lib -nostdlib -L/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12 -L/home/linuxbrew/.linuxbrew/lib/gcc/current -L/home/linuxbrew/.linuxbrew/lib -rpath /home/linuxbrew/.linuxbrew/opt/llvm@15/lib CMakeFiles/cmTC_37a57.dir/CMakeCCompilerABI.c.o -rpath /home/linuxbrew/.linuxbrew/lib -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtend.o /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtn.o]
+    arg [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/x86_64-pc-linux-gnu/12/collect2] ==> ignore
+    arg [-plugin] ==> ignore
+    arg [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/x86_64-pc-linux-gnu/12/liblto_plugin.so] ==> ignore
+    arg [-plugin-opt=/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../libexec/gcc/x86_64-pc-linux-gnu/12/lto-wrapper] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccqWgMqH.res] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+    arg [-plugin-opt=-pass-through=-lc] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+    arg [--eh-frame-hdr] ==> ignore
+    arg [-m] ==> ignore
+    arg [elf_x86_64] ==> ignore
+    arg [-export-dynamic] ==> ignore
+    arg [-dynamic-linker] ==> ignore
+    arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+    arg [--dynamic-linker] ==> ignore
+    arg [/home/linuxbrew/.linuxbrew/lib/ld.so] ==> ignore
+    arg [-rpath] ==> ignore
+    arg [/home/linuxbrew/.linuxbrew/lib/gcc/current] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_1fe22] ==> ignore
-    arg [-L/opt/local/libexec/llvm-15/lib] ==> dir [/opt/local/libexec/llvm-15/lib]
-    arg [-L/opt/local/lib] ==> dir [/opt/local/lib]
-    arg [-search_paths_first] ==> ignore
-    arg [-headerpad_max_install_names] ==> ignore
-    arg [-v] ==> ignore
-    arg [CMakeFiles/cmTC_1fe22.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
-    arg [-lc++] ==> lib [c++]
-    arg [-lSystem] ==> lib [System]
-    arg [/opt/local/libexec/llvm-15/lib/clang/15.0.4/lib/darwin/libclang_rt.osx.a] ==> lib [/opt/local/libexec/llvm-15/lib/clang/15.0.4/lib/darwin/libclang_rt.osx.a]
-  Library search paths: [;/opt/local/libexec/llvm-15/lib;/opt/local/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/lib]
-  Framework search paths: [;/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/]
-  remove lib [System]
-  remove lib [/opt/local/libexec/llvm-15/lib/clang/15.0.4/lib/darwin/libclang_rt.osx.a]
-  collapse library dir [/opt/local/libexec/llvm-15/lib] ==> [/opt/local/libexec/llvm-15/lib]
-  collapse library dir [/opt/local/lib] ==> [/opt/local/lib]
-  collapse library dir [/opt/local/libexec/llvm-15/lib] ==> [/opt/local/libexec/llvm-15/lib]
-  collapse library dir [/opt/local/lib] ==> [/opt/local/lib]
-  collapse library dir [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/lib] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/lib]
-  collapse framework dir [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks]
-  implicit libs: [c++]
-  implicit objs: []
-  implicit dirs: [/opt/local/libexec/llvm-15/lib;/opt/local/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/lib]
-  implicit fwks: [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks]
+    arg [cmTC_37a57] ==> ignore
+    arg [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crt1.o] ==> obj [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crt1.o]
+    arg [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crti.o] ==> obj [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crti.o]
+    arg [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtbegin.o] ==> obj [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtbegin.o]
+    arg [-L/home/linuxbrew/.linuxbrew/opt/llvm@15/lib] ==> dir [/home/linuxbrew/.linuxbrew/opt/llvm@15/lib]
+    arg [-nostdlib] ==> ignore
+    arg [-L/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12] ==> dir [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12]
+    arg [-L/home/linuxbrew/.linuxbrew/lib/gcc/current] ==> dir [/home/linuxbrew/.linuxbrew/lib/gcc/current]
+    arg [-L/home/linuxbrew/.linuxbrew/lib] ==> dir [/home/linuxbrew/.linuxbrew/lib]
+    arg [-rpath] ==> ignore
+    arg [/home/linuxbrew/.linuxbrew/opt/llvm@15/lib] ==> ignore
+    arg [CMakeFiles/cmTC_37a57.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [-rpath] ==> ignore
+    arg [/home/linuxbrew/.linuxbrew/lib] ==> ignore
+    arg [-lgcc] ==> lib [gcc]
+    arg [--push-state] ==> ignore
+    arg [--as-needed] ==> ignore
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [--pop-state] ==> ignore
+    arg [-lc] ==> lib [c]
+    arg [-lgcc] ==> lib [gcc]
+    arg [--push-state] ==> ignore
+    arg [--as-needed] ==> ignore
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [--pop-state] ==> ignore
+    arg [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtend.o] ==> obj [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtend.o]
+    arg [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtn.o] ==> obj [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtn.o]
+  collapse obj [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crt1.o] ==> [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crt1.o]
+  collapse obj [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crti.o] ==> [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crti.o]
+  collapse obj [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtbegin.o] ==> [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtbegin.o]
+  collapse obj [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtend.o] ==> [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtend.o]
+  collapse obj [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtn.o] ==> [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtn.o]
+  collapse library dir [/home/linuxbrew/.linuxbrew/opt/llvm@15/lib] ==> [/home/linuxbrew/.linuxbrew/opt/llvm@15/lib]
+  collapse library dir [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/bin/../lib/gcc/current/gcc/x86_64-pc-linux-gnu/12] ==> [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12]
+  collapse library dir [/home/linuxbrew/.linuxbrew/lib/gcc/current] ==> [/home/linuxbrew/.linuxbrew/lib/gcc/current]
+  collapse library dir [/home/linuxbrew/.linuxbrew/lib] ==> [/home/linuxbrew/.linuxbrew/lib]
+  implicit libs: [gcc;gcc_s;c;gcc;gcc_s]
+  implicit objs: [/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crt1.o;/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crti.o;/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtbegin.o;/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtend.o;/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/crtn.o]
+  implicit dirs: [/home/linuxbrew/.linuxbrew/opt/llvm@15/lib;/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12;/home/linuxbrew/.linuxbrew/lib/gcc/current;/home/linuxbrew/.linuxbrew/lib]
+  implicit fwks: []
 
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: /home/linuxbrew/.linuxbrew/bin/clang++ 
+Build flags: 
+Id flags: -c 
+
+The output was:
+0
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.o"
+
+The CXX compiler identification is Clang, found in "/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/3.24.2/CompilerIdCXX/CMakeCXXCompilerId.o"
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: /home/linuxbrew/.linuxbrew/bin/clang++ 
+Build flags: 
+Id flags: -c 
+
+The output was:
+0
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.o"
+
+The CXX compiler identification is Clang, found in "/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/3.24.2/CompilerIdCXX/CMakeCXXCompilerId.o"
 

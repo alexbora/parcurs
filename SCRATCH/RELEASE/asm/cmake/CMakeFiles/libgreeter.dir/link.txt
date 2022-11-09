@@ -1,2 +1,0 @@
-/usr/bin/ar qc liblibgreeter.a CMakeFiles/libgreeter.dir/test2.c.o
-/opt/local/libexec/llvm-15/bin/llvm-ranlib liblibgreeter.a

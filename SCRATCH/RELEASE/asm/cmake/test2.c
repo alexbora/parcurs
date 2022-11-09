@@ -4,7 +4,6 @@
  * @created     : Sâmbătă Oct 01, 2022 18:37:34 EEST
  */
 
-#include <mach/i386/vm_param.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/fcntl.h>
@@ -23,16 +22,15 @@
 #include <sys/user.h>
 #include <unistd.h>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   DEBUG("%d\n", __LINE__);
 
-  printf("%d\n", PAGE_SIZE);
+  printf("%lu\n", PAGE_SIZE);
   if (argc < 2) {
     puts("provide args");
     return 0;
   }
-  int         fd = open(argv[1], O_RDONLY);
+  int fd = open(argv[1], O_RDONLY);
   struct stat fs;
   fstat(fd, &fs);
 
