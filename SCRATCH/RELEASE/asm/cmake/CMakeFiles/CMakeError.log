@@ -1,0 +1,19 @@
+Detecting C compiler ABI info failed to compile with the following output:
+Change Dir: /Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_7de3b/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_7de3b.dir/build.make CMakeFiles/cmTC_7de3b.dir/build
+CMakeFiles/cmTC_7de3b.dir/flags.make:10: *** missing separator.  Stop.
+make: *** [cmTC_7de3b/fast] Error 2
+
+
+
+
+Determining if the C compiler works failed with the following output:
+Change Dir: /Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_b4b1c/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_b4b1c.dir/build.make CMakeFiles/cmTC_b4b1c.dir/build
+CMakeFiles/cmTC_b4b1c.dir/flags.make:10: *** missing separator.  Stop.
+make: *** [cmTC_b4b1c/fast] Error 2
+
+
+

@@ -1,0 +1,1 @@
+/opt/local/libexec/llvm-15/bin/clang -I/Users/alex/tech/root/include/openssl -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names -L/opt/local/libexec/llvm-15/lib -L/opt/local/lib CMakeFiles/hello.dir/test2.c.o -o hello 

@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/test2.c
+mach/i386/vm_param.h
+-
+stdio.h
+-
+stdlib.h
+-
+sys/fcntl.h
+-
+fcntl.h
+-
+sys/stat.h
+-
+sys/types.h
+-
+sys/user.h
+-
+unistd.h
+-
+

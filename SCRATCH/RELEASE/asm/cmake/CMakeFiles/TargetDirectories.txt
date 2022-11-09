@@ -1,0 +1,4 @@
+/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/hello.dir
+/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/greeter.dir
+/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/edit_cache.dir
+/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/CMakeFiles/rebuild_cache.dir
