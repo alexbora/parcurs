@@ -5,12 +5,12 @@
 ######################################################################
 
 cmake_minimum_required(VERSION 3.0)
-# project(myproject LANGUAGES C)
-set(CMAKE_C_COMPILER "/usr/local/Cellar/gcc/12.2.0/bin/gcc-12")
+# SET (CMAKE_C_COMPILER_WORKS 1)
+project(myproject LANGUAGES C)
+# set(CMAKE_C_COMPILER /usr/local/Cellar/gcc/12.2.0/bin/gcc-12)
 # set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
 # set(CMAKE_C_COMPILER:FILEPATH gcc-12)
 # set(CMAKE_CXX_COMPILER:FILEPATH g++-12)
-SET (CMAKE_C_COMPILER_WORKS 1)
 # SET (CMAKE_CXX_COMPILER_WORKS 1)
 
 project(C_Only C)
@@ -33,7 +33,10 @@ add_definitions (${GTK3_CFLAGS_OTHER})
 # add_library(test2 SHARED test2.c)
 # add_library(test_static test2.c)
 # target_link_libraries(main test2)
+set (EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
 
-add_executable(gtk gtk.c)
+set(namefile "gtk")
+# add_executable(gtk gtk.c)
+add_executable( ${namefile} ${namefile}.c ) 
 target_link_libraries (gtk ${GTK3_LIBRARIES})
 
