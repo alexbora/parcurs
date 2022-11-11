@@ -28,7 +28,7 @@ include_directories (${GTK3_INCLUDE_DIRS})
 link_directories (${GTK3_LIBRARY_DIRS})
 add_definitions (${GTK3_CFLAGS_OTHER})
 
-# enable_language(C)
+ enable_language(C)
 # add_library(test2 test2.c)
 # add_library(test2 SHARED test2.c)
 # add_library(test_static test2.c)
