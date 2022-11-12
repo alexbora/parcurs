@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "Teste in Bash"
+exit 0
