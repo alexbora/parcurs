@@ -1,5 +1,9 @@
-all:  
-	mkdir build && cd build 
-clean:
-	cd ..
+
+all: clean 
+	mkdir build 
+	cmake -Bbuild 
+	make -C ./build	
+
+clean: 
 	rm -rf build
+

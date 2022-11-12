@@ -16,6 +16,7 @@ project(myproject LANGUAGES C)
 project(C_Only C)
 enable_language(C)
 # add_executable(main test2.c)
+set(CMAKE_C_COMPILER:FILEPATH=/usr/local/bin/gcc-12)
 
 # set(CMAKE_C_COMPILER_WORKS 1)
 # set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
