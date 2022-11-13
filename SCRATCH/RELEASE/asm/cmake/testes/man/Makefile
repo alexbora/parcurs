@@ -148,24 +148,24 @@ MANS = $(man_MANS)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 am__DIST_COMMON = $(srcdir)/Makefile.in
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} '/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/testes/missing' aclocal-1.16
+ACLOCAL = ${SHELL} '/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/cmake/testes/missing' aclocal-1.16
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
-AUTOCONF = ${SHELL} '/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/testes/missing' autoconf
-AUTOHEADER = ${SHELL} '/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/testes/missing' autoheader
-AUTOMAKE = ${SHELL} '/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/testes/missing' automake-1.16
-AWK = awk
-CC = /opt/local/libexec/llvm-15/bin/clang
+AUTOCONF = ${SHELL} '/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/cmake/testes/missing' autoconf
+AUTOHEADER = ${SHELL} '/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/cmake/testes/missing' autoheader
+AUTOMAKE = ${SHELL} '/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/cmake/testes/missing' automake-1.16
+AWK = gawk
+CC = gcc-12
 CCDEPMODE = depmode=gcc3
-CFLAGS = -I/Users/alex/tech/root/include/openssl -I/usr/local/opt/llvm/include -I/Users/alex/tech/include/ -I/Users/alex/tech/root/include/openssl -I/usr/local/opt/binutils/include -I/usr/local/opt/curl/include -I/Users/alex/tech/lib -I/opt/local/include -I/usr/local/Cellar/libxlsxwriter/1.1.4/include -I/usr/local/Cellar/wxwidgets/3.2.1/include/wx-3.2 -I/opt/local -I/opt/local/include -I/opt/local
-CPPFLAGS = -I/opt/local/libexec/llvm-15/include
+CFLAGS = -g -O2
+CPPFLAGS = 
 CSCOPE = cscope
 CTAGS = ctags
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
-ECHO_C = \c
-ECHO_N = 
+ECHO_C = 
+ECHO_N = -n
 ECHO_T = 
 ETAGS = etags
 EXEEXT = 
@@ -174,12 +174,12 @@ INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
-LDFLAGS = -L/opt/local/libexec/llvm-15/lib -L/opt/local/lib
+LDFLAGS = -L/home/linuxbrew/.linuxbrew/opt/llvm@15/lib -Wl,-rpath,/home/linuxbrew/.linuxbrew/opt/llvm@15/lib
 LIBOBJS = 
 LIBS = 
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} '/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/testes/missing' makeinfo
-MKDIR_P = .././install-sh -c -d
+MAKEINFO = ${SHELL} '/home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/cmake/testes/missing' makeinfo
+MKDIR_P = /bin/mkdir -p
 OBJEXT = o
 PACKAGE = teste
 PACKAGE_BUGREPORT = 
@@ -190,14 +190,14 @@ PACKAGE_URL =
 PACKAGE_VERSION = 
 PATH_SEPARATOR = :
 SET_MAKE = 
-SHELL = /bin/sh
+SHELL = /bin/bash
 STRIP = 
 VERSION = 1.0
-abs_builddir = /Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/testes/man
-abs_srcdir = /Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/testes/man
-abs_top_builddir = /Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/testes
-abs_top_srcdir = /Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/testes
-ac_ct_CC = /opt/local/libexec/llvm-15/bin/clang
+abs_builddir = /home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/cmake/testes/man
+abs_srcdir = /home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/cmake/testes/man
+abs_top_builddir = /home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/cmake/testes
+abs_top_srcdir = /home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/cmake/testes
+ac_ct_CC = gcc-12
 am__include = include
 am__leading_dot = .
 am__quote = 
@@ -215,7 +215,7 @@ host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/cmake/testes/install-sh
+install_sh = ${SHELL} /home/alex/tmp/parcurs/SCRATCH/RELEASE/asm/cmake/testes/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -249,9 +249,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu man/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign man/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu man/Makefile
+	  $(AUTOMAKE) --foreign man/Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \
