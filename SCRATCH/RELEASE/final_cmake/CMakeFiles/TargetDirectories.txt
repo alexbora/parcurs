@@ -1,0 +1,3 @@
+/Users/alex/dev/parcurs/SCRATCH/RELEASE/final_cmake/CMakeFiles/main.dir
+/Users/alex/dev/parcurs/SCRATCH/RELEASE/final_cmake/CMakeFiles/edit_cache.dir
+/Users/alex/dev/parcurs/SCRATCH/RELEASE/final_cmake/CMakeFiles/rebuild_cache.dir
