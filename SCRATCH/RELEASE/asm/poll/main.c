@@ -12,6 +12,8 @@
 #include <sys/poll.h>
 #include <unistd.h>
 
+#define _GNU_SOURCE
+
 int main(void)
 {
   struct pollfd fd;
@@ -28,7 +30,7 @@ int main(void)
   if (fd.revents & POLLOUT)
     printf("stdout is writable\n");
   write(f, "1\n", 2);
-
+  pwrite(f, "2\n", 2, 2);
   close(f);
   return EXIT_SUCCESS;
 }
