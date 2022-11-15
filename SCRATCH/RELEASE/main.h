@@ -86,13 +86,14 @@ extern int fd_;
 #define CLOSE_FD close_fd();
 void init_fd(void);
 void close_fd(void);
-
-#define PRINT_(a) write(fd_, a, strlen(a));
+#define _XOPEN_SOURCE 500
+#define PRINT_(a)     write(fd_, a, strlen(a));
 
 #elif defined LOG_VERBOSE
 #define INIT_FD
 #define CLOSE_FD
-#define PRINT_(a) write(2, a, strlen(a));
+#define PRINT_(a) write(2 /* STDERR */, a, strlen(a));
+
 #else
 #define INIT_FD
 #define CLOSE_FD
