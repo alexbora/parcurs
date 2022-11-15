@@ -6,6 +6,7 @@
 
 #include <fcntl.h>
 #include <poll.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/fcntl.h>
@@ -29,6 +30,7 @@ int main(void)
     printf("stdin is readable\n");
   if (fd.revents & POLLOUT)
     printf("stdout is writable\n");
+  size_t len = 0;
   write(f, "1\n", 2);
   pwrite(f, "2\n", 2, 2);
   close(f);
