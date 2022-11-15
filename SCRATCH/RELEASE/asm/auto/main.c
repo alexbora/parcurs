@@ -1,7 +1,7 @@
 /**
  * @author      : alex (alexbora@gmail.com)
  * @file        : main
- * @created     : Marţi Noi 15, 2022 14:32:25 EET
+ * @created     : Marţi Noi 15, 2022 20:39:38 EET
  */
 
 #include <stdio.h>
@@ -9,7 +9,6 @@
 
 int main(int argc, char *argv[])
 {
-
-  puts("SUCCESS\n");
+  puts("success");
   return EXIT_SUCCESS;
 }
