@@ -2,8 +2,8 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.71])
-AC_INIT (test, 1.0, teste@terminalroot.com .br)
-AM_INIT_AUTOMAKE(teste, 1.0)
+AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS])
+AM_INIT_AUTOMAKE(main, 1.0)
 AC_CONFIG_SRCDIR([main.c])
 AC_CONFIG_HEADERS([config.h])
 
@@ -17,5 +17,6 @@ AC_PROG_CC
 # Checks for typedefs, structures, and compiler characteristics.
 
 # Checks for library functions.
+
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
