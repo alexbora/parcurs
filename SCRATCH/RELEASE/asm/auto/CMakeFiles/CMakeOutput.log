@@ -1,0 +1,330 @@
+The system is: Darwin - 17.7.0 - x86_64
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /opt/local/libexec/llvm-15/bin/clang 
+Build flags: -I/Users/alex/tech/root/include/openssl;-I/usr/local/opt/llvm/include;-I/Users/alex/tech/include/;-I/Users/alex/tech/root/include/openssl;-I/usr/local/opt/binutils/include;-I/usr/local/opt/curl/include;-I/Users/alex/tech/lib;-I/opt/local/include;-I/usr/local/Cellar/libxlsxwriter/1.1.4/include;-I/usr/local/Cellar/wxwidgets/3.2.1/include/wx-3.2;-I/opt/local;-I/opt/local/include;-I/opt/local
+Id flags:  
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+
+The C compiler identification is Clang, found in "/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/auto/CMakeFiles/3.23.5/CompilerIdC/a.out"
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: /opt/local/libexec/llvm-15/bin/clang++ 
+Build flags: 
+Id flags:  
+
+The output was:
+0
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+
+The CXX compiler identification is Clang, found in "/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/auto/CMakeFiles/3.23.5/CompilerIdCXX/a.out"
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: /Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/auto/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_52a0e/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_52a0e.dir/build.make CMakeFiles/cmTC_52a0e.dir/build
+Building C object CMakeFiles/cmTC_52a0e.dir/CMakeCCompilerABI.c.o
+/opt/local/libexec/llvm-15/bin/clang   -I/Users/alex/tech/root/include/openssl -I/usr/local/opt/llvm/include -I/Users/alex/tech/include/ -I/Users/alex/tech/root/include/openssl -I/usr/local/opt/binutils/include -I/usr/local/opt/curl/include -I/Users/alex/tech/lib -I/opt/local/include -I/usr/local/Cellar/libxlsxwriter/1.1.4/include -I/usr/local/Cellar/wxwidgets/3.2.1/include/wx-3.2 -I/opt/local -I/opt/local/include -I/opt/local  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk   -v -Wl,-v -MD -MT CMakeFiles/cmTC_52a0e.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_52a0e.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_52a0e.dir/CMakeCCompilerABI.c.o -c /opt/local/share/cmake-3.23/Modules/CMakeCCompilerABI.c
+clang version 15.0.4
+Target: x86_64-apple-darwin17.7.0
+Thread model: posix
+InstalledDir: /opt/local/libexec/llvm-15/bin
+clang: warning: -Wl,-v: 'linker' input unused [-Wunused-command-line-argument]
+ (in-process)
+ "/opt/local/libexec/llvm-15/bin/clang" -cc1 -triple x86_64-apple-macosx10.13.0 -Wundef-prefix=TARGET_OS_ -Werror=undef-prefix -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -mframe-pointer=all -ffp-contract=on -fno-rounding-math -funwind-tables=2 -target-sdk-version=10.14 -fcompatibility-qualified-id-block-type-checking -fvisibility-inlines-hidden-static-local-var -target-cpu penryn -tune-cpu generic -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=lldb -target-linker-version 450.3 -v -fcoverage-compilation-dir=/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/auto/CMakeFiles/CMakeTmp -resource-dir /opt/local/libexec/llvm-15/lib/clang/15.0.4 -dependency-file CMakeFiles/cmTC_52a0e.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_52a0e.dir/CMakeCCompilerABI.c.o -sys-header-deps -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -I /Users/alex/tech/root/include/openssl -I /usr/local/opt/llvm/include -I /Users/alex/tech/include/ -I /Users/alex/tech/root/include/openssl -I /usr/local/opt/binutils/include -I /usr/local/opt/curl/include -I /Users/alex/tech/lib -I /opt/local/include -I /usr/local/Cellar/libxlsxwriter/1.1.4/include -I /usr/local/Cellar/wxwidgets/3.2.1/include/wx-3.2 -I /opt/local -I /opt/local/include -I /opt/local -internal-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include -internal-isystem /opt/local/libexec/llvm-15/lib/clang/15.0.4/include -internal-externc-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -fdebug-compilation-dir=/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/auto/CMakeFiles/CMakeTmp -ferror-limit 19 -stack-protector 1 -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fmax-type-align=16 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_52a0e.dir/CMakeCCompilerABI.c.o -x c /opt/local/share/cmake-3.23/Modules/CMakeCCompilerABI.c
+clang -cc1 version 15.0.4 based upon LLVM 15.0.4 default target x86_64-apple-darwin17.7.0
+ignoring nonexistent directory "/Users/alex/tech/root/include/openssl"
+ignoring nonexistent directory "/usr/local/opt/llvm/include"
+ignoring nonexistent directory "/Users/alex/tech/root/include/openssl"
+ignoring nonexistent directory "/usr/local/Cellar/wxwidgets/3.2.1/include/wx-3.2"
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include"
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/Library/Frameworks"
+ignoring duplicate directory "/opt/local/include"
+ignoring duplicate directory "/opt/local"
+#include "..." search starts here:
+#include <...> search starts here:
+ /Users/alex/tech/include
+ /usr/local/opt/binutils/include
+ /usr/local/opt/curl/include
+ /Users/alex/tech/lib
+ /opt/local/include
+ /usr/local/Cellar/libxlsxwriter/1.1.4/include
+ /opt/local
+ /opt/local/libexec/llvm-15/lib/clang/15.0.4/include
+ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include
+ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks (framework directory)
+End of search list.
+Linking C executable cmTC_52a0e
+/opt/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_52a0e.dir/link.txt --verbose=1
+/opt/local/libexec/llvm-15/bin/clang -I/Users/alex/tech/root/include/openssl -I/usr/local/opt/llvm/include -I/Users/alex/tech/include/ -I/Users/alex/tech/root/include/openssl -I/usr/local/opt/binutils/include -I/usr/local/opt/curl/include -I/Users/alex/tech/lib -I/opt/local/include -I/usr/local/Cellar/libxlsxwriter/1.1.4/include -I/usr/local/Cellar/wxwidgets/3.2.1/include/wx-3.2 -I/opt/local -I/opt/local/include -I/opt/local  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names -L/opt/local/libexec/llvm-15/lib -L/opt/local/lib -v -Wl,-v CMakeFiles/cmTC_52a0e.dir/CMakeCCompilerABI.c.o -o cmTC_52a0e 
+clang version 15.0.4
+Target: x86_64-apple-darwin17.7.0
+Thread model: posix
+InstalledDir: /opt/local/libexec/llvm-15/bin
+ "/opt/local/libexec/llvm-15/bin/ld" -demangle -lto_library /opt/local/libexec/llvm-15/lib/libLTO.dylib -dynamic -arch x86_64 -macosx_version_min 10.13.0 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -o cmTC_52a0e -L/opt/local/libexec/llvm-15/lib -L/opt/local/lib -L/usr/local/lib -L/usr/local/Cellar/libxlsxwriter -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_52a0e.dir/CMakeCCompilerABI.c.o -lSystem /opt/local/libexec/llvm-15/lib/clang/15.0.4/lib/darwin/libclang_rt.osx.a
+@(#)PROGRAM:ld  PROJECT:ld64-450.3
+BUILD 21:43:24 Feb  5 2020
+configured to support archs: i386 x86_64 x86_64h armv6 armv7 armv7s armv7m armv7k arm64
+Library search paths:
+	/opt/local/libexec/llvm-15/lib
+	/opt/local/lib
+	/usr/local/lib
+	/usr/local/Cellar/libxlsxwriter
+	/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/lib
+Framework search paths:
+	/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/
+
+
+
+Parsed C implicit include dir info from above output: rv=done
+  found start of include info
+  found start of implicit include info
+    add: [/Users/alex/tech/include]
+    add: [/usr/local/opt/binutils/include]
+    add: [/usr/local/opt/curl/include]
+    add: [/Users/alex/tech/lib]
+    add: [/opt/local/include]
+    add: [/usr/local/Cellar/libxlsxwriter/1.1.4/include]
+    add: [/opt/local]
+    add: [/opt/local/libexec/llvm-15/lib/clang/15.0.4/include]
+    add: [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include]
+  end of search list found
+  collapse include dir [/Users/alex/tech/include] ==> [/Users/alex/tech/include]
+  collapse include dir [/usr/local/opt/binutils/include] ==> [/usr/local/opt/binutils/include]
+  collapse include dir [/usr/local/opt/curl/include] ==> [/usr/local/opt/curl/include]
+  collapse include dir [/Users/alex/tech/lib] ==> [/Users/alex/tech/lib]
+  collapse include dir [/opt/local/include] ==> [/opt/local/include]
+  collapse include dir [/usr/local/Cellar/libxlsxwriter/1.1.4/include] ==> [/usr/local/Cellar/libxlsxwriter/1.1.4/include]
+  collapse include dir [/opt/local] ==> [/opt/local]
+  collapse include dir [/opt/local/libexec/llvm-15/lib/clang/15.0.4/include] ==> [/opt/local/libexec/llvm-15/lib/clang/15.0.4/include]
+  collapse include dir [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include]
+  implicit include dirs: [/Users/alex/tech/include;/usr/local/opt/binutils/include;/usr/local/opt/curl/include;/Users/alex/tech/lib;/opt/local/include;/usr/local/Cellar/libxlsxwriter/1.1.4/include;/opt/local;/opt/local/libexec/llvm-15/lib/clang/15.0.4/include;/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include]
+
+
+Parsed C implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld\.lld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/auto/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command(s):/usr/bin/make -f Makefile cmTC_52a0e/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_52a0e.dir/build.make CMakeFiles/cmTC_52a0e.dir/build]
+  ignore line: [Building C object CMakeFiles/cmTC_52a0e.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/opt/local/libexec/llvm-15/bin/clang   -I/Users/alex/tech/root/include/openssl -I/usr/local/opt/llvm/include -I/Users/alex/tech/include/ -I/Users/alex/tech/root/include/openssl -I/usr/local/opt/binutils/include -I/usr/local/opt/curl/include -I/Users/alex/tech/lib -I/opt/local/include -I/usr/local/Cellar/libxlsxwriter/1.1.4/include -I/usr/local/Cellar/wxwidgets/3.2.1/include/wx-3.2 -I/opt/local -I/opt/local/include -I/opt/local  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk   -v -Wl -v -MD -MT CMakeFiles/cmTC_52a0e.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_52a0e.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_52a0e.dir/CMakeCCompilerABI.c.o -c /opt/local/share/cmake-3.23/Modules/CMakeCCompilerABI.c]
+  ignore line: [clang version 15.0.4]
+  ignore line: [Target: x86_64-apple-darwin17.7.0]
+  ignore line: [Thread model: posix]
+  ignore line: [InstalledDir: /opt/local/libexec/llvm-15/bin]
+  ignore line: [clang: warning: -Wl -v: 'linker' input unused [-Wunused-command-line-argument]]
+  ignore line: [ (in-process)]
+  ignore line: [ "/opt/local/libexec/llvm-15/bin/clang" -cc1 -triple x86_64-apple-macosx10.13.0 -Wundef-prefix=TARGET_OS_ -Werror=undef-prefix -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -mframe-pointer=all -ffp-contract=on -fno-rounding-math -funwind-tables=2 -target-sdk-version=10.14 -fcompatibility-qualified-id-block-type-checking -fvisibility-inlines-hidden-static-local-var -target-cpu penryn -tune-cpu generic -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=lldb -target-linker-version 450.3 -v -fcoverage-compilation-dir=/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/auto/CMakeFiles/CMakeTmp -resource-dir /opt/local/libexec/llvm-15/lib/clang/15.0.4 -dependency-file CMakeFiles/cmTC_52a0e.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_52a0e.dir/CMakeCCompilerABI.c.o -sys-header-deps -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -I /Users/alex/tech/root/include/openssl -I /usr/local/opt/llvm/include -I /Users/alex/tech/include/ -I /Users/alex/tech/root/include/openssl -I /usr/local/opt/binutils/include -I /usr/local/opt/curl/include -I /Users/alex/tech/lib -I /opt/local/include -I /usr/local/Cellar/libxlsxwriter/1.1.4/include -I /usr/local/Cellar/wxwidgets/3.2.1/include/wx-3.2 -I /opt/local -I /opt/local/include -I /opt/local -internal-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include -internal-isystem /opt/local/libexec/llvm-15/lib/clang/15.0.4/include -internal-externc-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -fdebug-compilation-dir=/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/auto/CMakeFiles/CMakeTmp -ferror-limit 19 -stack-protector 1 -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fmax-type-align=16 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_52a0e.dir/CMakeCCompilerABI.c.o -x c /opt/local/share/cmake-3.23/Modules/CMakeCCompilerABI.c]
+  ignore line: [clang -cc1 version 15.0.4 based upon LLVM 15.0.4 default target x86_64-apple-darwin17.7.0]
+  ignore line: [ignoring nonexistent directory "/Users/alex/tech/root/include/openssl"]
+  ignore line: [ignoring nonexistent directory "/usr/local/opt/llvm/include"]
+  ignore line: [ignoring nonexistent directory "/Users/alex/tech/root/include/openssl"]
+  ignore line: [ignoring nonexistent directory "/usr/local/Cellar/wxwidgets/3.2.1/include/wx-3.2"]
+  ignore line: [ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include"]
+  ignore line: [ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/Library/Frameworks"]
+  ignore line: [ignoring duplicate directory "/opt/local/include"]
+  ignore line: [ignoring duplicate directory "/opt/local"]
+  ignore line: [#include "..." search starts here:]
+  ignore line: [#include <...> search starts here:]
+  ignore line: [ /Users/alex/tech/include]
+  ignore line: [ /usr/local/opt/binutils/include]
+  ignore line: [ /usr/local/opt/curl/include]
+  ignore line: [ /Users/alex/tech/lib]
+  ignore line: [ /opt/local/include]
+  ignore line: [ /usr/local/Cellar/libxlsxwriter/1.1.4/include]
+  ignore line: [ /opt/local]
+  ignore line: [ /opt/local/libexec/llvm-15/lib/clang/15.0.4/include]
+  ignore line: [ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include]
+  ignore line: [ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks (framework directory)]
+  ignore line: [End of search list.]
+  ignore line: [Linking C executable cmTC_52a0e]
+  ignore line: [/opt/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_52a0e.dir/link.txt --verbose=1]
+  ignore line: [/opt/local/libexec/llvm-15/bin/clang -I/Users/alex/tech/root/include/openssl -I/usr/local/opt/llvm/include -I/Users/alex/tech/include/ -I/Users/alex/tech/root/include/openssl -I/usr/local/opt/binutils/include -I/usr/local/opt/curl/include -I/Users/alex/tech/lib -I/opt/local/include -I/usr/local/Cellar/libxlsxwriter/1.1.4/include -I/usr/local/Cellar/wxwidgets/3.2.1/include/wx-3.2 -I/opt/local -I/opt/local/include -I/opt/local  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -Wl -search_paths_first -Wl -headerpad_max_install_names -L/opt/local/libexec/llvm-15/lib -L/opt/local/lib -v -Wl -v CMakeFiles/cmTC_52a0e.dir/CMakeCCompilerABI.c.o -o cmTC_52a0e ]
+  ignore line: [clang version 15.0.4]
+  ignore line: [Target: x86_64-apple-darwin17.7.0]
+  ignore line: [Thread model: posix]
+  ignore line: [InstalledDir: /opt/local/libexec/llvm-15/bin]
+  link line: [ "/opt/local/libexec/llvm-15/bin/ld" -demangle -lto_library /opt/local/libexec/llvm-15/lib/libLTO.dylib -dynamic -arch x86_64 -macosx_version_min 10.13.0 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -o cmTC_52a0e -L/opt/local/libexec/llvm-15/lib -L/opt/local/lib -L/usr/local/lib -L/usr/local/Cellar/libxlsxwriter -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_52a0e.dir/CMakeCCompilerABI.c.o -lSystem /opt/local/libexec/llvm-15/lib/clang/15.0.4/lib/darwin/libclang_rt.osx.a]
+    arg [/opt/local/libexec/llvm-15/bin/ld] ==> ignore
+    arg [-demangle] ==> ignore
+    arg [-lto_library] ==> ignore, skip following value
+    arg [/opt/local/libexec/llvm-15/lib/libLTO.dylib] ==> skip value of -lto_library
+    arg [-dynamic] ==> ignore
+    arg [-arch] ==> ignore
+    arg [x86_64] ==> ignore
+    arg [-macosx_version_min] ==> ignore
+    arg [10.13.0] ==> ignore
+    arg [-syslibroot] ==> ignore
+    arg [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTC_52a0e] ==> ignore
+    arg [-L/opt/local/libexec/llvm-15/lib] ==> dir [/opt/local/libexec/llvm-15/lib]
+    arg [-L/opt/local/lib] ==> dir [/opt/local/lib]
+    arg [-L/usr/local/lib] ==> dir [/usr/local/lib]
+    arg [-L/usr/local/Cellar/libxlsxwriter] ==> dir [/usr/local/Cellar/libxlsxwriter]
+    arg [-search_paths_first] ==> ignore
+    arg [-headerpad_max_install_names] ==> ignore
+    arg [-v] ==> ignore
+    arg [CMakeFiles/cmTC_52a0e.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [-lSystem] ==> lib [System]
+    arg [/opt/local/libexec/llvm-15/lib/clang/15.0.4/lib/darwin/libclang_rt.osx.a] ==> lib [/opt/local/libexec/llvm-15/lib/clang/15.0.4/lib/darwin/libclang_rt.osx.a]
+  Library search paths: [;/opt/local/libexec/llvm-15/lib;/opt/local/lib;/usr/local/lib;/usr/local/Cellar/libxlsxwriter;/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/lib]
+  Framework search paths: [;/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/]
+  remove lib [System]
+  remove lib [/opt/local/libexec/llvm-15/lib/clang/15.0.4/lib/darwin/libclang_rt.osx.a]
+  collapse library dir [/opt/local/libexec/llvm-15/lib] ==> [/opt/local/libexec/llvm-15/lib]
+  collapse library dir [/opt/local/lib] ==> [/opt/local/lib]
+  collapse library dir [/usr/local/lib] ==> [/usr/local/lib]
+  collapse library dir [/usr/local/Cellar/libxlsxwriter] ==> [/usr/local/Cellar/libxlsxwriter]
+  collapse library dir [/opt/local/libexec/llvm-15/lib] ==> [/opt/local/libexec/llvm-15/lib]
+  collapse library dir [/opt/local/lib] ==> [/opt/local/lib]
+  collapse library dir [/usr/local/lib] ==> [/usr/local/lib]
+  collapse library dir [/usr/local/Cellar/libxlsxwriter] ==> [/usr/local/Cellar/libxlsxwriter]
+  collapse library dir [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/lib] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/lib]
+  collapse framework dir [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks]
+  implicit libs: []
+  implicit objs: []
+  implicit dirs: [/opt/local/libexec/llvm-15/lib;/opt/local/lib;/usr/local/lib;/usr/local/Cellar/libxlsxwriter;/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/lib]
+  implicit fwks: [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks]
+
+
+Detecting CXX compiler ABI info compiled with the following output:
+Change Dir: /Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/auto/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_44db2/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_44db2.dir/build.make CMakeFiles/cmTC_44db2.dir/build
+Building CXX object CMakeFiles/cmTC_44db2.dir/CMakeCXXCompilerABI.cpp.o
+/opt/local/libexec/llvm-15/bin/clang++   -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk   -v -Wl,-v -MD -MT CMakeFiles/cmTC_44db2.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_44db2.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_44db2.dir/CMakeCXXCompilerABI.cpp.o -c /opt/local/share/cmake-3.23/Modules/CMakeCXXCompilerABI.cpp
+clang version 15.0.4
+Target: x86_64-apple-darwin17.7.0
+Thread model: posix
+InstalledDir: /opt/local/libexec/llvm-15/bin
+clang: warning: -Wl,-v: 'linker' input unused [-Wunused-command-line-argument]
+ (in-process)
+ "/opt/local/libexec/llvm-15/bin/clang" -cc1 -triple x86_64-apple-macosx10.13.0 -Wundef-prefix=TARGET_OS_ -Werror=undef-prefix -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -mframe-pointer=all -ffp-contract=on -fno-rounding-math -funwind-tables=2 -target-sdk-version=10.14 -fcompatibility-qualified-id-block-type-checking -fvisibility-inlines-hidden-static-local-var -target-cpu penryn -tune-cpu generic -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=lldb -target-linker-version 450.3 -v -fcoverage-compilation-dir=/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/auto/CMakeFiles/CMakeTmp -resource-dir /opt/local/libexec/llvm-15/lib/clang/15.0.4 -dependency-file CMakeFiles/cmTC_44db2.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_44db2.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -stdlib=libc++ -internal-isystem /opt/local/libexec/llvm-15/bin/../include/c++/v1 -internal-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include -internal-isystem /opt/local/libexec/llvm-15/lib/clang/15.0.4/include -internal-externc-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -fdeprecated-macro -fdebug-compilation-dir=/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/auto/CMakeFiles/CMakeTmp -ferror-limit 19 -stack-protector 1 -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fcxx-exceptions -fexceptions -fmax-type-align=16 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_44db2.dir/CMakeCXXCompilerABI.cpp.o -x c++ /opt/local/share/cmake-3.23/Modules/CMakeCXXCompilerABI.cpp
+clang -cc1 version 15.0.4 based upon LLVM 15.0.4 default target x86_64-apple-darwin17.7.0
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include"
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/Library/Frameworks"
+#include "..." search starts here:
+#include <...> search starts here:
+ /opt/local/libexec/llvm-15/bin/../include/c++/v1
+ /opt/local/libexec/llvm-15/lib/clang/15.0.4/include
+ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include
+ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks (framework directory)
+End of search list.
+Linking CXX executable cmTC_44db2
+/opt/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_44db2.dir/link.txt --verbose=1
+/opt/local/libexec/llvm-15/bin/clang++  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names -L/opt/local/libexec/llvm-15/lib -L/opt/local/lib -v -Wl,-v CMakeFiles/cmTC_44db2.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_44db2 
+clang version 15.0.4
+Target: x86_64-apple-darwin17.7.0
+Thread model: posix
+InstalledDir: /opt/local/libexec/llvm-15/bin
+ "/opt/local/libexec/llvm-15/bin/ld" -demangle -lto_library /opt/local/libexec/llvm-15/lib/libLTO.dylib -dynamic -arch x86_64 -macosx_version_min 10.13.0 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -o cmTC_44db2 -L/opt/local/libexec/llvm-15/lib -L/opt/local/lib -L/usr/local/lib -L/usr/local/Cellar/libxlsxwriter -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_44db2.dir/CMakeCXXCompilerABI.cpp.o -lc++ -lSystem /opt/local/libexec/llvm-15/lib/clang/15.0.4/lib/darwin/libclang_rt.osx.a
+@(#)PROGRAM:ld  PROJECT:ld64-450.3
+BUILD 21:43:24 Feb  5 2020
+configured to support archs: i386 x86_64 x86_64h armv6 armv7 armv7s armv7m armv7k arm64
+Library search paths:
+	/opt/local/libexec/llvm-15/lib
+	/opt/local/lib
+	/usr/local/lib
+	/usr/local/Cellar/libxlsxwriter
+	/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/lib
+Framework search paths:
+	/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/
+
+
+
+Parsed CXX implicit include dir info from above output: rv=done
+  found start of include info
+  found start of implicit include info
+    add: [/opt/local/libexec/llvm-15/bin/../include/c++/v1]
+    add: [/opt/local/libexec/llvm-15/lib/clang/15.0.4/include]
+    add: [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include]
+  end of search list found
+  collapse include dir [/opt/local/libexec/llvm-15/bin/../include/c++/v1] ==> [/opt/local/libexec/llvm-15/include/c++/v1]
+  collapse include dir [/opt/local/libexec/llvm-15/lib/clang/15.0.4/include] ==> [/opt/local/libexec/llvm-15/lib/clang/15.0.4/include]
+  collapse include dir [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include]
+  implicit include dirs: [/opt/local/libexec/llvm-15/include/c++/v1;/opt/local/libexec/llvm-15/lib/clang/15.0.4/include;/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include]
+
+
+Parsed CXX implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld\.lld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/auto/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command(s):/usr/bin/make -f Makefile cmTC_44db2/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_44db2.dir/build.make CMakeFiles/cmTC_44db2.dir/build]
+  ignore line: [Building CXX object CMakeFiles/cmTC_44db2.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/opt/local/libexec/llvm-15/bin/clang++   -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk   -v -Wl -v -MD -MT CMakeFiles/cmTC_44db2.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_44db2.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_44db2.dir/CMakeCXXCompilerABI.cpp.o -c /opt/local/share/cmake-3.23/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [clang version 15.0.4]
+  ignore line: [Target: x86_64-apple-darwin17.7.0]
+  ignore line: [Thread model: posix]
+  ignore line: [InstalledDir: /opt/local/libexec/llvm-15/bin]
+  ignore line: [clang: warning: -Wl -v: 'linker' input unused [-Wunused-command-line-argument]]
+  ignore line: [ (in-process)]
+  ignore line: [ "/opt/local/libexec/llvm-15/bin/clang" -cc1 -triple x86_64-apple-macosx10.13.0 -Wundef-prefix=TARGET_OS_ -Werror=undef-prefix -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -mframe-pointer=all -ffp-contract=on -fno-rounding-math -funwind-tables=2 -target-sdk-version=10.14 -fcompatibility-qualified-id-block-type-checking -fvisibility-inlines-hidden-static-local-var -target-cpu penryn -tune-cpu generic -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=lldb -target-linker-version 450.3 -v -fcoverage-compilation-dir=/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/auto/CMakeFiles/CMakeTmp -resource-dir /opt/local/libexec/llvm-15/lib/clang/15.0.4 -dependency-file CMakeFiles/cmTC_44db2.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_44db2.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -stdlib=libc++ -internal-isystem /opt/local/libexec/llvm-15/bin/../include/c++/v1 -internal-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include -internal-isystem /opt/local/libexec/llvm-15/lib/clang/15.0.4/include -internal-externc-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -fdeprecated-macro -fdebug-compilation-dir=/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/auto/CMakeFiles/CMakeTmp -ferror-limit 19 -stack-protector 1 -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fcxx-exceptions -fexceptions -fmax-type-align=16 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_44db2.dir/CMakeCXXCompilerABI.cpp.o -x c++ /opt/local/share/cmake-3.23/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [clang -cc1 version 15.0.4 based upon LLVM 15.0.4 default target x86_64-apple-darwin17.7.0]
+  ignore line: [ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include"]
+  ignore line: [ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/Library/Frameworks"]
+  ignore line: [#include "..." search starts here:]
+  ignore line: [#include <...> search starts here:]
+  ignore line: [ /opt/local/libexec/llvm-15/bin/../include/c++/v1]
+  ignore line: [ /opt/local/libexec/llvm-15/lib/clang/15.0.4/include]
+  ignore line: [ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include]
+  ignore line: [ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks (framework directory)]
+  ignore line: [End of search list.]
+  ignore line: [Linking CXX executable cmTC_44db2]
+  ignore line: [/opt/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_44db2.dir/link.txt --verbose=1]
+  ignore line: [/opt/local/libexec/llvm-15/bin/clang++  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -Wl -search_paths_first -Wl -headerpad_max_install_names -L/opt/local/libexec/llvm-15/lib -L/opt/local/lib -v -Wl -v CMakeFiles/cmTC_44db2.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_44db2 ]
+  ignore line: [clang version 15.0.4]
+  ignore line: [Target: x86_64-apple-darwin17.7.0]
+  ignore line: [Thread model: posix]
+  ignore line: [InstalledDir: /opt/local/libexec/llvm-15/bin]
+  link line: [ "/opt/local/libexec/llvm-15/bin/ld" -demangle -lto_library /opt/local/libexec/llvm-15/lib/libLTO.dylib -dynamic -arch x86_64 -macosx_version_min 10.13.0 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -o cmTC_44db2 -L/opt/local/libexec/llvm-15/lib -L/opt/local/lib -L/usr/local/lib -L/usr/local/Cellar/libxlsxwriter -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_44db2.dir/CMakeCXXCompilerABI.cpp.o -lc++ -lSystem /opt/local/libexec/llvm-15/lib/clang/15.0.4/lib/darwin/libclang_rt.osx.a]
+    arg [/opt/local/libexec/llvm-15/bin/ld] ==> ignore
+    arg [-demangle] ==> ignore
+    arg [-lto_library] ==> ignore, skip following value
+    arg [/opt/local/libexec/llvm-15/lib/libLTO.dylib] ==> skip value of -lto_library
+    arg [-dynamic] ==> ignore
+    arg [-arch] ==> ignore
+    arg [x86_64] ==> ignore
+    arg [-macosx_version_min] ==> ignore
+    arg [10.13.0] ==> ignore
+    arg [-syslibroot] ==> ignore
+    arg [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTC_44db2] ==> ignore
+    arg [-L/opt/local/libexec/llvm-15/lib] ==> dir [/opt/local/libexec/llvm-15/lib]
+    arg [-L/opt/local/lib] ==> dir [/opt/local/lib]
+    arg [-L/usr/local/lib] ==> dir [/usr/local/lib]
+    arg [-L/usr/local/Cellar/libxlsxwriter] ==> dir [/usr/local/Cellar/libxlsxwriter]
+    arg [-search_paths_first] ==> ignore
+    arg [-headerpad_max_install_names] ==> ignore
+    arg [-v] ==> ignore
+    arg [CMakeFiles/cmTC_44db2.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [-lc++] ==> lib [c++]
+    arg [-lSystem] ==> lib [System]
+    arg [/opt/local/libexec/llvm-15/lib/clang/15.0.4/lib/darwin/libclang_rt.osx.a] ==> lib [/opt/local/libexec/llvm-15/lib/clang/15.0.4/lib/darwin/libclang_rt.osx.a]
+  Library search paths: [;/opt/local/libexec/llvm-15/lib;/opt/local/lib;/usr/local/lib;/usr/local/Cellar/libxlsxwriter;/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/lib]
+  Framework search paths: [;/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/]
+  remove lib [System]
+  remove lib [/opt/local/libexec/llvm-15/lib/clang/15.0.4/lib/darwin/libclang_rt.osx.a]
+  collapse library dir [/opt/local/libexec/llvm-15/lib] ==> [/opt/local/libexec/llvm-15/lib]
+  collapse library dir [/opt/local/lib] ==> [/opt/local/lib]
+  collapse library dir [/usr/local/lib] ==> [/usr/local/lib]
+  collapse library dir [/usr/local/Cellar/libxlsxwriter] ==> [/usr/local/Cellar/libxlsxwriter]
+  collapse library dir [/opt/local/libexec/llvm-15/lib] ==> [/opt/local/libexec/llvm-15/lib]
+  collapse library dir [/opt/local/lib] ==> [/opt/local/lib]
+  collapse library dir [/usr/local/lib] ==> [/usr/local/lib]
+  collapse library dir [/usr/local/Cellar/libxlsxwriter] ==> [/usr/local/Cellar/libxlsxwriter]
+  collapse library dir [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/lib] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/lib]
+  collapse framework dir [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks]
+  implicit libs: [c++]
+  implicit objs: []
+  implicit dirs: [/opt/local/libexec/llvm-15/lib;/opt/local/lib;/usr/local/lib;/usr/local/Cellar/libxlsxwriter;/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/lib]
+  implicit fwks: [/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks]
+
+

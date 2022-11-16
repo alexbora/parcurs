@@ -7,8 +7,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void say(void);
+
 int main(int argc, char *argv[])
 {
   puts("success");
+  say();
   return EXIT_SUCCESS;
 }

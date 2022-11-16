@@ -1,0 +1,4 @@
+/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/auto/CMakeFiles/main.dir
+/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/auto/CMakeFiles/say.dir
+/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/auto/CMakeFiles/edit_cache.dir
+/Users/alex/dev/parcurs/SCRATCH/RELEASE/asm/auto/CMakeFiles/rebuild_cache.dir
