@@ -1,7 +1,7 @@
 /**
  * @author      : alex (alexbora@gmail.com)
  * @file        : main
- * @created     : Marţi Noi 15, 2022 20:39:38 EET
+ * @created     : Miercuri Noi 16, 2022 09:09:19 EET
  */
 
 #include <stdio.h>
