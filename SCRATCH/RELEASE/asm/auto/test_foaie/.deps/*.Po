@@ -1,411 +1,618 @@
-*.o: excel.c /home/linuxbrew/.linuxbrew/include/stdc-predef.h main.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/immintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/x86gprintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/ia32intrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/stddef.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/adxintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/bmiintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/bmi2intrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/cetintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/cldemoteintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/clflushoptintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/clwbintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/clzerointrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/enqcmdintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/fxsrintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/lzcntintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/lwpintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/movdirintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/mwaitintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/mwaitxintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/pconfigintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/popcntintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/pkuintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/rdseedintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/rtmintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/serializeintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/sgxintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/tbmintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/tsxldtrkintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/uintrintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/waitpkgintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/wbnoinvdintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/xsaveintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/xsavecintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/xsaveoptintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/xsavesintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/xtestintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/hresetintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/mmintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/xmmintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/mm_malloc.h \
- /home/linuxbrew/.linuxbrew/include/stdlib.h \
- /home/linuxbrew/.linuxbrew/include/bits/libc-header-start.h \
- /home/linuxbrew/.linuxbrew/include/features.h \
- /home/linuxbrew/.linuxbrew/include/features-time64.h \
- /home/linuxbrew/.linuxbrew/include/bits/wordsize.h \
- /home/linuxbrew/.linuxbrew/include/bits/timesize.h \
- /home/linuxbrew/.linuxbrew/include/sys/cdefs.h \
- /home/linuxbrew/.linuxbrew/include/bits/long-double.h \
- /home/linuxbrew/.linuxbrew/include/gnu/stubs.h \
- /home/linuxbrew/.linuxbrew/include/gnu/stubs-64.h \
- /home/linuxbrew/.linuxbrew/include/bits/waitflags.h \
- /home/linuxbrew/.linuxbrew/include/bits/waitstatus.h \
- /home/linuxbrew/.linuxbrew/include/bits/floatn.h \
- /home/linuxbrew/.linuxbrew/include/bits/floatn-common.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/locale_t.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/__locale_t.h \
- /home/linuxbrew/.linuxbrew/include/sys/types.h \
- /home/linuxbrew/.linuxbrew/include/bits/types.h \
- /home/linuxbrew/.linuxbrew/include/bits/typesizes.h \
- /home/linuxbrew/.linuxbrew/include/bits/time64.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/clock_t.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/clockid_t.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/time_t.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/timer_t.h \
- /home/linuxbrew/.linuxbrew/include/bits/stdint-intn.h \
- /home/linuxbrew/.linuxbrew/include/endian.h \
- /home/linuxbrew/.linuxbrew/include/bits/endian.h \
- /home/linuxbrew/.linuxbrew/include/bits/endianness.h \
- /home/linuxbrew/.linuxbrew/include/bits/byteswap.h \
- /home/linuxbrew/.linuxbrew/include/bits/uintn-identity.h \
- /home/linuxbrew/.linuxbrew/include/sys/select.h \
- /home/linuxbrew/.linuxbrew/include/bits/select.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/sigset_t.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/__sigset_t.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/struct_timeval.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/struct_timespec.h \
- /home/linuxbrew/.linuxbrew/include/bits/pthreadtypes.h \
- /home/linuxbrew/.linuxbrew/include/bits/thread-shared-types.h \
- /home/linuxbrew/.linuxbrew/include/bits/pthreadtypes-arch.h \
- /home/linuxbrew/.linuxbrew/include/bits/atomic_wide_counter.h \
- /home/linuxbrew/.linuxbrew/include/bits/struct_mutex.h \
- /home/linuxbrew/.linuxbrew/include/bits/struct_rwlock.h \
- /home/linuxbrew/.linuxbrew/include/alloca.h \
- /home/linuxbrew/.linuxbrew/include/bits/stdlib-bsearch.h \
- /home/linuxbrew/.linuxbrew/include/bits/stdlib-float.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/emmintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/pmmintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/tmmintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/smmintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/wmmintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avxintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avxvnniintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx2intrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512fintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512erintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512pfintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512cdintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vlintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512bwintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512dqintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vlbwintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vldqintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512ifmaintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512ifmavlintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vbmiintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vbmivlintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx5124fmapsintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx5124vnniwintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vpopcntdqintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vbmi2intrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vbmi2vlintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vnniintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vnnivlintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vpopcntdqvlintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512bitalgintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vp2intersectintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vp2intersectvlintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512fp16intrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512fp16vlintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/shaintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/fmaintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/f16cintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/gfniintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/vaesintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/vpclmulqdqintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512bf16vlintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512bf16intrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/amxtileintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/amxint8intrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/amxbf16intrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/prfchwintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/keylockerintrin.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/stdalign.h \
- /home/linuxbrew/.linuxbrew/include/pthread.h \
- /home/linuxbrew/.linuxbrew/include/sched.h \
- /home/linuxbrew/.linuxbrew/include/bits/sched.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/struct_sched_param.h \
- /home/linuxbrew/.linuxbrew/include/bits/cpu-set.h \
- /home/linuxbrew/.linuxbrew/include/time.h \
- /home/linuxbrew/.linuxbrew/include/bits/time.h \
- /home/linuxbrew/.linuxbrew/include/bits/timex.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/struct_tm.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/struct_itimerspec.h \
- /home/linuxbrew/.linuxbrew/include/bits/setjmp.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/struct___jmp_buf_tag.h \
- /home/linuxbrew/.linuxbrew/include/bits/pthread_stack_min-dynamic.h \
- /home/linuxbrew/.linuxbrew/include/xlsxwriter.h \
- /home/linuxbrew/.linuxbrew/include/xlsxwriter/workbook.h \
- /home/linuxbrew/.linuxbrew/include/stdint.h \
- /home/linuxbrew/.linuxbrew/include/bits/wchar.h \
- /home/linuxbrew/.linuxbrew/include/bits/stdint-uintn.h \
- /home/linuxbrew/.linuxbrew/include/stdio.h \
- /home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/stdarg.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/__fpos_t.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/__mbstate_t.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/__fpos64_t.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/__FILE.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/FILE.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/struct_FILE.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/cookie_io_functions_t.h \
- /home/linuxbrew/.linuxbrew/include/bits/stdio_lim.h \
- /home/linuxbrew/.linuxbrew/include/bits/stdio.h \
- /home/linuxbrew/.linuxbrew/include/errno.h \
- /home/linuxbrew/.linuxbrew/include/bits/errno.h \
- /home/linuxbrew/.linuxbrew/include/linux/errno.h \
- /home/linuxbrew/.linuxbrew/include/asm/errno.h \
- /home/linuxbrew/.linuxbrew/include/asm-generic/errno.h \
- /home/linuxbrew/.linuxbrew/include/asm-generic/errno-base.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/error_t.h \
- /home/linuxbrew/.linuxbrew/include/xlsxwriter/worksheet.h \
- /home/linuxbrew/.linuxbrew/include/xlsxwriter/shared_strings.h \
- /home/linuxbrew/.linuxbrew/include/string.h \
- /home/linuxbrew/.linuxbrew/include/strings.h \
- /home/linuxbrew/.linuxbrew/include/xlsxwriter/common.h \
- /home/linuxbrew/.linuxbrew/include/xlsxwriter/third_party/queue.h \
- /home/linuxbrew/.linuxbrew/include/xlsxwriter/third_party/tree.h \
- /home/linuxbrew/.linuxbrew/include/xlsxwriter/chart.h \
- /home/linuxbrew/.linuxbrew/include/xlsxwriter/format.h \
- /home/linuxbrew/.linuxbrew/include/xlsxwriter/hash_table.h \
- /home/linuxbrew/.linuxbrew/include/xlsxwriter/drawing.h \
- /home/linuxbrew/.linuxbrew/include/xlsxwriter/styles.h \
- /home/linuxbrew/.linuxbrew/include/ctype.h \
- /home/linuxbrew/.linuxbrew/include/xlsxwriter/utility.h \
- /home/linuxbrew/.linuxbrew/include/xlsxwriter/xmlwriter.h \
- /home/linuxbrew/.linuxbrew/include/xlsxwriter/relationships.h \
- /home/linuxbrew/.linuxbrew/include/xlsxwriter/chartsheet.h \
- /home/linuxbrew/.linuxbrew/include/xlsxwriter/worksheet.h \
- /home/linuxbrew/.linuxbrew/include/xlsxwriter/format.h \
- /home/linuxbrew/.linuxbrew/include/xlsxwriter/utility.h \
- /home/linuxbrew/.linuxbrew/include/fcntl.h \
- /home/linuxbrew/.linuxbrew/include/bits/fcntl.h \
- /home/linuxbrew/.linuxbrew/include/bits/fcntl-linux.h \
- /home/linuxbrew/.linuxbrew/include/bits/types/struct_iovec.h \
- /home/linuxbrew/.linuxbrew/include/linux/falloc.h \
- /home/linuxbrew/.linuxbrew/include/bits/stat.h \
- /home/linuxbrew/.linuxbrew/include/bits/struct_stat.h \
- /home/linuxbrew/.linuxbrew/include/unistd.h \
- /home/linuxbrew/.linuxbrew/include/bits/posix_opt.h \
- /home/linuxbrew/.linuxbrew/include/bits/environments.h \
- /home/linuxbrew/.linuxbrew/include/bits/confname.h \
- /home/linuxbrew/.linuxbrew/include/bits/getopt_posix.h \
- /home/linuxbrew/.linuxbrew/include/bits/getopt_core.h \
- /home/linuxbrew/.linuxbrew/include/bits/unistd_ext.h \
- /home/linuxbrew/.linuxbrew/include/linux/close_range.h
-/home/linuxbrew/.linuxbrew/include/stdc-predef.h:
+*.o: date.c \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/fcntl.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/cdefs.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_symbol_aliasing.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_posix_availability.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/machine/_types.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/i386/_types.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_types.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/Availability.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/AvailabilityInternal.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_size_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_mode_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_off_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_pid_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_o_sync.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_o_dsync.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_seek_set.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_s_ifmt.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_timespec.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/machine/types.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/i386/types.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_int8_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_int16_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_int32_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_int64_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_u_int8_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_u_int16_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_u_int32_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_u_int64_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_intptr_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_uintptr_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_filesec_t.h \
+  main.h /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/immintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/x86gprintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/hresetintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/uintrintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/crc32intrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/mmintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/xmmintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/mm_malloc.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/stdlib.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/_types.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/wait.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_id_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/signal.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/appleapiopts.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/machine/signal.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/i386/signal.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/machine/_mcontext.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/i386/_mcontext.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/mach/machine/_structs.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/mach/i386/_structs.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_attr_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_sigaltstack.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_ucontext.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_sigset_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_uid_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/resource.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/stdint.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/stdint.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/_types/_uint8_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/_types/_uint16_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/_types/_uint32_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/_types/_uint64_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/_types/_intmax_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/_types/_uintmax_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_timeval.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_wchar_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_null.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/malloc/_malloc.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/emmintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/pmmintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/tmmintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/smmintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/popcntintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/wmmintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/__wmmintrin_aes.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/__wmmintrin_pclmul.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/clflushoptintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/clwbintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avxintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx2intrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/f16cintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/bmiintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/bmi2intrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/lzcntintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/fmaintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512fintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vlintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512bwintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512bitalgintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512cdintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vpopcntdqintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vpopcntdqvlintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vnniintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vlvnniintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avxvnniintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512dqintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vlbitalgintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vlbwintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vlcdintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vldqintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512erintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512ifmaintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512ifmavlintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vbmiintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vbmivlintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vbmi2intrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vlvbmi2intrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512pfintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512bf16intrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vlbf16intrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/pkuintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/vpclmulqdqintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/vaesintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/gfniintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/rtmintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/xtestintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/shaintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/fxsrintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/xsaveintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/xsaveoptintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/xsavecintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/xsavesintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/cetintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/adxintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/rdseedintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/wbnoinvdintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/cldemoteintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/waitpkgintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/movdirintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/pconfigintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/sgxintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/ptwriteintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/invpcidintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/keylockerintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/amxintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vp2intersectintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vlvp2intersectintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/enqcmdintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/serializeintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/tsxldtrkintrin.h \
+  /opt/local/libexec/llvm-15/lib/clang/15.0.4/include/stdalign.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/pthread.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/pthread/pthread_impl.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/pthread/sched.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/pthread_impl.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/time.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_clock_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_time_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_cond_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_condattr_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_key_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_mutex_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_mutexattr_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_once_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_rwlock_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_rwlockattr_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/pthread/qos.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/qos.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/stdio.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/_stdio.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_va_list.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/stdio.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_ssize_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/secure/_stdio.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/secure/_common.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/string.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_rsize_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_errno_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/strings.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/secure/_strings.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/secure/_string.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/stat.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_blkcnt_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_blksize_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_dev_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_ino_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_nlink_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_gid_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/types.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/machine/endian.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/i386/endian.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_caddr_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_in_addr_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_in_port_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_key_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_useconds_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_suseconds_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_fsblkcnt_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_fsfilcnt_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/unistd.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/unistd.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_posix_vdisable.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/select.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_fd_def.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_fd_setsize.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_fd_set.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_fd_clr.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_fd_isset.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_fd_zero.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_select.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_uuid_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/gethostuuid.h
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/fcntl.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/cdefs.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_symbol_aliasing.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_posix_availability.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/machine/_types.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/i386/_types.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_types.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/Availability.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/AvailabilityInternal.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_size_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_mode_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_off_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_pid_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_o_sync.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_o_dsync.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_seek_set.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_s_ifmt.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_timespec.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/machine/types.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/i386/types.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_int8_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_int16_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_int32_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_int64_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_u_int8_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_u_int16_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_u_int32_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_u_int64_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_intptr_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_uintptr_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_filesec_t.h:
+
 main.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/immintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/x86gprintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/ia32intrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/stddef.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/adxintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/bmiintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/bmi2intrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/cetintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/cldemoteintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/clflushoptintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/clwbintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/clzerointrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/enqcmdintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/fxsrintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/lzcntintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/lwpintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/movdirintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/mwaitintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/mwaitxintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/pconfigintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/popcntintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/pkuintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/rdseedintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/rtmintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/serializeintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/sgxintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/tbmintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/tsxldtrkintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/uintrintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/waitpkgintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/wbnoinvdintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/xsaveintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/xsavecintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/xsaveoptintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/xsavesintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/xtestintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/hresetintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/mmintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/xmmintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/mm_malloc.h:
-/home/linuxbrew/.linuxbrew/include/stdlib.h:
-/home/linuxbrew/.linuxbrew/include/bits/libc-header-start.h:
-/home/linuxbrew/.linuxbrew/include/features.h:
-/home/linuxbrew/.linuxbrew/include/features-time64.h:
-/home/linuxbrew/.linuxbrew/include/bits/wordsize.h:
-/home/linuxbrew/.linuxbrew/include/bits/timesize.h:
-/home/linuxbrew/.linuxbrew/include/sys/cdefs.h:
-/home/linuxbrew/.linuxbrew/include/bits/long-double.h:
-/home/linuxbrew/.linuxbrew/include/gnu/stubs.h:
-/home/linuxbrew/.linuxbrew/include/gnu/stubs-64.h:
-/home/linuxbrew/.linuxbrew/include/bits/waitflags.h:
-/home/linuxbrew/.linuxbrew/include/bits/waitstatus.h:
-/home/linuxbrew/.linuxbrew/include/bits/floatn.h:
-/home/linuxbrew/.linuxbrew/include/bits/floatn-common.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/locale_t.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/__locale_t.h:
-/home/linuxbrew/.linuxbrew/include/sys/types.h:
-/home/linuxbrew/.linuxbrew/include/bits/types.h:
-/home/linuxbrew/.linuxbrew/include/bits/typesizes.h:
-/home/linuxbrew/.linuxbrew/include/bits/time64.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/clock_t.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/clockid_t.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/time_t.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/timer_t.h:
-/home/linuxbrew/.linuxbrew/include/bits/stdint-intn.h:
-/home/linuxbrew/.linuxbrew/include/endian.h:
-/home/linuxbrew/.linuxbrew/include/bits/endian.h:
-/home/linuxbrew/.linuxbrew/include/bits/endianness.h:
-/home/linuxbrew/.linuxbrew/include/bits/byteswap.h:
-/home/linuxbrew/.linuxbrew/include/bits/uintn-identity.h:
-/home/linuxbrew/.linuxbrew/include/sys/select.h:
-/home/linuxbrew/.linuxbrew/include/bits/select.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/sigset_t.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/__sigset_t.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/struct_timeval.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/struct_timespec.h:
-/home/linuxbrew/.linuxbrew/include/bits/pthreadtypes.h:
-/home/linuxbrew/.linuxbrew/include/bits/thread-shared-types.h:
-/home/linuxbrew/.linuxbrew/include/bits/pthreadtypes-arch.h:
-/home/linuxbrew/.linuxbrew/include/bits/atomic_wide_counter.h:
-/home/linuxbrew/.linuxbrew/include/bits/struct_mutex.h:
-/home/linuxbrew/.linuxbrew/include/bits/struct_rwlock.h:
-/home/linuxbrew/.linuxbrew/include/alloca.h:
-/home/linuxbrew/.linuxbrew/include/bits/stdlib-bsearch.h:
-/home/linuxbrew/.linuxbrew/include/bits/stdlib-float.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/emmintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/pmmintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/tmmintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/smmintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/wmmintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avxintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avxvnniintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx2intrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512fintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512erintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512pfintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512cdintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vlintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512bwintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512dqintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vlbwintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vldqintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512ifmaintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512ifmavlintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vbmiintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vbmivlintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx5124fmapsintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx5124vnniwintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vpopcntdqintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vbmi2intrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vbmi2vlintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vnniintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vnnivlintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vpopcntdqvlintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512bitalgintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vp2intersectintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512vp2intersectvlintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512fp16intrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512fp16vlintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/shaintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/fmaintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/f16cintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/gfniintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/vaesintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/vpclmulqdqintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512bf16vlintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/avx512bf16intrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/amxtileintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/amxint8intrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/amxbf16intrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/prfchwintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/keylockerintrin.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/stdalign.h:
-/home/linuxbrew/.linuxbrew/include/pthread.h:
-/home/linuxbrew/.linuxbrew/include/sched.h:
-/home/linuxbrew/.linuxbrew/include/bits/sched.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/struct_sched_param.h:
-/home/linuxbrew/.linuxbrew/include/bits/cpu-set.h:
-/home/linuxbrew/.linuxbrew/include/time.h:
-/home/linuxbrew/.linuxbrew/include/bits/time.h:
-/home/linuxbrew/.linuxbrew/include/bits/timex.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/struct_tm.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/struct_itimerspec.h:
-/home/linuxbrew/.linuxbrew/include/bits/setjmp.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/struct___jmp_buf_tag.h:
-/home/linuxbrew/.linuxbrew/include/bits/pthread_stack_min-dynamic.h:
-/home/linuxbrew/.linuxbrew/include/xlsxwriter.h:
-/home/linuxbrew/.linuxbrew/include/xlsxwriter/workbook.h:
-/home/linuxbrew/.linuxbrew/include/stdint.h:
-/home/linuxbrew/.linuxbrew/include/bits/wchar.h:
-/home/linuxbrew/.linuxbrew/include/bits/stdint-uintn.h:
-/home/linuxbrew/.linuxbrew/include/stdio.h:
-/home/linuxbrew/.linuxbrew/Cellar/gcc/12.2.0/lib/gcc/current/gcc/x86_64-pc-linux-gnu/12/include/stdarg.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/__fpos_t.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/__mbstate_t.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/__fpos64_t.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/__FILE.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/FILE.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/struct_FILE.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/cookie_io_functions_t.h:
-/home/linuxbrew/.linuxbrew/include/bits/stdio_lim.h:
-/home/linuxbrew/.linuxbrew/include/bits/stdio.h:
-/home/linuxbrew/.linuxbrew/include/errno.h:
-/home/linuxbrew/.linuxbrew/include/bits/errno.h:
-/home/linuxbrew/.linuxbrew/include/linux/errno.h:
-/home/linuxbrew/.linuxbrew/include/asm/errno.h:
-/home/linuxbrew/.linuxbrew/include/asm-generic/errno.h:
-/home/linuxbrew/.linuxbrew/include/asm-generic/errno-base.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/error_t.h:
-/home/linuxbrew/.linuxbrew/include/xlsxwriter/worksheet.h:
-/home/linuxbrew/.linuxbrew/include/xlsxwriter/shared_strings.h:
-/home/linuxbrew/.linuxbrew/include/string.h:
-/home/linuxbrew/.linuxbrew/include/strings.h:
-/home/linuxbrew/.linuxbrew/include/xlsxwriter/common.h:
-/home/linuxbrew/.linuxbrew/include/xlsxwriter/third_party/queue.h:
-/home/linuxbrew/.linuxbrew/include/xlsxwriter/third_party/tree.h:
-/home/linuxbrew/.linuxbrew/include/xlsxwriter/chart.h:
-/home/linuxbrew/.linuxbrew/include/xlsxwriter/format.h:
-/home/linuxbrew/.linuxbrew/include/xlsxwriter/hash_table.h:
-/home/linuxbrew/.linuxbrew/include/xlsxwriter/drawing.h:
-/home/linuxbrew/.linuxbrew/include/xlsxwriter/styles.h:
-/home/linuxbrew/.linuxbrew/include/ctype.h:
-/home/linuxbrew/.linuxbrew/include/xlsxwriter/utility.h:
-/home/linuxbrew/.linuxbrew/include/xlsxwriter/xmlwriter.h:
-/home/linuxbrew/.linuxbrew/include/xlsxwriter/relationships.h:
-/home/linuxbrew/.linuxbrew/include/xlsxwriter/chartsheet.h:
-/home/linuxbrew/.linuxbrew/include/xlsxwriter/worksheet.h:
-/home/linuxbrew/.linuxbrew/include/xlsxwriter/format.h:
-/home/linuxbrew/.linuxbrew/include/xlsxwriter/utility.h:
-/home/linuxbrew/.linuxbrew/include/fcntl.h:
-/home/linuxbrew/.linuxbrew/include/bits/fcntl.h:
-/home/linuxbrew/.linuxbrew/include/bits/fcntl-linux.h:
-/home/linuxbrew/.linuxbrew/include/bits/types/struct_iovec.h:
-/home/linuxbrew/.linuxbrew/include/linux/falloc.h:
-/home/linuxbrew/.linuxbrew/include/bits/stat.h:
-/home/linuxbrew/.linuxbrew/include/bits/struct_stat.h:
-/home/linuxbrew/.linuxbrew/include/unistd.h:
-/home/linuxbrew/.linuxbrew/include/bits/posix_opt.h:
-/home/linuxbrew/.linuxbrew/include/bits/environments.h:
-/home/linuxbrew/.linuxbrew/include/bits/confname.h:
-/home/linuxbrew/.linuxbrew/include/bits/getopt_posix.h:
-/home/linuxbrew/.linuxbrew/include/bits/getopt_core.h:
-/home/linuxbrew/.linuxbrew/include/bits/unistd_ext.h:
-/home/linuxbrew/.linuxbrew/include/linux/close_range.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/immintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/x86gprintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/hresetintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/uintrintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/crc32intrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/mmintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/xmmintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/mm_malloc.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/stdlib.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/_types.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/wait.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_id_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/signal.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/appleapiopts.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/machine/signal.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/i386/signal.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/machine/_mcontext.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/i386/_mcontext.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/mach/machine/_structs.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/mach/i386/_structs.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_attr_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_sigaltstack.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_ucontext.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_sigset_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_uid_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/resource.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/stdint.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/stdint.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/_types/_uint8_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/_types/_uint16_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/_types/_uint32_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/_types/_uint64_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/_types/_intmax_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/_types/_uintmax_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_timeval.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_wchar_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_null.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/malloc/_malloc.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/emmintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/pmmintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/tmmintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/smmintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/popcntintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/wmmintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/__wmmintrin_aes.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/__wmmintrin_pclmul.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/clflushoptintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/clwbintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avxintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx2intrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/f16cintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/bmiintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/bmi2intrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/lzcntintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/fmaintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512fintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vlintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512bwintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512bitalgintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512cdintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vpopcntdqintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vpopcntdqvlintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vnniintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vlvnniintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avxvnniintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512dqintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vlbitalgintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vlbwintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vlcdintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vldqintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512erintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512ifmaintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512ifmavlintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vbmiintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vbmivlintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vbmi2intrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vlvbmi2intrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512pfintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512bf16intrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vlbf16intrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/pkuintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/vpclmulqdqintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/vaesintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/gfniintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/rtmintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/xtestintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/shaintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/fxsrintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/xsaveintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/xsaveoptintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/xsavecintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/xsavesintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/cetintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/adxintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/rdseedintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/wbnoinvdintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/cldemoteintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/waitpkgintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/movdirintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/pconfigintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/sgxintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/ptwriteintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/invpcidintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/keylockerintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/amxintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vp2intersectintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/avx512vlvp2intersectintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/enqcmdintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/serializeintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/tsxldtrkintrin.h:
+
+/opt/local/libexec/llvm-15/lib/clang/15.0.4/include/stdalign.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/pthread.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/pthread/pthread_impl.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/pthread/sched.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/pthread_impl.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/time.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_clock_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_time_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_cond_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_condattr_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_key_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_mutex_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_mutexattr_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_once_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_rwlock_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_rwlockattr_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_pthread/_pthread_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/pthread/qos.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/qos.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/stdio.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/_stdio.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_va_list.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/stdio.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_ssize_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/secure/_stdio.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/secure/_common.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/string.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_rsize_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_errno_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/strings.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/secure/_strings.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/secure/_string.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/stat.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_blkcnt_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_blksize_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_dev_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_ino_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_nlink_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_gid_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/types.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/machine/endian.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/i386/endian.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_caddr_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_in_addr_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_in_port_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_key_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_useconds_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_suseconds_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_fsblkcnt_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_fsfilcnt_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/unistd.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/unistd.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_posix_vdisable.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/select.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_fd_def.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_fd_setsize.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_fd_set.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_fd_clr.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_fd_isset.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_fd_zero.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_select.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/sys/_types/_uuid_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/gethostuuid.h:
