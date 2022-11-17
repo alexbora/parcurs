@@ -139,7 +139,7 @@ int main(int argc, char *argv[])
   write_km();
 
   /* FLUSH_CACHE */
-  /* mail_me(); */
+  mail_me();
 
   /* NO_LATENCY */
 
