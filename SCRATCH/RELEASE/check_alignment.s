@@ -1,4 +1,4 @@
-        #iddef __linux__
+        #ifdef __linux__
         .global check_alignment
         #else
         .global _check_alignment
