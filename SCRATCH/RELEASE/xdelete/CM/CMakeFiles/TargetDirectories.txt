@@ -1,0 +1,3 @@
+/Users/alex/Desktop/xdelete/CM/CMakeFiles/main.dir
+/Users/alex/Desktop/xdelete/CM/CMakeFiles/edit_cache.dir
+/Users/alex/Desktop/xdelete/CM/CMakeFiles/rebuild_cache.dir
