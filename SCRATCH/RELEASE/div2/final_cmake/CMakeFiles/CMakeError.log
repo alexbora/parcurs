@@ -1,0 +1,91 @@
+Detecting CXX compiler ABI info failed to compile with the following output:
+Change Dir: /home/alex/tmp/parcurs/SCRATCH/RELEASE/div2/final_cmake/CMakeFiles/CMakeScratch/TryCompile-CIrAmF
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_8eac5/fast && /usr/bin/make  -f CMakeFiles/cmTC_8eac5.dir/build.make CMakeFiles/cmTC_8eac5.dir/build
+make[1]: Entering directory '/home/alex/tmp/parcurs/SCRATCH/RELEASE/div2/final_cmake/CMakeFiles/CMakeScratch/TryCompile-CIrAmF'
+Building CXX object CMakeFiles/cmTC_8eac5.dir/CMakeCXXCompilerABI.cpp.o
+/home/linuxbrew/.linuxbrew/bin/clang++   -v -MD -MT CMakeFiles/cmTC_8eac5.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_8eac5.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_8eac5.dir/CMakeCXXCompilerABI.cpp.o -c /home/linuxbrew/.linuxbrew/Cellar/cmake/3.25.0/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+Homebrew clang version 15.0.5
+Target: x86_64-unknown-linux-gnu
+Thread model: posix
+InstalledDir: /home/linuxbrew/.linuxbrew/bin
+Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/5
+Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/5.5.0
+Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/6
+Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/6.5.0
+Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/7
+Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/7.5.0
+Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/9
+Selected GCC installation: /usr/lib/gcc/x86_64-linux-gnu/9
+Candidate multilib: .;@m64
+Selected multilib: .;@m64
+ (in-process)
+ "/home/linuxbrew/.linuxbrew/Cellar/llvm/15.0.5/bin/clang-15" -cc1 -triple x86_64-unknown-linux-gnu -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=gdb -v -fcoverage-compilation-dir=/home/alex/tmp/parcurs/SCRATCH/RELEASE/div2/final_cmake/CMakeFiles/CMakeScratch/TryCompile-CIrAmF -resource-dir /home/linuxbrew/.linuxbrew/Cellar/llvm/15.0.5/lib/clang/15.0.5 -dependency-file CMakeFiles/cmTC_8eac5.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_8eac5.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -I/home/linuxbrew/.linuxbrew/include -I/usr/include -I/home/linuxbrew/.linuxbrew/Cellar/llvm@14/14.0.6 -c-isystem /home/linuxbrew/.linuxbrew/include -c-isystem /usr/include -c-isystem /home/linuxbrew/.linuxbrew/Cellar/llvm@14/14.0.6/ -cxx-isystem /home/linuxbrew/.linuxbrew/include -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/9/../../../../include/c++ -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/9/../../../../include/c++/x86_64-linux-gnu -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/9/../../../../include/c++/backward -internal-isystem /home/linuxbrew/.linuxbrew/Cellar/llvm/15.0.5/lib/clang/15.0.5/include -internal-isystem /usr/local/include -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -fdebug-compilation-dir=/home/alex/tmp/parcurs/SCRATCH/RELEASE/div2/final_cmake/CMakeFiles/CMakeScratch/TryCompile-CIrAmF -ferror-limit 19 -fgnuc-version=4.2.1 -fcxx-exceptions -fexceptions -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_8eac5.dir/CMakeCXXCompilerABI.cpp.o -x c++ /home/linuxbrew/.linuxbrew/Cellar/cmake/3.25.0/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+clang -cc1 version 15.0.5 based upon LLVM 15.0.5 default target x86_64-unknown-linux-gnu
+ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/9/../../../../include/c++/x86_64-linux-gnu"
+ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/9/../../../../include/c++/backward"
+ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/include"
+ignoring nonexistent directory "/include"
+ignoring duplicate directory "/home/linuxbrew/.linuxbrew/include"
+  as it is a non-system directory that duplicates a system directory
+ignoring duplicate directory "/usr/include"
+  as it is a non-system directory that duplicates a system directory
+#include "..." search starts here:
+#include <...> search starts here:
+ /home/linuxbrew/.linuxbrew/Cellar/llvm@14/14.0.6
+ /home/linuxbrew/.linuxbrew/include
+ /usr/lib/gcc/x86_64-linux-gnu/9/../../../../include/c++
+ /home/linuxbrew/.linuxbrew/Cellar/llvm/15.0.5/lib/clang/15.0.5/include
+ /usr/local/include
+ /usr/include/x86_64-linux-gnu
+ /usr/include
+End of search list.
+Linking CXX executable cmTC_8eac5
+/home/linuxbrew/.linuxbrew/Cellar/cmake/3.25.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8eac5.dir/link.txt --verbose=1
+/home/linuxbrew/.linuxbrew/bin/clang++ -L/home/linuxbrew/.linuxbrew/Cellar/llvm@14/14.0.6/lib -Wl,-rpath,/home/linuxbrew/.linuxbrew/Cellar/llvm@14/14.0.6/ -v CMakeFiles/cmTC_8eac5.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_8eac5 
+Homebrew clang version 15.0.5
+Target: x86_64-unknown-linux-gnu
+Thread model: posix
+InstalledDir: /home/linuxbrew/.linuxbrew/bin
+Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/5
+Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/5.5.0
+Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/6
+Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/6.5.0
+Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/7
+Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/7.5.0
+Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/9
+Selected GCC installation: /usr/lib/gcc/x86_64-linux-gnu/9
+Candidate multilib: .;@m64
+Selected multilib: .;@m64
+ "/home/linuxbrew/.linuxbrew/bin/ld" -pie -z relro --hash-style=gnu --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_8eac5 /usr/lib/x86_64-linux-gnu/Scrt1.o /usr/lib/x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/home/linuxbrew/.linuxbrew/Cellar/llvm@14/14.0.6/lib -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/home/linuxbrew/.linuxbrew/Cellar/llvm/15.0.5/bin/../lib -L/lib -L/usr/lib -L/home/linuxbrew/.linuxbrew/lib -L/usr/local/lib64i -L/home/linuxbrew/.linuxbrew/Cellar/llvm/14.0.6/lib -rpath /home/linuxbrew/.linuxbrew/Cellar/llvm@14/14.0.6/ CMakeFiles/cmTC_8eac5.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/x86_64-linux-gnu/crtn.o
+/home/linuxbrew/.linuxbrew/bin/ld: cannot find -lstdc++: No such file or directory
+clang-15: error: linker command failed with exit code 1 (use -v to see invocation)
+CMakeFiles/cmTC_8eac5.dir/build.make:99: recipe for target 'cmTC_8eac5' failed
+make[1]: *** [cmTC_8eac5] Error 1
+make[1]: Leaving directory '/home/alex/tmp/parcurs/SCRATCH/RELEASE/div2/final_cmake/CMakeFiles/CMakeScratch/TryCompile-CIrAmF'
+Makefile:127: recipe for target 'cmTC_8eac5/fast' failed
+make: *** [cmTC_8eac5/fast] Error 2
+
+
+
+
+Determining if the C++ compiler works failed with the following output:
+Change Dir: /home/alex/tmp/parcurs/SCRATCH/RELEASE/div2/final_cmake/CMakeFiles/CMakeScratch/TryCompile-vQNpkn
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_09b8d/fast && /usr/bin/make  -f CMakeFiles/cmTC_09b8d.dir/build.make CMakeFiles/cmTC_09b8d.dir/build
+make[1]: Entering directory '/home/alex/tmp/parcurs/SCRATCH/RELEASE/div2/final_cmake/CMakeFiles/CMakeScratch/TryCompile-vQNpkn'
+Building CXX object CMakeFiles/cmTC_09b8d.dir/testCXXCompiler.cxx.o
+/home/linuxbrew/.linuxbrew/bin/clang++    -MD -MT CMakeFiles/cmTC_09b8d.dir/testCXXCompiler.cxx.o -MF CMakeFiles/cmTC_09b8d.dir/testCXXCompiler.cxx.o.d -o CMakeFiles/cmTC_09b8d.dir/testCXXCompiler.cxx.o -c /home/alex/tmp/parcurs/SCRATCH/RELEASE/div2/final_cmake/CMakeFiles/CMakeScratch/TryCompile-vQNpkn/testCXXCompiler.cxx
+Linking CXX executable cmTC_09b8d
+/home/linuxbrew/.linuxbrew/Cellar/cmake/3.25.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_09b8d.dir/link.txt --verbose=1
+/home/linuxbrew/.linuxbrew/bin/clang++ -L/home/linuxbrew/.linuxbrew/Cellar/llvm@14/14.0.6/lib -Wl,-rpath,/home/linuxbrew/.linuxbrew/Cellar/llvm@14/14.0.6/  CMakeFiles/cmTC_09b8d.dir/testCXXCompiler.cxx.o -o cmTC_09b8d 
+/home/linuxbrew/.linuxbrew/bin/ld: cannot find -lstdc++: No such file or directory
+clang-15: error: linker command failed with exit code 1 (use -v to see invocation)
+CMakeFiles/cmTC_09b8d.dir/build.make:99: recipe for target 'cmTC_09b8d' failed
+make[1]: *** [cmTC_09b8d] Error 1
+make[1]: Leaving directory '/home/alex/tmp/parcurs/SCRATCH/RELEASE/div2/final_cmake/CMakeFiles/CMakeScratch/TryCompile-vQNpkn'
+Makefile:127: recipe for target 'cmTC_09b8d/fast' failed
+make: *** [cmTC_09b8d/fast] Error 2
+
+
+
