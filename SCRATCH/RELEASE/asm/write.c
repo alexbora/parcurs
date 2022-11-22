@@ -5,6 +5,7 @@
  */
 
 #include <fcntl.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -16,6 +17,11 @@ void w(void)
 
 int main(int argc, char *argv[])
 {
-
+  int     x;
+  int     y;
+  int     z;
+  int     m;
+  int     mm;
+  int16_t xxxx;
   return 0;
 }
