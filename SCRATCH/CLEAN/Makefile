@@ -2,6 +2,11 @@ all: mail2.c date2.c excel2.c main.c main.h
 	gcc-13 mail2.c date2.c excel2.c main.c -DSkipmain -o final_program -w -std=c11 -O3  `pkg-config --cflags --libs openssl` `pkg-config --cflags --libs xlsxwriter` -ldl -pthread -fstrict-aliasing -DLOG_VERBOSE
 	@echo	# gcc-11 date2.c excel2.c -o final_program -O3 -std=c11 -w -lxlsxwriter
 
+gui: mail2.c date2.c excel2.c main.c main.h
+	gcc-13 -DUSE_GUI main.c -c -o main.o
+	g++-13 -DUSE_GUI fltk.cpp -c -o fltk.o 
+	# g++-13 fltk.o main.o -o main
+	# gcc-13 -DUSE_GUI mail2.c date2.c excel2.c main.c -DSkipmain -o final_program -w -std=c11 -O3  `pkg-config --cflags --libs openssl` `pkg-config --cflags --libs xlsxwriter` -ldl -pthread -fstrict-aliasing -DLOG_VERBOSE -lfltk
 
 log:
 	gcc-13 mail2.c date2.c excel2.c main.c -DSkipmain -o final_program -w -std=c11 -O3  `pkg-config --cflags --libs openssl` -lxlsxwriter -ldl -pthread -fstrict-aliasing -DLOG
