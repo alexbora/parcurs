@@ -1,22 +1,22 @@
 all: mail2.c date2.c excel2.c main.c main.h
-	gcc mail2.c date2.c excel2.c main.c -DSkipmain -o final_program -w -std=c11 -O3  `pkg-config --cflags --libs openssl` `pkg-config --cflags --libs xlsxwriter` -ldl -pthread -fstrict-aliasing -DLOG_VERBOSE
+	gcc-13 mail2.c date2.c excel2.c main.c -DSkipmain -o final_program -w -std=c11 -O3  `pkg-config --cflags --libs openssl` `pkg-config --cflags --libs xlsxwriter` -ldl -pthread -fstrict-aliasing -DLOG_VERBOSE
 	@echo	# gcc-11 date2.c excel2.c -o final_program -O3 -std=c11 -w -lxlsxwriter
 
 
 log:
-	gcc-11 mail2.c date2.c excel2.c main.c -DSkipmain -o final_program -w -std=c11 -O3  `pkg-config --cflags --libs openssl` -lxlsxwriter -ldl -pthread -fstrict-aliasing -DLOG
+	gcc-13 mail2.c date2.c excel2.c main.c -DSkipmain -o final_program -w -std=c11 -O3  `pkg-config --cflags --libs openssl` -lxlsxwriter -ldl -pthread -fstrict-aliasing -DLOG
 	@echo	# gcc-11 date2.c excel2.c -o final_program -O3 -std=c11 -w -lxlsxwriter
 
 
 mail:
-	gcc-11 mail2.c -o mail -O3 -std=c11 -w -lcrypto -lssl -ldl -pthread
+	gcc-13 -DLOG_VERBOSE mail2.c -o mail -O3 -std=c11 -w -lcrypto -lssl -ldl -pthread
 
 y: x 
 	./final_program
-	gcc-11 mail2.c date2.c excel2.c main.c -DSkipmain -o final_program -w -std=c11 -Ofast  `pkg-config --cflags --libs openssl` -lxlsxwriter -ldl -pthread -fno-threadsafe-statics -fno-exceptions -funsigned-char -fmerge-all-constants -fdevirtualize-speculatively -ftree-parallelize-loops=2 -fdelete-null-pointer-checks -fprofile-arcs -falign-functions=32 -falign-loops=32 -falign-jumps=32 -flto -ffast-math -fno-math-errno -funsafe-math-optimizations -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fsingle-precision-constant -fcx-fortran-rules -fprofile-use -fprofile-correction -fbranch-probabilities -fdata-sections -ffunction-sections -fdce -Wl,--gc-sections
+	gcc-13 mail2.c date2.c excel2.c main.c -DSkipmain -o final_program -w -std=c11 -Ofast  `pkg-config --cflags --libs openssl` -lxlsxwriter -ldl -pthread -fno-threadsafe-statics -fno-exceptions -funsigned-char -fmerge-all-constants -fdevirtualize-speculatively -ftree-parallelize-loops=2 -fdelete-null-pointer-checks -fprofile-arcs -falign-functions=32 -falign-loops=32 -falign-jumps=32 -flto -ffast-math -fno-math-errno -funsafe-math-optimizations -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fsingle-precision-constant -fcx-fortran-rules -fprofile-use -fprofile-correction -fbranch-probabilities -fdata-sections -ffunction-sections -fdce #-Wl,--gc-sections
 
 x: date2.c excel2.c mail2.c main.c main.h
-	gcc-11 mail2.c date2.c excel2.c main.c -DSkipmain -o final_program -w -std=c11 -Ofast  `pkg-config --cflags --libs openssl` -lxlsxwriter -ldl -pthread -fno-threadsafe-statics -fno-exceptions -funsigned-char -fmerge-all-constants -fdevirtualize-speculatively -ftree-parallelize-loops=2 -fdelete-null-pointer-checks -fprofile-arcs -falign-functions=32 -falign-loops=32 -falign-jumps=32 -flto -ffast-math -fno-math-errno -funsafe-math-optimizations -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fsingle-precision-constant -fcx-fortran-rules 
+	gcc-13 mail2.c date2.c excel2.c main.c -DSkipmain -o final_program -w -std=c11 -Ofast  `pkg-config --cflags --libs openssl` -lxlsxwriter -ldl -pthread -fno-threadsafe-statics -fno-exceptions -funsigned-char -fmerge-all-constants -fdevirtualize-speculatively -ftree-parallelize-loops=2 -fdelete-null-pointer-checks -fprofile-arcs -falign-functions=32 -falign-loops=32 -falign-jumps=32 -flto -ffast-math -fno-math-errno -funsafe-math-optimizations -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fsingle-precision-constant -fcx-fortran-rules 
 
 clean:
 	@echo Done.
