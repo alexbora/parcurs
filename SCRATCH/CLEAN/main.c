@@ -51,15 +51,10 @@ extern int           dayz_in_mon;
 extern char          attachment[128];
 extern unsigned char arr[32];
 
-#ifdef USE_GUI
-int
-mainx(int argc, char* argv[])
-{
-#else
+#ifndef USE_GUI
 int
 main(int argc, char** argv)
 {
-#endif
 
   INIT_FD
 
@@ -82,3 +77,18 @@ main(int argc, char** argv)
 
   return 0;
 }
+
+#else
+#include <unistd.h>
+int
+mainx(void* p)
+{
+  struct Data {
+    const char* txt;
+    int         len;
+  };
+  struct Data* data = (struct Data*) p;
+  write(1, data->txt, data->len);
+  return 0;
+}
+#endif
