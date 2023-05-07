@@ -85,7 +85,16 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
   /* std::vector<const char*> mths; */
   /* std::vector<const char*, 10> v; */
   /* std::vector<std::string> svec; */
-  std::vector<char*> v = {"a"};
+  /* std::vector<char*> v = {"a"}; */
+
+  const char* mths[] = {"ian", "feb", "mar"};
+
+  for (const char** p = mths; *p; p++) choice_month->add(*p);
+
+  const char* m = "ian feb mar apr mai iun iul aug sep oct nov dec";
+  /* while (*m++) choice_month->add(m + (m + 4 - m)); */
+  int i;
+  for (i = 0; i < strlen(m); i += 4) { choice_month->add(&m[i]); }
 
   Fl_Button* btn_ok = new Fl_Button(200, 300, 50, 30, "OK");
   btn_ok->labelfont(FL_COURIER);
