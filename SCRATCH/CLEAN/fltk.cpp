@@ -30,12 +30,12 @@ btn_cb(Fl_Widget* o, void* v)
 {
   Fl_Input** i = (Fl_Input**) v;
 
-  printf("%s %d\n", i[0]->value(), i[0]->size());
+  printf("FLTK: %s %d\n", i[0]->value(), i[0]->size());
 
   struct Data {
     const char* txt;
     int         len;
-  } data[4] = {
+  } data[] = {
       {.txt = i[0]->value(), .len = i[0]->size()}
   };
 

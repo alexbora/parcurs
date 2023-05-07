@@ -79,16 +79,27 @@ main(int argc, char** argv)
 }
 
 #else
-#include <unistd.h>
+size_t
+write(int, const void*, size_t);
+#include <stdio.h>
 int
 mainx(void* p)
 {
-  struct Data {
-    const char* txt;
-    int         len;
-  };
-  struct Data* data = (struct Data*) p;
-  write(1, data->txt, data->len);
+
+  char** argv = (char**) p;
+  /* argv[0]     = "iun"; */
+  argv[1] = "22";
+  argv[2] = "100";
+  init_time(3, argv);
+
+  /*   struct Data { */
+  /*     const char* txt; */
+  /*     int         len; */
+  /*   }; */
+  /*   struct Data* data = (struct Data*) p; */
+  /*   write(1, data->txt, data->len); */
+  /*   write(1, "\n", 1); */
+
   return 0;
 }
 #endif
