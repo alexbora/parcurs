@@ -11,7 +11,9 @@
 #include <FL/Fl_Input.H>
 #include <FL/Fl_Window.H>
 #include <Fl/Fl_Input_Choice.H>
+#include <array>
 #include <cstdio>
+#include <vector>
 
 extern "C" {
 int
@@ -80,8 +82,10 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
   choice_month->labelsize(16);
   choice_month->textsize(16);
 
-  char** mths = (char*[]){"ian", "feb"};
-  for (char** p = mths; mths; *mths++) choice_month->add(*p);
+  /* std::vector<const char*> mths; */
+  /* std::vector<const char*, 10> v; */
+  /* std::vector<std::string> svec; */
+  std::vector<char*> v = {"a"};
 
   Fl_Button* btn_ok = new Fl_Button(200, 300, 50, 30, "OK");
   btn_ok->labelfont(FL_COURIER);
