@@ -83,14 +83,20 @@ size_t
 write(int, const void*, size_t);
 #include <stdio.h>
 int
-mainx(void* p)
+mainx(int argc, char** argv)
 {
 
-  char** argv = (char**) p;
+  /* char** argv = (char**) p; */
   /* argv[0]     = "iun"; */
-  argv[1] = "22";
-  argv[2] = "100";
-  init_time(3, argv);
+  /* argv[1] = "22"; */
+  /* argv[2] = "100"; */
+  mix();
+  init_time(argc, argv);
+
+  get_km(argc > 3 ? argv[argc - 1] : NULL);
+  write_excel();
+
+  write_km();
 
   /*   struct Data { */
   /*     const char* txt; */

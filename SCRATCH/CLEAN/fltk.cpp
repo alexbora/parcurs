@@ -10,11 +10,13 @@
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Input.H>
 #include <FL/Fl_Window.H>
+#include <Fl/Fl_Input_Choice.H>
 #include <cstdio>
 
 extern "C" {
 int
-mainx(void*);
+mainx(int, const char**);
+/* mainx(void*); */
 }
 
 class MyGroup : public Fl_Group
@@ -24,6 +26,13 @@ public:
       : Fl_Group(x, y, z, q, l){};
   ~MyGroup(){};
 };
+
+void
+btn_clear_cb(Fl_Widget* o, void* v)
+{
+  Fl_Input** i = (Fl_Input**) v;
+  for (Fl_Input** p = i; *p; p++) (*p)->value("");
+}
 
 void
 btn_cb(Fl_Widget* o, void* v)
@@ -39,7 +48,9 @@ btn_cb(Fl_Widget* o, void* v)
       {.txt = i[0]->value(), .len = i[0]->size()}
   };
 
-  mainx(data);
+  /* mainx(data); */
+  const char* argv[] = {NULL, i[0]->value(), i[1]->value(), i[2]->value()};
+  mainx(4, argv);
 }
 
 Fl_Window*
@@ -48,13 +59,40 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
   Fl_Window* w = new Fl_Double_Window(dimensions[0], dimensions[1], label);
   w->begin();
 
-  in[0] = new Fl_Input(200, 200, 200, 30, "Test");
+  in[0] = new Fl_Input(200, 100, 200, 30, "Luna: ");
   in[0]->labelfont(FL_COURIER);
   in[0]->labelsize(16);
   in[0]->textsize(16);
 
-  Fl_Button* btn = new Fl_Button(300, 300, 100, 50, "OK");
-  btn->callback(btn_cb, in);
+  in[1] = new Fl_Input(200, 150, 200, 30, "Anul: ");
+  in[1]->labelfont(FL_COURIER);
+  in[1]->labelsize(16);
+  in[1]->textsize(16);
+
+  in[2] = new Fl_Input(200, 200, 200, 30, "Km initiali: ");
+  in[2]->labelfont(FL_COURIER);
+  in[2]->labelsize(16);
+  in[2]->textsize(16);
+
+  Fl_Input_Choice* choice_month =
+      new Fl_Input_Choice(200, 250, 200, 30, "Select month: ");
+  choice_month->labelfont(FL_COURIER);
+  choice_month->labelsize(16);
+  choice_month->textsize(16);
+
+  char** mths = (char*[]){"ian", "feb"};
+  for (char** p = mths; mths; *mths++) choice_month->add(*p);
+
+  Fl_Button* btn_ok = new Fl_Button(200, 300, 50, 30, "OK");
+  btn_ok->labelfont(FL_COURIER);
+  btn_ok->labelsize(16);
+
+  btn_ok->callback(btn_cb, in);
+
+  Fl_Button* btn_clear = new Fl_Button(250, 300, 75, 30, "Clear");
+  btn_clear->labelfont(FL_COURIER);
+  btn_clear->labelsize(16);
+  btn_clear->callback(btn_clear_cb, in);
 
   w->end();
   w->show();

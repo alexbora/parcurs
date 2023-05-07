@@ -182,17 +182,16 @@ static int
 then(char** argv)
 {
 
-  printf("then: %s %s %s\n", argv[0], argv[1], argv[2]);
   /* shorten year to two digits, in case you enter 2022 instead of 22 */
   char* p = argv[2];
   while (*p++ != '\0') // forward to the end
     ;
   p -= 3; // rewind back two characters, +1 for the '\0'
   argv[2] = p;
-
   /* shorten the month name to three charachters, case is entered ianuarie
    * instead of ian */
-  argv[1][3]              = '\0';
+  argv[1][3] = '\0';
+  /* printf("then: %s %s %s %s\n", argv[0], argv[1], argv[2], argv[3]); */
   static const char* mths = "ian feb mar apr mai iun iul aug sep oct noi dec ";
   /* char *m = strstr("ian feb mar apr mai iun iul aug sep oct noi dec",
      argv[1]); */
@@ -210,6 +209,8 @@ then(char** argv)
           tm2.tm_year + 1900);
 
   TM = tm2;
+#if 0
+#endif
   return 1;
 }
 
@@ -375,6 +376,7 @@ get_km(char* argv)
   /* printf("KM: %u\n", km); */
   /* write(2, "Km read successfully.\n", 22); */
   PRINT_("Km read... OK\n");
+  printf("km: %d\n", km);
 }
 
 void
