@@ -6,14 +6,16 @@
 
 #include <FL/Fl.H>
 #include <FL/Fl_Button.H>
+#include <FL/Fl_Choice.H>
 #include <FL/Fl_Double_Window.H>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Input.H>
 #include <FL/Fl_Window.H>
 #include <Fl/Fl_Input_Choice.H>
-#include <array>
-#include <cstdio>
-#include <vector>
+#include <ctime>
+#include <fcntl.h>
+#include <sys/fcntl.h>
+#include <unistd.h>
 
 extern "C" {
 int
@@ -76,25 +78,34 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
   in[2]->labelsize(16);
   in[2]->textsize(16);
 
-  Fl_Input_Choice* choice_month =
-      new Fl_Input_Choice(200, 250, 200, 30, "Select month: ");
+  int  f = open("km.txt", O_RDONLY);
+  char buf[16];
+
+  while (read(f, buf, 7))
+    ;
+  buf[5] = '\0';
+  close(f);
+  in[2]->value(buf);
+
+  Fl_Choice* choice_month = new Fl_Choice(200, 250, 64, 30, "Select month: ");
   choice_month->labelfont(FL_COURIER);
   choice_month->labelsize(16);
   choice_month->textsize(16);
-
+  /* choice_month->label("Luna: "); */
+  /* choice_month->copy_label("lun"); */
   /* std::vector<const char*> mths; */
   /* std::vector<const char*, 10> v; */
   /* std::vector<std::string> svec; */
   /* std::vector<char*> v = {"a"}; */
 
-  const char* mths[] = {"ian", "feb", "mar"};
+  const char* mths[] = {"ian", "feb", "mar", "apr", "mai", "iun", "jul",
+                        "aug", "sep", "oct", "nov", "dec", NULL};
 
   for (const char** p = mths; *p; p++) choice_month->add(*p);
 
-  const char* m = "ian feb mar apr mai iun iul aug sep oct nov dec";
-  /* while (*m++) choice_month->add(m + (m + 4 - m)); */
-  int i;
-  for (i = 0; i < strlen(m); i += 4) { choice_month->add(&m[i]); }
+  time_t     t  = time(0);
+  struct tm* tm = localtime(&t);
+  choice_month->value(tm->tm_mon);
 
   Fl_Button* btn_ok = new Fl_Button(200, 300, 50, 30, "OK");
   btn_ok->labelfont(FL_COURIER);
@@ -119,7 +130,7 @@ main(int argc, char* argv[])
 
   Fl_Input* input[4];
 
-  Fl::scheme("gtk+");
+  Fl::scheme("plastic");
 
   int        dim[2] = {800, 400};
   Fl_Window* w      = make_window(dim, "", input);
