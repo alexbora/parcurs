@@ -104,7 +104,7 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
   for (const char** p = mths; *p; p++) choice_month->add(*p);
 
   time_t     t  = time(0);
-  struct tm* tm = localtime(&t);
+  struct tm* tm = localtime(&((time_t){time(0)}));
   choice_month->value(tm->tm_mon);
 
   Fl_Button* btn_ok = new Fl_Button(200, 300, 50, 30, "OK");
@@ -127,10 +127,13 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
 int
 main(int argc, char* argv[])
 {
+  Fl::use_high_res_GL();
+  Fl::scheme("plastic");
+
+  setenv("TZ", "Europe/Bucharest", 1);
+  tzset();
 
   Fl_Input* input[4];
-
-  Fl::scheme("plastic");
 
   int        dim[2] = {800, 400};
   Fl_Window* w      = make_window(dim, "", input);
