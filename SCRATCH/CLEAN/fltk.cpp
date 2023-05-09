@@ -104,7 +104,7 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
   for (const char** p = mths; *p; p++) choice_month->add(*p);
 
   time_t     t  = time(0);
-  struct tm* tm = localtime(&((time_t){time(0)}));
+  struct tm* tm = localtime(&t);
   choice_month->value(tm->tm_mon);
 
   Fl_Button* btn_ok = new Fl_Button(200, 300, 50, 30, "OK");
