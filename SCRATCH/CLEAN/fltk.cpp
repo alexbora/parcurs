@@ -5,11 +5,13 @@
  */
 
 #include <FL/Fl.H>
+#include <FL/Fl_Box.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Choice.H>
 #include <FL/Fl_Double_Window.H>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Input.H>
+#include <FL/Fl_Int_Input.H>
 #include <FL/Fl_Window.H>
 #include <Fl/Fl_Input_Choice.H>
 #include <ctime>
@@ -39,6 +41,24 @@ btn_clear_cb(Fl_Widget* o, void* v)
 }
 
 void
+choice_cb(Fl_Widget* o, void* v)
+{
+  Fl_Choice* in = (Fl_Choice*) o;
+  printf("%d\n", in->value());
+  Fl_Input**  out    = (Fl_Input**) v;
+  const char* mths[] = {"ian", "feb"};
+  out[0]->value(mths[in->value()]);
+
+  const char* mth =
+      "ian\0feb\0mar\0apr\0mai\0iun\0iul\0aug\0sep\0oct\0nov\bdec\0";
+
+  out[0]->value(mth + (4 * in->value()));
+
+  /* out[0]->value("ian"); */
+  /* printf("out 0: %s\n", out[0]->value()); */
+}
+
+void
 btn_cb(Fl_Widget* o, void* v)
 {
   Fl_Input** i = (Fl_Input**) v;
@@ -54,7 +74,7 @@ btn_cb(Fl_Widget* o, void* v)
 
   /* mainx(data); */
   const char* argv[] = {NULL, i[0]->value(), i[1]->value(), i[2]->value()};
-  mainx(4, argv);
+  /* mainx(4, argv); */
 }
 
 Fl_Window*
@@ -90,6 +110,10 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
     in[2]->value(buf);
   }
 
+  Fl_Box* box = new Fl_Box(200, 30, 200, 30, in[2]->value());
+  box->labelsize(16);
+  box->labelfont(FL_COURIER);
+
   Fl_Choice* choice_month = new Fl_Choice(200, 250, 64, 30, "Select month: ");
   choice_month->labelfont(FL_COURIER);
   choice_month->labelsize(16);
@@ -109,11 +133,11 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
   time_t     t  = time(0);
   struct tm* tm = localtime(&t);
   choice_month->value(tm->tm_mon);
+  choice_month->callback(choice_cb, in);
 
   Fl_Button* btn_ok = new Fl_Button(200, 300, 50, 30, "OK");
   btn_ok->labelfont(FL_COURIER);
   btn_ok->labelsize(16);
-
   btn_ok->callback(btn_cb, in);
 
   Fl_Button* btn_clear = new Fl_Button(250, 300, 75, 30, "Clear");
