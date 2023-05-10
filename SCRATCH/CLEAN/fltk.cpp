@@ -78,14 +78,17 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
   in[2]->labelsize(16);
   in[2]->textsize(16);
 
-  int  f = open("km.txt", O_RDONLY);
-  char buf[16];
+  {
+    int  f = open("km.txt", O_RDONLY);
+    char buf[16];
 
-  while (read(f, buf, 7))
-    ;
-  buf[5] = '\0';
-  close(f);
-  in[2]->value(buf);
+    while (read(f, buf, 7))
+      ;
+    buf[5] = '\0';
+    close(f);
+
+    in[2]->value(buf);
+  }
 
   Fl_Choice* choice_month = new Fl_Choice(200, 250, 64, 30, "Select month: ");
   choice_month->labelfont(FL_COURIER);
