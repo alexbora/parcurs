@@ -90,12 +90,12 @@ mainx(int argc, char** argv)
   /* argv[0]     = "iun"; */
   /* argv[1] = "22"; */
   /* argv[2] = "100"; */
+  puts("reached mix\n");
   mix();
   init_time(argc, argv);
 
   get_km(argc > 3 ? argv[argc - 1] : NULL);
   write_excel();
-
   write_km();
 
   /*   struct Data { */

@@ -74,7 +74,7 @@ btn_cb(Fl_Widget* o, void* v)
 
   /* mainx(data); */
   const char* argv[] = {NULL, i[0]->value(), i[1]->value(), i[2]->value()};
-  /* mainx(4, argv); */
+  mainx(4, argv);
 }
 
 Fl_Window*
