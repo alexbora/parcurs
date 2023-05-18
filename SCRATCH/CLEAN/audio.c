@@ -72,6 +72,7 @@ play(Playback* p)
 void
 play2(void* b, size_t sz)
 {
+
   bool success = false;
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
     printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
@@ -81,7 +82,6 @@ play2(void* b, size_t sz)
       SDL_NewAudioStream(AUDIO_S16, 1, 22050, AUDIO_F32, 2, 48000);
   SDL_AudioStreamPut(stream, b, sz);
   static Uint8* audio_pos;
-  SDL_MixAudio(stream, audio_pos, sz, SDL_MIX_MAXVOLUME);
 
   SDL_Delay(3000);
   /* getchar(); */

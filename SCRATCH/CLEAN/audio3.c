@@ -35,9 +35,9 @@ main(int argc, char* argv[])
 
   /* Load the WAV */
   // the specs, length and buffer of our wav are filled
-  if (SDL_LoadWAV(MUS_PATH, &wav_spec, &wav_buffer, &wav_length) == NULL) {
+  if (SDL_LoadWAV(MUS_PATH, &wav_spec, &wav_buffer, &wav_length) == NULL)
     return 1;
-  }
+
   // set the callback function
   wav_spec.callback = my_audio_callback;
   wav_spec.userdata = NULL;
