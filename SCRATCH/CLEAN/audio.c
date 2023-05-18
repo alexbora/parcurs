@@ -4,9 +4,11 @@
  * @created     : Sâmbătă Mai 13, 2023 08:03:35 EEST
  */
 
+#include <sys/fcntl.h>
 #define MINIAUDIO_IMPLEMENTATION
 #include "/Users/alex/dev/wx/miniaudio/miniaudio.h"
 
+#include <SDL2/SDL.h>
 #include <stdlib.h>
 
 void
@@ -67,6 +69,21 @@ play(Playback* p)
   ma_decoder_uninit(&p->decoder);
 }
 
+void
+play2(void* b, size_t sz)
+{
+  bool success = false;
+  if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
+    printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
+    success = false;
+  }
+  SDL_AudioStream* stream =
+      SDL_NewAudioStream(AUDIO_S16, 1, 22050, AUDIO_F32, 2, 48000);
+  SDL_AudioStreamPut(stream, b, sz);
+  getchar();
+  SDL_AudioStreamFlush(stream);
+}
+
 int
 main(int argc, char** argv)
 {
@@ -99,7 +116,7 @@ main(int argc, char** argv)
   /*   } */
   Playback* p = init_playback(argv);
 
-  play(p);
+  /* play(p); */
   /* if (ma_device_start(&p->device) != MA_SUCCESS) { */
   /*   printf("Failed to start playback device.\n"); */
   /*   ma_device_uninit(&p->device); */
@@ -112,5 +129,16 @@ main(int argc, char** argv)
 
   /* ma_device_uninit(&p->device); */
   /* ma_decoder_uninit(&p->decoder); */
+  char* b = malloc(16340);
+
+  int fd = open("/Users/alex/dev/wx/miniaudio/test.mp3", O_RDONLY);
+
+  size_t i = 0;
+  while (i < 16340) {
+    read(fd, b + i, 1);
+    i++;
+  }
+
+  play2(b, 16340);
   return 0;
 }
