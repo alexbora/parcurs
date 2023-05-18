@@ -80,7 +80,11 @@ play2(void* b, size_t sz)
   SDL_AudioStream* stream =
       SDL_NewAudioStream(AUDIO_S16, 1, 22050, AUDIO_F32, 2, 48000);
   SDL_AudioStreamPut(stream, b, sz);
-  getchar();
+  static Uint8* audio_pos;
+  SDL_MixAudio(stream, audio_pos, sz, SDL_MIX_MAXVOLUME);
+
+  SDL_Delay(3000);
+  /* getchar(); */
   SDL_AudioStreamFlush(stream);
 }
 
