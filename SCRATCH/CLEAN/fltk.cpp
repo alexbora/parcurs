@@ -14,6 +14,7 @@
 #include <FL/Fl_Int_Input.H>
 #include <FL/Fl_Window.H>
 #include <Fl/Fl_Input_Choice.H>
+#include <cstdio>
 #include <ctime>
 #include <fcntl.h>
 #include <sys/fcntl.h>
@@ -32,6 +33,15 @@ public:
       : Fl_Group(x, y, z, q, l){};
   ~MyGroup(){};
 };
+
+struct tm* __attribute__((constructor)) tim()
+{
+  time_t     t  = time(0);
+  struct tm* tm = localtime(&t);
+
+  puts("constructor");
+  return tm;
+}
 
 void
 btn_clear_cb(Fl_Widget* o, void* v)
@@ -92,6 +102,11 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
   in[1]->labelfont(FL_COURIER);
   in[1]->labelsize(16);
   in[1]->textsize(16);
+  Fl_Choice* choice_year = new Fl_Choice(200, 300, 200, 30, "xx");
+  choice_year->labelfont(FL_COURIER);
+  choice_year->labelsize(16);
+  choice_year->textsize(16);
+  choice_year->value(2023);
 
   in[2] = new Fl_Input(200, 200, 200, 30, "Km initiali: ");
   in[2]->labelfont(FL_COURIER);
@@ -108,13 +123,16 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
     close(f);
 
     in[2]->value(buf);
+    in[2]->textfont(FL_COURIER);
+    in[2]->textsize(16);
   }
 
   Fl_Box* box = new Fl_Box(200, 30, 200, 30, in[2]->value());
   box->labelsize(16);
   box->labelfont(FL_COURIER);
 
-  Fl_Choice* choice_month = new Fl_Choice(200, 250, 64, 30, "Select month: ");
+  Fl_Choice* choice_month =
+      new Fl_Choice(400, 100, 64, 30, "Input/select month ");
   choice_month->labelfont(FL_COURIER);
   choice_month->labelsize(16);
   choice_month->textsize(16);
@@ -134,6 +152,12 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
   struct tm* tm = localtime(&t);
   choice_month->value(tm->tm_mon);
   choice_month->callback(choice_cb, in);
+
+  /* char  initial[32]; */
+  const char* initial = mths[tm->tm_mon - 1];
+  Fl_Box*     box_    = new Fl_Box(320, 200, 200, 30, initial);
+  box_->labelfont(FL_COURIER);
+  box_->labelsize(16);
 
   Fl_Button* btn_ok = new Fl_Button(200, 300, 50, 30, "OK");
   btn_ok->labelfont(FL_COURIER);
@@ -163,7 +187,7 @@ main(int argc, char* argv[])
   Fl_Input* input[4];
 
   int        dim[2] = {800, 400};
-  Fl_Window* w      = make_window(dim, "", input);
+  Fl_Window* w      = make_window(dim, "Foaie parcurs", input);
 
   return Fl::run();
 }
