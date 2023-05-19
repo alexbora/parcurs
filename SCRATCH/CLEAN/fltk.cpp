@@ -36,6 +36,8 @@ public:
 
 struct tm* __attribute__((constructor)) tim()
 {
+  setenv("TZ", "Europe/Bucharest", 1);
+  tzset();
   time_t     t  = time(0);
   struct tm* tm = localtime(&t);
 
@@ -102,7 +104,7 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
   in[1]->labelfont(FL_COURIER);
   in[1]->labelsize(16);
   in[1]->textsize(16);
-  Fl_Choice* choice_year = new Fl_Choice(200, 300, 200, 30, "xx");
+  Fl_Choice* choice_year = new Fl_Choice(200, 100, 200, 30, "xx");
   choice_year->labelfont(FL_COURIER);
   choice_year->labelsize(16);
   choice_year->textsize(16);
@@ -178,11 +180,12 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
 int
 main(int argc, char* argv[])
 {
+
   Fl::use_high_res_GL();
   Fl::scheme("plastic");
 
-  setenv("TZ", "Europe/Bucharest", 1);
-  tzset();
+  /* setenv("TZ", "Europe/Bucharest", 1); */
+  /* tzset(); */
 
   Fl_Input* input[4];
 
