@@ -104,11 +104,12 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
   in[1]->labelfont(FL_COURIER);
   in[1]->labelsize(16);
   in[1]->textsize(16);
-  Fl_Choice* choice_year = new Fl_Choice(200, 100, 200, 30, "xx");
+  Fl_Choice* choice_year =
+      new Fl_Choice(400, 150, 64, 30, "Input year / select");
   choice_year->labelfont(FL_COURIER);
   choice_year->labelsize(16);
   choice_year->textsize(16);
-  choice_year->value(2023);
+  choice_year->value(1);
 
   in[2] = new Fl_Input(200, 200, 200, 30, "Km initiali: ");
   in[2]->labelfont(FL_COURIER);
