@@ -117,7 +117,7 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
   in[2]->textsize(16);
 
   {
-    int  f = open("km.txt", O_RDONLY);
+    int  f = open("km", O_RDONLY);
     char buf[16];
 
     while (read(f, buf, 7))
