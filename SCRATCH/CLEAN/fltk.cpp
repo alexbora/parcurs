@@ -56,13 +56,13 @@ void
 choice_cb(Fl_Widget* o, void* v)
 {
   Fl_Choice* in = (Fl_Choice*) o;
-  printf("%d\n", in->value());
-  Fl_Input**  out    = (Fl_Input**) v;
-  const char* mths[] = {"ian", "feb"};
-  out[0]->value(mths[in->value()]);
+  /* printf("%d\n", in->value()); */
+  Fl_Input** out = (Fl_Input**) v;
+  /* const char* mths[] = {"ian", "feb"}; */
+  /* out[0]->value(mths[in->value()]); */
 
   const char* mth =
-      "ian\0feb\0mar\0apr\0mai\0iun\0iul\0aug\0sep\0oct\0nov\bdec\0";
+      "ian\0feb\0mar\0apr\0mai\0iun\0iul\0aug\0sep\0oct\0noi\0dec\0";
 
   out[0]->value(mth + (4 * in->value()));
 
@@ -86,6 +86,7 @@ btn_cb(Fl_Widget* o, void* v)
 
   /* mainx(data); */
   const char* argv[] = {NULL, i[0]->value(), i[1]->value(), i[2]->value()};
+  /* printf("%s %s %s\n", i[0]->value(), i[1]->value(), i[2]->value()); */
   mainx(4, argv);
 }
 
@@ -147,7 +148,7 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
   /* std::vector<char*> v = {"a"}; */
 
   const char* mths[] = {"ian", "feb", "mar", "apr", "mai", "iun", "jul",
-                        "aug", "sep", "oct", "nov", "dec", NULL};
+                        "aug", "sep", "oct", "noi", "dec", NULL};
 
   for (const char** p = mths; *p; p++) choice_month->add(*p);
 

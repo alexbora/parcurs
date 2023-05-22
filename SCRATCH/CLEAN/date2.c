@@ -195,6 +195,8 @@ then(char** argv)
   static const char* mths = "ian feb mar apr mai iun iul aug sep oct noi dec ";
   /* char *m = strstr("ian feb mar apr mai iun iul aug sep oct noi dec",
      argv[1]); */
+  /* if (strstr(argv[1], "nov")) argv[1] = "noi"; */
+  if (argv[1][1] == 'o' & argv[1][2] == 'v') argv[1] = "noi";
   char*     m    = strstr(mths, argv[1]);
   int       mon  = (int) ((m - mths) / 4);
   int       year = atoi(argv[2]); // atoi(p) ?
