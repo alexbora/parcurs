@@ -108,14 +108,40 @@ btn_cb(Fl_Widget* o, void* v)
   mainx(4, argv);
 }
 
+void
+exit_cb(Fl_Widget* o, void* v)
+{
+  exit(0);
+}
+
+void
+add_vacation(Fl_Widget* o, void* v)
+{
+  Fl_Window* w = new Fl_Window(100, 100, 100, 100, "test");
+  w->set_menu_window();
+  w->set_modal();
+  w->take_focus();
+  w->begin();
+  Fl_Input* vacation = new Fl_Input(60, 60, 600, 30, "vacation");
+  w->end();
+  w->show();
+  o->parent()->redraw();
+}
+
 Fl_Window*
-make_window(int* dimensions, const char* label, Fl_Input** in)
+make_window(int* dimensions, const char* label, Fl_Input** in, int argc,
+            char** argv)
 {
 
   const time_t           t  = time(0UL);
   const struct tm* const tm = localtime(&t);
 
   Fl_Window* w = new Fl_Double_Window(dimensions[0], dimensions[1], label);
+  w->clear_border();
+  w->box(FL_FLAT_BOX);
+  w->resizable();
+  w->set_active();
+  w->set_modal();
   w->begin();
 
   in[0] = new Fl_Input(200, 100, 200, 30, "Luna: ");
@@ -171,6 +197,8 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
 
   Fl_Box* box__ = new Fl_Box(100, 30, 200, 30, "initial");
   Fl_Box* box   = new Fl_Box(200, 30, 200, 30, in[2]->value());
+  box__->labelsize(16);
+  box__->labelfont(FL_COURIER);
   box->labelsize(16);
   box->labelfont(FL_COURIER);
 
@@ -211,6 +239,17 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
   btn_clear->labelsize(16);
   btn_clear->callback(btn_clear_cb, in);
 
+  Fl_Button* btn_exit = new Fl_Button(350, 300, 75, 30, "Exit");
+  btn_exit->labelfont(FL_COURIER);
+  btn_exit->labelsize(16);
+  btn_exit->callback(exit_cb, NULL);
+
+  Fl_Button* btn_add_vacation = new Fl_Button(350, 350, 75, 30, "Add vacation");
+  btn_add_vacation->labelfont(FL_COURIER);
+  btn_add_vacation->labelsize(16);
+  btn_add_vacation->callback(add_vacation, NULL);
+  btn_add_vacation->hide();
+
   w->end();
   w->show();
 
@@ -221,16 +260,17 @@ int
 main(int argc, char* argv[])
 {
 
+  setenv("TZ", "Europe/Bucharest", 1);
+  tzset();
+
   Fl::use_high_res_GL();
   Fl::scheme("plastic");
 
-  /* setenv("TZ", "Europe/Bucharest", 1); */
-  /* tzset(); */
-
   Fl_Input* input[4];
 
-  int        dim[2] = {800, 400};
-  Fl_Window* w      = make_window(dim, "Foaie parcurs", input);
+  int dim[2] = {600, 400};
+
+  Fl_Window* w = make_window(dim, "Foaie parcurs", input, argc, argv);
 
   return Fl::run();
 }
