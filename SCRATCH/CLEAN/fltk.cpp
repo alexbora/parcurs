@@ -50,6 +50,7 @@ btn_clear_cb(Fl_Widget* o, void* v)
 {
   Fl_Input** i = (Fl_Input**) v;
   for (Fl_Input** p = i; *p; p++) (*p)->value("");
+  o->parent()->redraw();
 }
 
 void
@@ -75,7 +76,7 @@ btn_cb(Fl_Widget* o, void* v)
 {
   Fl_Input** i = (Fl_Input**) v;
 
-  printf("FLTK: %s %d\n", i[0]->value(), i[0]->size());
+  /* printf("FLTK: %s %d\n", i[0]->value(), i[0]->size()); */
 
   struct Data {
     const char* txt;
@@ -83,16 +84,21 @@ btn_cb(Fl_Widget* o, void* v)
   } data[] = {
       {.txt = i[0]->value(), .len = i[0]->size()}
   };
-
+  o->parent()->redraw();
   /* mainx(data); */
   const char* argv[] = {NULL, i[0]->value(), i[1]->value(), i[2]->value()};
   /* printf("%s %s %s\n", i[0]->value(), i[1]->value(), i[2]->value()); */
+
   mainx(4, argv);
 }
 
 Fl_Window*
 make_window(int* dimensions, const char* label, Fl_Input** in)
 {
+
+  time_t     t  = time(0);
+  struct tm* tm = localtime(&t);
+
   Fl_Window* w = new Fl_Double_Window(dimensions[0], dimensions[1], label);
   w->begin();
 
@@ -105,12 +111,15 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
   in[1]->labelfont(FL_COURIER);
   in[1]->labelsize(16);
   in[1]->textsize(16);
-  Fl_Choice* choice_year =
-      new Fl_Choice(400, 150, 64, 30, "Input year / select");
+
+  Fl_Choice* choice_year = new Fl_Choice(400, 150, 74, 30, "");
   choice_year->labelfont(FL_COURIER);
   choice_year->labelsize(16);
   choice_year->textsize(16);
-  choice_year->value(1);
+  choice_year->textfont(FL_COURIER);
+  const char* year[] = {"2020", "2021", "2022", "2023", "2024", "2025", NULL};
+  for (const char** i = year; *i; i++) choice_year->add(*i);
+  choice_year->value(tm->tm_year - 120);
 
   in[2] = new Fl_Input(200, 200, 200, 30, "Km initiali: ");
   in[2]->labelfont(FL_COURIER);
@@ -135,11 +144,11 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
   box->labelsize(16);
   box->labelfont(FL_COURIER);
 
-  Fl_Choice* choice_month =
-      new Fl_Choice(400, 100, 64, 30, "Input/select month ");
+  Fl_Choice* choice_month = new Fl_Choice(400, 100, 64, 30, "");
   choice_month->labelfont(FL_COURIER);
   choice_month->labelsize(16);
   choice_month->textsize(16);
+  choice_month->textfont(FL_COURIER);
   /* choice_month->label("Luna: "); */
   /* choice_month->copy_label("lun"); */
   /* std::vector<const char*> mths; */
@@ -152,10 +161,9 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
 
   for (const char** p = mths; *p; p++) choice_month->add(*p);
 
-  time_t     t  = time(0);
-  struct tm* tm = localtime(&t);
   choice_month->value(tm->tm_mon);
   choice_month->callback(choice_cb, in);
+  /* in[0]->value(mths[tm->tm_mon]); */
 
   /* char  initial[32]; */
   const char* initial = mths[tm->tm_mon - 1];
