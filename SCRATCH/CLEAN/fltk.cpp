@@ -22,6 +22,14 @@
 #include <unistd.h>
 
 extern "C" {
+#ifndef TRANS_COCOA_HDR
+#define TRANS_COCOA_HDR
+void
+setWindowTransparency(Fl_Window*, double);
+#endif /* TRANS_COCOA_HDR */
+}
+
+extern "C" {
 int
 mainx(int, const char**);
 /* mainx(void*); */
@@ -139,6 +147,7 @@ make_window(int* dimensions, const char* label, Fl_Input** in, int argc,
   Fl_Window* w = new Fl_Double_Window(dimensions[0], dimensions[1], label);
   w->clear_border();
   w->box(FL_FLAT_BOX);
+  /* setWindowTransparency(w, 127); */
   w->resizable();
   w->set_active();
   w->set_modal();
