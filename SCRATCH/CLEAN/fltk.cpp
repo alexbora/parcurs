@@ -14,6 +14,7 @@
 #include <FL/Fl_Int_Input.H>
 #include <FL/Fl_Window.H>
 #include <Fl/Fl_Input_Choice.H>
+#include <_ctype.h>
 #include <cstdio>
 #include <ctime>
 #include <fcntl.h>
@@ -67,8 +68,23 @@ choice_cb(Fl_Widget* o, void* v)
 
   out[0]->value(mth + (4 * in->value()));
 
+  out[0]->textfont(FL_COURIER);
+  out[0]->textsize(16);
   /* out[0]->value("ian"); */
   /* printf("out 0: %s\n", out[0]->value()); */
+}
+
+void
+year_cb(Fl_Widget* o, void* v)
+{
+  Fl_Choice* in  = (Fl_Choice*) o;
+  Fl_Input** out = (Fl_Input**) v;
+
+  const char* year[] = {"2020", "2021", "2022", "2023", "2024", "2025", NULL};
+
+  out[1]->value(year[in->value()]);
+  out[1]->textfont(FL_COURIER);
+  out[1]->textsize(16);
 }
 
 void
@@ -96,8 +112,8 @@ Fl_Window*
 make_window(int* dimensions, const char* label, Fl_Input** in)
 {
 
-  time_t     t  = time(0);
-  struct tm* tm = localtime(&t);
+  const time_t           t  = time(0UL);
+  const struct tm* const tm = localtime(&t);
 
   Fl_Window* w = new Fl_Double_Window(dimensions[0], dimensions[1], label);
   w->begin();
@@ -112,35 +128,49 @@ make_window(int* dimensions, const char* label, Fl_Input** in)
   in[1]->labelsize(16);
   in[1]->textsize(16);
 
-  Fl_Choice* choice_year = new Fl_Choice(400, 150, 74, 30, "");
-  choice_year->labelfont(FL_COURIER);
-  choice_year->labelsize(16);
-  choice_year->textsize(16);
-  choice_year->textfont(FL_COURIER);
-  const char* year[] = {"2020", "2021", "2022", "2023", "2024", "2025", NULL};
-  for (const char** i = year; *i; i++) choice_year->add(*i);
-  choice_year->value(tm->tm_year - 120);
-
-  in[2] = new Fl_Input(200, 200, 200, 30, "Km initiali: ");
-  in[2]->labelfont(FL_COURIER);
-  in[2]->labelsize(16);
-  in[2]->textsize(16);
+  {
+    Fl_Choice* choice_year = new Fl_Choice(400, 150, 74, 30, "");
+    choice_year->labelfont(FL_COURIER);
+    choice_year->labelsize(16);
+    choice_year->textsize(16);
+    choice_year->textfont(FL_COURIER);
+    const char* year[] = {"2020", "2021", "2022", "2023", "2024", "2025", NULL};
+    for (const char** i = year; *i; i++) choice_year->add(*i);
+    if (tm->tm_year - 120 > 0 && tm->tm_year - 120 < 6)
+      choice_year->value(tm->tm_year - 120);
+    else {
+      write(1, "year", strlen("year"));
+      abort();
+    }
+    choice_year->callback(year_cb, in);
+    /* choice_year->when(FL_WHEN_CHANGED); */
+  }
 
   {
-    int  f = open("km", O_RDONLY);
-    char buf[16];
+    in[2] = new Fl_Input(200, 200, 200, 30, "Km initiali: ");
+    in[2]->labelfont(FL_COURIER);
+    in[2]->labelsize(16);
+    in[2]->textsize(16);
+    in[2]->textfont(FL_COURIER);
+    in[2]->textsize(16);
 
-    while (read(f, buf, 7))
-      ;
-    buf[5] = '\0';
+    int  f = open("km", O_RDONLY);
+    char buf[8];
+    while (read(f, buf, 8))
+      if (!isnumber(*buf)) break;
+
+    /* char* p = buf; */
+    /* int   k; */
+    /* while (isnumber(*p++)) k++; */
+    /* buf[k] = '\0'; */
+    /* buf[5] = '\0'; */
     close(f);
 
     in[2]->value(buf);
-    in[2]->textfont(FL_COURIER);
-    in[2]->textsize(16);
   }
 
-  Fl_Box* box = new Fl_Box(200, 30, 200, 30, in[2]->value());
+  Fl_Box* box__ = new Fl_Box(100, 30, 200, 30, "initial");
+  Fl_Box* box   = new Fl_Box(200, 30, 200, 30, in[2]->value());
   box->labelsize(16);
   box->labelfont(FL_COURIER);
 
