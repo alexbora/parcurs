@@ -45,7 +45,7 @@ main(int argc, char** argv)
                      sel_registerName("sharedApplication"));
 
   NSRunAlertPanel(CFSTR("Testing"),
-                  CFSTR("This is a simple test to display NSAlertPanel."),
+                  CFSTR("xxx This is a simple test to display NSAlertPanel."),
                   CFSTR("OK"), NULL, NULL);
 
   objc_msgSend(pool, sel_registerName("release"));

@@ -54,7 +54,78 @@ struct tm* __attribute__((constructor)) tim()
   return tm;
 }
 
+typedef enum {
+  LOG_ALL = 0, // Display all logs¬
+  LOG_TRACE,   // Trace logging, intended for internal use only¬
+  LOG_DEBUG,   // Debug logging, used for internal debugging, it should be
+               // disabled on release builds¬
+  LOG_INFO,    // Info logging, used for program execution info¬
+  LOG_WARNING, // Warning logging, used on recoverable failures¬
+  LOG_ERROR,   // Error logging, used on unrecoverable failures¬
+  LOG_FATAL,   // Fatal logging, used to abort program: exit(EXIT_FAILURE)¬
+  LOG_NONE     // Disable logging¬
+} Log_level;
+
+static int logTypeLevel = LOG_INFO; // Minimum log type level
+
+typedef void (*TraceLogCallback)(int logLevel, const char* text, va_list args);
+static TraceLogCallback traceLog = NULL;
+
 void
+SetTraceLogCallback(TraceLogCallback callback)
+{
+  traceLog = callback;
+}
+void
+SetTraceLogLevel(int logType)
+{
+  logTypeLevel = logType;
+}
+
+void
+TraceLog(int logType, const char* text, ...)
+{
+#define SUPPORT_TRACELOG
+#if defined(SUPPORT_TRACELOG)
+#define MAX_TRACELOG_MSG_LENGTH 256
+  // Message has level below current threshold, don't emit¬
+  if (logType < logTypeLevel) return;
+
+  va_list args;
+  va_start(args, text);
+
+  if (traceLog) {
+    traceLog(logType, text, args);
+    va_end(args);
+    return;
+  }
+  char buffer[MAX_TRACELOG_MSG_LENGTH] = {0};
+
+  switch (logType) {
+  case LOG_TRACE: strcpy(buffer, "TRACE: "); break;
+  case LOG_DEBUG: strcpy(buffer, "DEBUG: "); break;
+  case LOG_INFO: strcpy(buffer, "INFO: "); break;
+  case LOG_WARNING: strcpy(buffer, "WARNING: "); break;
+  case LOG_ERROR: strcpy(buffer, "ERROR: "); break;
+  case LOG_FATAL: strcpy(buffer, "FATAL: "); break;
+  default: break;
+  }
+  unsigned int textSize = (unsigned int) strlen(text);
+  memcpy(buffer + strlen(buffer), text,
+         (textSize < (MAX_TRACELOG_MSG_LENGTH - 12))
+             ? textSize
+             : (MAX_TRACELOG_MSG_LENGTH - 12));
+  strcat(buffer, "\n");
+  vprintf(buffer, args);
+  fflush(stdout);
+  va_end(args);
+
+  if (logType == LOG_FATAL) exit(EXIT_FAILURE);
+
+#endif
+}
+
+static void
 btn_clear_cb(Fl_Widget* o, void* v)
 {
   Fl_Input** i = (Fl_Input**) v;
@@ -62,7 +133,7 @@ btn_clear_cb(Fl_Widget* o, void* v)
   o->parent()->redraw();
 }
 
-void
+static void
 choice_cb(Fl_Widget* o, void* v)
 {
   Fl_Choice* in = (Fl_Choice*) o;
@@ -113,12 +184,19 @@ btn_cb(Fl_Widget* o, void* v)
   const char* argv[] = {NULL, i[0]->value(), i[1]->value(), i[2]->value()};
   /* printf("%s %s %s\n", i[0]->value(), i[1]->value(), i[2]->value()); */
 
+  TraceLog(LOG_INFO, "ok button pushed, values: %s  - %s -  %s", i[0]->value(),
+           i[1]->value(), i[2]->value());
+
+  if (!i[0]->value() && !i[1]->value() && !i[2]->value())
+    TraceLog(LOG_ERROR, "exiting");
+
   mainx(4, argv);
 }
 
 void
 exit_cb(Fl_Widget* o, void* v)
 {
+  TraceLog(LOG_INFO, "exit button pushed");
   exit(0);
 }
 
@@ -169,11 +247,15 @@ make_window(int* dimensions, const char* label, Fl_Input** in, int argc,
     choice_year->labelsize(16);
     choice_year->textsize(16);
     choice_year->textfont(FL_COURIER);
+    choice_year->align(FL_ALIGN_CENTER);
+    /* choice_year->take_focus(); */
+
     const char* year[] = {"2020", "2021", "2022", "2023", "2024", "2025", NULL};
     for (const char** i = year; *i; i++) choice_year->add(*i);
-    if (tm->tm_year - 120 > 0 && tm->tm_year - 120 < 6)
+    if (tm->tm_year - 120 > 0 && tm->tm_year - 120 < 6) {
+      in[1]->value(year[tm->tm_year - 120]);
       choice_year->value(tm->tm_year - 120);
-    else {
+    } else {
       write(1, "year", strlen("year"));
       abort();
     }
@@ -200,7 +282,7 @@ make_window(int* dimensions, const char* label, Fl_Input** in, int argc,
     /* buf[k] = '\0'; */
     /* buf[5] = '\0'; */
     close(f);
-
+    TraceLog(LOG_INFO, "%s file read", "km");
     in[2]->value(buf);
   }
 
@@ -216,6 +298,7 @@ make_window(int* dimensions, const char* label, Fl_Input** in, int argc,
   choice_month->labelsize(16);
   choice_month->textsize(16);
   choice_month->textfont(FL_COURIER);
+  choice_month->align(FL_ALIGN_CENTER);
   /* choice_month->label("Luna: "); */
   /* choice_month->copy_label("lun"); */
   /* std::vector<const char*> mths; */
@@ -229,6 +312,7 @@ make_window(int* dimensions, const char* label, Fl_Input** in, int argc,
   for (const char** p = mths; *p; p++) choice_month->add(*p);
 
   choice_month->value(tm->tm_mon);
+  in[0]->value(mths[tm->tm_mon]);
   choice_month->callback(choice_cb, in);
   /* in[0]->value(mths[tm->tm_mon]); */
 
@@ -268,6 +352,9 @@ make_window(int* dimensions, const char* label, Fl_Input** in, int argc,
 int
 main(int argc, char* argv[])
 {
+
+  SetTraceLogLevel(LOG_INFO);
+  TraceLog(LOG_INFO, "test");
 
   setenv("TZ", "Europe/Bucharest", 1);
   tzset();
