@@ -1,0 +1,18 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0308
+header_name {.h}
+code_name {.cxx}
+Function {} {open C
+} {
+  Fl_Window {} {open
+    xywh {851 44 429 694} type Double resizable visible
+  } {
+    Fl_Input {} {
+      callback {printf("%s\\n", v->value());} selected
+      xywh {0 651 425 47}
+    }
+    Fl_Output {} {
+      xywh {-9 2 434 655} resizable hotspot
+    }
+  }
+}
