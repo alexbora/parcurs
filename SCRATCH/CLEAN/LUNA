@@ -1,0 +1,16 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0308
+header_name {.h}
+code_name {.cxx}
+Function {} {open
+} {
+  Fl_Window {} {open selected
+    xywh {728 98 327 501} type Double color 39 selection_color 31 resizable hotspot modal visible
+  } {
+    Fl_Choice {} {
+      label LUNA open
+      xywh {0 0 330 50} down_box FLAT_BOX color 239 selection_color 231 align 16 resizable
+      code0 {o->add("MAI");}
+    } {}
+  }
+}
