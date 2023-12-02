@@ -1,21 +1,3 @@
-# data file for the Fltk User Interface Designer (fluid)
-version 1.0308
-header_name {.h}
-code_name {.cxx}
-Function {} {open C
-} {
-  Fl_Window {} {open
-    xywh {866 44 414 692} type Double color 16 labelcolor 40 resizable visible
-  } {
-    Fl_Input {} {selected
-      xywh {14 618 397 37} textfont 4
-    }
-    Fl_Return_Button {} {
-      label ask
-      xywh {314 655 97 20} labelfont 9 labelcolor 60
-    }
-    Fl_Output {} {
-      xywh {15 6 392 613} selection_color 16 textfont 4 resizable hotspot
-    }
-  }
-}
+#!/bin/sh
+dir="`dirname \"$0\"`"
+exec "$dir/gpt.app/Contents/MacOS/gpt" "$@"

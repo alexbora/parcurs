@@ -2,21 +2,29 @@
 
 #include "gpt.h"
 
-int main(int argc, char **argv) {
+int
+main(int argc, char** argv)
+{
   Fl_Double_Window* w;
-  { Fl_Double_Window* o = new Fl_Double_Window(414, 692);
-    w = o; if (w) {/* empty */}
-    o->color((Fl_Color)16);
-    o->labelcolor((Fl_Color)40);
-    { Fl_Input* o = new Fl_Input(14, 618, 397, 37);
+  {
+    Fl_Double_Window* o = new Fl_Double_Window(414, 692);
+    w                   = o;
+    if (w) { /* empty */
+    }
+    o->color((Fl_Color) 16);
+    o->labelcolor((Fl_Color) 40);
+    {
+      Fl_Input* o = new Fl_Input(14, 618, 397, 37);
       o->textfont(4);
     } // Fl_Input* o
-    { Fl_Return_Button* o = new Fl_Return_Button(314, 655, 97, 20, "ask");
+    {
+      Fl_Return_Button* o = new Fl_Return_Button(314, 655, 97, 20, "ask");
       o->labelfont(9);
       o->labelcolor(FL_DARK_GREEN);
     } // Fl_Return_Button* o
-    { Fl_Output* o = new Fl_Output(15, 6, 392, 613);
-      o->selection_color((Fl_Color)16);
+    {
+      Fl_Output* o = new Fl_Output(15, 6, 392, 613);
+      o->selection_color((Fl_Color) 16);
       o->textfont(4);
       Fl_Group::current()->resizable(o);
       o->window()->hotspot(o);
